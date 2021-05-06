@@ -135,8 +135,7 @@ public class PacManGameUI_Swing implements PacManGameUI {
 				e -> window.setTitle(String.format("Pac-Man / Ms. Pac-Man (%d fps, JFC Swing)", gameLoop.clock.getLastFPS())));
 
 		// start initial game scene
-		onPacManGameStateChange(
-				new PacManGameStateChangeEvent(currentGameVariant(), gameController.game(), null, controller.state));
+		onPacManGameStateChange(new PacManGameStateChangeEvent(gameController.game(), null, controller.state));
 		show();
 	}
 
@@ -249,7 +248,7 @@ public class PacManGameUI_Swing implements PacManGameUI {
 	@Override
 	public void reset() {
 		currentGameScene.end();
-		SOUND.get(gameController.gameVariant()).stopAll();
+		SOUND.get(gameController.game().variant()).stopAll();
 	}
 
 	@Override
