@@ -32,7 +32,7 @@ public class JuniorBag2D {
 	}
 
 	public void render(Graphics2D g) {
-		if (bag.visible) {
+		if (bag.isVisible()) {
 			if (bag.open) {
 				drawEntity(g, bag, junior);
 			} else {

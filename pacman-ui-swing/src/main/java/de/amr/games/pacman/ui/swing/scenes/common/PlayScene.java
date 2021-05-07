@@ -249,7 +249,7 @@ public class PlayScene extends GameScene {
 			ghost2D.getKickingAnimations().values().forEach(TimedSequence::reset);
 		});
 		player2D.getDyingAnimation().delay(120).onStart(() -> {
-			game().ghosts().forEach(ghost -> ghost.visible = false);
+			game().ghosts().forEach(ghost -> ghost.setVisible(false));
 			if (gameController.isGameRunning()) {
 				sounds.play(PacManGameSound.PACMAN_DEATH);
 			}
@@ -258,7 +258,7 @@ public class PlayScene extends GameScene {
 
 	private void playLevelCompleteAnimation(PacManGameState state) {
 		if (gameController.stateTimer().isRunningSeconds(2)) {
-			game().ghosts().forEach(ghost -> ghost.visible = false);
+			game().ghosts().forEach(ghost -> ghost.setVisible(false));
 		}
 		if (gameController.stateTimer().isRunningSeconds(3)) {
 			mazeFlashing.restart();

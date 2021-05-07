@@ -44,7 +44,7 @@ public class Bonus2D {
 
 	public void render(Graphics2D g) {
 		BufferedImage sprite = currentSprite();
-		if (sprite == null || !bonus.visible) {
+		if (sprite == null || !bonus.isVisible()) {
 			return;
 		}
 		// Ms. Pac.Man bonus is jumping up and down while wandering the maze

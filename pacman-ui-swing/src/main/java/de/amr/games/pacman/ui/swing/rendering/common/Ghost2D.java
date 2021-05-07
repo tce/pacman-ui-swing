@@ -84,7 +84,7 @@ public class Ghost2D {
 
 	public void render(Graphics2D g) {
 		BufferedImage sprite = currentSprite();
-		if (ghost.visible) {
+		if (ghost.isVisible()) {
 			int dx = (TS - sprite.getWidth()) / 2, dy = (TS - sprite.getHeight()) / 2;
 			g.drawImage(sprite, (int) (ghost.position.x + dx), (int) (ghost.position.y + dy), null);
 		}

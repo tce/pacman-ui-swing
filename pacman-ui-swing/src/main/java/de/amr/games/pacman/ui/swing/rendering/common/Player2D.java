@@ -43,7 +43,7 @@ public class Player2D {
 
 	public void render(Graphics2D g) {
 		BufferedImage sprite = currentSprite();
-		if (player.visible) {
+		if (player.isVisible()) {
 			int dx = (TS - sprite.getWidth()) / 2, dy = (TS - sprite.getHeight()) / 2;
 			g.drawImage(sprite, (int) (player.position.x + dx), (int) (player.position.y + dy), null);
 		}
