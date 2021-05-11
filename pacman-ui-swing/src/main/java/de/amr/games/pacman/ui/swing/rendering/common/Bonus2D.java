@@ -59,10 +59,10 @@ public class Bonus2D {
 		if (bonus == null) {
 			return null;
 		}
-		if (bonus.edibleTicksLeft > 0) {
+		if (bonus.state == Bonus.EDIBLE) {
 			return symbolSprites.get(bonus.symbol);
 		}
-		if (bonus.eatenTicksLeft > 0) {
+		if (bonus.state == Bonus.EATEN) {
 			return numberSprites.get(bonus.points);
 		}
 		return null;
