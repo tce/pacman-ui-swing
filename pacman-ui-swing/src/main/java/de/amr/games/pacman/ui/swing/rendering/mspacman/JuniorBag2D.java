@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.model.common.GameEntity;
-import de.amr.games.pacman.model.mspacman.JuniorBag;
+import de.amr.games.pacman.model.mspacman.entities.JuniorBag;
 
 public class JuniorBag2D {
 
