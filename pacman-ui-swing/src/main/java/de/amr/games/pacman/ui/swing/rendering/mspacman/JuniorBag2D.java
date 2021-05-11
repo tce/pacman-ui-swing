@@ -28,7 +28,7 @@ public class JuniorBag2D {
 
 	private void drawEntity(Graphics2D g, GameEntity entity, BufferedImage sprite) {
 		int dx = -(sprite.getWidth() - TS) / 2, dy = -(sprite.getHeight() - TS) / 2;
-		g.drawImage(sprite, (int) (entity.position.x + dx), (int) (entity.position.y + dy), null);
+		g.drawImage(sprite, (int) (entity.position().x + dx), (int) (entity.position().y + dy), null);
 	}
 
 	public void render(Graphics2D g) {

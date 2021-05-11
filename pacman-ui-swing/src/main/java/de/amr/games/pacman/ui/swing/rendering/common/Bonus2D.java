@@ -51,7 +51,7 @@ public class Bonus2D {
 		int jump = jumpAnimation != null ? jumpAnimation.animate() : 0;
 		int dx = -(sprite.getWidth() - TS) / 2, dy = -(sprite.getHeight() - TS) / 2;
 		g.translate(0, jump);
-		g.drawImage(sprite, (int) (bonus.position.x + dx), (int) (bonus.position.y + dy), null);
+		g.drawImage(sprite, (int) (bonus.position().x + dx), (int) (bonus.position().y + dy), null);
 		g.translate(0, -jump);
 	}
 

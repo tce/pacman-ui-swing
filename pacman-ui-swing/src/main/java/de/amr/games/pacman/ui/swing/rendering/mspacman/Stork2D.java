@@ -25,6 +25,6 @@ public class Stork2D {
 
 	public void render(Graphics2D g) {
 		BufferedImage frame = animation.animate();
-		g.drawImage(frame, (int) stork.position.x, (int) stork.position.y, null);
+		g.drawImage(frame, (int) stork.position().x, (int) stork.position().y, null);
 	}
 }

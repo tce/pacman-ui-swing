@@ -86,7 +86,7 @@ public class PacMan_IntroScene extends GameScene {
 		if (sceneController.phase == Phase.CHASING_PAC) {
 			if (sceneController.blinking.animate()) {
 				g2.setColor(Color.PINK);
-				g2.fillOval(t(2), (int) sceneController.pac.position.y, TS, TS);
+				g2.fillOval(t(2), (int) sceneController.pac.position().y, TS, TS);
 			}
 		}
 		drawGuys(g);
