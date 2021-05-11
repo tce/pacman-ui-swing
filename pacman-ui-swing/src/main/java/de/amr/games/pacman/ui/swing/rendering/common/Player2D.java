@@ -53,7 +53,7 @@ public class Player2D {
 		if (player.dead) {
 			return dyingAnimation.hasStarted() ? dyingAnimation.animate() : munchingAnimations.get(player.dir()).frame();
 		}
-		if (player.speed == 0) {
+		if (player.speed() == 0) {
 			return munchingAnimations.get(player.dir()).frame(0);
 		}
 		if (player.stuck) {
