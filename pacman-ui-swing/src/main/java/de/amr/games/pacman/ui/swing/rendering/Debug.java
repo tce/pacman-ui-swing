@@ -15,14 +15,14 @@ import de.amr.games.pacman.controller.PacManGameController;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.AbstractGameModel;
-import de.amr.games.pacman.model.common.GameModel;
+import de.amr.games.pacman.model.common.PacManGameModel;
 
 public class Debug {
 
 	public static boolean on = false;
 
 	public static void drawPlaySceneDebugInfo(Graphics2D g, PacManGameController controller) {
-		GameModel game = controller.game();
+		PacManGameModel game = controller.game();
 		final Color[] GHOST_COLORS = { Color.RED, Color.PINK, Color.CYAN, Color.ORANGE };
 		long remaining = controller.stateTimer().ticksRemaining();
 		String ticksText = remaining == Long.MAX_VALUE ? "forever" : remaining + " ticks remaining";

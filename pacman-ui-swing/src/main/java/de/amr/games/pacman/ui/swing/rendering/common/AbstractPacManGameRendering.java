@@ -17,7 +17,7 @@ import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameEntity;
-import de.amr.games.pacman.model.common.GameModel;
+import de.amr.games.pacman.model.common.PacManGameModel;
 
 /**
  * Spritesheet-based rendering for Pac-Man and Ms. Pac-Man game.
@@ -114,7 +114,7 @@ public abstract class AbstractPacManGameRendering {
 
 	public abstract void drawMaze(Graphics2D g, int mazeNumber, int i, int t, boolean running);
 
-	public void drawScore(Graphics2D g, GameModel game, boolean showHiscoreOnly) {
+	public void drawScore(Graphics2D g, PacManGameModel game, boolean showHiscoreOnly) {
 		g.setFont(getScoreFont());
 		g.translate(0, 2);
 		g.setColor(Color.WHITE);
@@ -138,7 +138,7 @@ public abstract class AbstractPacManGameRendering {
 		g.translate(0, -3);
 	}
 
-	public void drawLivesCounter(Graphics2D g, GameModel game, int x, int y) {
+	public void drawLivesCounter(Graphics2D g, PacManGameModel game, int x, int y) {
 		int maxLivesDisplayed = 5;
 		for (int i = 0; i < Math.min(game.lives(), maxLivesDisplayed); ++i) {
 			g.drawImage(lifeSprite(), x + t(2 * i), y, null);
@@ -150,7 +150,7 @@ public abstract class AbstractPacManGameRendering {
 		}
 	}
 
-	public void drawLevelCounter(Graphics2D g, GameModel game, int rightX, int y) {
+	public void drawLevelCounter(Graphics2D g, PacManGameModel game, int rightX, int y) {
 		int x = rightX;
 		int firstLevel = Math.max(1, game.currentLevel().number - 6);
 		for (int level = firstLevel; level <= game.currentLevel().number; ++level) {
@@ -160,7 +160,7 @@ public abstract class AbstractPacManGameRendering {
 		}
 	}
 
-	public void drawGameState(Graphics2D g, GameModel game, PacManGameState gameState) {
+	public void drawGameState(Graphics2D g, PacManGameModel game, PacManGameState gameState) {
 		if (gameState == PacManGameState.READY) {
 			g.setFont(getScoreFont());
 			g.setColor(Color.YELLOW);
