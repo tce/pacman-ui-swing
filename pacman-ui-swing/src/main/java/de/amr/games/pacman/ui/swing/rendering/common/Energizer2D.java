@@ -11,7 +11,7 @@ import de.amr.games.pacman.lib.V2i;
 public class Energizer2D {
 
 	private final V2i tile;
-	private TimedSequence<Boolean> blinkingAnimation = TimedSequence.pulse().frameDuration(15);
+	private TimedSequence<Boolean> blinkingAnimation = TimedSequence.pulse().frameDuration(10);
 
 	public Energizer2D(V2i tile) {
 		this.tile = tile;

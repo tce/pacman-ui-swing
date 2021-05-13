@@ -82,7 +82,7 @@ public class PlayScene extends GameScene {
 
 		// enter READY
 		if (e.newGameState == PacManGameState.READY) {
-			// TODO check this
+			energizers2D.forEach(energizer2D -> energizer2D.getBlinkingAnimation().reset());
 			rendering.mazeFlashing(game().currentLevel().mazeNumber).reset();
 			if (!gameController.isAttractMode() && !gameController.isGameRunning()) {
 				gameController.stateTimer().resetSeconds(4.5);
@@ -99,11 +99,6 @@ public class PlayScene extends GameScene {
 			ghosts2D.forEach(ghost2D -> {
 				ghost2D.getKickingAnimations().values().forEach(TimedSequence::restart);
 			});
-		}
-
-		// exit HUNTING
-		if (e.oldGameState == PacManGameState.HUNTING) {
-			energizers2D.forEach(energizer2D -> energizer2D.getBlinkingAnimation().reset());
 		}
 
 		// enter PACMAN_DYING
