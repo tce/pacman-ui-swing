@@ -273,11 +273,6 @@ public class PacManGameUI_Swing implements PacManGameUI {
 		return Optional.empty();
 	}
 
-	@Override
-	public boolean gameStartRequested() {
-		return keyboard.keyPressed("Space");
-	}
-
 	private void handleKey(KeyEvent e) {
 		switch (e.getKeyCode()) {
 
@@ -337,6 +332,10 @@ public class PacManGameUI_Swing implements PacManGameUI {
 
 		case KeyEvent.VK_X:
 			gameController.killGhosts();
+			break;
+
+		case KeyEvent.VK_SPACE:
+			gameController.startGame();
 			break;
 
 		default:
