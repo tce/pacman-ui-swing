@@ -24,7 +24,6 @@ import java.util.Arrays;
 import java.util.Deque;
 import java.util.EnumMap;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import javax.swing.JFrame;
@@ -38,6 +37,7 @@ import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameVariant;
+import de.amr.games.pacman.model.common.Pac;
 import de.amr.games.pacman.model.world.PacManGameWorld;
 import de.amr.games.pacman.ui.FlashMessage;
 import de.amr.games.pacman.ui.PacManGameUI;
@@ -257,28 +257,27 @@ public class PacManGameUI_Swing implements PacManGameUI {
 	}
 
 	@Override
-	public Optional<Direction> playerDirectionChangeRequested() {
+	public void steer(Pac player) {
 		if (keyboard.keyPressed("Up")) {
-			return Optional.of(Direction.UP);
+			player.setWishDir(Direction.UP);
 		}
 		if (keyboard.keyPressed("Down")) {
-			return Optional.of(Direction.DOWN);
+			player.setWishDir(Direction.DOWN);
 		}
 		if (keyboard.keyPressed("Left")) {
-			return Optional.of(Direction.LEFT);
+			player.setWishDir(Direction.LEFT);
 		}
 		if (keyboard.keyPressed("Right")) {
-			return Optional.of(Direction.RIGHT);
+			player.setWishDir(Direction.RIGHT);
 		}
-		return Optional.empty();
 	}
 
 	private void handleKey(KeyEvent e) {
 		switch (e.getKeyCode()) {
 
 		case KeyEvent.VK_A:
-			gameController.autopilotOn = !gameController.autopilotOn;
-			showFlashMessage(gameController.autopilotOn ? "Autopilot ON" : "Autopilot OFF");
+			gameController.setAutoControlled(!gameController.isAutoControlled());
+			showFlashMessage(gameController.isAutoControlled() ? "Autopilot ON" : "Autopilot OFF");
 			break;
 
 		case KeyEvent.VK_D:
