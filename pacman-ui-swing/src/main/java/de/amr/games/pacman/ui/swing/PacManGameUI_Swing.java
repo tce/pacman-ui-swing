@@ -24,7 +24,6 @@ import java.util.Arrays;
 import java.util.Deque;
 import java.util.EnumMap;
 import java.util.List;
-import java.util.stream.Stream;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
@@ -190,19 +189,15 @@ public class PacManGameUI_Swing implements PacManGameUI {
 		titleUpdateTimer.start();
 	}
 
-	private GameVariant currentGameVariant() {
-		return Stream.of(GameVariant.values()).filter(gameController::isPlaying).findFirst().get();
-	}
-
 	private GameScene getSceneForGameState(PacManGameState state) {
-		GameVariant currentGame = currentGameVariant();
+		GameVariant variant = gameController.game().variant();
 		switch (state) {
 		case INTRO:
-			return scenes.get(currentGame).get(0);
+			return scenes.get(variant).get(0);
 		case INTERMISSION:
-			return scenes.get(currentGame).get(gameController.game().intermissionNumber());
+			return scenes.get(variant).get(gameController.game().intermissionNumber());
 		default:
-			return scenes.get(currentGame).get(4);
+			return scenes.get(variant).get(4);
 		}
 	}
 
