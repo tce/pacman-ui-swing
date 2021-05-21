@@ -281,7 +281,7 @@ public class PacManGameUI_Swing implements PacManGameUI {
 			break;
 
 		case KeyEvent.VK_E:
-			gameController.eatAllPellets();
+			gameController.cheatEatAllPellets();
 			break;
 
 		case KeyEvent.VK_I:
@@ -325,7 +325,7 @@ public class PacManGameUI_Swing implements PacManGameUI {
 			break;
 
 		case KeyEvent.VK_X:
-			gameController.killGhosts();
+			gameController.cheatKillGhosts();
 			break;
 
 		case KeyEvent.VK_SPACE:

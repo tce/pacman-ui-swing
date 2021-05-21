@@ -45,7 +45,7 @@ public class PacManGameAppSwing extends PacManGameController {
 	public static void main(String[] args) {
 		Options options = new Options(args);
 		PacManGameAppSwing app = new PacManGameAppSwing();
-		app.selectGame(options.gameVariant);
+		app.selectGameVariant(options.gameVariant);
 		invokeLater(() -> {
 			GameLoop gameLoop = new GameLoop(app);
 			app.setUI(new PacManGameUI_Swing(gameLoop, app, options.height));
