@@ -187,7 +187,7 @@ public class PlayScene extends GameScene {
 	@Override
 	public void onExtraLife(PacManGameEvent e) {
 		sounds.play(PacManGameSound.EXTRA_LIFE);
-		gameController.getUI().showFlashMessage("Extra life!");
+		gameController.getUI().showFlashMessage(1, "Extra life!");
 	}
 
 	@Override

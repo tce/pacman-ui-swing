@@ -247,8 +247,8 @@ public class PacManGameUI_Swing implements PacManGameUI {
 	}
 
 	@Override
-	public void showFlashMessage(String message, double seconds) {
-		flashMessageQ.add(new FlashMessage(message, (long) (60 * seconds)));
+	public void showFlashMessage(double seconds, String message, Object... args) {
+		flashMessageQ.add(new FlashMessage(String.format(message, args), (long) (60 * seconds)));
 	}
 
 	@Override
@@ -272,7 +272,7 @@ public class PacManGameUI_Swing implements PacManGameUI {
 
 		case KeyEvent.VK_A:
 			gameController.setAutoControlled(!gameController.isAutoControlled());
-			showFlashMessage(gameController.isAutoControlled() ? "Autopilot ON" : "Autopilot OFF");
+			showFlashMessage(1, "Autopilot %s", gameController.isAutoControlled() ? "on" : "off");
 			break;
 
 		case KeyEvent.VK_D:
@@ -286,13 +286,12 @@ public class PacManGameUI_Swing implements PacManGameUI {
 
 		case KeyEvent.VK_I:
 			gameController.setPlayerImmune(!gameController.isPlayerImmune());
-			showFlashMessage(gameController.isPlayerImmune() ? "Player IMMUNE" : "Player VULNERABLE");
+			showFlashMessage(1, "Player is %s", gameController.isPlayerImmune() ? "immune" : "vulnerable");
 			break;
 
 		case KeyEvent.VK_F: {
 			gameLoop.clock.setTargetFPS(gameLoop.clock.getTargetFPS() != 120 ? 120 : 60);
-			String text = gameLoop.clock.getTargetFPS() == 60 ? "Normal speed" : "Fast speed";
-			showFlashMessage(text);
+			showFlashMessage(1, "Speed: %s", gameLoop.clock.getTargetFPS() == 60 ? "Normal" : "Fast");
 			log("Clock frequency changed to %d Hz", gameLoop.clock.getTargetFPS());
 			break;
 		}
@@ -314,8 +313,7 @@ public class PacManGameUI_Swing implements PacManGameUI {
 
 		case KeyEvent.VK_S: {
 			gameLoop.clock.setTargetFPS(gameLoop.clock.getTargetFPS() != 30 ? 30 : 60);
-			String text = gameLoop.clock.getTargetFPS() == 60 ? "Normal speed" : "Slow speed";
-			showFlashMessage(text);
+			showFlashMessage(1, "Speed: %s", gameLoop.clock.getTargetFPS() == 60 ? "Normal" : "Slow");
 			log("Clock frequency changed to %d Hz", gameLoop.clock.getTargetFPS());
 			break;
 		}
