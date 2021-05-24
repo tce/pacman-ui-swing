@@ -240,7 +240,6 @@ public class PacManGameUI_Swing implements PacManGameUI {
 		} while (buffers.contentsLost());
 	}
 
-	@Override
 	public void reset() {
 		currentGameScene.end();
 		SOUND.get(gameController.game().variant()).stopAll();
