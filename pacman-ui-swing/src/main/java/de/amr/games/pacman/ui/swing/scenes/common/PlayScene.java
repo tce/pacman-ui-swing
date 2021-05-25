@@ -85,10 +85,7 @@ public class PlayScene extends GameScene {
 			energizers2D.forEach(energizer2D -> energizer2D.getBlinkingAnimation().reset());
 			rendering.mazeFlashing(game().currentLevel().mazeNumber).reset();
 			if (!gameController.isAttractMode() && !gameController.isGameRunning()) {
-				gameController.stateTimer().resetSeconds(4.5);
 				sounds.play(PacManGameSound.GAME_READY);
-			} else {
-				gameController.stateTimer().resetSeconds(2);
 			}
 		}
 
