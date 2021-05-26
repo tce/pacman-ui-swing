@@ -30,7 +30,7 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 public class MsPacMan_IntroScene extends GameScene {
 
 	private MsPacMan_IntroScene_Controller sceneController;
-	private TickTimer boardAnimationTimer = new TickTimer();
+	private TickTimer boardAnimationTimer = new TickTimer("boardAnimation-timer");
 	private Player2D msPacMan2D;
 	private List<Ghost2D> ghosts2D;
 
