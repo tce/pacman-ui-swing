@@ -13,6 +13,7 @@ import java.awt.Stroke;
 
 import de.amr.games.pacman.controller.PacManGameController;
 import de.amr.games.pacman.lib.Direction;
+import de.amr.games.pacman.lib.TickTimer;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.AbstractGameModel;
 import de.amr.games.pacman.model.common.PacManGameModel;
@@ -25,7 +26,7 @@ public class Debug {
 		PacManGameModel game = controller.game();
 		final Color[] GHOST_COLORS = { Color.RED, Color.PINK, Color.CYAN, Color.ORANGE };
 		long remaining = controller.stateTimer().ticksRemaining();
-		String ticksText = remaining == Long.MAX_VALUE ? "forever" : remaining + " ticks remaining";
+		String ticksText = remaining == TickTimer.INDEFINITE ? "indefinite" : remaining + " ticks remaining";
 		String stateText = String.format("%s (%s)", controller.state, ticksText);
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Arial", Font.PLAIN, 6));
