@@ -50,13 +50,13 @@ public class PlayScene extends GameScene {
 		ghosts2D = game().ghosts().map(Ghost2D::new).collect(Collectors.toList());
 		ghosts2D.forEach(ghost2D -> ghost2D.setRendering(rendering));
 
-		energizers2D = game().currentLevel().world.energizerTiles().map(Energizer2D::new).collect(Collectors.toList());
+		energizers2D = game().level().world.energizerTiles().map(Energizer2D::new).collect(Collectors.toList());
 
 		bonus2D = new Bonus2D();
 		bonus2D.setRendering(rendering);
 
-		mazeFlashing = rendering.mazeFlashing(game().currentLevel().mazeNumber)
-				.repetitions(game().currentLevel().numFlashes);
+		mazeFlashing = rendering.mazeFlashing(game().level().mazeNumber)
+				.repetitions(game().level().numFlashes);
 		mazeFlashing.reset();
 
 		game().player().powerTimer.addEventListener(this::handleGhostsFlashing);
@@ -83,7 +83,7 @@ public class PlayScene extends GameScene {
 		// enter READY
 		if (e.newGameState == PacManGameState.READY) {
 			energizers2D.forEach(energizer2D -> energizer2D.getBlinkingAnimation().reset());
-			rendering.mazeFlashing(game().currentLevel().mazeNumber).reset();
+			rendering.mazeFlashing(game().level().mazeNumber).reset();
 			if (!gameController.isAttractMode() && !gameController.isGameRunning()) {
 				sounds.play(PacManGameSound.GAME_READY);
 			}
@@ -120,7 +120,7 @@ public class PlayScene extends GameScene {
 
 		// enter LEVEL_COMPLETE
 		if (e.newGameState == PacManGameState.LEVEL_COMPLETE) {
-			mazeFlashing = rendering.mazeFlashing(game().currentLevel().mazeNumber);
+			mazeFlashing = rendering.mazeFlashing(game().level().mazeNumber);
 			sounds.stopAll();
 		}
 
@@ -201,9 +201,9 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		rendering.drawMaze(g, game().currentLevel().mazeNumber, 0, t(3), mazeFlashing.isRunning());
+		rendering.drawMaze(g, game().level().mazeNumber, 0, t(3), mazeFlashing.isRunning());
 		if (!mazeFlashing.isRunning()) {
-			rendering.hideEatenFood(g, game().currentLevel().world.tiles(), game().currentLevel()::isFoodRemoved);
+			rendering.hideEatenFood(g, game().level().world.tiles(), game().level()::isFoodRemoved);
 			energizers2D.forEach(energizer2D -> energizer2D.render(g));
 		}
 		if (gameController.isAttractMode()) {
@@ -230,8 +230,8 @@ public class PlayScene extends GameScene {
 		if (e.type == TickTimerEvent.Type.HALF_EXPIRED) {
 			ghosts2D.stream().filter(ghost2D -> ghost2D.ghost.is(GhostState.FRIGHTENED)).forEach(ghost2D -> {
 				TimedSequence<?> flashing = ghost2D.getFlashingAnimation();
-				long frameTime = e.ticks / (game().currentLevel().numFlashes * flashing.numFrames());
-				flashing.frameDuration(frameTime).repetitions(game().currentLevel().numFlashes).restart();
+				long frameTime = e.ticks / (game().level().numFlashes * flashing.numFrames());
+				flashing.frameDuration(frameTime).repetitions(game().level().numFlashes).restart();
 			});
 		}
 	}

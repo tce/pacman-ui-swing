@@ -52,18 +52,18 @@ public class Debug {
 		Stroke thin = new BasicStroke(0.1f);
 		g.setColor(dark);
 		g.setStroke(thin);
-		for (int x = 0; x < game.currentLevel().world.numCols(); ++x) {
-			for (int y = 0; y < game.currentLevel().world.numRows(); ++y) {
+		for (int x = 0; x < game.level().world.numCols(); ++x) {
+			for (int y = 0; y < game.level().world.numRows(); ++y) {
 				V2i tile = new V2i(x, y);
-				if (game.currentLevel().world.isIntersection(tile)) {
+				if (game.level().world.isIntersection(tile)) {
 					for (Direction dir : Direction.values()) {
 						V2i neighbor = tile.plus(dir.vec);
-						if (game.currentLevel().world.isWall(neighbor)) {
+						if (game.level().world.isWall(neighbor)) {
 							continue;
 						}
 						g.drawLine(t(x) + HTS, t(y) + HTS, t(neighbor.x) + HTS, t(neighbor.y) + HTS);
 					}
-				} else if (game.currentLevel().world.isOneWayDown(tile)) {
+				} else if (game.level().world.isOneWayDown(tile)) {
 					g.translate(t(x) + HTS, t(y));
 					g.fillPolygon(TRIANGLE);
 					g.translate(-t(x) - HTS, -t(y));

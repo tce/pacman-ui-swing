@@ -121,7 +121,7 @@ public abstract class AbstractPacManGameRendering {
 		g.drawString("SCORE", t(1), t(1));
 		g.drawString("HIGH SCORE", t(15), t(1));
 		g.translate(0, 1);
-		Color pointsColor = getMazeWallColor(game.currentLevel().mazeNumber - 1);
+		Color pointsColor = getMazeWallColor(game.level().mazeNumber - 1);
 		if (pointsColor == Color.BLACK) {
 			pointsColor = Color.YELLOW;
 		}
@@ -129,7 +129,7 @@ public abstract class AbstractPacManGameRendering {
 			g.setColor(pointsColor);
 			g.drawString(String.format("%08d", game.score()), t(1), t(2));
 			g.setColor(Color.LIGHT_GRAY);
-			g.drawString(String.format("L%02d", game.currentLevel().number), t(9), t(2));
+			g.drawString(String.format("L%02d", game.level().number), t(9), t(2));
 		}
 		g.setColor(pointsColor);
 		g.drawString(String.format("%08d", game.hiscorePoints()), t(15), t(2));
@@ -152,8 +152,8 @@ public abstract class AbstractPacManGameRendering {
 
 	public void drawLevelCounter(Graphics2D g, PacManGameModel game, int rightX, int y) {
 		int x = rightX;
-		int firstLevel = Math.max(1, game.currentLevel().number - 6);
-		for (int level = firstLevel; level <= game.currentLevel().number; ++level) {
+		int firstLevel = Math.max(1, game.level().number - 6);
+		for (int level = firstLevel; level <= game.level().number; ++level) {
 			String symbol = game.levelSymbol(level);
 			g.drawImage(symbolSprite(symbol), x, y, null);
 			x -= t(2);
