@@ -3,7 +3,7 @@ package de.amr.games.pacman.ui.swing;
 import static de.amr.games.pacman.lib.Logging.log;
 import static de.amr.games.pacman.model.common.GameVariant.MS_PACMAN;
 import static de.amr.games.pacman.model.common.GameVariant.PACMAN;
-import static de.amr.games.pacman.model.world.PacManGameWorld.TS;
+import static de.amr.games.pacman.model.world.PacManGameWorld.t;
 
 import java.awt.AWTException;
 import java.awt.Canvas;
@@ -37,7 +37,6 @@ import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameVariant;
 import de.amr.games.pacman.model.common.Pac;
-import de.amr.games.pacman.model.world.PacManGameWorld;
 import de.amr.games.pacman.ui.FlashMessage;
 import de.amr.games.pacman.ui.PacManGameUI;
 import de.amr.games.pacman.ui.swing.app.GameLoop;
@@ -95,7 +94,7 @@ public class PacManGameUI_Swing implements PacManGameUI {
 
 		createGameScenes();
 
-		unscaledSize = new Dimension(PacManGameWorld.DEFAULT_WIDTH * TS, PacManGameWorld.DEFAULT_HEIGHT * TS);
+		unscaledSize = new Dimension(t(28), t(36));
 		scaling = Math.round(height / unscaledSize.height);
 		scaledSize = new V2d(unscaledSize.width, unscaledSize.height).scaled(this.scaling).toV2i();
 
