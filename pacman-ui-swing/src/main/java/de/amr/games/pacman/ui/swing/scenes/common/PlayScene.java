@@ -67,7 +67,7 @@ public class PlayScene extends GameScene {
 		if (gameController.state == PacManGameState.LEVEL_COMPLETE) {
 			playLevelCompleteAnimation(gameController.state);
 		} else if (gameController.state == PacManGameState.LEVEL_STARTING) {
-			gameController.stateTimer().forceExpiration();
+			gameController.stateTimer().expire();
 		}
 	}
 
@@ -257,7 +257,7 @@ public class PlayScene extends GameScene {
 		}
 		mazeFlashing.animate();
 		if (mazeFlashing.isComplete()) {
-			gameController.stateTimer().forceExpiration();
+			gameController.stateTimer().expire();
 		}
 	}
 }
