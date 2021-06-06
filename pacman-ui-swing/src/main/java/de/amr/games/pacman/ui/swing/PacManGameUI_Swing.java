@@ -317,7 +317,9 @@ public class PacManGameUI_Swing implements PacManGameUI {
 		}
 
 		case KeyEvent.VK_V:
-			gameController.toggleGameVariant();
+			if (gameController.state == PacManGameState.INTRO) {
+				gameController.selectGameVariant(gameController.game().variant().succ());
+			}
 			break;
 
 		case KeyEvent.VK_X:
