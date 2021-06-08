@@ -33,11 +33,11 @@ import de.amr.games.pacman.controller.PacManGameState;
 import de.amr.games.pacman.controller.event.PacManGameEvent;
 import de.amr.games.pacman.controller.event.PacManGameStateChangeEvent;
 import de.amr.games.pacman.lib.Direction;
+import de.amr.games.pacman.lib.TickTimer;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameVariant;
 import de.amr.games.pacman.model.common.Pac;
-import de.amr.games.pacman.ui.FlashMessage;
 import de.amr.games.pacman.ui.PacManGameUI;
 import de.amr.games.pacman.ui.swing.app.GameLoop;
 import de.amr.games.pacman.ui.swing.assets.AssetLoader;
@@ -71,6 +71,17 @@ public class PacManGameUI_Swing implements PacManGameUI {
 	static {
 		SOUND.put(MS_PACMAN, new SoundManager(PacManGameSounds::msPacManSoundURL));
 		SOUND.put(PACMAN, new SoundManager(PacManGameSounds::mrPacManSoundURL));
+	}
+
+	static class FlashMessage {
+
+		private final TickTimer timer = new TickTimer(this.toString());
+		public final String text;
+
+		public FlashMessage(String text, long ticks) {
+			this.text = text;
+			timer.reset(ticks);
+		}
 	}
 
 	private final EnumMap<GameVariant, List<GameScene>> scenes = new EnumMap<>(GameVariant.class);
