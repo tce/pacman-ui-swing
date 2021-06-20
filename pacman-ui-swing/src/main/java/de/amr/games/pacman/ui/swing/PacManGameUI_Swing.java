@@ -140,8 +140,8 @@ public class PacManGameUI_Swing implements PacManGameUI {
 
 		keyboard = new Keyboard(window);
 
-		titleUpdateTimer = new Timer(1000,
-				e -> window.setTitle(String.format("Pac-Man / Ms. Pac-Man (%d fps, JFC Swing)", gameLoop.clock.getLastFPS())));
+		titleUpdateTimer = new Timer(1000, e -> window.setTitle(String.format("%s (%d fps, JFC Swing)",
+				gameController.game().variant() == MS_PACMAN ? "Ms. Pac-Man" : "Pac-Man", gameLoop.clock.getLastFPS())));
 
 		// start initial game scene
 		onPacManGameStateChange(new PacManGameStateChangeEvent(gameController.game(), null, controller.state));
