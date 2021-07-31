@@ -18,6 +18,7 @@ import java.util.Map;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TimedSequence;
+import de.amr.games.pacman.model.mspacman.MsPacManGame;
 import de.amr.games.pacman.ui.swing.assets.Spritesheet;
 
 /**
@@ -85,13 +86,13 @@ public class MsPacManGameRenderingAssets extends Spritesheet {
 
 		//@formatter:off
 		symbolSprites = Map.of(
-			"CHERRIES", 	s(3,0),
-			"STRAWBERRY", s(4,0),
-			"PEACH",			s(5,0),
-			"PRETZEL",		s(6,0),
-			"APPLE",			s(7,0),
-			"PEAR",				s(8,0),
-			"BANANA",			s(9,0)
+			MsPacManGame.CHERRIES,   s(3,0),
+			MsPacManGame.STRAWBERRY, s(4,0),
+			MsPacManGame.PEACH,      s(5,0),
+			MsPacManGame.PRETZEL,    s(6,0),
+			MsPacManGame.APPLE,      s(7,0),
+			MsPacManGame.PEAR,       s(8,0),
+			MsPacManGame.BANANA,     s(9,0)
 		);
 
 		bonusNumberSprites = Map.of(

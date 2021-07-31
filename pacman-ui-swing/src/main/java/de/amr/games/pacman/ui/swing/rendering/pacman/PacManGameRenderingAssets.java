@@ -18,6 +18,7 @@ import java.util.Map;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TimedSequence;
+import de.amr.games.pacman.model.pacman.PacManGame;
 import de.amr.games.pacman.ui.swing.assets.Spritesheet;
 
 /**
@@ -62,14 +63,14 @@ public class PacManGameRenderingAssets extends Spritesheet {
 
 		//@formatter:off
 		symbolSprites = Map.of(
-				"CHERRIES", 	sprite(2, 3),
-				"STRAWBERRY", sprite(3, 3),
-				"PEACH",			sprite(4, 3),
-				"APPLE",			sprite(5, 3),
-				"GRAPES",			sprite(6, 3),
-				"GALAXIAN",		sprite(7, 3),
-				"BELL",				sprite(8, 3),
-				"KEY",				sprite(9, 3)
+				PacManGame.CHERRIES,   sprite(2, 3),
+				PacManGame.STRAWBERRY, sprite(3, 3),
+				PacManGame.PEACH,      sprite(4, 3),
+				PacManGame.APPLE,      sprite(5, 3),
+				PacManGame.GRAPES,     sprite(6, 3),
+				PacManGame.GALAXIAN,   sprite(7, 3),
+				PacManGame.BELL,       sprite(8, 3),
+				PacManGame.KEY,        sprite(9, 3)
 		);
 
 		numberSprites = Map.ofEntries(
