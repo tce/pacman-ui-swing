@@ -115,7 +115,8 @@ public class MsPacManGameRenderingAssets extends Spritesheet {
 	}
 
 	/**
-	 * Picks sprite from the right part of the sheet, on the left are the maze images
+	 * Picks sprite from the right part of the sheet, on the left are the maze
+	 * images
 	 */
 	public BufferedImage s(int tileX, int tileY) {
 		return sprite(456, 0, tileX, tileY);

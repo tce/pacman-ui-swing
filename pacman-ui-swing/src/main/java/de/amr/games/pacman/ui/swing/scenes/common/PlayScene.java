@@ -55,8 +55,7 @@ public class PlayScene extends GameScene {
 		bonus2D = new Bonus2D();
 		bonus2D.setRendering(rendering);
 
-		mazeFlashing = rendering.mazeFlashing(game().level().mazeNumber)
-				.repetitions(game().level().numFlashes);
+		mazeFlashing = rendering.mazeFlashing(game().level().mazeNumber).repetitions(game().level().numFlashes);
 		mazeFlashing.reset();
 
 		game().player().powerTimer.addEventListener(this::handleGhostsFlashing);

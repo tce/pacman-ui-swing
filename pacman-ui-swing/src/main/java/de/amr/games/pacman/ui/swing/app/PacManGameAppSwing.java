@@ -33,7 +33,8 @@ import de.amr.games.pacman.ui.swing.PacManGameUI_Swing;
  * 
  * Command-line arguments:
  * <ul>
- * <li><code>-height</code> &lt;pixels&gt;: Height of UI in pixels (default: 576)</li>
+ * <li><code>-height</code> &lt;pixels&gt;: Height of UI in pixels (default:
+ * 576)</li>
  * <li><code>-pacman</code>: Starts the game in Pac-Man mode</li>
  * <li><code>-mspacman</code>: Starts game in Ms. Pac-Man mode</li>
  * </ul>
