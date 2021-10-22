@@ -40,7 +40,7 @@ public class GameLoop {
 
 	private void run() {
 		while (running) {
-			clock.frame(controller::step);
+			clock.frame(controller::updateState);
 			controller.getUI().update();
 		}
 	}

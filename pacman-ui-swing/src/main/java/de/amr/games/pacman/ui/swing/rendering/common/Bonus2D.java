@@ -30,7 +30,7 @@ import java.awt.image.BufferedImage;
 import java.util.Map;
 
 import de.amr.games.pacman.lib.TimedSequence;
-import de.amr.games.pacman.model.pacman.Bonus;
+import de.amr.games.pacman.model.pacman.entities.Bonus;
 
 public class Bonus2D {
 
