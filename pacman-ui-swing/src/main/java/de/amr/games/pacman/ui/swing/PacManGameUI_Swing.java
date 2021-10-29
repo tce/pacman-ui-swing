@@ -163,10 +163,8 @@ public class PacManGameUI_Swing implements PacManGameUI {
 
 		keyboard = new Keyboard(window);
 
-		titleUpdateTimer = new Timer(1000,
-				e -> window.setTitle(String.format("%s (%d fps, JFC Swing)",
-						gameController.game().variant() == MS_PACMAN ? "Ms. Pac-Man" : "Pac-Man",
-						gameLoop.clock.getLastFPS())));
+		titleUpdateTimer = new Timer(1000, e -> window.setTitle(String.format("%s (%d fps, JFC Swing)",
+				gameController.game().variant() == MS_PACMAN ? "Ms. Pac-Man" : "Pac-Man", gameLoop.clock.getLastFPS())));
 
 		// start initial game scene
 		onPacManGameStateChange(new PacManGameStateChangeEvent(gameController.game(), null, controller.state));
@@ -319,8 +317,8 @@ public class PacManGameUI_Swing implements PacManGameUI {
 			break;
 
 		case KeyEvent.VK_I:
-			gameController.setPlayerImmune(!gameController.isPlayerImmune());
-			showFlashMessage(1, "Player is %s", gameController.isPlayerImmune() ? "immune" : "vulnerable");
+			gameController.game().player().immune = !gameController.game().player().immune;
+			showFlashMessage(1, "Player is %s", gameController.game().player().immune ? "immune" : "vulnerable");
 			break;
 
 		case KeyEvent.VK_F: {
