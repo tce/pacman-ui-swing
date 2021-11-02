@@ -35,6 +35,7 @@ import java.util.Map;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TimedSequence;
+import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.model.common.Ghost;
 
 public class Ghost2D {
@@ -126,7 +127,7 @@ public class Ghost2D {
 		if (ghost.is(LOCKED) && displayFrightened) {
 			return frightenedAnimation.animate();
 		}
-		if (ghost.speed() == 0) {
+		if (ghost.velocity().equals(V2d.NULL)) {
 			return kickingAnimations.get(ghost.wishDir()).frame();
 		}
 		return kickingAnimations.get(ghost.wishDir()).animate(); // Looks towards wish dir!

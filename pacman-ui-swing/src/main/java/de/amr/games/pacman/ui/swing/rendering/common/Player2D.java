@@ -31,6 +31,7 @@ import java.util.Map;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TimedSequence;
+import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.model.common.Pac;
 
 public class Player2D {
@@ -74,10 +75,9 @@ public class Player2D {
 
 	private BufferedImage currentSprite() {
 		if (player.dead) {
-			return dyingAnimation.hasStarted() ? dyingAnimation.animate()
-					: munchingAnimations.get(player.dir()).frame();
+			return dyingAnimation.hasStarted() ? dyingAnimation.animate() : munchingAnimations.get(player.dir()).frame();
 		}
-		if (player.speed() == 0) {
+		if (player.velocity().equals(V2d.NULL)) {
 			return munchingAnimations.get(player.dir()).frame(0);
 		}
 		if (player.stuck) {
