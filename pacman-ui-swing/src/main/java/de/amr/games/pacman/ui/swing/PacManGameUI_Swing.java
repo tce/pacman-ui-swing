@@ -164,7 +164,7 @@ public class PacManGameUI_Swing implements PacManGameUI {
 		keyboard = new Keyboard(window);
 
 		titleUpdateTimer = new Timer(1000, e -> window.setTitle(String.format("%s (%d fps, JFC Swing)",
-				gameController.game().variant() == MS_PACMAN ? "Ms. Pac-Man" : "Pac-Man", gameLoop.clock.getLastFPS())));
+				gameController.gameVariant() == MS_PACMAN ? "Ms. Pac-Man" : "Pac-Man", gameLoop.clock.getLastFPS())));
 
 		// start initial game scene
 		onPacManGameStateChange(new PacManGameStateChangeEvent(gameController.game(), null, controller.state));
@@ -226,11 +226,11 @@ public class PacManGameUI_Swing implements PacManGameUI {
 		var game = gameController.game();
 		switch (state) {
 		case INTRO:
-			return scenes.get(game.variant()).get(0);
+			return scenes.get(gameController.gameVariant()).get(0);
 		case INTERMISSION:
-			return scenes.get(game.variant()).get(game.intermissionAfterLevel(game.level().number).getAsInt());
+			return scenes.get(gameController.gameVariant()).get(game.intermissionAfterLevel(game.level().number).getAsInt());
 		default:
-			return scenes.get(game.variant()).get(4);
+			return scenes.get(gameController.gameVariant()).get(4);
 		}
 	}
 
@@ -275,7 +275,7 @@ public class PacManGameUI_Swing implements PacManGameUI {
 
 	public void reset() {
 		currentGameScene.end();
-		SOUND.get(gameController.game().variant()).stopAll();
+		SOUND.get(gameController.gameVariant()).stopAll();
 	}
 
 	@Override
@@ -352,7 +352,7 @@ public class PacManGameUI_Swing implements PacManGameUI {
 
 		case KeyEvent.VK_V:
 			if (gameController.state == PacManGameState.INTRO) {
-				gameController.selectGameVariant(gameController.game().variant().succ());
+				gameController.selectGameVariant(gameController.gameVariant().succ());
 			}
 			break;
 
