@@ -27,14 +27,14 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.lib.TimedSequence;
-import de.amr.games.pacman.model.mspacman.entities.Stork;
+import de.amr.games.pacman.model.common.GameEntity;
 
 public class Stork2D {
 
-	private final Stork stork;
+	private final GameEntity stork;
 	private TimedSequence<BufferedImage> animation;
 
-	public Stork2D(Stork stork) {
+	public Stork2D(GameEntity stork) {
 		this.stork = stork;
 	}
 
