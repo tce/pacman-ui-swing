@@ -187,12 +187,12 @@ public abstract class AbstractPacManGameRendering {
 		if (gameState == PacManGameState.READY) {
 			g.setFont(getScoreFont());
 			g.setColor(Color.YELLOW);
-			g.drawString("READY", t(11), t(21));
+			g.drawString("READY!", t(11), t(21));
 		} else if (gameState == PacManGameState.GAME_OVER) {
 			g.setFont(getScoreFont());
 			g.setColor(Color.RED);
 			g.drawString("GAME", t(9), t(21));
-			g.drawString("OVER", t(15), t(21));
+			g.drawString("OVER!", t(15), t(21));
 		}
 	}
 
