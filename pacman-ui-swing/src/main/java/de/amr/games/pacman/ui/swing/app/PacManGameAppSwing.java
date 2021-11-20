@@ -33,24 +33,29 @@ import de.amr.games.pacman.ui.swing.PacManGameUI_Swing;
  * 
  * Command-line arguments:
  * <ul>
- * <li><code>-height</code> &lt;pixels&gt;: Height of UI in pixels (default:
- * 576)</li>
+ * <li><code>-height</code> &lt;pixels&gt;: Height of UI in pixels (default: 576)</li>
  * <li><code>-pacman</code>: Starts the game in Pac-Man mode</li>
  * <li><code>-mspacman</code>: Starts game in Ms. Pac-Man mode</li>
  * </ul>
  * 
  * @author Armin Reichert
  */
-public class PacManGameAppSwing extends PacManGameController {
+public class PacManGameAppSwing {
+
+	private PacManGameController controller;
+	private GameLoop gameLoop;
+
+	public PacManGameAppSwing(Options options) {
+		controller = new PacManGameController();
+		controller.selectGameVariant(options.gameVariant);
+		gameLoop = new GameLoop(controller);
+		controller.setUI(new PacManGameUI_Swing(gameLoop, controller, options.height));
+	}
 
 	public static void main(String[] args) {
-		Options options = new Options(args);
-		PacManGameAppSwing app = new PacManGameAppSwing();
-		app.selectGameVariant(options.gameVariant);
 		invokeLater(() -> {
-			GameLoop gameLoop = new GameLoop(app);
-			app.setUI(new PacManGameUI_Swing(gameLoop, app, options.height));
-			gameLoop.start();
+			PacManGameAppSwing app = new PacManGameAppSwing(new Options(args));
+			app.gameLoop.start();
 		});
 	}
 }
