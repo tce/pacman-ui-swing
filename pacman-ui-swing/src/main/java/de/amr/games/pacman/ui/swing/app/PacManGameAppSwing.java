@@ -43,23 +43,19 @@ import de.amr.games.pacman.ui.swing.PacManGameUI_Swing;
 public class PacManGameAppSwing {
 
 	public static void main(String[] args) {
-		invokeLater(() -> {
-			PacManGameAppSwing app = new PacManGameAppSwing(new Options(args));
-			app.gameLoop.start();
-		});
+		invokeLater(() -> new PacManGameAppSwing(new Options(args)));
 	}
 
-	private PacManGameController controller;
-	private GameLoop gameLoop;
+	private final PacManGameController controller = new PacManGameController();
+	private final GameLoop gameLoop = new GameLoop();
 
 	public PacManGameAppSwing(Options options) {
-		controller = new PacManGameController();
 		controller.selectGameVariant(options.gameVariant);
-		gameLoop = new GameLoop();
 		controller.setUI(new PacManGameUI_Swing(gameLoop, controller, options.height));
 		gameLoop.action = () -> {
 			gameLoop.clock.frame(controller::updateState);
 			controller.getUI().update();
 		};
+		gameLoop.start();
 	}
 }
