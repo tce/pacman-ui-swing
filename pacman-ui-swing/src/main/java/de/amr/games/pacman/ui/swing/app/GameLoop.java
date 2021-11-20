@@ -25,23 +25,19 @@ package de.amr.games.pacman.ui.swing.app;
 
 import static de.amr.games.pacman.lib.Logging.log;
 
-import de.amr.games.pacman.controller.PacManGameController;
-
 public class GameLoop {
 
 	public final SpeedControl clock = new SpeedControl();
-	private final PacManGameController controller;
+	public Runnable action;
+
 	private Thread thread;
 	private boolean running;
 
-	public GameLoop(PacManGameController controller) {
-		this.controller = controller;
-	}
-
 	private void run() {
 		while (running) {
-			clock.frame(controller::updateState);
-			controller.getUI().update();
+			if (action != null) {
+				action.run();
+			}
 		}
 	}
 
