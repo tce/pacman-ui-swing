@@ -52,12 +52,12 @@ public class PacManGameAppSwing {
 
 	public PacManGameAppSwing(Options options) {
 		controller.selectGameVariant(options.gameVariant);
-		PacManGameUI ui = new PacManGameUI_Swing(gameLoop, controller, options.height);
+		final PacManGameUI ui = new PacManGameUI_Swing(gameLoop, controller, options.height);
 		controller.setUI(ui);
 		controller.setPlayerControl(ui);
 		gameLoop.action = () -> {
 			gameLoop.clock.frame(controller::updateState);
-			controller.getUI().update();
+			ui.update();
 		};
 		gameLoop.start();
 	}
