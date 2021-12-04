@@ -23,10 +23,10 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.scenes.pacman;
 
+import static de.amr.games.pacman.controller.pacman.PacMan_IntroScene_Controller.TOP_Y;
 import static de.amr.games.pacman.model.common.GameVariant.PACMAN;
 import static de.amr.games.pacman.model.world.PacManGameWorld.TS;
 import static de.amr.games.pacman.model.world.PacManGameWorld.t;
-import static de.amr.games.pacman.ui.pacman.PacMan_IntroScene_Controller.TOP_Y;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -38,11 +38,11 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import de.amr.games.pacman.controller.PacManGameController;
+import de.amr.games.pacman.controller.pacman.PacMan_IntroScene_Controller;
+import de.amr.games.pacman.controller.pacman.PacMan_IntroScene_Controller.GhostPortrait;
+import de.amr.games.pacman.controller.pacman.PacMan_IntroScene_Controller.Phase;
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.model.common.Ghost;
-import de.amr.games.pacman.ui.pacman.PacMan_IntroScene_Controller;
-import de.amr.games.pacman.ui.pacman.PacMan_IntroScene_Controller.GhostPortrait;
-import de.amr.games.pacman.ui.pacman.PacMan_IntroScene_Controller.Phase;
 import de.amr.games.pacman.ui.swing.PacManGameUI_Swing;
 import de.amr.games.pacman.ui.swing.rendering.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Player2D;
