@@ -34,8 +34,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import de.amr.games.pacman.controller.PacManGameController;
-import de.amr.games.pacman.controller.mspacman.MsPacMan_IntroScene_Controller;
-import de.amr.games.pacman.controller.mspacman.MsPacMan_IntroScene_Controller.Phase;
+import de.amr.games.pacman.controller.mspacman.IntroController;
+import de.amr.games.pacman.controller.mspacman.IntroController.Phase;
 import de.amr.games.pacman.lib.TickTimer;
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.model.common.Ghost;
@@ -52,7 +52,7 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
  */
 public class MsPacMan_IntroScene extends GameScene {
 
-	private MsPacMan_IntroScene_Controller sceneController;
+	private IntroController sceneController;
 	private TickTimer boardAnimationTimer = new TickTimer("boardAnimation-timer");
 	private Player2D msPacMan2D;
 	private List<Ghost2D> ghosts2D;
@@ -63,7 +63,7 @@ public class MsPacMan_IntroScene extends GameScene {
 
 	@Override
 	public void init() {
-		sceneController = new MsPacMan_IntroScene_Controller(gameController);
+		sceneController = new IntroController(gameController);
 		sceneController.init();
 		msPacMan2D = new Player2D(sceneController.msPacMan);
 		msPacMan2D.setMunchingAnimations(rendering.createPlayerMunchingAnimations());

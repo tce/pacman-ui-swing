@@ -31,7 +31,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.controller.PacManGameController;
-import de.amr.games.pacman.controller.pacman.PacMan_IntermissionScene2_Controller;
+import de.amr.games.pacman.controller.pacman.Intermission2Controller;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.lib.V2d;
@@ -50,7 +50,7 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
  */
 public class PacMan_IntermissionScene2 extends GameScene {
 
-	private class SceneController extends PacMan_IntermissionScene2_Controller {
+	private class SceneController extends Intermission2Controller {
 
 		public SceneController(PacManGameController gameController) {
 			super(gameController);
