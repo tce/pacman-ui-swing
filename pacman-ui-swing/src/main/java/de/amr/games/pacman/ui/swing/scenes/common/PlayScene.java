@@ -86,9 +86,9 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void update() {
-		if (gameController.state == PacManGameState.LEVEL_COMPLETE) {
-			playLevelCompleteAnimation(gameController.state);
-		} else if (gameController.state == PacManGameState.LEVEL_STARTING) {
+		if (gameController.currentStateID == PacManGameState.LEVEL_COMPLETE) {
+			playLevelCompleteAnimation(gameController.currentStateID);
+		} else if (gameController.currentStateID == PacManGameState.LEVEL_STARTING) {
 			gameController.stateTimer().expire();
 		}
 	}
@@ -233,7 +233,7 @@ public class PlayScene extends GameScene {
 		if (gameController.isAttractMode()) {
 			rendering.drawGameState(g, game(), PacManGameState.GAME_OVER);
 		} else {
-			rendering.drawGameState(g, game(), gameController.state);
+			rendering.drawGameState(g, game(), gameController.currentStateID);
 		}
 		bonus2D.render(g);
 		player2D.render(g);

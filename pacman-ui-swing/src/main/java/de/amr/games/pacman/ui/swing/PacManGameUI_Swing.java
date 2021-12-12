@@ -167,7 +167,7 @@ public class PacManGameUI_Swing implements PacManGameUI {
 				gameController.gameVariant() == MS_PACMAN ? "Ms. Pac-Man" : "Pac-Man", gameLoop.clock.getLastFPS())));
 
 		// start initial game scene
-		onPacManGameStateChange(new PacManGameStateChangeEvent(gameController.game(), null, controller.state));
+		onPacManGameStateChange(new PacManGameStateChangeEvent(gameController.game(), null, controller.currentStateID));
 		show();
 	}
 
@@ -351,7 +351,7 @@ public class PacManGameUI_Swing implements PacManGameUI {
 		}
 
 		case KeyEvent.VK_V:
-			if (gameController.state == PacManGameState.INTRO) {
+			if (gameController.currentStateID == PacManGameState.INTRO) {
 				gameController.selectGameVariant(gameController.gameVariant().succ());
 			}
 			break;
