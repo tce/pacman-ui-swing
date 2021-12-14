@@ -329,7 +329,7 @@ public class PacManGameUI_Swing implements PacManGameUI {
 		}
 
 		case KeyEvent.VK_L:
-			gameController.game().changeLivesBy(3);
+			gameController.game().lives += 3;
 			break;
 
 		case KeyEvent.VK_N:
