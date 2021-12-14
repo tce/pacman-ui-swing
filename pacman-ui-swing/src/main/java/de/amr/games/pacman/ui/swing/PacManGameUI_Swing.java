@@ -228,7 +228,7 @@ public class PacManGameUI_Swing implements PacManGameUI {
 		case INTRO:
 			return scenes.get(gameController.gameVariant()).get(0);
 		case INTERMISSION:
-			return scenes.get(gameController.gameVariant()).get(game.intermissionAfterLevel(game.level().number).getAsInt());
+			return scenes.get(gameController.gameVariant()).get(game.intermissionAfterLevel(game.levelNumber).getAsInt());
 		default:
 			return scenes.get(gameController.gameVariant()).get(4);
 		}
@@ -317,8 +317,8 @@ public class PacManGameUI_Swing implements PacManGameUI {
 			break;
 
 		case KeyEvent.VK_I:
-			gameController.game().player().immune = !gameController.game().player().immune;
-			showFlashMessage(1, "Player is %s", gameController.game().player().immune ? "immune" : "vulnerable");
+			gameController.game().player.immune = !gameController.game().player.immune;
+			showFlashMessage(1, "Player is %s", gameController.game().player.immune ? "immune" : "vulnerable");
 			break;
 
 		case KeyEvent.VK_F: {
