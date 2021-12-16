@@ -48,9 +48,9 @@ public class Heart2D {
 	}
 
 	public void render(Graphics2D g) {
-		if (heart.isVisible()) {
+		if (heart.visible) {
 			int dx = -(image.getWidth() - TS) / 2, dy = -(image.getHeight() - TS) / 2;
-			g.drawImage(image, (int) heart.position().x + dx, (int) heart.position().y + dy, null);
+			g.drawImage(image, (int) heart.position.x + dx, (int) heart.position.y + dy, null);
 		}
 	}
 }

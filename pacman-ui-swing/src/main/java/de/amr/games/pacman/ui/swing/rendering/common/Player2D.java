@@ -67,9 +67,9 @@ public class Player2D {
 
 	public void render(Graphics2D g) {
 		BufferedImage sprite = currentSprite();
-		if (player.isVisible()) {
+		if (player.visible) {
 			int dx = (TS - sprite.getWidth()) / 2, dy = (TS - sprite.getHeight()) / 2;
-			g.drawImage(sprite, (int) (player.position().x + dx), (int) (player.position().y + dy), null);
+			g.drawImage(sprite, (int) (player.position.x + dx), (int) (player.position.y + dy), null);
 		}
 	}
 
@@ -77,7 +77,7 @@ public class Player2D {
 		if (player.dead) {
 			return dyingAnimation.hasStarted() ? dyingAnimation.animate() : munchingAnimations.get(player.dir()).frame();
 		}
-		if (player.velocity().equals(V2d.NULL)) {
+		if (player.velocity.equals(V2d.NULL)) {
 			return munchingAnimations.get(player.dir()).frame(0);
 		}
 		if (player.stuck) {

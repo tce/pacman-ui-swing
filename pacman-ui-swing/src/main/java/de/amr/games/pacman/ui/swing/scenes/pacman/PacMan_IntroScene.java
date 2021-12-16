@@ -51,8 +51,8 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 /**
  * Intro scene of the PacMan game.
  * <p>
- * The ghost are presented one after another, then Pac-Man is chased by the
- * ghosts, turns the card and hunts the ghost himself.
+ * The ghost are presented one after another, then Pac-Man is chased by the ghosts, turns the card
+ * and hunts the ghost himself.
  * 
  * @author Armin Reichert
  */
@@ -109,7 +109,7 @@ public class PacMan_IntroScene extends GameScene {
 		if (sceneController.phase == Phase.CHASING_PAC) {
 			if (sceneController.blinking.animate()) {
 				g2.setColor(Color.PINK);
-				g2.fillOval(t(2), (int) sceneController.pac.position().y, TS, TS);
+				g2.fillOval(t(2), (int) sceneController.pac.position.y, TS, TS);
 			}
 		}
 		drawGuys(g);
@@ -135,7 +135,7 @@ public class PacMan_IntroScene extends GameScene {
 		g.drawString("NICKNAME", t(18), TOP_Y);
 		for (int i = 0; i < 4; ++i) {
 			GhostPortrait portrait = sceneController.gallery[i];
-			if (portrait.ghost.isVisible()) {
+			if (portrait.ghost.visible) {
 				int y = TOP_Y + t(2 + 3 * i);
 				ghostsInGallery2D.get(i).render(g);
 				g.setColor(getGhostColor(i));

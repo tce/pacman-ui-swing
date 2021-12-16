@@ -58,12 +58,12 @@ public class Flap2D {
 	}
 
 	public void render(Graphics2D g) {
-		if (flap.isVisible()) {
-			g.drawImage(animation.animate(), (int) flap.position().x, (int) flap.position().y, null);
+		if (flap.visible) {
+			g.drawImage(animation.animate(), (int) flap.position.x, (int) flap.position.y, null);
 			g.setFont(font);
 			g.setColor(new Color(222, 222, 225, 192));
-			g.drawString(flap.sceneNumber + "", (int) flap.position().x + 20, (int) flap.position().y + 30);
-			g.drawString(flap.sceneTitle, (int) flap.position().x + 40, (int) flap.position().y + 20);
+			g.drawString(flap.sceneNumber + "", (int) flap.position.x + 20, (int) flap.position.y + 30);
+			g.drawString(flap.sceneTitle, (int) flap.position.x + 40, (int) flap.position.y + 20);
 		}
 	}
 }

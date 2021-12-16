@@ -55,7 +55,7 @@ public class Debug {
 		g.drawString(stateText, t(1), t(3));
 		game.ghosts().forEach(ghost -> {
 			g.setColor(Color.WHITE);
-			g.drawRect((int) ghost.position().x, (int) ghost.position().y, TS, TS);
+			g.drawRect((int) ghost.position.x, (int) ghost.position.y, TS, TS);
 			if (ghost.targetTile != null) {
 				Color c = GHOST_COLORS[ghost.id];
 				g.setColor(c);

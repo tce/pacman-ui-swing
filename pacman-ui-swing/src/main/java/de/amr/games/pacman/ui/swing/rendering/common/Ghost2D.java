@@ -108,9 +108,9 @@ public class Ghost2D {
 
 	public void render(Graphics2D g) {
 		BufferedImage sprite = currentSprite();
-		if (ghost.isVisible()) {
+		if (ghost.visible) {
 			int dx = (TS - sprite.getWidth()) / 2, dy = (TS - sprite.getHeight()) / 2;
-			g.drawImage(sprite, (int) (ghost.position().x + dx), (int) (ghost.position().y + dy), null);
+			g.drawImage(sprite, (int) (ghost.position.x + dx), (int) (ghost.position.y + dy), null);
 		}
 	}
 
@@ -127,7 +127,7 @@ public class Ghost2D {
 		if (ghost.is(LOCKED) && displayFrightened) {
 			return frightenedAnimation.animate();
 		}
-		if (ghost.velocity().equals(V2d.NULL)) {
+		if (ghost.velocity.equals(V2d.NULL)) {
 			return kickingAnimations.get(ghost.wishDir()).frame();
 		}
 		return kickingAnimations.get(ghost.wishDir()).animate(); // Looks towards wish dir!

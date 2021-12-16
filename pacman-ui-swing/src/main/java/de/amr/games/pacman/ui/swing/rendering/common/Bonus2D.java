@@ -67,14 +67,14 @@ public class Bonus2D {
 
 	public void render(Graphics2D g) {
 		BufferedImage sprite = currentSprite();
-		if (sprite == null || !bonus.isVisible()) {
+		if (sprite == null || !bonus.visible) {
 			return;
 		}
 		// Ms. Pac.Man bonus is jumping up and down while wandering the maze
 		int jump = jumpAnimation != null ? jumpAnimation.animate() : 0;
 		int dx = -(sprite.getWidth() - TS) / 2, dy = -(sprite.getHeight() - TS) / 2;
 		g.translate(0, jump);
-		g.drawImage(sprite, (int) (bonus.position().x + dx), (int) (bonus.position().y + dy), null);
+		g.drawImage(sprite, (int) (bonus.position.x + dx), (int) (bonus.position.y + dy), null);
 		g.translate(0, -jump);
 	}
 

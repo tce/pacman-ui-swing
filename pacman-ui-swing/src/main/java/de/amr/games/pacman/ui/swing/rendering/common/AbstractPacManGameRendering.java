@@ -122,9 +122,9 @@ public abstract class AbstractPacManGameRendering {
 	// drawing
 
 	protected void drawEntitySprite(Graphics2D g, GameEntity entity, BufferedImage sprite) {
-		if (entity.isVisible() && sprite != null) {
+		if (entity.visible && sprite != null) {
 			int dx = HTS - sprite.getWidth() / 2, dy = HTS - sprite.getHeight() / 2;
-			g.drawImage(sprite, (int) (entity.position().x + dx), (int) (entity.position().y + dy), null);
+			g.drawImage(sprite, (int) (entity.position.x + dx), (int) (entity.position.y + dy), null);
 		}
 	}
 
