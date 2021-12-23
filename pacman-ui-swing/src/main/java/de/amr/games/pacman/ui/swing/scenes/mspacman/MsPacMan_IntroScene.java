@@ -35,7 +35,7 @@ import java.util.stream.Stream;
 
 import de.amr.games.pacman.controller.PacManGameController;
 import de.amr.games.pacman.controller.mspacman.IntroController;
-import de.amr.games.pacman.controller.mspacman.IntroController.Phase;
+import de.amr.games.pacman.controller.mspacman.IntroController.IntroState;
 import de.amr.games.pacman.lib.TickTimer;
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.model.common.Ghost;
@@ -45,8 +45,7 @@ import de.amr.games.pacman.ui.swing.rendering.common.Player2D;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
 /**
- * Intro scene of the Ms. Pac-Man game. The ghosts and Ms. Pac-Man are
- * introduced one after another.
+ * Intro scene of the Ms. Pac-Man game. The ghosts and Ms. Pac-Man are introduced one after another.
  * 
  * @author Armin Reichert
  */
@@ -93,11 +92,11 @@ public class MsPacMan_IntroScene extends GameScene {
 		g.setColor(Color.ORANGE);
 		g.drawString("\"MS PAC-MAN\"", t(8), t(5));
 		drawAnimatedBoard(g, 32, 16);
-		if (sceneController.phase == Phase.PRESENTING_GHOST) {
+		if (sceneController.currentStateID == IntroState.PRESENTING_GHOST) {
 			drawPresentingGhost(g, sceneController.ghosts[sceneController.currentGhostIndex]);
-		} else if (sceneController.phase == Phase.PRESENTING_MSPACMAN) {
+		} else if (sceneController.currentStateID == IntroState.PRESENTING_MSPACMAN) {
 			drawStarringMsPacMan(g);
-		} else if (sceneController.phase == Phase.END) {
+		} else if (sceneController.currentStateID == IntroState.WAITING_FOR_GAME) {
 			drawStarringMsPacMan(g);
 			drawPointsAnimation(g, 26);
 			drawPressKeyToStart(g, 32);
@@ -141,8 +140,7 @@ public class MsPacMan_IntroScene extends GameScene {
 				y = 2 * (numDotsX + numDotsY) - dot;
 			}
 			g.setColor((dot + light) % (numDotsX / 2) == 0 ? Color.PINK : Color.RED);
-			g.fillRect(t(sceneController.tileBoardTopLeft.x) + 4 * x, t(sceneController.tileBoardTopLeft.y) + 4 * y, 2,
-					2);
+			g.fillRect(t(sceneController.tileBoardTopLeft.x) + 4 * x, t(sceneController.tileBoardTopLeft.y) + 4 * y, 2, 2);
 		}
 	}
 
