@@ -31,7 +31,7 @@ import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.PacManGameController;
 import de.amr.games.pacman.controller.pacman.Intermission1Controller;
-import de.amr.games.pacman.controller.pacman.Intermission1Controller.Phase;
+import de.amr.games.pacman.controller.pacman.Intermission1Controller.IntermissionState;
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.ui.PacManGameSound;
 import de.amr.games.pacman.ui.swing.PacManGameUI_Swing;
@@ -41,8 +41,7 @@ import de.amr.games.pacman.ui.swing.rendering.pacman.PacManGameRendering;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
 /**
- * First intermission scene: Blinky chases Pac-Man and is then chased by a huge
- * Pac-Man.
+ * First intermission scene: Blinky chases Pac-Man and is then chased by a huge Pac-Man.
  * 
  * @author Armin Reichert
  */
@@ -96,7 +95,7 @@ public class PacMan_IntermissionScene1 extends GameScene {
 	public void render(Graphics2D g) {
 		PacManGameRendering r = (PacManGameRendering) rendering;
 		blinky2D.render(g);
-		if (sceneController.phase == Phase.BLINKY_CHASING_PACMAN) {
+		if (sceneController.currentStateID == IntermissionState.BLINKY_CHASING_PACMAN) {
 			pacMan2D.render(g);
 		} else {
 			g.translate(0, -10);
