@@ -40,7 +40,7 @@ import java.util.stream.Stream;
 import de.amr.games.pacman.controller.PacManGameController;
 import de.amr.games.pacman.controller.pacman.IntroController;
 import de.amr.games.pacman.controller.pacman.IntroController.GhostPortrait;
-import de.amr.games.pacman.controller.pacman.IntroController.Phase;
+import de.amr.games.pacman.controller.pacman.IntroController.IntroState;
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.model.common.Ghost;
 import de.amr.games.pacman.ui.swing.PacManGameUI_Swing;
@@ -106,17 +106,17 @@ public class PacMan_IntroScene extends GameScene {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		rendering.drawScore(g, gameController.game(), true);
 		drawGallery(g);
-		if (sceneController.phase == Phase.CHASING_PAC) {
+		if (sceneController.currentStateID == IntroState.CHASING_PAC) {
 			if (sceneController.blinking.animate()) {
 				g2.setColor(Color.PINK);
 				g2.fillOval(t(2), (int) sceneController.pac.position.y, TS, TS);
 			}
 		}
 		drawGuys(g);
-		if (sceneController.phase.ordinal() >= Phase.CHASING_GHOSTS.ordinal()) {
+		if (sceneController.currentStateID.ordinal() >= IntroState.CHASING_GHOSTS.ordinal()) {
 			drawPointsAnimation(g2, 11, 26);
 		}
-		if (sceneController.phase == Phase.READY_TO_PLAY) {
+		if (sceneController.currentStateID == IntroState.READY_TO_PLAY) {
 			drawPressKeyToStart(g, 32);
 		}
 		g2.dispose();
