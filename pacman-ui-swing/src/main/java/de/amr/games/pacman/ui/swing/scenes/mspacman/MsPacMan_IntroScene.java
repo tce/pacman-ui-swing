@@ -29,6 +29,7 @@ import static de.amr.games.pacman.model.world.PacManGameWorld.t;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -52,9 +53,9 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 public class MsPacMan_IntroScene extends GameScene {
 
 	private IntroController sceneController;
-	private TickTimer boardAnimationTimer = new TickTimer("boardAnimation-timer");
 	private Player2D msPacMan2D;
 	private List<Ghost2D> ghosts2D;
+	private TickTimer boardAnimationTimer = new TickTimer("boardAnimation-timer");
 
 	public MsPacMan_IntroScene(PacManGameController controller, Dimension size) {
 		super(controller, size, PacManGameUI_Swing.RENDERING_MS_PACMAN, PacManGameUI_Swing.SOUND.get(MS_PACMAN));
@@ -87,7 +88,10 @@ public class MsPacMan_IntroScene extends GameScene {
 	}
 
 	@Override
-	public void render(Graphics2D g) {
+	public void render(Graphics2D g_) {
+		Graphics2D g = (Graphics2D) g_.create();
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		rendering.drawScore(g, gameController.game(), true);
 		g.setFont(rendering.getScoreFont());
 		g.setColor(Color.ORANGE);
 		g.drawString("\"MS PAC-MAN\"", t(8), t(5));
@@ -103,6 +107,7 @@ public class MsPacMan_IntroScene extends GameScene {
 		}
 		ghosts2D.forEach(ghost2D -> ghost2D.render(g));
 		msPacMan2D.render(g);
+		g.dispose();
 	}
 
 	private void drawPresentingGhost(Graphics2D g, Ghost ghost) {
