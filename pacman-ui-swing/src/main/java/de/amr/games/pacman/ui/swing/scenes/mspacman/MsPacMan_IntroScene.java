@@ -94,7 +94,7 @@ public class MsPacMan_IntroScene extends GameScene {
 		rendering.drawScore(g, gameController.game(), true);
 		g.setFont(rendering.getScoreFont());
 		g.setColor(Color.ORANGE);
-		g.drawString("\"MS PAC-MAN\"", t(8), t(5));
+		g.drawString("\"MS PAC-MAN\"", t(8), t(sceneController.tileBoardTopLeft.y - 3));
 		drawAnimatedBoard(g, 32, 16);
 		if (sceneController.currentStateID == IntroState.PRESENTING_GHOST) {
 			drawPresentingGhost(g, sceneController.ghosts[sceneController.currentGhostIndex]);
@@ -111,21 +111,23 @@ public class MsPacMan_IntroScene extends GameScene {
 	}
 
 	private void drawPresentingGhost(Graphics2D g, Ghost ghost) {
+		int top = sceneController.tileBoardTopLeft.y;
 		g.setColor(Color.WHITE);
 		g.setFont(rendering.getScoreFont());
 		if (ghost == sceneController.ghosts[0]) {
-			g.drawString("WITH", t(8), t(11));
+			g.drawString("WITH", t(8), t(top + 3));
 		}
 		g.setColor(ghost.id == 0 ? Color.RED : ghost.id == 1 ? Color.PINK : ghost.id == 2 ? Color.CYAN : Color.ORANGE);
-		g.drawString(ghost.name.toUpperCase(), t(13 - ghost.name.length() / 2), t(14));
+		g.drawString(ghost.name.toUpperCase(), t(13 - ghost.name.length() / 2), t(top + 6));
 	}
 
 	private void drawStarringMsPacMan(Graphics2D g) {
+		int top = sceneController.tileBoardTopLeft.y;
 		g.setColor(Color.WHITE);
 		g.setFont(rendering.getScoreFont());
-		g.drawString("STARRING", t(8), t(11));
+		g.drawString("STARRING", t(8), t(top + 3));
 		g.setColor(Color.YELLOW);
-		g.drawString("MS PAC-MAN", t(8), t(14));
+		g.drawString("MS PAC-MAN", t(8), t(top + 6));
 	}
 
 	private void drawAnimatedBoard(Graphics2D g, int numDotsX, int numDotsY) {

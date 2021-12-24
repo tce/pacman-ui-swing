@@ -192,7 +192,7 @@ public abstract class AbstractPacManGameRendering {
 			g.setFont(getScoreFont());
 			g.setColor(Color.RED);
 			g.drawString("GAME", t(9), t(21));
-			g.drawString("OVER!", t(15), t(21));
+			g.drawString("OVER", t(15), t(21));
 		}
 	}
 
