@@ -99,7 +99,7 @@ public class MsPacMan_IntroScene extends GameScene {
 		g.setColor(Color.ORANGE);
 		g.drawString("\"MS PAC-MAN\"", t(sceneController.tileTitle.x), t(sceneController.tileTitle.y));
 		drawAnimatedBoard(g, 32, 16);
-		if (sceneController.currentStateID == IntroState.PRESENTING_GHOST) {
+		if (sceneController.currentStateID == IntroState.PRESENTING_GHOSTS) {
 			drawPresentingGhost(g, sceneController.ghosts[sceneController.currentGhostIndex]);
 		} else if (sceneController.currentStateID == IntroState.PRESENTING_MSPACMAN) {
 			drawStarringMsPacMan(g);
