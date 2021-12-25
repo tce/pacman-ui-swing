@@ -70,7 +70,7 @@ public class PacMan_IntroScene extends GameScene {
 	public void init() {
 		sceneController = new IntroController(gameController);
 		sceneController.init();
-		pacMan2D = new Player2D(sceneController.pac);
+		pacMan2D = new Player2D(sceneController.pacMan);
 		pacMan2D.setMunchingAnimations(rendering.createPlayerMunchingAnimations());
 		ghosts2D = Stream.of(sceneController.ghosts).map(Ghost2D::new).collect(Collectors.toList());
 		ghosts2D.forEach(ghost2D -> {
@@ -108,7 +108,7 @@ public class PacMan_IntroScene extends GameScene {
 		if (sceneController.currentStateID == IntroState.CHASING_PAC) {
 			if (sceneController.blinking.animate()) {
 				g.setColor(Color.PINK);
-				g.fillOval(t(2), (int) sceneController.pac.position.y, TS, TS);
+				g.fillOval(t(2), (int) sceneController.pacMan.position.y, TS, TS);
 			}
 		}
 		drawGuys(g);
