@@ -55,7 +55,11 @@ public class Keyboard {
 	}
 
 	public boolean keyPressed(String keySpec) {
-		return pressedKeys.get(keyCode(keySpec));
+		boolean pressed = pressedKeys.get(keyCode(keySpec));
+		if (pressed) {
+			pressedKeys.clear(keyCode(keySpec));
+		}
+		return pressed;
 	}
 
 	public boolean anyKeyPressed() {

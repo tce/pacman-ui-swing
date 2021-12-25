@@ -37,8 +37,6 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Robot;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
@@ -144,13 +142,6 @@ public class PacManGameUI_Swing implements PacManGameUI {
 		window.setFocusable(true);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setIconImage(AssetLoader.image("/pacman/graphics/pacman.png"));
-		window.addKeyListener(new KeyAdapter() {
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				handleKey(e);
-			}
-		});
 		window.addWindowListener(new WindowAdapter() {
 
 			@Override
@@ -236,6 +227,7 @@ public class PacManGameUI_Swing implements PacManGameUI {
 
 	@Override
 	public void update() {
+		handleNonPlayerKeys();
 		if (currentGameScene != null) {
 			currentGameScene.update();
 		}
@@ -250,7 +242,6 @@ public class PacManGameUI_Swing implements PacManGameUI {
 			}
 		}
 		EventQueue.invokeLater(this::renderScreen);
-//		keyboard.clear();
 	}
 
 	private void renderScreen() {
@@ -299,73 +290,68 @@ public class PacManGameUI_Swing implements PacManGameUI {
 		}
 	}
 
-	private void handleKey(KeyEvent e) {
-		switch (e.getKeyCode()) {
+	private void handleNonPlayerKeys() {
 
-		case KeyEvent.VK_A:
+		if (keyboard.keyPressed("A")) {
 			gameController.setAutoControlled(!gameController.isAutoControlled());
 			showFlashMessage(1, "Autopilot %s", gameController.isAutoControlled() ? "on" : "off");
-			break;
+		}
 
-		case KeyEvent.VK_D:
+		else if (keyboard.keyPressed("D")) {
 			Debug.on = !Debug.on;
 			log("UI debug mode is %s", Debug.on ? "on" : "off");
-			break;
+		}
 
-		case KeyEvent.VK_E:
+		else if (keyboard.keyPressed("E")) {
 			gameController.cheatEatAllPellets();
-			break;
+		}
 
-		case KeyEvent.VK_I:
-			gameController.game().player.immune = !gameController.game().player.immune;
-			showFlashMessage(1, "Player is %s", gameController.game().player.immune ? "immune" : "vulnerable");
-			break;
-
-		case KeyEvent.VK_F: {
+		else if (keyboard.keyPressed("F")) {
 			gameLoop.clock.setTargetFPS(gameLoop.clock.getTargetFPS() != 120 ? 120 : 60);
 			showFlashMessage(1, "Speed: %s", gameLoop.clock.getTargetFPS() == 60 ? "Normal" : "Fast");
 			log("Clock frequency changed to %d Hz", gameLoop.clock.getTargetFPS());
-			break;
 		}
 
-		case KeyEvent.VK_L:
-			gameController.game().player.lives += 3;
-			break;
+		else if (keyboard.keyPressed("I")) {
+			gameController.game().player.immune = !gameController.game().player.immune;
+			showFlashMessage(1, "Player is %s", gameController.game().player.immune ? "immune" : "vulnerable");
+		}
 
-		case KeyEvent.VK_N:
+		else if (keyboard.keyPressed("L")) {
+			gameController.game().player.lives += 3;
+		}
+
+		else if (keyboard.keyPressed("N")) {
 			if (gameController.isGameRunning()) {
 				gameController.changeState(PacManGameState.LEVEL_COMPLETE);
 			}
-			break;
+		}
 
-		case KeyEvent.VK_Q:
-			reset();
-			gameController.changeState(PacManGameState.INTRO);
-			break;
+		else if (keyboard.keyPressed("Q")) {
+			if (gameController.currentStateID != PacManGameState.INTRO) {
+				reset();
+				gameController.changeState(PacManGameState.INTRO);
+			}
+		}
 
-		case KeyEvent.VK_S: {
+		else if (keyboard.keyPressed("S")) {
 			gameLoop.clock.setTargetFPS(gameLoop.clock.getTargetFPS() != 30 ? 30 : 60);
 			showFlashMessage(1, "Speed: %s", gameLoop.clock.getTargetFPS() == 60 ? "Normal" : "Slow");
 			log("Clock frequency changed to %d Hz", gameLoop.clock.getTargetFPS());
-			break;
 		}
 
-		case KeyEvent.VK_V:
+		else if (keyboard.keyPressed("V")) {
 			if (gameController.currentStateID == PacManGameState.INTRO) {
 				gameController.selectGameVariant(gameController.gameVariant().succ());
 			}
-			break;
+		}
 
-		case KeyEvent.VK_X:
+		else if (keyboard.keyPressed("X")) {
 			gameController.cheatKillGhosts();
-			break;
+		}
 
-		case KeyEvent.VK_SPACE:
+		else if (keyboard.keyPressed("Space")) {
 			gameController.startGame();
-			break;
-
-		default:
-			break;
 		}
 	}
 
