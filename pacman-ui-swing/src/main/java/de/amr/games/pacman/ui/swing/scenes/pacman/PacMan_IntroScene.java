@@ -83,7 +83,7 @@ public class PacMan_IntroScene extends GameScene {
 		});
 		ghostsInGallery2D = new ArrayList<>();
 		for (int i = 0; i < 4; ++i) {
-			Ghost ghost = sceneController.gallery[i].ghost;
+			Ghost ghost = sceneController.portraits[i].ghost;
 			Ghost2D ghost2D = new Ghost2D(ghost);
 			ghost2D.setKickingAnimations(rendering.createGhostKickingAnimations(ghost.id));
 			ghostsInGallery2D.add(ghost2D);
@@ -133,7 +133,7 @@ public class PacMan_IntroScene extends GameScene {
 		g.drawString("/", t(16), sceneController.topY);
 		g.drawString("NICKNAME", t(18), sceneController.topY);
 		for (int i = 0; i < 4; ++i) {
-			GhostPortrait portrait = sceneController.gallery[i];
+			GhostPortrait portrait = sceneController.portraits[i];
 			if (portrait.ghost.visible) {
 				int y = sceneController.topY + t(2 + 3 * i);
 				ghostsInGallery2D.get(i).render(g);
