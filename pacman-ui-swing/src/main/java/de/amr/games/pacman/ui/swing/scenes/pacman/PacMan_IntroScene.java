@@ -114,8 +114,12 @@ public class PacMan_IntroScene extends GameScene {
 				g.setColor(Color.PINK);
 				g.fillOval(t(2), (int) sceneController.pacMan.position.y, TS, TS);
 			}
-		} else if (state == IntroState.READY_TO_PLAY) {
-			drawPressKeyToStart(g, 32);
+		}
+		if (state.ordinal() >= IntroState.CHASING_PAC.ordinal()) {
+			drawCopyright(g, 32);
+		}
+		if (state == IntroState.READY_TO_PLAY) {
+			drawPressKeyToStart(g, 24);
 		}
 		drawGuys(g);
 		g.dispose();
@@ -176,4 +180,12 @@ public class PacMan_IntroScene extends GameScene {
 		g.drawString("PTS", t(tileX + 5), t(tileY));
 		g.drawString("PTS", t(tileX + 5), t(tileY + 2));
 	}
+
+	private void drawCopyright(Graphics2D g, int yTile) {
+		String text = "\u00A9" + "  1980 MIDWAY MFG. CO.";
+		g.setFont(rendering.getScoreFont());
+		g.setColor(Color.PINK);
+		g.drawString(text, t(3), t(yTile));
+	}
+
 }
