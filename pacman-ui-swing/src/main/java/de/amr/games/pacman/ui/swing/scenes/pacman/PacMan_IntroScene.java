@@ -103,21 +103,21 @@ public class PacMan_IntroScene extends GameScene {
 	public void render(Graphics2D g_) {
 		Graphics2D g = (Graphics2D) g_.create();
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		IntroState state = sceneController.currentStateID;
 		rendering.drawScore(g, gameController.game(), true);
 		drawGallery(g);
-		if (sceneController.currentStateID == IntroState.CHASING_PAC) {
-			if (sceneController.blinking.animate()) {
+		if (state == IntroState.SHOWING_POINTS || state == IntroState.CHASING_GHOSTS || state == IntroState.CHASING_PAC) {
+			drawPointsAnimation(g, 11, 26);
+		}
+		if (state == IntroState.CHASING_PAC) {
+			if (sceneController.blinking.frame()) {
 				g.setColor(Color.PINK);
 				g.fillOval(t(2), (int) sceneController.pacMan.position.y, TS, TS);
 			}
-		}
-		drawGuys(g);
-		if (sceneController.currentStateID.ordinal() >= IntroState.CHASING_GHOSTS.ordinal()) {
-			drawPointsAnimation(g, 11, 26);
-		}
-		if (sceneController.currentStateID == IntroState.READY_TO_PLAY) {
+		} else if (state == IntroState.READY_TO_PLAY) {
 			drawPressKeyToStart(g, 32);
 		}
+		drawGuys(g);
 		g.dispose();
 	}
 
