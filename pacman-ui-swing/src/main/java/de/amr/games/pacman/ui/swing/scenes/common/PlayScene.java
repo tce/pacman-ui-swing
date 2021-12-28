@@ -234,6 +234,7 @@ public class PlayScene extends GameScene {
 			rendering.drawGameState(g, game(), PacManGameState.GAME_OVER);
 		} else {
 			rendering.drawGameState(g, game(), gameController.currentStateID);
+			rendering.drawLevelCounter(g, game(), t(25), t(34));
 		}
 		bonus2D.render(g);
 		player2D.render(g);
@@ -247,7 +248,6 @@ public class PlayScene extends GameScene {
 		} else {
 			rendering.drawScore(g, game(), true);
 		}
-		rendering.drawLevelCounter(g, game(), t(25), t(34));
 	}
 
 	private void handleGhostsFlashing(TickTimerEvent e) {

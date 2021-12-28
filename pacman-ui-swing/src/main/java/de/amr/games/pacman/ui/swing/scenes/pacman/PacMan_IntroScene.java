@@ -139,7 +139,7 @@ public class PacMan_IntroScene extends GameScene {
 		for (int i = 0; i < 4; ++i) {
 			GhostPortrait portrait = sceneController.portraits[i];
 			if (portrait.ghost.visible) {
-				int y = sceneController.topY + t(2 + 3 * i);
+				int y = sceneController.topY + t(1 + 3 * i);
 				ghostsInGallery2D.get(i).render(g);
 				g.setColor(getGhostColor(i));
 				g.setFont(rendering.getScoreFont());
@@ -187,5 +187,4 @@ public class PacMan_IntroScene extends GameScene {
 		g.setColor(Color.PINK);
 		g.drawString(text, t(3), t(yTile));
 	}
-
 }
