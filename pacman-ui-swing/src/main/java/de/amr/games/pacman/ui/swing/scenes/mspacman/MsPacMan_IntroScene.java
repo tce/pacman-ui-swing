@@ -28,15 +28,21 @@ import static de.amr.games.pacman.model.world.PacManGameWorld.t;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.imageio.ImageIO;
+
 import de.amr.games.pacman.controller.PacManGameController;
 import de.amr.games.pacman.controller.mspacman.IntroController;
 import de.amr.games.pacman.controller.mspacman.IntroController.IntroState;
+import de.amr.games.pacman.lib.Logging;
 import de.amr.games.pacman.lib.TickTimer;
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.model.common.Ghost;
@@ -52,6 +58,7 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
  */
 public class MsPacMan_IntroScene extends GameScene {
 
+	private BufferedImage midwayLogo;
 	private IntroController sceneController;
 	private Player2D msPacMan2D;
 	private List<Ghost2D> ghosts2D;
@@ -65,6 +72,13 @@ public class MsPacMan_IntroScene extends GameScene {
 	public void init() {
 		sceneController = new IntroController(gameController);
 		sceneController.init();
+
+		String path = "/mspacman/graphics/midway.png";
+		try {
+			midwayLogo = ImageIO.read(getClass().getResourceAsStream(path));
+		} catch (IOException e) {
+			Logging.log("Could not load image %s", path);
+		}
 
 		msPacMan2D = new Player2D(sceneController.msPacMan);
 		msPacMan2D.setMunchingAnimations(rendering.createPlayerMunchingAnimations());
@@ -92,6 +106,7 @@ public class MsPacMan_IntroScene extends GameScene {
 
 	@Override
 	public void render(Graphics2D g_) {
+		IntroState state = sceneController.currentStateID;
 		Graphics2D g = (Graphics2D) g_.create();
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		rendering.drawScore(g, gameController.game(), true);
@@ -99,17 +114,17 @@ public class MsPacMan_IntroScene extends GameScene {
 		g.setColor(Color.ORANGE);
 		g.drawString("\"MS PAC-MAN\"", t(sceneController.tileTitle.x), t(sceneController.tileTitle.y));
 		drawAnimatedBoard(g, 32, 16);
-		if (sceneController.currentStateID == IntroState.PRESENTING_GHOSTS) {
+		if (state == IntroState.PRESENTING_GHOSTS) {
 			drawPresentingGhost(g, sceneController.ghosts[sceneController.currentGhostIndex]);
-		} else if (sceneController.currentStateID == IntroState.PRESENTING_MSPACMAN) {
+		} else if (state == IntroState.PRESENTING_MSPACMAN) {
 			drawStarringMsPacMan(g);
-		} else if (sceneController.currentStateID == IntroState.WAITING_FOR_GAME) {
+		} else if (state == IntroState.WAITING_FOR_GAME) {
 			drawStarringMsPacMan(g);
-			drawPointsAnimation(g, 26);
-			drawPressKeyToStart(g, 32);
+			drawPressKeyToStart(g, 26);
 		}
 		ghosts2D.forEach(ghost2D -> ghost2D.render(g));
 		msPacMan2D.render(g);
+		drawCopyright(g);
 		g.dispose();
 	}
 
@@ -163,19 +178,15 @@ public class MsPacMan_IntroScene extends GameScene {
 		}
 	}
 
-	private void drawPointsAnimation(Graphics2D g, int tileY) {
-		int x = t(10), y = t(tileY);
-		if (sceneController.blinking.frame()) {
-			g.setColor(Color.PINK);
-			g.fillOval(x, y + t(1) - 2, 10, 10);
-			g.fillRect(x + 6, y - t(1) + 2, 2, 2);
-		}
-		g.setColor(Color.WHITE);
+	private void drawCopyright(Graphics2D g) {
+		double scale = 36.0 / 391;
+		g.drawImage(midwayLogo, t(6), t(28) + 3, (int) (scale * 400), (int) (scale * 391), null);
+		g.setColor(Color.RED);
+		g.setFont(new Font("Dialog", Font.PLAIN, 11));
+		g.drawString("\u00a9", t(11), t(30) + 2); // (c) symbol
 		g.setFont(rendering.getScoreFont());
-		g.drawString("10", x + t(2), y);
-		g.drawString("50", x + t(2), y + t(2));
-		g.setFont(rendering.getScoreFont().deriveFont(6f));
-		g.drawString("PTS", x + t(5), y);
-		g.drawString("PTS", x + t(5), y + t(2));
+		g.drawString("MIDWAY MFG CO", t(13), t(30));
+		g.drawString("1980/1981", t(14), t(32));
 	}
+
 }
