@@ -110,6 +110,9 @@ public class PacMan_IntroScene extends GameScene {
 		IntroState state = sceneController.currentStateID;
 		rendering.drawScore(g, gameController.game(), true);
 		drawGallery(g);
+		if (state == IntroState.SHOWING_POINTS) {
+			drawEnergizer(g, true);
+		}
 		if (state == IntroState.SHOWING_POINTS || state == IntroState.CHASING_GHOSTS || state == IntroState.CHASING_PAC) {
 			drawPointsAnimation(g, 11, 26);
 		}
@@ -165,9 +168,8 @@ public class PacMan_IntroScene extends GameScene {
 	}
 
 	private void drawPointsAnimation(Graphics2D g, int tileX, int tileY) {
-		if (sceneController.blinking.frame() && sceneController.currentStateID == IntroState.CHASING_PAC) {
-			g.setColor(PINK);
-			g.fillOval(t(2), (int) sceneController.pacMan.position.y, TS, TS);
+		if (sceneController.currentStateID == IntroState.CHASING_PAC) {
+			drawEnergizer(g, false);
 		}
 		g.setColor(PINK);
 		g.fillRect(t(tileX) + 6, t(tileY - 1) + 2, 2, 2);
@@ -181,6 +183,13 @@ public class PacMan_IntroScene extends GameScene {
 		g.setFont(rendering.getScoreFont().deriveFont(6f));
 		g.drawString("PTS", t(tileX + 5), t(tileY));
 		g.drawString("PTS", t(tileX + 5), t(tileY + 2));
+	}
+
+	private void drawEnergizer(Graphics2D g, boolean always) {
+		if (always || sceneController.blinking.frame()) {
+			g.setColor(PINK);
+			g.fillOval(t(2), t(20), TS, TS);
+		}
 	}
 
 	private void drawCopyright(Graphics2D g, int yTile) {
