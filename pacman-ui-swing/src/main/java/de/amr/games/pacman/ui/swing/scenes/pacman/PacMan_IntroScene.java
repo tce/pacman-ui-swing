@@ -57,6 +57,10 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
  */
 public class PacMan_IntroScene extends GameScene {
 
+	// use exactly same RGB values as sprites
+	static final Color PINK = new Color(252, 181, 255);
+	static final Color ORANGE = new Color(253, 192, 90);
+
 	private IntroController sceneController;
 	private Player2D pacMan2D;
 	private List<Ghost2D> ghosts2D;
@@ -111,11 +115,11 @@ public class PacMan_IntroScene extends GameScene {
 		}
 		if (state == IntroState.CHASING_PAC) {
 			if (sceneController.blinking.frame()) {
-				g.setColor(Color.PINK);
+				g.setColor(PINK);
 				g.fillOval(t(2), (int) sceneController.pacMan.position.y, TS, TS);
 			}
 		}
-		if (state.ordinal() >= IntroState.CHASING_PAC.ordinal()) {
+		if (state.ordinal() >= IntroState.SHOWING_POINTS.ordinal()) {
 			drawCopyright(g, 32);
 		}
 		if (state == IntroState.READY_TO_PLAY) {
@@ -154,22 +158,22 @@ public class PacMan_IntroScene extends GameScene {
 	}
 
 	private Color getGhostColor(int i) {
-		return i == 0 ? Color.RED : i == 1 ? Color.PINK : i == 2 ? Color.CYAN : Color.ORANGE;
+		return i == 0 ? Color.RED : i == 1 ? PINK : i == 2 ? Color.CYAN : ORANGE;
 	}
 
 	private void drawPressKeyToStart(Graphics2D g, int yTile) {
 		if (sceneController.blinking.frame()) {
 			String text = "PRESS SPACE TO PLAY";
-			g.setColor(Color.ORANGE);
+			g.setColor(ORANGE);
 			g.setFont(rendering.getScoreFont());
 			g.drawString(text, t(14 - text.length() / 2), t(yTile));
 		}
 	}
 
 	private void drawPointsAnimation(Graphics2D g, int tileX, int tileY) {
+		g.setColor(PINK);
+		g.fillRect(t(tileX) + 6, t(tileY - 1) + 2, 2, 2);
 		if (sceneController.blinking.frame()) {
-			g.setColor(Color.PINK);
-			g.fillRect(t(tileX) + 6, t(tileY - 1) + 2, 2, 2);
 			g.fillOval(t(tileX), t(tileY + 1) - 2, 10, 10);
 		}
 		g.setColor(Color.WHITE);
@@ -184,7 +188,7 @@ public class PacMan_IntroScene extends GameScene {
 	private void drawCopyright(Graphics2D g, int yTile) {
 		String text = "\u00A9" + "  1980 MIDWAY MFG. CO.";
 		g.setFont(rendering.getScoreFont());
-		g.setColor(Color.PINK);
+		g.setColor(PINK);
 		g.drawString(text, t(3), t(yTile));
 	}
 }
