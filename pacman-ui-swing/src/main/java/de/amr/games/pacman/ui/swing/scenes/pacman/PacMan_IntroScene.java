@@ -40,6 +40,7 @@ import de.amr.games.pacman.controller.PacManGameController;
 import de.amr.games.pacman.controller.pacman.IntroController;
 import de.amr.games.pacman.controller.pacman.IntroController.GhostPortrait;
 import de.amr.games.pacman.controller.pacman.IntroController.IntroState;
+import de.amr.games.pacman.lib.TickTimer;
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.model.common.Ghost;
 import de.amr.games.pacman.ui.swing.PacManGameUI_Swing;
@@ -60,6 +61,7 @@ public class PacMan_IntroScene extends GameScene {
 	// use exactly same RGB values as sprites
 	static final Color PINK = new Color(252, 181, 255);
 	static final Color ORANGE = new Color(253, 192, 90);
+	static final Color PELLET_COLOR = new Color(254, 189, 180);
 
 	private IntroController sceneController;
 	private Player2D pacMan2D;
@@ -109,20 +111,41 @@ public class PacMan_IntroScene extends GameScene {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		IntroState state = sceneController.currentStateID;
 		rendering.drawScore(g, gameController.game(), true);
-		drawGallery(g);
-		if (state == IntroState.SHOWING_POINTS) {
-			drawEnergizer(g, true);
-		}
-		if (state == IntroState.SHOWING_POINTS || state == IntroState.CHASING_GHOSTS || state == IntroState.CHASING_PAC) {
-			drawPointsAnimation(g, 11, 25);
-		}
-		if (state.ordinal() >= IntroState.SHOWING_POINTS.ordinal()) {
+		switch (sceneController.currentStateID) {
+		case BEGIN:
+		case PRESENTING_GHOSTS:
+			drawGallery(g);
+			break;
+		case SHOWING_POINTS:
+			drawGallery(g);
+			drawPoints(g, 11, 25);
+			if (sceneController.stateTimer().ticked() > TickTimer.sec_to_ticks(1)) {
+				drawEnergizer(g);
+				drawCopyright(g, 32);
+			}
+			break;
+		case CHASING_PAC:
+			drawGallery(g);
+			drawPoints(g, 11, 25);
 			drawCopyright(g, 32);
-		}
-		if (state == IntroState.READY_TO_PLAY) {
+			if (sceneController.blinking.frame()) {
+				drawEnergizer(g);
+			}
+			drawGuys(g);
+			break;
+		case CHASING_GHOSTS:
+			drawGallery(g);
+			drawPoints(g, 11, 25);
+			drawCopyright(g, 32);
+			drawGuys(g);
+			break;
+		case READY_TO_PLAY:
+			drawGallery(g);
 			drawPressKeyToStart(g, 24);
+			break;
+		default:
+			break;
 		}
-		drawGuys(g);
 		g.dispose();
 	}
 
@@ -167,11 +190,8 @@ public class PacMan_IntroScene extends GameScene {
 		}
 	}
 
-	private void drawPointsAnimation(Graphics2D g, int tileX, int tileY) {
-		if (sceneController.currentStateID == IntroState.CHASING_PAC) {
-			drawEnergizer(g, false);
-		}
-		g.setColor(PINK);
+	private void drawPoints(Graphics2D g, int tileX, int tileY) {
+		g.setColor(PELLET_COLOR);
 		g.fillRect(t(tileX) + 6, t(tileY - 1) + 2, 2, 2);
 		if (sceneController.blinking.frame()) {
 			g.fillOval(t(tileX), t(tileY + 1) - 2, 10, 10);
@@ -185,11 +205,9 @@ public class PacMan_IntroScene extends GameScene {
 		g.drawString("PTS", t(tileX + 5), t(tileY + 2));
 	}
 
-	private void drawEnergizer(Graphics2D g, boolean always) {
-		if (always || sceneController.blinking.frame()) {
-			g.setColor(PINK);
-			g.fillOval(t(2), t(20), TS, TS);
-		}
+	private void drawEnergizer(Graphics2D g) {
+		g.setColor(PELLET_COLOR);
+		g.fillOval(t(2), t(20), TS, TS);
 	}
 
 	private void drawCopyright(Graphics2D g, int yTile) {
