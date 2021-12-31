@@ -39,7 +39,6 @@ import java.util.stream.Stream;
 import de.amr.games.pacman.controller.PacManGameController;
 import de.amr.games.pacman.controller.pacman.IntroController;
 import de.amr.games.pacman.controller.pacman.IntroController.GhostPortrait;
-import de.amr.games.pacman.controller.pacman.IntroController.IntroState;
 import de.amr.games.pacman.lib.TickTimer;
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.model.common.Ghost;
@@ -109,7 +108,6 @@ public class PacMan_IntroScene extends GameScene {
 	public void render(Graphics2D g_) {
 		Graphics2D g = (Graphics2D) g_.create();
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		IntroState state = sceneController.currentStateID;
 		rendering.drawScore(g, gameController.game(), true);
 		switch (sceneController.currentStateID) {
 		case BEGIN:
