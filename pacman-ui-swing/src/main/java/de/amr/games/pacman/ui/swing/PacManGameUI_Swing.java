@@ -215,13 +215,14 @@ public class PacManGameUI_Swing implements PacManGameUI {
 
 	private GameScene getSceneForGameState(PacManGameState state) {
 		var game = gameController.game();
+		var variant = gameController.gameVariant();
 		switch (state) {
 		case INTRO:
-			return scenes.get(gameController.gameVariant()).get(0);
+			return scenes.get(variant).get(0);
 		case INTERMISSION:
-			return scenes.get(gameController.gameVariant()).get(game.intermissionAfterLevel(game.levelNumber).getAsInt());
+			return scenes.get(variant).get(gameController.intermissionNumber(game.levelNumber));
 		default:
-			return scenes.get(gameController.gameVariant()).get(4);
+			return scenes.get(variant).get(4);
 		}
 	}
 
