@@ -180,9 +180,9 @@ public class PacMan_IntroScene extends GameScene {
 	}
 
 	private void drawPressKeyToStart(Graphics2D g, int yTile) {
-		if (sceneController.blinking.frame()) {
+		if (sceneController.slowBlinking.frame()) {
 			String text = "PRESS SPACE TO PLAY";
-			g.setColor(ORANGE);
+			g.setColor(Color.WHITE);
 			g.setFont(rendering.getScoreFont());
 			g.drawString(text, t(14 - text.length() / 2), t(yTile));
 		}
