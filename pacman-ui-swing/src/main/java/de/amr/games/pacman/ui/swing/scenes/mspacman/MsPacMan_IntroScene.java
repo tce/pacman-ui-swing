@@ -165,7 +165,8 @@ public class MsPacMan_IntroScene extends GameScene {
 				y = 2 * (numDotsX + numDotsY) - dot;
 			}
 			g.setColor((dot + light) % (numDotsX / 2) == 0 ? Color.PINK : Color.RED);
-			g.fillRect(t(sceneController.tileBoardTopLeft.x) + 4 * x, t(sceneController.tileBoardTopLeft.y) + 4 * y, 2, 2);
+			g.fillRect(t(sceneController.tileBoardTopLeft.x) + 4 * x, t(sceneController.tileBoardTopLeft.y) + 4 * y, 2,
+					2);
 		}
 	}
 

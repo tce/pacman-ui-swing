@@ -114,7 +114,8 @@ public class PacMan_IntermissionScene2 extends GameScene {
 			blinky2D.render(g);
 		} else {
 			BufferedImage blinkyDamaged = blinkyDamagedAnimation.frame(blinky2D.ghost.dir() == Direction.UP ? 0 : 1);
-			g.drawImage(blinkyDamaged, (int) (blinky2D.ghost.position.x - 4), (int) (blinky2D.ghost.position.y - 4), null);
+			g.drawImage(blinkyDamaged, (int) (blinky2D.ghost.position.x - 4), (int) (blinky2D.ghost.position.y - 4),
+					null);
 		}
 	}
 }

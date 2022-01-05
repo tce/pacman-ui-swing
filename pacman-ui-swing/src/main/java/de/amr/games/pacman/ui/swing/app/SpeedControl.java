@@ -42,8 +42,7 @@ public class SpeedControl {
 	private long framesCountStart;
 
 	/**
-	 * Executes the given work and sleeps as long as needed to keep the target
-	 * frequency.
+	 * Executes the given work and sleeps as long as needed to keep the target frequency.
 	 * 
 	 * @param work some work to do during this frame
 	 */
@@ -91,18 +90,16 @@ public class SpeedControl {
 	}
 
 	/**
-	 * @return the number of ticks equivalent to the given amount of seconds wrt. to
-	 *         the current clock frequency
+	 * @return the number of ticks equivalent to the given amount of seconds wrt. to the current clock frequency
 	 */
 	public int sec(double seconds) {
 		return (int) (seconds * targetFPS);
 	}
 
 	/**
-	 * Computes the animation frame at the current clock tick. For example, if each
-	 * animation frame shall take 2 ticks and the complete animation consists of 4
-	 * different frames, then the call <code>frame(2, 4)</code> produces repeatedly
-	 * the sequence <code>0, 0, 1, 1, 2, 2, 3, 3</code>.
+	 * Computes the animation frame at the current clock tick. For example, if each animation frame shall take 2 ticks
+	 * and the complete animation consists of 4 different frames, then the call <code>frame(2, 4)</code> produces
+	 * repeatedly the sequence <code>0, 0, 1, 1, 2, 2, 3, 3</code>.
 	 * 
 	 * @param frameDurationTicks duration in ticks of one animation frame
 	 * @param numFrames          number of frames of the complete animation

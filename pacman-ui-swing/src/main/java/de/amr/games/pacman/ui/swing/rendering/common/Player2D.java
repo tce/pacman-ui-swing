@@ -75,7 +75,8 @@ public class Player2D {
 
 	private BufferedImage currentSprite() {
 		if (player.dead) {
-			return dyingAnimation.hasStarted() ? dyingAnimation.animate() : munchingAnimations.get(player.dir()).frame();
+			return dyingAnimation.hasStarted() ? dyingAnimation.animate()
+					: munchingAnimations.get(player.dir()).frame();
 		}
 		if (player.velocity.equals(V2d.NULL)) {
 			return munchingAnimations.get(player.dir()).frame(0);
