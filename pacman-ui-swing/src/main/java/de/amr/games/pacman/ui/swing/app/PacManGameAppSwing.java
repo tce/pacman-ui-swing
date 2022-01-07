@@ -26,6 +26,7 @@ package de.amr.games.pacman.ui.swing.app;
 import static java.awt.EventQueue.invokeLater;
 
 import de.amr.games.pacman.controller.PacManGameController;
+import de.amr.games.pacman.ui.swing.ManualPlayerControl;
 import de.amr.games.pacman.ui.swing.PacManGameUI_Swing;
 
 /**
@@ -54,7 +55,7 @@ public class PacManGameAppSwing {
 		gameController = new PacManGameController(options.gameVariant);
 		ui = new PacManGameUI_Swing(gameLoop, gameController, options.height);
 		gameController.setUI(ui);
-		gameController.setPlayerControl(ui);
+		gameController.setPlayerControl(new ManualPlayerControl(ui.keyboard, "Up", "Down", "Left", "Right"));
 		gameLoop.action = () -> {
 			gameLoop.clock.frame(gameController::updateState);
 			ui.update();

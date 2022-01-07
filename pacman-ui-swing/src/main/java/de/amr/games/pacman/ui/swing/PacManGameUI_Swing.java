@@ -53,12 +53,10 @@ import de.amr.games.pacman.controller.PacManGameController;
 import de.amr.games.pacman.controller.PacManGameState;
 import de.amr.games.pacman.controller.event.PacManGameEvent;
 import de.amr.games.pacman.controller.event.PacManGameStateChangeEvent;
-import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TickTimer;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameVariant;
-import de.amr.games.pacman.model.common.Pac;
 import de.amr.games.pacman.ui.PacManGameUI;
 import de.amr.games.pacman.ui.swing.app.GameLoop;
 import de.amr.games.pacman.ui.swing.assets.AssetLoader;
@@ -116,7 +114,7 @@ public class PacManGameUI_Swing implements PacManGameUI {
 	private final JFrame window;
 	private final Timer titleUpdateTimer;
 	private final Canvas canvas;
-	private final Keyboard keyboard;
+	public final Keyboard keyboard;
 
 	private GameScene currentGameScene;
 
@@ -275,21 +273,6 @@ public class PacManGameUI_Swing implements PacManGameUI {
 		flashMessageQ.add(new FlashMessage(String.format(message, args), (long) (60 * seconds)));
 	}
 
-	@Override
-	public void steer(Pac player) {
-		if (keyboard.keyPressed("Up")) {
-			player.setWishDir(Direction.UP);
-		}
-		if (keyboard.keyPressed("Down")) {
-			player.setWishDir(Direction.DOWN);
-		}
-		if (keyboard.keyPressed("Left")) {
-			player.setWishDir(Direction.LEFT);
-		}
-		if (keyboard.keyPressed("Right")) {
-			player.setWishDir(Direction.RIGHT);
-		}
-	}
 
 	private void handleNonPlayerKeys() {
 
