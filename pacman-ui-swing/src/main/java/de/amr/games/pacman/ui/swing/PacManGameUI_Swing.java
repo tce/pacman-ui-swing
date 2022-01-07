@@ -51,6 +51,7 @@ import javax.swing.Timer;
 
 import de.amr.games.pacman.controller.PacManGameController;
 import de.amr.games.pacman.controller.PacManGameState;
+import de.amr.games.pacman.controller.event.DefaultPacManGameEventHandler;
 import de.amr.games.pacman.controller.event.PacManGameEvent;
 import de.amr.games.pacman.controller.event.PacManGameStateChangeEvent;
 import de.amr.games.pacman.lib.TickTimer;
@@ -81,7 +82,7 @@ import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_IntroScene;
  * 
  * @author Armin Reichert
  */
-public class PacManGameUI_Swing implements PacManGameUI {
+public class PacManGameUI_Swing implements PacManGameUI, DefaultPacManGameEventHandler {
 
 	public static MsPacManGameRendering RENDERING_MS_PACMAN = new MsPacManGameRendering();
 	public static PacManGameRendering RENDERING_PACMAN = new PacManGameRendering();
@@ -180,7 +181,7 @@ public class PacManGameUI_Swing implements PacManGameUI {
 
 	@Override
 	public void onGameEvent(PacManGameEvent event) {
-		PacManGameUI.super.onGameEvent(event);
+		DefaultPacManGameEventHandler.super.onGameEvent(event);
 		// delegate to current scene
 		currentGameScene.onGameEvent(event);
 	}
@@ -272,7 +273,6 @@ public class PacManGameUI_Swing implements PacManGameUI {
 	public void showFlashMessage(double seconds, String message, Object... args) {
 		flashMessageQ.add(new FlashMessage(String.format(message, args), (long) (60 * seconds)));
 	}
-
 
 	private void handleNonPlayerKeys() {
 

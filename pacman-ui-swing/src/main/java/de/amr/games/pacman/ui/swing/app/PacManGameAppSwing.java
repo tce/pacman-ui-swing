@@ -47,18 +47,19 @@ public class PacManGameAppSwing {
 		invokeLater(() -> new PacManGameAppSwing(new Options(args)));
 	}
 
-	private final PacManGameController gameController;
-	private final PacManGameUI_Swing ui;
+	private final PacManGameController controller;
+	private final PacManGameUI_Swing view;
 	private final GameLoop gameLoop = new GameLoop();
 
 	public PacManGameAppSwing(Options options) {
-		gameController = new PacManGameController(options.gameVariant);
-		ui = new PacManGameUI_Swing(gameLoop, gameController, options.height);
-		gameController.setUI(ui);
-		gameController.setPlayerControl(new ManualPlayerControl(ui.keyboard, "Up", "Down", "Left", "Right"));
+		controller = new PacManGameController(options.gameVariant);
+		view = new PacManGameUI_Swing(gameLoop, controller, options.height);
+		controller.setUI(view);
+		controller.addGameEventListener(view);
+		controller.setPlayerControl(new ManualPlayerControl(view.keyboard, "Up", "Down", "Left", "Right"));
 		gameLoop.action = () -> {
-			gameLoop.clock.frame(gameController::updateState);
-			ui.update();
+			gameLoop.clock.frame(controller::updateState);
+			view.update();
 		};
 		gameLoop.start();
 	}
