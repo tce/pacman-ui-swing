@@ -220,7 +220,7 @@ public class PacManGameUI_Swing implements PacManGameUI {
 		case INTRO:
 			return scenes.get(variant).get(0);
 		case INTERMISSION:
-			return scenes.get(variant).get(gameController.intermissionNumber(game.levelNumber));
+			return scenes.get(variant).get(game.intermissionNumber(game.levelNumber));
 		default:
 			return scenes.get(variant).get(4);
 		}
