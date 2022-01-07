@@ -173,17 +173,14 @@ public class MsPacManGameRenderingAssets extends Spritesheet {
 	}
 
 	public TimedSequence<BufferedImage> createPlayerDyingAnimation() {
-		TimedSequence<BufferedImage> animation = TimedSequence.of(s(0, 3), s(0, 0), s(0, 1), s(0, 2));
-		animation.frameDuration(10).repetitions(2);
-		return animation;
+		return TimedSequence.of(s(0, 3), s(0, 0), s(0, 1), s(0, 2)).frameDuration(10).repetitions(2);
 	}
 
 	public Map<Direction, TimedSequence<BufferedImage>> createPlayerMunchingAnimations() {
 		Map<Direction, TimedSequence<BufferedImage>> munchings = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
-			TimedSequence<BufferedImage> munching = TimedSequence.of(s(0, d), s(1, d), s(2, d), s(1, d));
-			munching.frameDuration(2).endless();
+			var munching = TimedSequence.of(s(0, d), s(1, d), s(2, d)).frameDuration(4).endless();
 			munchings.put(dir, munching);
 		}
 		return munchings;
@@ -193,8 +190,7 @@ public class MsPacManGameRenderingAssets extends Spritesheet {
 		Map<Direction, TimedSequence<BufferedImage>> munchings = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
-			TimedSequence<BufferedImage> munching = TimedSequence.of(s(0, 9 + d), s(1, 9 + d), s(2, 9));
-			munching.frameDuration(2).endless();
+			var munching = TimedSequence.of(s(0, 9 + d), s(1, 9 + d), s(2, 9)).frameDuration(4).endless();
 			munchings.put(dir, munching);
 		}
 		return munchings;
@@ -204,17 +200,14 @@ public class MsPacManGameRenderingAssets extends Spritesheet {
 		EnumMap<Direction, TimedSequence<BufferedImage>> kickingByDir = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
-			TimedSequence<BufferedImage> kicking = TimedSequence.of(s(2 * d, 4 + ghostID), s(2 * d + 1, 4 + ghostID));
-			kicking.frameDuration(4).endless();
+			var kicking = TimedSequence.of(s(2 * d, 4 + ghostID), s(2 * d + 1, 4 + ghostID)).frameDuration(4).endless();
 			kickingByDir.put(dir, kicking);
 		}
 		return kickingByDir;
 	}
 
 	public TimedSequence<BufferedImage> createGhostFrightenedAnimation() {
-		TimedSequence<BufferedImage> animation = TimedSequence.of(s(8, 4), s(9, 4));
-		animation.frameDuration(20).endless().run();
-		return animation;
+		return TimedSequence.of(s(8, 4), s(9, 4)).frameDuration(20).endless().run();
 	}
 
 	public TimedSequence<BufferedImage> createGhostFlashingAnimation() {

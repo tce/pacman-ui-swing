@@ -75,15 +75,12 @@ public class Player2D {
 
 	private BufferedImage currentSprite() {
 		if (player.dead) {
-			return dyingAnimation.hasStarted() ? dyingAnimation.animate()
-					: munchingAnimations.get(player.dir()).frame();
+			return dyingAnimation.hasStarted() ? dyingAnimation.animate() : munchingAnimations.get(player.dir()).frame();
 		}
 		if (player.velocity.equals(V2d.NULL)) {
-			return munchingAnimations.get(player.dir()).frame(0);
+			boolean msPacMan = player.name.equals("Ms. Pac-Man");
+			return munchingAnimations.get(player.dir()).frame(msPacMan ? 1 : 2);
 		}
-		if (player.stuck) {
-			return munchingAnimations.get(player.dir()).frame(1);
-		}
-		return munchingAnimations.get(player.dir()).animate();
+		return player.stuck ? munchingAnimations.get(player.dir()).frame() : munchingAnimations.get(player.dir()).animate();
 	}
 }
