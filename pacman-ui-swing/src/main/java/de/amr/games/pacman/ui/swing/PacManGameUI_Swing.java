@@ -171,6 +171,8 @@ public class PacManGameUI_Swing implements PacManGameUI, DefaultPacManGameEventH
 			return scenes.get(0); // intro scene
 		case INTERMISSION:
 			return scenes.get(game.intermissionNumber(game.levelNumber));
+		case INTERMISSION_TEST:
+			return scenes.get(gameController.intermissionTestNumber);
 		default:
 			return scenes.get(4); // play scene
 		}
@@ -287,7 +289,7 @@ public class PacManGameUI_Swing implements PacManGameUI, DefaultPacManGameEventH
 		}
 
 		else if (keyboard.keyPressed("Z")) {
-//			gameController.startIntermissionTest();
+			gameController.startIntermissionTest();
 		}
 
 		else if (keyboard.keyPressed("Space")) {
