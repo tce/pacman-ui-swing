@@ -23,8 +23,6 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.scenes.mspacman;
 
-import static de.amr.games.pacman.model.common.GameVariant.MS_PACMAN;
-
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 
@@ -32,10 +30,10 @@ import de.amr.games.pacman.controller.PacManGameController;
 import de.amr.games.pacman.controller.mspacman.Intermission2Controller;
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.ui.PacManGameSound;
-import de.amr.games.pacman.ui.swing.PacManGameUI_Swing;
 import de.amr.games.pacman.ui.swing.rendering.common.Player2D;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.Flap2D;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
+import de.amr.games.pacman.ui.swing.scenes.common.ScenesMsPacMan;
 
 /**
  * Intermission scene 2: "The chase".
@@ -70,7 +68,7 @@ public class MsPacMan_IntermissionScene2 extends GameScene {
 	private Flap2D flap2D;
 
 	public MsPacMan_IntermissionScene2(Dimension size) {
-		super(size, PacManGameUI_Swing.RENDERING_MS_PACMAN, PacManGameUI_Swing.SOUND.get(MS_PACMAN));
+		super(size, ScenesMsPacMan.RENDERING, ScenesMsPacMan.SOUNDS);
 	}
 
 	@Override

@@ -23,7 +23,6 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.scenes.mspacman;
 
-import static de.amr.games.pacman.model.common.GameVariant.MS_PACMAN;
 import static de.amr.games.pacman.model.world.PacManGameWorld.t;
 
 import java.awt.Color;
@@ -46,10 +45,10 @@ import de.amr.games.pacman.lib.Logging;
 import de.amr.games.pacman.lib.TickTimer;
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.model.common.Ghost;
-import de.amr.games.pacman.ui.swing.PacManGameUI_Swing;
 import de.amr.games.pacman.ui.swing.rendering.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Player2D;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
+import de.amr.games.pacman.ui.swing.scenes.common.ScenesMsPacMan;
 
 /**
  * Intro scene of the Ms. Pac-Man game. The ghosts and Ms. Pac-Man are introduced one after another.
@@ -65,7 +64,7 @@ public class MsPacMan_IntroScene extends GameScene {
 	private TickTimer boardAnimationTimer = new TickTimer("boardAnimation-timer");
 
 	public MsPacMan_IntroScene(Dimension size) {
-		super(size, PacManGameUI_Swing.RENDERING_MS_PACMAN, PacManGameUI_Swing.SOUND.get(MS_PACMAN));
+		super(size, ScenesMsPacMan.RENDERING, ScenesMsPacMan.SOUNDS);
 	}
 
 	@Override

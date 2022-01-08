@@ -25,8 +25,6 @@ package de.amr.games.pacman.ui.swing;
 
 import static de.amr.games.pacman.lib.Logging.log;
 import static de.amr.games.pacman.model.common.GameVariant.MS_PACMAN;
-import static de.amr.games.pacman.model.common.GameVariant.PACMAN;
-import static de.amr.games.pacman.model.world.PacManGameWorld.t;
 
 import java.awt.AWTException;
 import java.awt.Canvas;
@@ -42,8 +40,6 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.EnumMap;
-import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
@@ -56,25 +52,13 @@ import de.amr.games.pacman.controller.event.PacManGameStateChangeEvent;
 import de.amr.games.pacman.lib.TickTimer;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
-import de.amr.games.pacman.model.common.GameVariant;
 import de.amr.games.pacman.ui.PacManGameUI;
 import de.amr.games.pacman.ui.swing.app.GameLoop;
 import de.amr.games.pacman.ui.swing.assets.AssetLoader;
-import de.amr.games.pacman.ui.swing.assets.PacManGameSounds;
-import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.rendering.Debug;
-import de.amr.games.pacman.ui.swing.rendering.mspacman.MsPacManGameRendering;
-import de.amr.games.pacman.ui.swing.rendering.pacman.PacManGameRendering;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
-import de.amr.games.pacman.ui.swing.scenes.common.PlayScene;
-import de.amr.games.pacman.ui.swing.scenes.mspacman.MsPacMan_IntermissionScene1;
-import de.amr.games.pacman.ui.swing.scenes.mspacman.MsPacMan_IntermissionScene2;
-import de.amr.games.pacman.ui.swing.scenes.mspacman.MsPacMan_IntermissionScene3;
-import de.amr.games.pacman.ui.swing.scenes.mspacman.MsPacMan_IntroScene;
-import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_IntermissionScene1;
-import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_IntermissionScene2;
-import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_IntermissionScene3;
-import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_IntroScene;
+import de.amr.games.pacman.ui.swing.scenes.common.ScenesMsPacMan;
+import de.amr.games.pacman.ui.swing.scenes.common.ScenesPacMan;
 
 /**
  * A Swing implementation of the Pac-Man game UI interface.
@@ -82,15 +66,6 @@ import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_IntroScene;
  * @author Armin Reichert
  */
 public class PacManGameUI_Swing implements PacManGameUI, DefaultPacManGameEventHandler {
-
-	public static MsPacManGameRendering RENDERING_MS_PACMAN = new MsPacManGameRendering();
-	public static PacManGameRendering RENDERING_PACMAN = new PacManGameRendering();
-
-	public static final EnumMap<GameVariant, SoundManager> SOUND = new EnumMap<>(GameVariant.class);
-	static {
-		SOUND.put(MS_PACMAN, new SoundManager(PacManGameSounds::msPacManSoundURL));
-		SOUND.put(PACMAN, new SoundManager(PacManGameSounds::mrPacManSoundURL));
-	}
 
 	static class FlashMessage {
 
@@ -102,8 +77,6 @@ public class PacManGameUI_Swing implements PacManGameUI, DefaultPacManGameEventH
 			timer.reset(ticks);
 		}
 	}
-
-	private final EnumMap<GameVariant, List<GameScene>> scenes = new EnumMap<>(GameVariant.class);
 
 	private final GameLoop gameLoop;
 	private final PacManGameController gameController;
@@ -122,9 +95,7 @@ public class PacManGameUI_Swing implements PacManGameUI, DefaultPacManGameEventH
 		this.gameLoop = gameLoop;
 		this.gameController = controller;
 
-		createGameScenes();
-
-		unscaledSize = new Dimension(t(28), t(36));
+		unscaledSize = ScenesPacMan.UNSCALED_SIZE;
 		scaling = Math.round(height / unscaledSize.height);
 		scaledSize = new V2d(unscaledSize.width, unscaledSize.height).scaled(this.scaling).toV2i();
 
@@ -160,28 +131,9 @@ public class PacManGameUI_Swing implements PacManGameUI, DefaultPacManGameEventH
 		show();
 	}
 
-	private void createGameScenes() {
-		scenes.put(MS_PACMAN, List.of(//
-				new MsPacMan_IntroScene(unscaledSize), //
-				new MsPacMan_IntermissionScene1(unscaledSize), //
-				new MsPacMan_IntermissionScene2(unscaledSize), //
-				new MsPacMan_IntermissionScene3(unscaledSize), //
-				new PlayScene(unscaledSize, RENDERING_MS_PACMAN, SOUND.get(MS_PACMAN))//
-		));
-
-		scenes.put(PACMAN, List.of(//
-				new PacMan_IntroScene(unscaledSize), //
-				new PacMan_IntermissionScene1(unscaledSize), //
-				new PacMan_IntermissionScene2(unscaledSize), //
-				new PacMan_IntermissionScene3(unscaledSize), //
-				new PlayScene(unscaledSize, RENDERING_PACMAN, SOUND.get(PACMAN))//
-		));
-	}
-
 	@Override
 	public void onGameEvent(PacManGameEvent event) {
 		DefaultPacManGameEventHandler.super.onGameEvent(event);
-		// delegate to current scene
 		currentGameScene.onGameEvent(event);
 	}
 
@@ -213,14 +165,14 @@ public class PacManGameUI_Swing implements PacManGameUI, DefaultPacManGameEventH
 
 	private GameScene getSceneForGameState(PacManGameState state) {
 		var game = gameController.game();
-		var variant = gameController.gameVariant();
+		var scenes = gameController.gameVariant() == MS_PACMAN ? ScenesMsPacMan.SCENES : ScenesPacMan.SCENES;
 		switch (state) {
 		case INTRO:
-			return scenes.get(variant).get(0);
+			return scenes.get(0); // intro scene
 		case INTERMISSION:
-			return scenes.get(variant).get(game.intermissionNumber(game.levelNumber));
+			return scenes.get(game.intermissionNumber(game.levelNumber));
 		default:
-			return scenes.get(variant).get(4);
+			return scenes.get(4); // play scene
 		}
 	}
 
@@ -265,7 +217,8 @@ public class PacManGameUI_Swing implements PacManGameUI, DefaultPacManGameEventH
 
 	public void reset() {
 		currentGameScene.end();
-		SOUND.get(gameController.gameVariant()).stopAll();
+		ScenesMsPacMan.SOUNDS.stopAll();
+		ScenesPacMan.SOUNDS.stopAll();
 	}
 
 	@Override
