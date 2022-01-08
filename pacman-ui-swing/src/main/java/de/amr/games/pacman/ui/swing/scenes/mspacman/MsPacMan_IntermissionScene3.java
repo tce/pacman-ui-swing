@@ -74,12 +74,14 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 	private Stork2D stork2D;
 	private JuniorBag2D bag2D;
 
-	public MsPacMan_IntermissionScene3(PacManGameController controller, Dimension size) {
-		super(controller, size, PacManGameUI_Swing.RENDERING_MS_PACMAN, PacManGameUI_Swing.SOUND.get(MS_PACMAN));
+	public MsPacMan_IntermissionScene3(Dimension size) {
+		super(size, PacManGameUI_Swing.RENDERING_MS_PACMAN, PacManGameUI_Swing.SOUND.get(MS_PACMAN));
 	}
 
 	@Override
-	public void init() {
+	public void init(PacManGameController gameController) {
+		super.init(gameController);
+
 		sceneController = new SceneController(gameController);
 		sceneController.init();
 		flap2D = new Flap2D(sceneController.flap);
@@ -100,10 +102,6 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 	@Override
 	public void update() {
 		sceneController.update();
-	}
-
-	@Override
-	public void end() {
 	}
 
 	@Override

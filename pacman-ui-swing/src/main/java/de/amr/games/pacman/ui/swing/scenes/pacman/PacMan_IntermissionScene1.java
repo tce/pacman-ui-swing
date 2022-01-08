@@ -63,12 +63,14 @@ public class PacMan_IntermissionScene1 extends GameScene {
 	private Player2D pacMan2D;
 	private Ghost2D blinky2D;
 
-	public PacMan_IntermissionScene1(PacManGameController controller, Dimension size) {
-		super(controller, size, PacManGameUI_Swing.RENDERING_PACMAN, PacManGameUI_Swing.SOUND.get(PACMAN));
+	public PacMan_IntermissionScene1(Dimension size) {
+		super(size, PacManGameUI_Swing.RENDERING_PACMAN, PacManGameUI_Swing.SOUND.get(PACMAN));
 	}
 
 	@Override
-	public void init() {
+	public void init(PacManGameController gameController) {
+		super.init(gameController);
+
 		sceneController = new SceneController(gameController);
 		sceneController.init();
 		pacMan2D = new Player2D(sceneController.pac);
@@ -88,10 +90,6 @@ public class PacMan_IntermissionScene1 extends GameScene {
 	}
 
 	@Override
-	public void end() {
-	}
-
-	@Override
 	public void render(Graphics2D g) {
 		PacManGameRendering r = (PacManGameRendering) rendering;
 		blinky2D.render(g);
@@ -102,6 +100,6 @@ public class PacMan_IntermissionScene1 extends GameScene {
 			r.drawBigPacMan(g, sceneController.pac);
 			g.translate(0, 10);
 		}
-		r.drawLevelCounter(g, gameController.game(), t(25), t(34));
+		r.drawLevelCounter(g, game, t(25), t(34));
 	}
 }

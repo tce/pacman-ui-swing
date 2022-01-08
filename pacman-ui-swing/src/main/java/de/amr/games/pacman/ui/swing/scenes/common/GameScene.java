@@ -39,32 +39,31 @@ import de.amr.games.pacman.ui.swing.rendering.common.AbstractPacManGameRendering
  */
 public abstract class GameScene implements DefaultPacManGameEventHandler {
 
-	protected final PacManGameController gameController;
 	protected final Dimension size;
 	protected final AbstractPacManGameRendering rendering;
 	protected final SoundManager sounds;
+	protected PacManGameController gameController;
+	protected GameModel game;
 
-	public GameScene(PacManGameController controller, Dimension size, AbstractPacManGameRendering rendering,
-			SoundManager sounds) {
-		this.gameController = controller;
+	public GameScene(Dimension size, AbstractPacManGameRendering rendering, SoundManager sounds) {
 		this.size = size;
 		this.rendering = rendering;
 		this.sounds = sounds;
-	}
-
-	public GameModel game() {
-		return gameController.game();
 	}
 
 	public Dimension size() {
 		return size;
 	}
 
-	public abstract void init();
+	public void init(PacManGameController gameController) {
+		this.gameController = gameController;
+		this.game = gameController.game();
+	}
 
 	public abstract void update();
 
-	public abstract void end();
+	public void end() {
+	}
 
 	public abstract void render(Graphics2D g);
 }

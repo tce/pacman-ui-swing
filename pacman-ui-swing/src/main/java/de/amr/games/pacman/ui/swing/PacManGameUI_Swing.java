@@ -41,7 +41,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayDeque;
-import java.util.Arrays;
 import java.util.Deque;
 import java.util.EnumMap;
 import java.util.List;
@@ -162,20 +161,20 @@ public class PacManGameUI_Swing implements PacManGameUI, DefaultPacManGameEventH
 	}
 
 	private void createGameScenes() {
-		scenes.put(MS_PACMAN, Arrays.asList(//
-				new MsPacMan_IntroScene(gameController, unscaledSize), //
-				new MsPacMan_IntermissionScene1(gameController, unscaledSize), //
-				new MsPacMan_IntermissionScene2(gameController, unscaledSize), //
-				new MsPacMan_IntermissionScene3(gameController, unscaledSize), //
-				new PlayScene(gameController, unscaledSize, RENDERING_MS_PACMAN, SOUND.get(MS_PACMAN))//
+		scenes.put(MS_PACMAN, List.of(//
+				new MsPacMan_IntroScene(unscaledSize), //
+				new MsPacMan_IntermissionScene1(unscaledSize), //
+				new MsPacMan_IntermissionScene2(unscaledSize), //
+				new MsPacMan_IntermissionScene3(unscaledSize), //
+				new PlayScene(unscaledSize, RENDERING_MS_PACMAN, SOUND.get(MS_PACMAN))//
 		));
 
-		scenes.put(PACMAN, Arrays.asList(//
-				new PacMan_IntroScene(gameController, unscaledSize), //
-				new PacMan_IntermissionScene1(gameController, unscaledSize), //
-				new PacMan_IntermissionScene2(gameController, unscaledSize), //
-				new PacMan_IntermissionScene3(gameController, unscaledSize), //
-				new PlayScene(gameController, unscaledSize, RENDERING_PACMAN, SOUND.get(PACMAN))//
+		scenes.put(PACMAN, List.of(//
+				new PacMan_IntroScene(unscaledSize), //
+				new PacMan_IntermissionScene1(unscaledSize), //
+				new PacMan_IntermissionScene2(unscaledSize), //
+				new PacMan_IntermissionScene3(unscaledSize), //
+				new PlayScene(unscaledSize, RENDERING_PACMAN, SOUND.get(PACMAN))//
 		));
 	}
 
@@ -196,7 +195,7 @@ public class PacManGameUI_Swing implements PacManGameUI, DefaultPacManGameEventH
 			if (currentGameScene != null) {
 				currentGameScene.end();
 			}
-			newScene.init();
+			newScene.init(gameController);
 			log("Current scene changed from %s to %s", currentGameScene, newScene);
 		}
 		currentGameScene = newScene;
@@ -332,6 +331,10 @@ public class PacManGameUI_Swing implements PacManGameUI, DefaultPacManGameEventH
 
 		else if (keyboard.keyPressed("X")) {
 			gameController.cheatKillGhosts();
+		}
+
+		else if (keyboard.keyPressed("Z")) {
+//			gameController.startIntermissionTest();
 		}
 
 		else if (keyboard.keyPressed("Space")) {

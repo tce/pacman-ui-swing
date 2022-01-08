@@ -49,6 +49,21 @@ import de.amr.games.pacman.model.common.GameModel;
  */
 public abstract class AbstractPacManGameRendering {
 
+	public Color getGhostColor(int ghostID) {
+		switch (ghostID) {
+		case GameModel.RED_GHOST:
+			return Color.RED;
+		case GameModel.PINK_GHOST:
+			return new Color(252, 181, 255);
+		case GameModel.CYAN_GHOST:
+			return Color.CYAN;
+		case GameModel.ORANGE_GHOST:
+			return new Color(253, 192, 90);
+		default:
+			return Color.WHITE;
+		}
+	}
+
 	public abstract Map<Direction, TimedSequence<BufferedImage>> createPlayerMunchingAnimations();
 
 	public abstract TimedSequence<BufferedImage> createPlayerDyingAnimation();

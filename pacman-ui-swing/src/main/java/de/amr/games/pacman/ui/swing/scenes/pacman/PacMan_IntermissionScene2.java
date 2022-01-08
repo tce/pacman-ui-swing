@@ -67,12 +67,14 @@ public class PacMan_IntermissionScene2 extends GameScene {
 	private TimedSequence<BufferedImage> blinkyStretchedAnimation;
 	private TimedSequence<BufferedImage> blinkyDamagedAnimation;
 
-	public PacMan_IntermissionScene2(PacManGameController controller, Dimension size) {
-		super(controller, size, PacManGameUI_Swing.RENDERING_PACMAN, PacManGameUI_Swing.SOUND.get(PACMAN));
+	public PacMan_IntermissionScene2(Dimension size) {
+		super(size, PacManGameUI_Swing.RENDERING_PACMAN, PacManGameUI_Swing.SOUND.get(PACMAN));
 	}
 
 	@Override
-	public void init() {
+	public void init(PacManGameController gameController) {
+		super.init(gameController);
+
 		sceneController = new SceneController(gameController);
 		sceneController.init();
 		pacMan2D = new Player2D(sceneController.pac);
@@ -88,10 +90,6 @@ public class PacMan_IntermissionScene2 extends GameScene {
 	@Override
 	public void update() {
 		sceneController.update();
-	}
-
-	@Override
-	public void end() {
 	}
 
 	@Override
@@ -114,8 +112,7 @@ public class PacMan_IntermissionScene2 extends GameScene {
 			blinky2D.render(g);
 		} else {
 			BufferedImage blinkyDamaged = blinkyDamagedAnimation.frame(blinky2D.ghost.dir() == Direction.UP ? 0 : 1);
-			g.drawImage(blinkyDamaged, (int) (blinky2D.ghost.position.x - 4), (int) (blinky2D.ghost.position.y - 4),
-					null);
+			g.drawImage(blinkyDamaged, (int) (blinky2D.ghost.position.x - 4), (int) (blinky2D.ghost.position.y - 4), null);
 		}
 	}
 }

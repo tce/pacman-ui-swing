@@ -64,12 +64,14 @@ public class MsPacMan_IntroScene extends GameScene {
 	private List<Ghost2D> ghosts2D;
 	private TickTimer boardAnimationTimer = new TickTimer("boardAnimation-timer");
 
-	public MsPacMan_IntroScene(PacManGameController controller, Dimension size) {
-		super(controller, size, PacManGameUI_Swing.RENDERING_MS_PACMAN, PacManGameUI_Swing.SOUND.get(MS_PACMAN));
+	public MsPacMan_IntroScene(Dimension size) {
+		super(size, PacManGameUI_Swing.RENDERING_MS_PACMAN, PacManGameUI_Swing.SOUND.get(MS_PACMAN));
 	}
 
 	@Override
-	public void init() {
+	public void init(PacManGameController gameController) {
+		super.init(gameController);
+
 		sceneController = new IntroController(gameController);
 		sceneController.init();
 
@@ -98,10 +100,6 @@ public class MsPacMan_IntroScene extends GameScene {
 	public void update() {
 		sceneController.update();
 		boardAnimationTimer.tick();
-	}
-
-	@Override
-	public void end() {
 	}
 
 	@Override
@@ -165,8 +163,7 @@ public class MsPacMan_IntroScene extends GameScene {
 				y = 2 * (numDotsX + numDotsY) - dot;
 			}
 			g.setColor((dot + light) % (numDotsX / 2) == 0 ? Color.PINK : Color.RED);
-			g.fillRect(t(sceneController.tileBoardTopLeft.x) + 4 * x, t(sceneController.tileBoardTopLeft.y) + 4 * y, 2,
-					2);
+			g.fillRect(t(sceneController.tileBoardTopLeft.x) + 4 * x, t(sceneController.tileBoardTopLeft.y) + 4 * y, 2, 2);
 		}
 	}
 
@@ -189,5 +186,4 @@ public class MsPacMan_IntroScene extends GameScene {
 		g.drawString("MIDWAY MFG CO", t(13), t(30));
 		g.drawString("1980/1981", t(14), t(32));
 	}
-
 }

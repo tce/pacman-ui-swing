@@ -60,28 +60,29 @@ public class PlayScene extends GameScene {
 
 	private TimedSequence<?> mazeFlashing;
 
-	public PlayScene(PacManGameController controller, Dimension size, AbstractPacManGameRendering rendering,
-			SoundManager sounds) {
-		super(controller, size, rendering, sounds);
+	public PlayScene(Dimension size, AbstractPacManGameRendering rendering, SoundManager sounds) {
+		super(size, rendering, sounds);
 	}
 
 	@Override
-	public void init() {
-		player2D = new Player2D(game().player);
+	public void init(PacManGameController gameController) {
+		super.init(gameController);
+
+		player2D = new Player2D(game.player);
 		player2D.setRendering(rendering);
 
-		ghosts2D = game().ghosts().map(Ghost2D::new).collect(Collectors.toList());
+		ghosts2D = game.ghosts().map(Ghost2D::new).collect(Collectors.toList());
 		ghosts2D.forEach(ghost2D -> ghost2D.setRendering(rendering));
 
-		energizers2D = game().world.energizerTiles().map(Energizer2D::new).collect(Collectors.toList());
+		energizers2D = game.world.energizerTiles().map(Energizer2D::new).collect(Collectors.toList());
 
 		bonus2D = new Bonus2D();
 		bonus2D.setRendering(rendering);
 
-		mazeFlashing = rendering.mazeFlashing(game().mazeNumber).repetitions(game().numFlashes);
+		mazeFlashing = rendering.mazeFlashing(game.mazeNumber).repetitions(game.numFlashes);
 		mazeFlashing.reset();
 
-		game().player.powerTimer.addEventListener(this::handleGhostsFlashing);
+		game.player.powerTimer.addEventListener(this::handleGhostsFlashing);
 	}
 
 	@Override
@@ -95,7 +96,7 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void end() {
-		game().player.powerTimer.removeEventListener(this::handleGhostsFlashing);
+		game.player.powerTimer.removeEventListener(this::handleGhostsFlashing);
 	}
 
 	@Override
@@ -105,7 +106,7 @@ public class PlayScene extends GameScene {
 		// enter READY
 		if (e.newGameState == PacManGameState.READY) {
 			energizers2D.forEach(energizer2D -> energizer2D.getBlinkingAnimation().reset());
-			rendering.mazeFlashing(game().mazeNumber).reset();
+			rendering.mazeFlashing(game.mazeNumber).reset();
 			if (!gameController.isAttractMode() && !gameController.isGameRunning()) {
 				sounds.play(PacManGameSound.GAME_READY);
 			}
@@ -137,14 +138,14 @@ public class PlayScene extends GameScene {
 		// exit GHOST_DYING
 		if (e.oldGameState == PacManGameState.GHOST_DYING) {
 			// the dead ghost(s) will return home now
-			if (game().ghosts(GhostState.DEAD).count() > 0) {
+			if (game.ghosts(GhostState.DEAD).count() > 0) {
 				sounds.loop(PacManGameSound.GHOST_RETURNING_HOME, Integer.MAX_VALUE);
 			}
 		}
 
 		// enter LEVEL_COMPLETE
 		if (e.newGameState == PacManGameState.LEVEL_COMPLETE) {
-			mazeFlashing = rendering.mazeFlashing(game().mazeNumber);
+			mazeFlashing = rendering.mazeFlashing(game.mazeNumber);
 			sounds.stopAll();
 		}
 
@@ -191,7 +192,7 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void onBonusActivated(PacManGameEvent e) {
-		bonus2D.setBonus(gameController.game().bonus);
+		bonus2D.setBonus(game.bonus);
 		if (bonus2D.getJumpAnimation() != null) {
 			bonus2D.getJumpAnimation().restart();
 		}
@@ -218,35 +219,35 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void onGhostEntersHouse(PacManGameEvent e) {
-		if (game().ghosts(GhostState.DEAD).count() == 0) {
+		if (game.ghosts(GhostState.DEAD).count() == 0) {
 			sounds.stop(PacManGameSound.GHOST_RETURNING_HOME);
 		}
 	};
 
 	@Override
 	public void render(Graphics2D g) {
-		rendering.drawMaze(g, game().mazeNumber, 0, t(3), mazeFlashing.isRunning());
+		rendering.drawMaze(g, game.mazeNumber, 0, t(3), mazeFlashing.isRunning());
 		if (!mazeFlashing.isRunning()) {
-			rendering.hideEatenFood(g, game().world.tiles(), game()::isFoodEaten);
+			rendering.hideEatenFood(g, game.world.tiles(), game::isFoodEaten);
 			energizers2D.forEach(energizer2D -> energizer2D.render(g));
 		}
 		if (gameController.isAttractMode()) {
-			rendering.drawGameState(g, game(), PacManGameState.GAME_OVER);
+			rendering.drawGameState(g, game, PacManGameState.GAME_OVER);
 		} else {
-			rendering.drawGameState(g, game(), gameController.currentStateID);
-			rendering.drawLevelCounter(g, game(), t(25), t(34));
+			rendering.drawGameState(g, game, gameController.currentStateID);
+			rendering.drawLevelCounter(g, game, t(25), t(34));
 		}
 		bonus2D.render(g);
 		player2D.render(g);
 		ghosts2D.forEach(ghost2D -> {
-			ghost2D.setDisplayFrightened(game().player.powerTimer.isRunning());
+			ghost2D.setDisplayFrightened(game.player.powerTimer.isRunning());
 			ghost2D.render(g);
 		});
 		if (gameController.isGameRunning()) {
-			rendering.drawScore(g, game(), false);
-			rendering.drawLivesCounter(g, game(), t(2), t(34));
+			rendering.drawScore(g, game, false);
+			rendering.drawLivesCounter(g, game, t(2), t(34));
 		} else {
-			rendering.drawScore(g, game(), true);
+			rendering.drawScore(g, game, true);
 		}
 	}
 
@@ -254,8 +255,8 @@ public class PlayScene extends GameScene {
 		if (e.type == TickTimerEvent.Type.HALF_EXPIRED) {
 			ghosts2D.stream().filter(ghost2D -> ghost2D.ghost.is(GhostState.FRIGHTENED)).forEach(ghost2D -> {
 				TimedSequence<?> flashing = ghost2D.getFlashingAnimation();
-				long frameTime = e.ticks / (game().numFlashes * flashing.numFrames());
-				flashing.frameDuration(frameTime).repetitions(game().numFlashes).restart();
+				long frameTime = e.ticks / (game.numFlashes * flashing.numFrames());
+				flashing.frameDuration(frameTime).repetitions(game.numFlashes).restart();
 			});
 		}
 	}
@@ -265,7 +266,7 @@ public class PlayScene extends GameScene {
 			ghost2D.getKickingAnimations().values().forEach(TimedSequence::reset);
 		});
 		player2D.getDyingAnimation().delay(120).onStart(() -> {
-			game().ghosts().forEach(ghost -> ghost.visible = false);
+			game.hideGhosts();
 			if (gameController.isGameRunning()) {
 				sounds.play(PacManGameSound.PACMAN_DEATH);
 			}
@@ -274,7 +275,7 @@ public class PlayScene extends GameScene {
 
 	private void playLevelCompleteAnimation(PacManGameState state) {
 		if (gameController.stateTimer().isRunningSeconds(2)) {
-			game().ghosts().forEach(ghost -> ghost.visible = false);
+			game.hideGhosts();
 		}
 		if (gameController.stateTimer().isRunningSeconds(3)) {
 			mazeFlashing.restart();

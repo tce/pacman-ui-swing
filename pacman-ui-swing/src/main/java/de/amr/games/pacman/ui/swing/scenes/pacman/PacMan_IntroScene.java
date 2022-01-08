@@ -41,6 +41,7 @@ import de.amr.games.pacman.controller.pacman.IntroController;
 import de.amr.games.pacman.controller.pacman.IntroController.GhostPortrait;
 import de.amr.games.pacman.lib.TickTimer;
 import de.amr.games.pacman.lib.TimedSequence;
+import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.Ghost;
 import de.amr.games.pacman.ui.swing.PacManGameUI_Swing;
 import de.amr.games.pacman.ui.swing.rendering.common.Ghost2D;
@@ -58,8 +59,6 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 public class PacMan_IntroScene extends GameScene {
 
 	// use exactly same RGB values as sprites
-	static final Color PINK = new Color(252, 181, 255);
-	static final Color ORANGE = new Color(253, 192, 90);
 	static final Color PELLET_COLOR = new Color(254, 189, 180);
 
 	private IntroController sceneController;
@@ -67,12 +66,14 @@ public class PacMan_IntroScene extends GameScene {
 	private List<Ghost2D> ghosts2D;
 	private List<Ghost2D> ghostsInGallery2D;
 
-	public PacMan_IntroScene(PacManGameController controller, Dimension size) {
-		super(controller, size, PacManGameUI_Swing.RENDERING_PACMAN, PacManGameUI_Swing.SOUND.get(PACMAN));
+	public PacMan_IntroScene(Dimension size) {
+		super(size, PacManGameUI_Swing.RENDERING_PACMAN, PacManGameUI_Swing.SOUND.get(PACMAN));
 	}
 
 	@Override
-	public void init() {
+	public void init(PacManGameController gameController) {
+		super.init(gameController);
+
 		sceneController = new IntroController(gameController);
 		sceneController.init();
 		pacMan2D = new Player2D(sceneController.pacMan);
@@ -101,14 +102,10 @@ public class PacMan_IntroScene extends GameScene {
 	}
 
 	@Override
-	public void end() {
-	}
-
-	@Override
 	public void render(Graphics2D g_) {
 		Graphics2D g = (Graphics2D) g_.create();
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		rendering.drawScore(g, gameController.game(), true);
+		rendering.drawScore(g, game, true);
 		switch (sceneController.currentStateID) {
 		case BEGIN:
 		case PRESENTING_GHOSTS:
@@ -158,12 +155,12 @@ public class PacMan_IntroScene extends GameScene {
 		g.drawString("CHARACTER", t(6), sceneController.topY);
 		g.drawString("/", t(16), sceneController.topY);
 		g.drawString("NICKNAME", t(18), sceneController.topY);
-		for (int i = 0; i < 4; ++i) {
-			GhostPortrait portrait = sceneController.portraits[i];
+		for (int ghostID = 0; ghostID < 4; ++ghostID) {
+			GhostPortrait portrait = sceneController.portraits[ghostID];
 			if (portrait.ghost.visible) {
-				int y = sceneController.topY + t(1 + 3 * i);
-				ghostsInGallery2D.get(i).render(g);
-				g.setColor(getGhostColor(i));
+				int y = sceneController.topY + t(1 + 3 * ghostID);
+				ghostsInGallery2D.get(ghostID).render(g);
+				g.setColor(rendering.getGhostColor(ghostID));
 				g.setFont(rendering.getScoreFont());
 				if (portrait.characterVisible) {
 					g.drawString("-" + portrait.character, t(6), y + 8);
@@ -173,10 +170,6 @@ public class PacMan_IntroScene extends GameScene {
 				}
 			}
 		}
-	}
-
-	private Color getGhostColor(int i) {
-		return i == 0 ? Color.RED : i == 1 ? PINK : i == 2 ? Color.CYAN : ORANGE;
 	}
 
 	private void drawPressKeyToStart(Graphics2D g, int yTile) {
@@ -211,7 +204,7 @@ public class PacMan_IntroScene extends GameScene {
 	private void drawCopyright(Graphics2D g, int yTile) {
 		String text = "\u00A9" + "  1980 MIDWAY MFG. CO.";
 		g.setFont(rendering.getScoreFont());
-		g.setColor(PINK);
+		g.setColor(rendering.getGhostColor(GameModel.PINK_GHOST));
 		g.drawString(text, t(3), t(yTile));
 	}
 }
