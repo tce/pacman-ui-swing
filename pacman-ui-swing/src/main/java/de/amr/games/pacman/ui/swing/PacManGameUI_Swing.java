@@ -31,15 +31,12 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Robot;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
-import java.util.ArrayDeque;
-import java.util.Deque;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
@@ -49,7 +46,6 @@ import de.amr.games.pacman.controller.PacManGameState;
 import de.amr.games.pacman.controller.event.DefaultPacManGameEventHandler;
 import de.amr.games.pacman.controller.event.PacManGameEvent;
 import de.amr.games.pacman.controller.event.PacManGameStateChangeEvent;
-import de.amr.games.pacman.lib.TickTimer;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.ui.PacManGameUI;
@@ -67,26 +63,16 @@ import de.amr.games.pacman.ui.swing.scenes.common.ScenesPacMan;
  */
 public class PacManGameUI_Swing implements PacManGameUI, DefaultPacManGameEventHandler {
 
-	static class FlashMessage {
-
-		private final TickTimer timer = new TickTimer(this.toString());
-		public final String text;
-
-		public FlashMessage(String text, long ticks) {
-			this.text = text;
-			timer.reset(ticks);
-		}
-	}
-
 	private final GameLoop gameLoop;
 	private final PacManGameController gameController;
-	private final Deque<FlashMessage> flashMessageQ = new ArrayDeque<>();
 	private final Dimension unscaledSize;
 	private final V2i scaledSize;
 	private final double scaling;
 	private final JFrame window;
 	private final Timer titleUpdateTimer;
 	private final Canvas canvas;
+	private final FlashMessageDisplay flashMessageDisplay = new FlashMessageDisplay(ScenesPacMan.UNSCALED_SIZE);
+
 	public final Keyboard keyboard;
 
 	private GameScene currentGameScene;
@@ -184,16 +170,7 @@ public class PacManGameUI_Swing implements PacManGameUI, DefaultPacManGameEventH
 		if (currentGameScene != null) {
 			currentGameScene.update();
 		}
-		FlashMessage message = flashMessageQ.peek();
-		if (message != null) {
-			if (!message.timer.isRunning()) {
-				message.timer.start();
-			}
-			message.timer.tick();
-			if (message.timer.hasExpired()) {
-				flashMessageQ.remove();
-			}
-		}
+		flashMessageDisplay.update();
 		EventQueue.invokeLater(this::renderScreen);
 	}
 
@@ -210,7 +187,7 @@ public class PacManGameUI_Swing implements PacManGameUI, DefaultPacManGameEventH
 				g.scale(scaling, scaling);
 				g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 				currentGameScene.render(g);
-				drawFlashMessage(g);
+				flashMessageDisplay.render(g);
 				g.dispose();
 			} while (buffers.contentsRestored());
 			buffers.show();
@@ -225,7 +202,7 @@ public class PacManGameUI_Swing implements PacManGameUI, DefaultPacManGameEventH
 
 	@Override
 	public void showFlashMessage(double seconds, String message, Object... args) {
-		flashMessageQ.add(new FlashMessage(String.format(message, args), (long) (60 * seconds)));
+		flashMessageDisplay.addMessage(seconds, message, args);
 	}
 
 	private void handleNonPlayerKeys() {
@@ -294,21 +271,6 @@ public class PacManGameUI_Swing implements PacManGameUI, DefaultPacManGameEventH
 
 		else if (keyboard.keyPressed("Space")) {
 			gameController.startGame();
-		}
-	}
-
-	private void drawFlashMessage(Graphics2D g) {
-		FlashMessage message = flashMessageQ.peek();
-		if (message != null) {
-			double alpha = Math.cos(Math.PI * message.timer.ticked() / (2 * message.timer.duration()));
-			g.setColor(Color.BLACK);
-			g.fillRect(0, unscaledSize.height - 16, unscaledSize.width, 16);
-			g.setColor(new Color(1, 1, 0, (float) alpha));
-			g.setFont(new Font(Font.SERIF, Font.BOLD, 10));
-			g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-			g.drawString(message.text, (unscaledSize.width - g.getFontMetrics().stringWidth(message.text)) / 2,
-					unscaledSize.height - 3);
-			g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
 		}
 	}
 
