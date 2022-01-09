@@ -180,8 +180,10 @@ public class MsPacManGameRenderingAssets extends Spritesheet {
 		Map<Direction, TimedSequence<BufferedImage>> munchings = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
-			var munching = TimedSequence.of(s(0, d), s(1, d), s(2, d)).frameDuration(4).endless();
-			munchings.put(dir, munching);
+			BufferedImage wide_open = s(0, d), open = s(1, d), closed = s(2, d);
+			var animation = TimedSequence.of(open, open, closed, closed, closed, open, open, wide_open, wide_open)
+					.frameDuration(1).endless().run();
+			munchings.put(dir, animation);
 		}
 		return munchings;
 	}
@@ -207,7 +209,7 @@ public class MsPacManGameRenderingAssets extends Spritesheet {
 	}
 
 	public TimedSequence<BufferedImage> createGhostFrightenedAnimation() {
-		return TimedSequence.of(s(8, 4), s(9, 4)).frameDuration(20).endless().run();
+		return TimedSequence.of(s(8, 4), s(9, 4)).frameDuration(8).endless().run();
 	}
 
 	public TimedSequence<BufferedImage> createGhostFlashingAnimation() {
