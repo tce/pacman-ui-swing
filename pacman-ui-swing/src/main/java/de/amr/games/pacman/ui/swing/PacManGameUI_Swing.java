@@ -53,8 +53,8 @@ import de.amr.games.pacman.ui.swing.app.GameLoop;
 import de.amr.games.pacman.ui.swing.assets.AssetLoader;
 import de.amr.games.pacman.ui.swing.rendering.Debug;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
-import de.amr.games.pacman.ui.swing.scenes.common.ScenesMsPacMan;
-import de.amr.games.pacman.ui.swing.scenes.common.ScenesPacMan;
+import de.amr.games.pacman.ui.swing.scenes.mspacman.ScenesMsPacMan;
+import de.amr.games.pacman.ui.swing.scenes.pacman.ScenesPacMan;
 
 /**
  * A Swing implementation of the Pac-Man game UI interface.

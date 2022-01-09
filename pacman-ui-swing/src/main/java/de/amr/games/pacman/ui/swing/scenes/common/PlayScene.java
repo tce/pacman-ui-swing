@@ -140,7 +140,7 @@ public class PlayScene extends GameScene {
 		if (e.oldGameState == PacManGameState.GHOST_DYING) {
 			// the dead ghost(s) will return home now
 			if (game.ghosts(GhostState.DEAD).count() > 0) {
-				sounds.loop(PacManGameSound.GHOST_RETURNING_HOME, Integer.MAX_VALUE);
+				sounds.loop(PacManGameSound.GHOST_RETURNING, Integer.MAX_VALUE);
 			}
 		}
 
@@ -215,13 +215,13 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void onGhostReturnsHome(PacManGameEvent e) {
-		sounds.play(PacManGameSound.GHOST_RETURNING_HOME);
+		sounds.play(PacManGameSound.GHOST_RETURNING);
 	}
 
 	@Override
 	public void onGhostEntersHouse(PacManGameEvent e) {
 		if (game.ghosts(GhostState.DEAD).count() == 0) {
-			sounds.stop(PacManGameSound.GHOST_RETURNING_HOME);
+			sounds.stop(PacManGameSound.GHOST_RETURNING);
 		}
 	};
 

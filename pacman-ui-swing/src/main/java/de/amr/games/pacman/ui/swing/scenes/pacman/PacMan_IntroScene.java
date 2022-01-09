@@ -45,7 +45,6 @@ import de.amr.games.pacman.model.common.Ghost;
 import de.amr.games.pacman.ui.swing.rendering.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Player2D;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
-import de.amr.games.pacman.ui.swing.scenes.common.ScenesPacMan;
 
 /**
  * Intro scene of the PacMan game.

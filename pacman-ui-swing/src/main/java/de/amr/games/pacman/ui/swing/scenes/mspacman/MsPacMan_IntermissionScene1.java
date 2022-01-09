@@ -35,7 +35,6 @@ import de.amr.games.pacman.ui.swing.rendering.common.Player2D;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.Flap2D;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.Heart2D;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
-import de.amr.games.pacman.ui.swing.scenes.common.ScenesMsPacMan;
 
 /**
  * Intermission scene 1: "They meet".

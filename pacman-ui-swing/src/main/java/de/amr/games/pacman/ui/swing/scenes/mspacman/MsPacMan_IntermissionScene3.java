@@ -34,7 +34,6 @@ import de.amr.games.pacman.ui.swing.rendering.mspacman.Flap2D;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.JuniorBag2D;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.Stork2D;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
-import de.amr.games.pacman.ui.swing.scenes.common.ScenesMsPacMan;
 
 /**
  * Intermission scene 3: "Junior".
