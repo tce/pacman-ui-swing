@@ -80,7 +80,7 @@ public class ScenesMsPacMan {
 			entry(GHOST_SIREN_1, "/mspacman/sound/Ghost Noise 1.wav"), //
 			entry(GHOST_SIREN_2, "/mspacman/sound/Ghost Noise 2.wav"), //
 			entry(GHOST_SIREN_3, "/mspacman/sound/Ghost Noise 3.wav"), //
-			entry(GHOST_SIREN_4, "/mspacman/sound/Ghost Noise 5.wav"), //
+			entry(GHOST_SIREN_4, "/mspacman/sound/Ghost Noise 4.wav"), //
 			entry(INTERMISSION_1, "/mspacman/sound/They Meet Act 1.wav"), //
 			entry(INTERMISSION_2, "/mspacman/sound/The Chase Act 2.wav"), //
 			entry(INTERMISSION_3, "/mspacman/sound/Junior Act 3.wav") //
