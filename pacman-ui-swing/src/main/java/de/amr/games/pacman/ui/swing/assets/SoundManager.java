@@ -25,6 +25,7 @@ package de.amr.games.pacman.ui.swing.assets;
 
 import java.net.URL;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.sound.sampled.AudioInputStream;
@@ -42,20 +43,28 @@ import de.amr.games.pacman.ui.PacManGameSound;
  */
 public class SoundManager {
 
-	private final Map<PacManGameSound, URL> url = new EnumMap<>(PacManGameSound.class);
+	private final Map<PacManGameSound, URL> urlMap;
 	private final Map<PacManGameSound, Clip> clipCache = new EnumMap<>(PacManGameSound.class);
-	private final Clip munch0, munch1;
+	private Clip munch0, munch1;
 	private int munchIndex;
 	private boolean muted;
 
-	public SoundManager() {
+	public SoundManager(Map<PacManGameSound, String> pathMap) {
+		urlMap = new HashMap<>();
+		for (var entry : pathMap.entrySet()) {
+			put(entry.getKey(), entry.getValue());
+		}
 		munchIndex = 0;
-		munch0 = createAndOpenClip(url.get(PacManGameSound.PACMAN_MUNCH));
-		munch1 = createAndOpenClip(url.get(PacManGameSound.PACMAN_MUNCH));
+		munch0 = createAndOpenClip(urlMap.get(PacManGameSound.PACMAN_MUNCH));
+		munch1 = createAndOpenClip(urlMap.get(PacManGameSound.PACMAN_MUNCH));
 	}
 
-	public void put(PacManGameSound sound, String path) {
-		url.put(sound, getClass().getResource(path));
+	private void put(PacManGameSound sound, String path) {
+		URL url = getClass().getResource(path);
+		if (url == null) {
+			throw new RuntimeException("Sound resource not found: " + path);
+		}
+		urlMap.put(sound, url);
 	}
 
 	public void setMuted(boolean muted) {
@@ -68,7 +77,7 @@ public class SoundManager {
 			clip.open(as);
 			return clip;
 		} catch (Exception x) {
-			throw new RuntimeException("Error opening audio clip", x);
+			throw new RuntimeException("Error opening audio clip from URL " + url, x);
 		}
 	}
 
@@ -80,7 +89,7 @@ public class SoundManager {
 		} else if (clipCache.containsKey(sound)) {
 			clip = clipCache.get(sound);
 		} else {
-			clip = createAndOpenClip(url.get(sound));
+			clip = createAndOpenClip(urlMap.get(sound));
 			clipCache.put(sound, clip);
 		}
 		clip.setFramePosition(0);

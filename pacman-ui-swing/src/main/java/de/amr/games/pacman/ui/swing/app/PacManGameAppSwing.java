@@ -44,7 +44,8 @@ import de.amr.games.pacman.ui.swing.PacManGameUI_Swing;
 public class PacManGameAppSwing {
 
 	public static void main(String[] args) {
-		invokeLater(() -> new PacManGameAppSwing(new Options(args)));
+		Options options = new Options(args);
+		invokeLater(() -> new PacManGameAppSwing(options));
 	}
 
 	private final PacManGameController controller;
