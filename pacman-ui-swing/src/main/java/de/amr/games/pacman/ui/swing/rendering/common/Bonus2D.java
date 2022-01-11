@@ -31,6 +31,7 @@ import java.util.Map;
 
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.model.pacman.entities.Bonus;
+import de.amr.games.pacman.model.pacman.entities.BonusState;
 
 public class Bonus2D {
 
@@ -82,10 +83,10 @@ public class Bonus2D {
 		if (bonus == null) {
 			return null;
 		}
-		if (bonus.state == Bonus.EDIBLE) {
+		if (bonus.state == BonusState.EDIBLE) {
 			return symbolSprites.get(bonus.symbol);
 		}
-		if (bonus.state == Bonus.EATEN) {
+		if (bonus.state == BonusState.EATEN) {
 			return numberSprites.get(bonus.points);
 		}
 		return null;
