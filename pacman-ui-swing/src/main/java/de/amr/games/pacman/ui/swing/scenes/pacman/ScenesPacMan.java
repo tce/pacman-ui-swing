@@ -64,26 +64,26 @@ public class ScenesPacMan {
 	public static Rendering2D_PacMan RENDERING = new Rendering2D_PacMan();
 
 	private static Entry<PacManGameSound, String> entry(PacManGameSound sound, String path) {
-		return new SimpleEntry<>(sound, path);
+		return new SimpleEntry<>(sound, "/pacman/sound/" + path);
 	}
 
 	private static Map<PacManGameSound, String> soundPaths = Map.ofEntries(//
-			entry(CREDIT, "/pacman/sound/credit.wav"), //
-			entry(EXTRA_LIFE, "/pacman/sound/extend.wav"), //
-			entry(GAME_READY, "/pacman/sound/game_start.wav"), //
-			entry(BONUS_EATEN, "/pacman/sound/eat_fruit.wav"), //
-			entry(PACMAN_MUNCH, "/pacman/sound/munch_1.wav"), //
-			entry(PACMAN_DEATH, "/pacman/sound/pacman_death.wav"), //
-			entry(PACMAN_POWER, "/pacman/sound/power_pellet.wav"), //
-			entry(GHOST_EATEN, "/pacman/sound/eat_ghost.wav"), //
-			entry(GHOST_RETURNING, "/pacman/sound/retreating.wav"), //
-			entry(GHOST_SIREN_1, "/pacman/sound/siren_1.wav"), //
-			entry(GHOST_SIREN_2, "/pacman/sound/siren_2.wav"), //
-			entry(GHOST_SIREN_3, "/pacman/sound/siren_3.wav"), //
-			entry(GHOST_SIREN_4, "/pacman/sound/siren_4.wav"), //
-			entry(INTERMISSION_1, "/pacman/sound/intermission.wav"), //
-			entry(INTERMISSION_2, "/pacman/sound/intermission.wav"), //
-			entry(INTERMISSION_3, "/pacman/sound/intermission.wav") //
+			entry(CREDIT, "credit.wav"), //
+			entry(EXTRA_LIFE, "extend.wav"), //
+			entry(GAME_READY, "game_start.wav"), //
+			entry(BONUS_EATEN, "eat_fruit.wav"), //
+			entry(PACMAN_MUNCH, "munch_1.wav"), //
+			entry(PACMAN_DEATH, "pacman_death.wav"), //
+			entry(PACMAN_POWER, "power_pellet.wav"), //
+			entry(GHOST_EATEN, "eat_ghost.wav"), //
+			entry(GHOST_RETURNING, "retreating.wav"), //
+			entry(GHOST_SIREN_1, "siren_1.wav"), //
+			entry(GHOST_SIREN_2, "siren_2.wav"), //
+			entry(GHOST_SIREN_3, "siren_3.wav"), //
+			entry(GHOST_SIREN_4, "siren_4.wav"), //
+			entry(INTERMISSION_1, "intermission.wav"), //
+			entry(INTERMISSION_2, "intermission.wav"), //
+			entry(INTERMISSION_3, "intermission.wav") //
 	);
 
 	public static final SoundManager SOUNDS = new SoundManager(soundPaths);

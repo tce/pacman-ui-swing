@@ -64,26 +64,26 @@ public class ScenesMsPacMan {
 	public static Rendering2D_MsPacMan RENDERING = new Rendering2D_MsPacMan();
 
 	private static Entry<PacManGameSound, String> entry(PacManGameSound sound, String path) {
-		return new SimpleEntry<>(sound, path);
+		return new SimpleEntry<>(sound, "/mspacman/sound/" + path);
 	}
 
 	private static Map<PacManGameSound, String> soundPaths = Map.ofEntries(//
-			entry(CREDIT, "/mspacman/sound/Coin Credit.wav"), //
-			entry(EXTRA_LIFE, "/mspacman/sound/Extra Life.wav"), //
-			entry(GAME_READY, "/mspacman/sound/Start.wav"), //
-			entry(BONUS_EATEN, "/mspacman/sound/Fruit.wav"), //
-			entry(PACMAN_MUNCH, "/mspacman/sound/Ms. Pac Man Pill.wav"), //
-			entry(PACMAN_DEATH, "/mspacman/sound/Died.wav"), //
-			entry(PACMAN_POWER, "/mspacman/sound/Scared Ghost.wav"), //
-			entry(GHOST_EATEN, "/mspacman/sound/Ghost.wav"), //
-			entry(GHOST_RETURNING, "/mspacman/sound/Ghost Eyes.wav"), //
-			entry(GHOST_SIREN_1, "/mspacman/sound/Ghost Noise 1.wav"), //
-			entry(GHOST_SIREN_2, "/mspacman/sound/Ghost Noise 2.wav"), //
-			entry(GHOST_SIREN_3, "/mspacman/sound/Ghost Noise 3.wav"), //
-			entry(GHOST_SIREN_4, "/mspacman/sound/Ghost Noise 4.wav"), //
-			entry(INTERMISSION_1, "/mspacman/sound/They Meet Act 1.wav"), //
-			entry(INTERMISSION_2, "/mspacman/sound/The Chase Act 2.wav"), //
-			entry(INTERMISSION_3, "/mspacman/sound/Junior Act 3.wav") //
+			entry(CREDIT, "Coin Credit.wav"), //
+			entry(EXTRA_LIFE, "Extra Life.wav"), //
+			entry(GAME_READY, "Start.wav"), //
+			entry(BONUS_EATEN, "Fruit.wav"), //
+			entry(PACMAN_MUNCH, "Ms. Pac Man Pill.wav"), //
+			entry(PACMAN_DEATH, "Died.wav"), //
+			entry(PACMAN_POWER, "Scared Ghost.wav"), //
+			entry(GHOST_EATEN, "Ghost.wav"), //
+			entry(GHOST_RETURNING, "Ghost Eyes.wav"), //
+			entry(GHOST_SIREN_1, "Ghost Noise 1.wav"), //
+			entry(GHOST_SIREN_2, "Ghost Noise 2.wav"), //
+			entry(GHOST_SIREN_3, "Ghost Noise 3.wav"), //
+			entry(GHOST_SIREN_4, "Ghost Noise 4.wav"), //
+			entry(INTERMISSION_1, "They Meet Act 1.wav"), //
+			entry(INTERMISSION_2, "The Chase Act 2.wav"), //
+			entry(INTERMISSION_3, "Junior Act 3.wav") //
 	);
 
 	public static final SoundManager SOUNDS = new SoundManager(soundPaths);
