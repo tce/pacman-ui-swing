@@ -49,7 +49,7 @@ import de.amr.games.pacman.ui.swing.assets.Spritesheet;
  * 
  * @author Armin Reichert
  */
-public class PacManGameRenderingAssets extends Spritesheet {
+public class RenderingAssets_PacMan extends Spritesheet {
 
 	/** Sprite sheet order of directions. */
 	static final List<Direction> order = Arrays.asList(RIGHT, LEFT, UP, DOWN);
@@ -73,7 +73,7 @@ public class PacManGameRenderingAssets extends Spritesheet {
 	public final TimedSequence<BufferedImage> blinkyPatched;
 	public final BufferedImage nailSprite;
 
-	public PacManGameRenderingAssets() {
+	public RenderingAssets_PacMan() {
 		super(image("/pacman/graphics/sprites.png"), 16);
 
 		scoreFont = font("/emulogic.ttf", 8);

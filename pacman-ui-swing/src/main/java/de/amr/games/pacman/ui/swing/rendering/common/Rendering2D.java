@@ -92,6 +92,12 @@ public abstract class Rendering2D {
 
 	public abstract Color getMazeWallBorderColor(int mazeIndex);
 
+	/**
+	 * @param mazeNumber the 1-based maze number
+	 * @return color of pellets in this maze
+	 */
+	public abstract Color getFoodColor(int mazeNumber);
+
 	public abstract Font getScoreFont();
 
 	// only use in Pac-Man:

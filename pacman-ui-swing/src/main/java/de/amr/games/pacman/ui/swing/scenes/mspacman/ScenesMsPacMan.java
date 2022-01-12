@@ -49,7 +49,7 @@ import java.util.Map.Entry;
 
 import de.amr.games.pacman.ui.PacManGameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
-import de.amr.games.pacman.ui.swing.rendering.mspacman.MsPacManGameRendering;
+import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.scenes.common.PlayScene;
 
@@ -61,7 +61,7 @@ import de.amr.games.pacman.ui.swing.scenes.common.PlayScene;
 public class ScenesMsPacMan {
 
 	public static final Dimension UNSCALED_SIZE = new Dimension(t(28), t(36));
-	public static MsPacManGameRendering RENDERING = new MsPacManGameRendering();
+	public static Rendering2D_MsPacMan RENDERING = new Rendering2D_MsPacMan();
 
 	private static Entry<PacManGameSound, String> entry(PacManGameSound sound, String path) {
 		return new SimpleEntry<>(sound, path);

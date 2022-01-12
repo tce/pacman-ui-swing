@@ -40,9 +40,11 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
  * 
  * @author Armin Reichert
  */
-public class PacManGameRendering extends Rendering2D {
+public class Rendering2D_PacMan extends Rendering2D {
 
-	public final PacManGameRenderingAssets assets = new PacManGameRenderingAssets();
+	private static final Color FOOD_COLOR = new Color(254, 189, 180);
+
+	public final RenderingAssets_PacMan assets = new RenderingAssets_PacMan();
 
 	@Override
 	public Map<Direction, TimedSequence<BufferedImage>> createPlayerMunchingAnimations() {
@@ -116,6 +118,11 @@ public class PacManGameRendering extends Rendering2D {
 	@Override
 	public Color getMazeWallColor(int mazeIndex) {
 		return Color.BLACK;
+	}
+
+	@Override
+	public Color getFoodColor(int mazeNumber) {
+		return FOOD_COLOR;
 	}
 
 	@Override

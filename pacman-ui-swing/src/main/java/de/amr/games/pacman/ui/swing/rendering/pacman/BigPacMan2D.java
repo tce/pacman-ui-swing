@@ -36,11 +36,11 @@ import de.amr.games.pacman.model.common.Pac;
  */
 public class BigPacMan2D {
 
-	private final PacManGameRendering rendering;
+	private final Rendering2D_PacMan rendering;
 	private final Pac pacMan;
 	public final TimedSequence<BufferedImage> munchingAnimation;
 
-	public BigPacMan2D(Pac pacMan, PacManGameRendering rendering) {
+	public BigPacMan2D(Pac pacMan, Rendering2D_PacMan rendering) {
 		this.pacMan = pacMan;
 		this.rendering = rendering;
 		munchingAnimation = rendering.createBigPacManMunchingAnimation();

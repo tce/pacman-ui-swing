@@ -55,9 +55,6 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
  */
 public class PacMan_IntroScene extends GameScene {
 
-	// use exactly same RGB values as sprites
-	static final Color PELLET_COLOR = new Color(254, 189, 180);
-
 	private IntroController sceneController;
 	private Player2D pacMan2D;
 	private List<Ghost2D> ghosts2D;
@@ -179,7 +176,7 @@ public class PacMan_IntroScene extends GameScene {
 	}
 
 	private void drawPoints(Graphics2D g, int tileX, int tileY) {
-		g.setColor(PELLET_COLOR); // TODO add method getFoodColor() to rendering
+		g.setColor(rendering.getFoodColor(1));
 		g.fillRect(t(tileX) + 6, t(tileY - 1) + 2, 2, 2);
 		if (sceneController.blinking.frame()) {
 			g.fillOval(t(tileX), t(tileY + 1) - 2, 10, 10);
@@ -194,7 +191,7 @@ public class PacMan_IntroScene extends GameScene {
 	}
 
 	private void drawEnergizer(Graphics2D g) {
-		g.setColor(PELLET_COLOR);
+		g.setColor(rendering.getFoodColor(1));
 		g.fillOval(t(2), t(20), TS, TS);
 	}
 

@@ -49,7 +49,7 @@ import de.amr.games.pacman.ui.swing.assets.Spritesheet;
  * 
  * @author Armin Reichert
  */
-public class MsPacManGameRenderingAssets extends Spritesheet {
+public class RenderingAssets_MsPacMan extends Spritesheet {
 
 	/** Sprite sheet order of directions. */
 	static final List<Direction> order = Arrays.asList(RIGHT, LEFT, UP, DOWN);
@@ -90,7 +90,7 @@ public class MsPacManGameRenderingAssets extends Spritesheet {
 	final List<BufferedImage> mazeFullImages;
 	final List<TimedSequence<BufferedImage>> mazesFlashingAnims;
 
-	public MsPacManGameRenderingAssets() {
+	public RenderingAssets_MsPacMan() {
 		super(image("/mspacman/graphics/sprites.png"), 16);
 
 		scoreFont = font("/emulogic.ttf", 8);

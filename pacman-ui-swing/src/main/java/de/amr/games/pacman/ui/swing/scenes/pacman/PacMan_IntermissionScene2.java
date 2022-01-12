@@ -37,7 +37,7 @@ import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.ui.PacManGameSound;
 import de.amr.games.pacman.ui.swing.rendering.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Player2D;
-import de.amr.games.pacman.ui.swing.rendering.pacman.PacManGameRendering;
+import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
 /**
@@ -88,7 +88,7 @@ public class PacMan_IntermissionScene2 extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		PacManGameRendering r = (PacManGameRendering) rendering;
+		Rendering2D_PacMan r = (Rendering2D_PacMan) rendering;
 		r.drawLevelCounter(g, gameController.game(), t(25), t(34));
 		r.drawNail(g, sceneController.nail);
 		pacMan2D.render(g);

@@ -38,9 +38,18 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
  * 
  * @author Armin Reichert
  */
-public class MsPacManGameRendering extends Rendering2D {
+public class Rendering2D_MsPacMan extends Rendering2D {
 
-	public final MsPacManGameRenderingAssets assets = new MsPacManGameRenderingAssets();
+	private static final Color[] FOOD_COLOR = { //
+			new Color(222, 222, 255), //
+			new Color(255, 255, 0), //
+			new Color(255, 0, 0), //
+			new Color(222, 222, 255), //
+			new Color(0, 255, 255), //
+			new Color(222, 222, 255), //
+	};
+
+	public final RenderingAssets_MsPacMan assets = new RenderingAssets_MsPacMan();
 
 	@Override
 	public TimedSequence<BufferedImage> mazeFlashing(int mazeNumber) {
@@ -191,6 +200,11 @@ public class MsPacManGameRendering extends Rendering2D {
 		default:
 			return Color.WHITE;
 		}
+	}
+
+	@Override
+	public Color getFoodColor(int mazeNumber) {
+		return FOOD_COLOR[mazeNumber - 1];
 	}
 
 	@Override

@@ -36,7 +36,7 @@ import de.amr.games.pacman.ui.PacManGameSound;
 import de.amr.games.pacman.ui.swing.rendering.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Player2D;
 import de.amr.games.pacman.ui.swing.rendering.pacman.BigPacMan2D;
-import de.amr.games.pacman.ui.swing.rendering.pacman.PacManGameRendering;
+import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
 /**
@@ -89,7 +89,7 @@ public class PacMan_IntermissionScene1 extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		PacManGameRendering r = (PacManGameRendering) rendering;
+		Rendering2D_PacMan r = (Rendering2D_PacMan) rendering;
 		blinky2D.render(g);
 		if (sceneController.currentStateID == IntermissionState.BLINKY_CHASING_PACMAN) {
 			pacMan2D.render(g);
