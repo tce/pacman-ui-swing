@@ -60,7 +60,7 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 
 		@Override
 		public void playFlapAnimation() {
-			flap2D.getAnimation().restart();
+			flap2D.animation.restart();
 		}
 	}
 
@@ -83,9 +83,7 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 		sceneController = new SceneController(gameController);
 		sceneController.init();
 
-		flap2D = new Flap2D(sceneController.flap);
-		flap2D.setFont(rendering.getScoreFont());
-		flap2D.setAnimation(rendering.createFlapAnimation());
+		flap2D = new Flap2D(sceneController.flap, rendering);
 		msPacMan2D = new Player2D(sceneController.msPac, rendering);
 		pacMan2D = new Player2D(sceneController.pacMan, rendering);
 		// overwrite by Pac-Man instead of Ms. Pac-Man sprites:

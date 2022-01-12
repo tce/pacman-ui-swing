@@ -28,26 +28,21 @@ import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.model.common.GameEntity;
+import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 public class Stork2D {
 
 	private final GameEntity stork;
-	private TimedSequence<BufferedImage> animation;
+	private final Rendering2D rendering;
+	public TimedSequence<BufferedImage> animation;
 
-	public Stork2D(GameEntity stork) {
+	public Stork2D(GameEntity stork, Rendering2D rendering) {
 		this.stork = stork;
-	}
-
-	public TimedSequence<BufferedImage> getAnimation() {
-		return animation;
-	}
-
-	public void setAnimation(TimedSequence<BufferedImage> animation) {
-		this.animation = animation;
+		this.rendering = rendering;
+		animation = rendering.createStorkFlyingAnimation();
 	}
 
 	public void render(Graphics2D g) {
-		BufferedImage frame = animation.animate();
-		g.drawImage(frame, (int) stork.position.x, (int) stork.position.y, null);
+		rendering.renderEntity(g, stork, animation.animate());
 	}
 }

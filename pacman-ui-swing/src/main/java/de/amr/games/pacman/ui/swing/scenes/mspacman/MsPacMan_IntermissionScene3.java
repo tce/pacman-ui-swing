@@ -60,7 +60,7 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 
 		@Override
 		public void playFlapAnimation() {
-			flap2D.getAnimation().restart();
+			flap2D.animation.restart();
 		}
 	}
 
@@ -81,18 +81,17 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 
 		sceneController = new SceneController(gameController);
 		sceneController.init();
-		flap2D = new Flap2D(sceneController.flap);
-		flap2D.setFont(rendering.getScoreFont());
-		flap2D.setAnimation(rendering.createFlapAnimation());
+
 		msPacMan2D = new Player2D(sceneController.msPacMan, rendering);
 		pacMan2D = new Player2D(sceneController.pacMan, rendering);
 		pacMan2D.munchingAnimations = rendering.createSpouseMunchingAnimations();
-		stork2D = new Stork2D(sceneController.stork);
-		stork2D.setAnimation(rendering.createStorkFlyingAnimation());
-		stork2D.getAnimation().restart();
-		bag2D = new JuniorBag2D(sceneController.bag);
-		bag2D.setBlueBag(rendering.getBlueBag());
-		bag2D.setJunior(rendering.getJunior());
+
+		flap2D = new Flap2D(sceneController.flap, rendering);
+
+		stork2D = new Stork2D(sceneController.stork, rendering);
+		stork2D.animation.restart();
+
+		bag2D = new JuniorBag2D(sceneController.bag, rendering);
 	}
 
 	@Override

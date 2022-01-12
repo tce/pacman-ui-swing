@@ -57,7 +57,7 @@ public class MsPacMan_IntermissionScene2 extends GameScene {
 
 		@Override
 		public void playFlapAnimation() {
-			flap2D.getAnimation().restart();
+			flap2D.animation.restart();
 		}
 	}
 
@@ -77,9 +77,7 @@ public class MsPacMan_IntermissionScene2 extends GameScene {
 		sceneController = new SceneController(gameController);
 		sceneController.init();
 
-		flap2D = new Flap2D(sceneController.flap);
-		flap2D.setFont(rendering.getScoreFont());
-		flap2D.setAnimation(rendering.createFlapAnimation());
+		flap2D = new Flap2D(sceneController.flap, rendering);
 
 		msPacMan2D = new Player2D(sceneController.msPacMan, rendering);
 		msPacMan2D.munchingAnimations.values().forEach(TimedSequence::restart);

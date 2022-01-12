@@ -30,31 +30,20 @@ import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.model.mspacman.entities.Flap;
+import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 public class Flap2D {
 
-	private final Flap flap;
-	private TimedSequence<BufferedImage> animation;
-	private Font font;
+	public final Flap flap;
+	public final Rendering2D rendering;
+	public TimedSequence<BufferedImage> animation;
+	public Font font;
 
-	public Flap2D(Flap flap) {
+	public Flap2D(Flap flap, Rendering2D rendering) {
 		this.flap = flap;
-	}
-
-	public void setAnimation(TimedSequence<BufferedImage> animation) {
-		this.animation = animation;
-	}
-
-	public TimedSequence<BufferedImage> getAnimation() {
-		return animation;
-	}
-
-	public void setFont(Font font) {
-		this.font = font;
-	}
-
-	public Flap getFlap() {
-		return flap;
+		this.rendering = rendering;
+		font = rendering.getScoreFont();
+		animation = rendering.createFlapAnimation();
 	}
 
 	public void render(Graphics2D g) {
