@@ -64,10 +64,6 @@ public class Rendering2D_PacMan extends Rendering2D {
 		return order.indexOf(dir);
 	}
 
-	public static Color ghostColor(int ghostType) {
-		return ghostType == 0 ? Color.RED : ghostType == 1 ? Color.pink : ghostType == 2 ? Color.CYAN : Color.ORANGE;
-	}
-
 	public final Spritesheet sheet;
 	public final Font scoreFont;
 
