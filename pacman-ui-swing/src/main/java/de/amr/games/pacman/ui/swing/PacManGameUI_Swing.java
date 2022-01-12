@@ -51,7 +51,7 @@ import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.ui.PacManGameUI;
 import de.amr.games.pacman.ui.swing.app.GameLoop;
 import de.amr.games.pacman.ui.swing.assets.AssetLoader;
-import de.amr.games.pacman.ui.swing.rendering.Debug;
+import de.amr.games.pacman.ui.swing.rendering.common.Debug;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.scenes.mspacman.ScenesMsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.pacman.ScenesPacMan;
