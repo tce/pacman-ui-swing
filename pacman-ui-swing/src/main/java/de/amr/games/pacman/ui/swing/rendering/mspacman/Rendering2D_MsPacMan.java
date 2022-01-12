@@ -58,15 +58,15 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 	//@formatter:off
 
 	static final Color[] FOOD_COLOR = {
-			new Color(222, 222, 255),
-			new Color(255, 255, 0),
-			new Color(255, 0, 0),
-			new Color(222, 222, 255),
-			new Color(0, 255, 255),
-			new Color(222, 222, 255),
+		new Color(222, 222, 255),
+		new Color(255, 255, 0),
+		new Color(255, 0, 0),
+		new Color(222, 222, 255),
+		new Color(0, 255, 255),
+		new Color(222, 222, 255),
 	};
 
-	static final Color[] mazeWallColors = { 
+	static final Color[] MAZE_WALL_COLORS = { 
 		new Color(255, 183, 174), 
 		new Color(71, 183, 255), 
 		new Color(222, 151, 81),
@@ -75,7 +75,7 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 		new Color(255, 183, 174)
 	};
 
-	static final Color[] mazeWallBorderColors = { 
+	static final Color[] MAZE_WALL_BORDER_COLORS = { 
 		new Color(255, 0, 0), 
 		new Color(222, 222, 255),
 		new Color(222, 222, 255), 
@@ -107,9 +107,9 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 		for (int i = 0; i < 6; ++i) {
 			mazeFullImages.add(sheet.image.getSubimage(0, i * 248, 226, 248));
 			mazeEmptyImages.add(sheet.image.getSubimage(226, i * 248, 226, 248));
-			BufferedImage mazeEmpzyBright = sheet.createBrightEffect(mazeEmptyImages.get(i), getMazeWallBorderColor(i),
+			BufferedImage mazeEmptyBright = sheet.createBrightEffect(mazeEmptyImages.get(i), getMazeWallBorderColor(i),
 					getMazeWallColor(i));
-			mazesFlashingAnims.add(TimedSequence.of(mazeEmpzyBright, mazeEmptyImages.get(i)).frameDuration(15));
+			mazesFlashingAnims.add(TimedSequence.of(mazeEmptyBright, mazeEmptyImages.get(i)).frameDuration(15));
 		}
 
 		//@formatter:off
@@ -124,20 +124,20 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 		);
 
 		bonusNumberSprites = Map.of(
-				100, s(3, 1), 
-				200, s(4, 1), 
-				500, s(5, 1), 
-				700, s(6, 1), 
-				1000, s(7, 1), 
-				2000, s(8, 1),
-				5000, s(9, 1)
+			100, s(3, 1), 
+			200, s(4, 1), 
+			500, s(5, 1), 
+			700, s(6, 1), 
+			1000, s(7, 1), 
+			2000, s(8, 1),
+			5000, s(9, 1)
 		);
 
 		bountyNumberSprites = Map.of(
-				200, s(0, 8), 
-				400, s(1, 8), 
-				800, s(2, 8), 
-				1600, s(3, 8)
+			200, s(0, 8), 
+			400, s(1, 8), 
+			800, s(2, 8), 
+			1600, s(3, 8)
 		);
 		//@formatter:on
 	}
@@ -157,7 +157,7 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 	 */
 	@Override
 	public Color getMazeWallColor(int mazeIndex) {
-		return mazeWallColors[mazeIndex];
+		return MAZE_WALL_COLORS[mazeIndex];
 	}
 
 	/**
@@ -168,7 +168,7 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 	 */
 	@Override
 	public Color getMazeWallBorderColor(int mazeIndex) {
-		return mazeWallBorderColors[mazeIndex];
+		return MAZE_WALL_BORDER_COLORS[mazeIndex];
 	}
 
 	@Override
@@ -182,8 +182,7 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
 			BufferedImage wide_open = s(0, d), open = s(1, d), closed = s(2, d);
-			var animation = TimedSequence.of(open, open, closed, closed, closed, open, open, wide_open, wide_open)
-					.frameDuration(1).endless().run();
+			var animation = TimedSequence.of(open, closed, open, wide_open).frameDuration(2).endless().run();
 			munchings.put(dir, animation);
 		}
 		return munchings;
@@ -194,7 +193,7 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 		Map<Direction, TimedSequence<BufferedImage>> munchings = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
-			var munching = TimedSequence.of(s(0, 9 + d), s(1, 9 + d), s(2, 9)).frameDuration(4).endless();
+			var munching = TimedSequence.of(s(0, 9 + d), s(1, 9 + d), s(2, 9)).frameDuration(2).endless();
 			munchings.put(dir, munching);
 		}
 		return munchings;
@@ -253,9 +252,9 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 
 	@Override
 	public TimedSequence<BufferedImage> createStorkFlyingAnimation() {
-		return TimedSequence.of(//
+		return TimedSequence.of( //
 				sheet.region(489, 176, 32, 16), //
-				sheet.region(521, 176, 32, 16)//
+				sheet.region(521, 176, 32, 16) //
 		).endless().frameDuration(10);
 	}
 
