@@ -30,8 +30,8 @@ import de.amr.games.pacman.controller.PacManGameController;
 import de.amr.games.pacman.controller.mspacman.Intermission2Controller;
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.ui.PacManGameSound;
-import de.amr.games.pacman.ui.swing.rendering.common.Player2D;
-import de.amr.games.pacman.ui.swing.rendering.mspacman.Flap2D;
+import de.amr.games.pacman.ui.swing.entity.common.Player2D;
+import de.amr.games.pacman.ui.swing.entity.mspacman.Flap2D;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
 /**

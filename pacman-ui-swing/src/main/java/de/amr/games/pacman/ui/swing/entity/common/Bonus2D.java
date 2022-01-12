@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package de.amr.games.pacman.ui.swing.rendering.common;
+package de.amr.games.pacman.ui.swing.entity.common;
 
 import static de.amr.games.pacman.model.world.PacManGameWorld.TS;
 
@@ -32,6 +32,7 @@ import java.util.Map;
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.model.common.BonusState;
 import de.amr.games.pacman.model.pacman.entities.Bonus;
+import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 public class Bonus2D {
 

@@ -21,38 +21,33 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package de.amr.games.pacman.ui.swing.rendering.mspacman;
+package de.amr.games.pacman.ui.swing.entity.common;
+
+import static de.amr.games.pacman.model.world.PacManGameWorld.TS;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.lib.TimedSequence;
-import de.amr.games.pacman.model.mspacman.entities.Flap;
-import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
+import de.amr.games.pacman.lib.V2i;
 
-public class Flap2D {
+public class Energizer2D {
 
-	public final Flap flap;
-	public final Rendering2D rendering;
-	public TimedSequence<BufferedImage> animation;
-	public Font font;
+	private final V2i tile;
+	private TimedSequence<Boolean> blinkingAnimation = TimedSequence.pulse().frameDuration(10);
 
-	public Flap2D(Flap flap, Rendering2D rendering) {
-		this.flap = flap;
-		this.rendering = rendering;
-		font = rendering.getScoreFont();
-		animation = rendering.createFlapAnimation();
+	public Energizer2D(V2i tile) {
+		this.tile = tile;
+	}
+
+	public TimedSequence<Boolean> getBlinkingAnimation() {
+		return blinkingAnimation;
 	}
 
 	public void render(Graphics2D g) {
-		if (flap.visible) {
-			g.drawImage(animation.animate(), (int) flap.position.x, (int) flap.position.y, null);
-			g.setFont(font);
-			g.setColor(new Color(222, 222, 255));
-			g.drawString(flap.sceneNumber + "", (int) flap.position.x + 20, (int) flap.position.y + 30);
-			g.drawString(flap.sceneTitle, (int) flap.position.x + 40, (int) flap.position.y + 20);
+		if (!blinkingAnimation.animate()) {
+			g.setColor(Color.BLACK);
+			g.fillRect(tile.x * TS, tile.y * TS, TS, TS);
 		}
 	}
 }

@@ -21,29 +21,28 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package de.amr.games.pacman.ui.swing.rendering.mspacman;
+package de.amr.games.pacman.ui.swing.entity.mspacman;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import de.amr.games.pacman.model.mspacman.entities.JuniorBag;
+import de.amr.games.pacman.lib.TimedSequence;
+import de.amr.games.pacman.model.common.GameEntity;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
-public class JuniorBag2D {
+public class Stork2D {
 
-	private final JuniorBag bag;
+	private final GameEntity stork;
 	private final Rendering2D rendering;
-	private BufferedImage blueBag;
-	private BufferedImage junior;
+	public TimedSequence<BufferedImage> animation;
 
-	public JuniorBag2D(JuniorBag bag, Rendering2D rendering) {
-		this.bag = bag;
+	public Stork2D(GameEntity stork, Rendering2D rendering) {
+		this.stork = stork;
 		this.rendering = rendering;
-		blueBag = rendering.getBlueBag();
-		junior = rendering.getJunior();
+		animation = rendering.createStorkFlyingAnimation();
 	}
 
 	public void render(Graphics2D g) {
-		rendering.renderEntity(g, bag, bag.open ? junior : blueBag);
+		rendering.renderEntity(g, stork, animation.animate());
 	}
 }

@@ -46,8 +46,8 @@ import de.amr.games.pacman.lib.TickTimer;
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.Ghost;
-import de.amr.games.pacman.ui.swing.rendering.common.Ghost2D;
-import de.amr.games.pacman.ui.swing.rendering.common.Player2D;
+import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
+import de.amr.games.pacman.ui.swing.entity.common.Player2D;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
 /**

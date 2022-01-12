@@ -40,10 +40,10 @@ import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.model.common.GhostState;
 import de.amr.games.pacman.ui.PacManGameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
-import de.amr.games.pacman.ui.swing.rendering.common.Bonus2D;
-import de.amr.games.pacman.ui.swing.rendering.common.Energizer2D;
-import de.amr.games.pacman.ui.swing.rendering.common.Ghost2D;
-import de.amr.games.pacman.ui.swing.rendering.common.Player2D;
+import de.amr.games.pacman.ui.swing.entity.common.Bonus2D;
+import de.amr.games.pacman.ui.swing.entity.common.Energizer2D;
+import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
+import de.amr.games.pacman.ui.swing.entity.common.Player2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**

@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package de.amr.games.pacman.ui.swing.rendering.common;
+package de.amr.games.pacman.ui.swing.entity.common;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -31,6 +31,7 @@ import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.model.common.Pac;
+import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**
  * 2D representation of the player (Pac-Man or Ms. Pac-Man).

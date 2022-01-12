@@ -32,7 +32,7 @@ import de.amr.games.pacman.controller.PacManGameController;
 import de.amr.games.pacman.controller.pacman.Intermission3Controller;
 import de.amr.games.pacman.controller.pacman.Intermission3Controller.IntermissionState;
 import de.amr.games.pacman.ui.PacManGameSound;
-import de.amr.games.pacman.ui.swing.rendering.common.Player2D;
+import de.amr.games.pacman.ui.swing.entity.common.Player2D;
 import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 

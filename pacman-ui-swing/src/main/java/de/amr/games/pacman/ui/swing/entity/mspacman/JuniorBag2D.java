@@ -21,38 +21,29 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package de.amr.games.pacman.ui.swing.rendering.pacman;
+package de.amr.games.pacman.ui.swing.entity.mspacman;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import de.amr.games.pacman.lib.TimedSequence;
-import de.amr.games.pacman.model.common.Pac;
+import de.amr.games.pacman.model.mspacman.entities.JuniorBag;
+import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
-/**
- * The big Pac-Man from the first intermission scene in Pac-Man.
- * 
- * @author Armin Reichert
- */
-public class BigPacMan2D {
+public class JuniorBag2D {
 
-	private final Rendering2D_PacMan rendering;
-	private final Pac pacMan;
-	public final TimedSequence<BufferedImage> munchingAnimation;
+	private final JuniorBag bag;
+	private final Rendering2D rendering;
+	private BufferedImage blueBag;
+	private BufferedImage junior;
 
-	public BigPacMan2D(Pac pacMan, Rendering2D_PacMan rendering) {
-		this.pacMan = pacMan;
+	public JuniorBag2D(JuniorBag bag, Rendering2D rendering) {
+		this.bag = bag;
 		this.rendering = rendering;
-		munchingAnimation = rendering.createBigPacManMunchingAnimation();
+		blueBag = rendering.getBlueBag();
+		junior = rendering.getJunior();
 	}
 
-	public void render(Graphics2D g_) {
-		Graphics2D g = (Graphics2D) g_.create();
-		BufferedImage sprite = munchingAnimation.animate();
-		// lift it up such that it sits on the ground instead of being vertically
-		// centered to the ground
-		g.translate(0, -sprite.getHeight() / 2 + 8);
-		rendering.renderEntity(g, pacMan, sprite);
-		g.dispose();
+	public void render(Graphics2D g) {
+		rendering.renderEntity(g, bag, bag.open ? junior : blueBag);
 	}
 }

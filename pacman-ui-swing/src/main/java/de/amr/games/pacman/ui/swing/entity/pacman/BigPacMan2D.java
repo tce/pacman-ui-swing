@@ -21,33 +21,39 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package de.amr.games.pacman.ui.swing.rendering.common;
+package de.amr.games.pacman.ui.swing.entity.pacman;
 
-import static de.amr.games.pacman.model.world.PacManGameWorld.TS;
-
-import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.lib.TimedSequence;
-import de.amr.games.pacman.lib.V2i;
+import de.amr.games.pacman.model.common.Pac;
+import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
 
-public class Energizer2D {
+/**
+ * The big Pac-Man from the first intermission scene in Pac-Man.
+ * 
+ * @author Armin Reichert
+ */
+public class BigPacMan2D {
 
-	private final V2i tile;
-	private TimedSequence<Boolean> blinkingAnimation = TimedSequence.pulse().frameDuration(10);
+	private final Rendering2D_PacMan rendering;
+	private final Pac pacMan;
+	public final TimedSequence<BufferedImage> munchingAnimation;
 
-	public Energizer2D(V2i tile) {
-		this.tile = tile;
+	public BigPacMan2D(Pac pacMan, Rendering2D_PacMan rendering) {
+		this.pacMan = pacMan;
+		this.rendering = rendering;
+		munchingAnimation = rendering.createBigPacManMunchingAnimation();
 	}
 
-	public TimedSequence<Boolean> getBlinkingAnimation() {
-		return blinkingAnimation;
-	}
-
-	public void render(Graphics2D g) {
-		if (!blinkingAnimation.animate()) {
-			g.setColor(Color.BLACK);
-			g.fillRect(tile.x * TS, tile.y * TS, TS, TS);
-		}
+	public void render(Graphics2D g_) {
+		Graphics2D g = (Graphics2D) g_.create();
+		BufferedImage sprite = munchingAnimation.animate();
+		// lift it up such that it sits on the ground instead of being vertically
+		// centered to the ground
+		g.translate(0, -sprite.getHeight() / 2 + 8);
+		rendering.renderEntity(g, pacMan, sprite);
+		g.dispose();
 	}
 }

@@ -21,36 +21,38 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package de.amr.games.pacman.ui.swing.rendering.mspacman;
+package de.amr.games.pacman.ui.swing.entity.mspacman;
 
-import static de.amr.games.pacman.model.world.PacManGameWorld.TS;
-
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import de.amr.games.pacman.model.common.GameEntity;
+import de.amr.games.pacman.lib.TimedSequence;
+import de.amr.games.pacman.model.mspacman.entities.Flap;
+import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
-public class Heart2D {
+public class Flap2D {
 
-	private final GameEntity heart;
-	private BufferedImage image;
+	public final Flap flap;
+	public final Rendering2D rendering;
+	public TimedSequence<BufferedImage> animation;
+	public Font font;
 
-	public Heart2D(GameEntity heart) {
-		this.heart = heart;
-	}
-
-	public void setImage(BufferedImage image) {
-		this.image = image;
-	}
-
-	public BufferedImage getImage() {
-		return image;
+	public Flap2D(Flap flap, Rendering2D rendering) {
+		this.flap = flap;
+		this.rendering = rendering;
+		font = rendering.getScoreFont();
+		animation = rendering.createFlapAnimation();
 	}
 
 	public void render(Graphics2D g) {
-		if (heart.visible) {
-			int dx = -(image.getWidth() - TS) / 2, dy = -(image.getHeight() - TS) / 2;
-			g.drawImage(image, (int) heart.position.x + dx, (int) heart.position.y + dy, null);
+		if (flap.visible) {
+			g.drawImage(animation.animate(), (int) flap.position.x, (int) flap.position.y, null);
+			g.setFont(font);
+			g.setColor(new Color(222, 222, 255));
+			g.drawString(flap.sceneNumber + "", (int) flap.position.x + 20, (int) flap.position.y + 30);
+			g.drawString(flap.sceneTitle, (int) flap.position.x + 40, (int) flap.position.y + 20);
 		}
 	}
 }
