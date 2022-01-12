@@ -122,12 +122,12 @@ public class MsPacManGameRendering extends Rendering2D {
 	}
 
 	@Override
-	public Map<Integer, BufferedImage> getBountyNumberSpritesMap() {
+	public Map<Integer, BufferedImage> getBountyNumberSprites() {
 		return assets.getBountyNumbersSpritesMap();
 	}
 
 	@Override
-	public Map<Integer, BufferedImage> getBonusNumberSpritesMap() {
+	public Map<Integer, BufferedImage> getBonusNumberSprites() {
 		return assets.getBonusNumbersSpritesMap();
 	}
 

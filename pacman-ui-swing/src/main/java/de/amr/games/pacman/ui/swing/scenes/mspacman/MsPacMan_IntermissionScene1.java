@@ -82,20 +82,24 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 
 		sceneController = new SceneController(gameController);
 		sceneController.init();
+
 		flap2D = new Flap2D(sceneController.flap);
 		flap2D.setFont(rendering.getScoreFont());
 		flap2D.setAnimation(rendering.createFlapAnimation());
 		msPacMan2D = new Player2D(sceneController.msPac, rendering);
 		pacMan2D = new Player2D(sceneController.pacMan, rendering);
+		// overwrite by Pac-Man instead of Ms. Pac-Man sprites:
 		pacMan2D.munchingAnimations = rendering.createSpouseMunchingAnimations();
-		inky2D = new Ghost2D(sceneController.inky);
-		inky2D.setKickingAnimations(rendering.createGhostKickingAnimations(inky2D.ghost.id));
-		inky2D.getKickingAnimations().values().forEach(TimedSequence::restart);
-		pinky2D = new Ghost2D(sceneController.pinky);
-		pinky2D.setKickingAnimations(rendering.createGhostKickingAnimations(pinky2D.ghost.id));
-		pinky2D.getKickingAnimations().values().forEach(TimedSequence::restart);
+		inky2D = new Ghost2D(sceneController.inky, rendering);
+		pinky2D = new Ghost2D(sceneController.pinky, rendering);
 		heart2D = new Heart2D(sceneController.heart);
 		heart2D.setImage(rendering.getHeart());
+
+		// start animations
+		msPacMan2D.munchingAnimations.values().forEach(TimedSequence::restart);
+		pacMan2D.munchingAnimations.values().forEach(TimedSequence::restart);
+		inky2D.kickingAnimations.values().forEach(TimedSequence::restart);
+		pinky2D.kickingAnimations.values().forEach(TimedSequence::restart);
 	}
 
 	@Override

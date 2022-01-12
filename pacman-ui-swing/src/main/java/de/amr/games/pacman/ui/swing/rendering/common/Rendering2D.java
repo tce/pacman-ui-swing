@@ -78,9 +78,9 @@ public abstract class Rendering2D {
 
 	public abstract Map<String, BufferedImage> getSymbolSpritesMap();
 
-	public abstract Map<Integer, BufferedImage> getBountyNumberSpritesMap();
+	public abstract Map<Integer, BufferedImage> getBountyNumberSprites();
 
-	public abstract Map<Integer, BufferedImage> getBonusNumberSpritesMap();
+	public abstract Map<Integer, BufferedImage> getBonusNumberSprites();
 
 	public abstract BufferedImage symbolSprite(String symbol);
 
@@ -136,7 +136,7 @@ public abstract class Rendering2D {
 
 	// drawing
 
-	protected void renderEntity(Graphics2D g, GameEntity entity, BufferedImage sprite) {
+	public void renderEntity(Graphics2D g, GameEntity entity, BufferedImage sprite) {
 		if (entity.visible && sprite != null) {
 			int dx = HTS - sprite.getWidth() / 2, dy = HTS - sprite.getHeight() / 2;
 			g.drawImage(sprite, (int) (entity.position.x + dx), (int) (entity.position.y + dy), null);
@@ -210,65 +210,4 @@ public abstract class Rendering2D {
 			g.drawString("OVER", t(15), t(21));
 		}
 	}
-
-//	public void drawMaze(Graphics2D g, GameModel game, int x, int y) {
-//		if (mazeFlashing(game.level.mazeNumber).hasStarted()) {
-//			BufferedImage image = (BufferedImage) mazeFlashing(game.level.mazeNumber).animate();
-//			g.drawImage(image, x, y, null);
-//			return;
-//		}
-//		if (foodAnimationOn && game.state == PacManGameState.HUNTING) {
-//			drawMazeWithFoodAnimation(g, game, game.level.mazeNumber, x, y);
-//		} else {
-//			drawMazeWithFood(g, game, game.level.mazeNumber, x, y);
-//		}
-//		game.level.world.tiles().filter(game.level::isFoodRemoved).forEach(tile -> {
-//			g.setColor(Color.BLACK);
-//			if (game.level.world.isEnergizerTile(tile)) {
-//				g.setColor(Color.BLACK);
-//				g.fillRect(t(tile.x) - 1, t(tile.y) - 1, TS + 2, TS + 2);
-//			} else {
-//				g.fillRect(t(tile.x), t(tile.y), TS, TS);
-//			}
-//		});
-//		if (energizerBlinking().isRunning() && energizerBlinking().animate()) {
-//			game.level.world.energizerTiles().forEach(tile -> {
-//				g.setColor(Color.BLACK);
-//				g.fillRect(t(tile.x) - 1, t(tile.y) - 1, TS + 2, TS + 2);
-//			});
-//		}
-//		drawBonus(g, game.bonus);
-//	}
-//
-//	private void drawMazeWithFood(Graphics2D g, GameModel game, int mazeNumber, int x, int y) {
-//		Graphics2D g2 = smoothGC(g);
-//		drawFullMaze(g2, game, mazeNumber, x, y);
-//		g2.dispose();
-//		game.level.world.tiles().filter(game.level::containsEatenFood).forEach(tile -> {
-//			g.setColor(Color.BLACK);
-//			g.fillRect(t(tile.x), t(tile.y), TS, TS);
-//		});
-//	}
-//
-//	private void drawMazeWithFoodAnimation(Graphics2D g, GameModel game, int mazeNumber, int x, int y) {
-//		drawEmptyMaze(g, game, mazeNumber, x, y);
-//		game.level.world.tiles().filter(game.level::containsFood).forEach(tile -> {
-//			if (game.level.world.isEnergizerTile(tile)) {
-//				g.setColor(Color.PINK);
-//				g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-//				g.fillOval(t(tile.x), t(tile.y), TS, TS);
-//				g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
-//			} else {
-//				long z = tile.x + tile.y;
-//				z += God.clock.ticksTotal / 15;
-//				int r = (int) (z % HTS) - 1;
-//				r = Math.max(1, r);
-//				g.setColor(Color.PINK);
-//				g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-//				g.fillOval(t(tile.x) + HTS - r, t(tile.y) + HTS - r, 2 * r, 2 * r);
-//				g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
-//			}
-//		});
-//	}
-
 }

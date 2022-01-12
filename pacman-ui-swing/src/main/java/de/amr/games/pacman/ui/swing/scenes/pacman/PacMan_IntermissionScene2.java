@@ -76,9 +76,7 @@ public class PacMan_IntermissionScene2 extends GameScene {
 		sceneController = new SceneController(gameController);
 		sceneController.init();
 		pacMan2D = new Player2D(sceneController.pac, rendering);
-		blinky2D = new Ghost2D(sceneController.blinky);
-		blinky2D.setKickingAnimations(rendering.createGhostKickingAnimations(blinky2D.ghost.id));
-		blinky2D.getKickingAnimations().values().forEach(TimedSequence::restart);
+		blinky2D = new Ghost2D(sceneController.blinky, rendering);
 		blinkyStretchedAnimation = rendering.createBlinkyStretchedAnimation();
 		blinkyDamagedAnimation = rendering.createBlinkyDamagedAnimation();
 	}
@@ -107,8 +105,9 @@ public class PacMan_IntermissionScene2 extends GameScene {
 		if (stretching < 3) {
 			blinky2D.render(g);
 		} else {
-			BufferedImage blinkyDamaged = blinkyDamagedAnimation.frame(blinky2D.ghost.dir() == Direction.UP ? 0 : 1);
-			g.drawImage(blinkyDamaged, (int) (blinky2D.ghost.position.x - 4), (int) (blinky2D.ghost.position.y - 4), null);
+			BufferedImage blinkyDamaged = blinkyDamagedAnimation.frame(sceneController.blinky.dir() == Direction.UP ? 0 : 1);
+			g.drawImage(blinkyDamaged, (int) (sceneController.blinky.position.x - 4),
+					(int) (sceneController.blinky.position.y - 4), null);
 		}
 	}
 }

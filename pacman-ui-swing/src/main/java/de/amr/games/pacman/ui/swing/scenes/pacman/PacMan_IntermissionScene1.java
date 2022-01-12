@@ -35,6 +35,7 @@ import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.ui.PacManGameSound;
 import de.amr.games.pacman.ui.swing.rendering.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Player2D;
+import de.amr.games.pacman.ui.swing.rendering.pacman.BigPacMan2D;
 import de.amr.games.pacman.ui.swing.rendering.pacman.PacManGameRendering;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
@@ -60,6 +61,7 @@ public class PacMan_IntermissionScene1 extends GameScene {
 	private SceneController sceneController;
 	private Player2D pacMan2D;
 	private Ghost2D blinky2D;
+	private BigPacMan2D bigPacMan2D;
 
 	public PacMan_IntermissionScene1(Dimension size) {
 		super(size, ScenesPacMan.RENDERING, ScenesPacMan.SOUNDS);
@@ -72,12 +74,12 @@ public class PacMan_IntermissionScene1 extends GameScene {
 		sceneController = new SceneController(gameController);
 		sceneController.init();
 		pacMan2D = new Player2D(sceneController.pac, rendering);
-		blinky2D = new Ghost2D(sceneController.blinky);
-		blinky2D.setKickingAnimations(rendering.createGhostKickingAnimations(blinky2D.ghost.id));
-		blinky2D.getKickingAnimations().values().forEach(TimedSequence::restart);
-		blinky2D.setFrightenedAnimation(rendering.createGhostFrightenedAnimation());
-		blinky2D.getFrightenedAnimation().restart();
-		blinky2D.setFlashingAnimation(rendering.createGhostFlashingAnimation());
+		blinky2D = new Ghost2D(sceneController.blinky, rendering);
+		bigPacMan2D = new BigPacMan2D(sceneController.pac, ScenesPacMan.RENDERING);
+		pacMan2D.munchingAnimations.values().forEach(TimedSequence::restart);
+		blinky2D.kickingAnimations.values().forEach(TimedSequence::restart);
+		blinky2D.frightenedAnimation.restart();
+		bigPacMan2D.munchingAnimation.restart();
 	}
 
 	@Override
@@ -92,9 +94,7 @@ public class PacMan_IntermissionScene1 extends GameScene {
 		if (sceneController.currentStateID == IntermissionState.BLINKY_CHASING_PACMAN) {
 			pacMan2D.render(g);
 		} else {
-			g.translate(0, -10);
-			r.drawBigPacMan(g, sceneController.pac);
-			g.translate(0, 10);
+			bigPacMan2D.render(g);
 		}
 		r.drawLevelCounter(g, game, t(25), t(34));
 	}

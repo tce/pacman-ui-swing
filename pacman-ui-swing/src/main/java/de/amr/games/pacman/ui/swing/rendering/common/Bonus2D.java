@@ -43,7 +43,7 @@ public class Bonus2D {
 	public void setRendering(Rendering2D rendering) {
 		setJumpAnimation(rendering.createBonusAnimation());
 		setSymbolSprites(rendering.getSymbolSpritesMap());
-		setNumberSprites(rendering.getBonusNumberSpritesMap());
+		setNumberSprites(rendering.getBonusNumberSprites());
 	}
 
 	public TimedSequence<Integer> getJumpAnimation() {

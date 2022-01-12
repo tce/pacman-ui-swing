@@ -23,6 +23,7 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.scenes.pacman;
 
+import static de.amr.games.pacman.lib.TickTimer.sec_to_ticks;
 import static de.amr.games.pacman.model.world.PacManGameWorld.TS;
 import static de.amr.games.pacman.model.world.PacManGameWorld.t;
 
@@ -38,10 +39,8 @@ import java.util.stream.Stream;
 import de.amr.games.pacman.controller.PacManGameController;
 import de.amr.games.pacman.controller.pacman.IntroController;
 import de.amr.games.pacman.controller.pacman.IntroController.GhostPortrait;
-import de.amr.games.pacman.lib.TickTimer;
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.model.common.GameModel;
-import de.amr.games.pacman.model.common.Ghost;
 import de.amr.games.pacman.ui.swing.rendering.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Player2D;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
@@ -62,7 +61,7 @@ public class PacMan_IntroScene extends GameScene {
 	private IntroController sceneController;
 	private Player2D pacMan2D;
 	private List<Ghost2D> ghosts2D;
-	private List<Ghost2D> ghostsInGallery2D;
+	private List<Ghost2D> gallery2D;
 
 	public PacMan_IntroScene(Dimension size) {
 		super(size, ScenesPacMan.RENDERING, ScenesPacMan.SOUNDS);
@@ -74,22 +73,22 @@ public class PacMan_IntroScene extends GameScene {
 
 		sceneController = new IntroController(gameController);
 		sceneController.init();
+
+		// TODO hide score points
+
 		pacMan2D = new Player2D(sceneController.pacMan, rendering);
-		ghosts2D = Stream.of(sceneController.ghosts).map(Ghost2D::new).collect(Collectors.toList());
-		ghosts2D.forEach(ghost2D -> {
-			ghost2D.setKickingAnimations(rendering.createGhostKickingAnimations(ghost2D.ghost.id));
-			ghost2D.getKickingAnimations().values().forEach(TimedSequence::restart);
-			ghost2D.setFrightenedAnimation(rendering.createGhostFrightenedAnimation());
-			ghost2D.getFrightenedAnimation().restart();
-			ghost2D.setFlashingAnimation(rendering.createGhostFlashingAnimation());
-			ghost2D.setBountyNumberSprites(rendering.getBountyNumberSpritesMap());
-		});
-		ghostsInGallery2D = new ArrayList<>();
+		pacMan2D.munchingAnimations.values().forEach(TimedSequence::restart);
+
+		ghosts2D = Stream.of(sceneController.ghosts).map(ghost -> {
+			Ghost2D ghost2D = new Ghost2D(ghost, rendering);
+			ghost2D.kickingAnimations.values().forEach(TimedSequence::restart);
+			ghost2D.frightenedAnimation.restart();
+			return ghost2D;
+		}).collect(Collectors.toList());
+
+		gallery2D = new ArrayList<>();
 		for (int i = 0; i < 4; ++i) {
-			Ghost ghost = sceneController.portraits[i].ghost;
-			Ghost2D ghost2D = new Ghost2D(ghost);
-			ghost2D.setKickingAnimations(rendering.createGhostKickingAnimations(ghost.id));
-			ghostsInGallery2D.add(ghost2D);
+			gallery2D.add(new Ghost2D(sceneController.portraits[i].ghost, rendering));
 		}
 	}
 
@@ -102,6 +101,7 @@ public class PacMan_IntroScene extends GameScene {
 	public void render(Graphics2D g_) {
 		Graphics2D g = (Graphics2D) g_.create();
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
 		rendering.drawScore(g, game, true);
 		switch (sceneController.currentStateID) {
 		case BEGIN:
@@ -111,7 +111,7 @@ public class PacMan_IntroScene extends GameScene {
 		case SHOWING_POINTS:
 			drawGallery(g);
 			drawPoints(g, 11, 25);
-			if (sceneController.stateTimer().ticked() > TickTimer.sec_to_ticks(1)) {
+			if (sceneController.stateTimer().ticked() > sec_to_ticks(1)) {
 				drawEnergizer(g);
 				drawCopyright(g, 32);
 			}
@@ -156,13 +156,13 @@ public class PacMan_IntroScene extends GameScene {
 			GhostPortrait portrait = sceneController.portraits[ghostID];
 			if (portrait.ghost.visible) {
 				int y = sceneController.topY + t(1 + 3 * ghostID);
-				ghostsInGallery2D.get(ghostID).render(g);
-				g.setColor(rendering.getGhostColor(ghostID));
-				g.setFont(rendering.getScoreFont());
+				gallery2D.get(ghostID).render(g);
 				if (portrait.characterVisible) {
+					g.setColor(rendering.getGhostColor(ghostID));
 					g.drawString("-" + portrait.character, t(6), y + 8);
 				}
 				if (portrait.nicknameVisible) {
+					g.setColor(rendering.getGhostColor(ghostID));
 					g.drawString("\"" + portrait.ghost.name + "\"", t(18), y + 8);
 				}
 			}
@@ -179,7 +179,7 @@ public class PacMan_IntroScene extends GameScene {
 	}
 
 	private void drawPoints(Graphics2D g, int tileX, int tileY) {
-		g.setColor(PELLET_COLOR);
+		g.setColor(PELLET_COLOR); // TODO add method getFoodColor() to rendering
 		g.fillRect(t(tileX) + 6, t(tileY - 1) + 2, 2, 2);
 		if (sceneController.blinking.frame()) {
 			g.fillOval(t(tileX), t(tileY + 1) - 2, 10, 10);

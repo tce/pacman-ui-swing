@@ -33,7 +33,6 @@ import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.model.common.GameEntity;
 import de.amr.games.pacman.model.common.Ghost;
-import de.amr.games.pacman.model.common.Pac;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**
@@ -75,6 +74,10 @@ public class PacManGameRendering extends Rendering2D {
 		return assets.createGhostsReturningHomeAnimations();
 	}
 
+	public TimedSequence<BufferedImage> createBigPacManMunchingAnimation() {
+		return assets.createBigPacManMunchingAnimation();
+	}
+
 	@Override
 	public TimedSequence<BufferedImage> createBlinkyStretchedAnimation() {
 		return assets.createBlinkyStretchedAnimation();
@@ -86,12 +89,12 @@ public class PacManGameRendering extends Rendering2D {
 	}
 
 	@Override
-	public Map<Integer, BufferedImage> getBountyNumberSpritesMap() {
+	public Map<Integer, BufferedImage> getBountyNumberSprites() {
 		return assets.numberSprites;
 	}
 
 	@Override
-	public Map<Integer, BufferedImage> getBonusNumberSpritesMap() {
+	public Map<Integer, BufferedImage> getBonusNumberSprites() {
 		return assets.numberSprites;
 	}
 
@@ -129,9 +132,9 @@ public class PacManGameRendering extends Rendering2D {
 		}
 	}
 
-	public void drawBigPacMan(Graphics2D g, Pac bigPacMan) {
-		renderEntity(g, bigPacMan, assets.bigPacManAnim.animate());
-	}
+//	public void drawBigPacMan(Graphics2D g, Pac bigPacMan) {
+//		renderEntity(g, bigPacMan, assets.bigPacManAnim.animate());
+//	}
 
 	public void drawNail(Graphics2D g, GameEntity nail) {
 		renderEntity(g, nail, assets.nailSprite);

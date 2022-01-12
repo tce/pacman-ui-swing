@@ -83,11 +83,13 @@ public class MsPacMan_IntroScene extends GameScene {
 		}
 
 		msPacMan2D = new Player2D(sceneController.msPacMan, rendering);
-		ghosts2D = Stream.of(sceneController.ghosts).map(Ghost2D::new).collect(Collectors.toList());
-		ghosts2D.forEach(ghost2D -> {
-			ghost2D.setKickingAnimations(rendering.createGhostKickingAnimations(ghost2D.ghost.id));
-			ghost2D.getKickingAnimations().values().forEach(TimedSequence::restart);
-		});
+		msPacMan2D.munchingAnimations.values().forEach(TimedSequence::restart);
+
+		ghosts2D = Stream.of(sceneController.ghosts).map(ghost -> {
+			Ghost2D ghost2D = new Ghost2D(ghost, rendering);
+			ghost2D.kickingAnimations.values().forEach(TimedSequence::restart);
+			return ghost2D;
+		}).collect(Collectors.toList());
 
 		boardAnimationTimer.reset();
 		boardAnimationTimer.start();
