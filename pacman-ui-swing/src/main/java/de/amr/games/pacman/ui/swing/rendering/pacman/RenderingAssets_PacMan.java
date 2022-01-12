@@ -49,7 +49,7 @@ import de.amr.games.pacman.ui.swing.assets.Spritesheet;
  * 
  * @author Armin Reichert
  */
-public class RenderingAssets_PacMan extends Spritesheet {
+public class RenderingAssets_PacMan {
 
 	/** Sprite sheet order of directions. */
 	static final List<Direction> order = Arrays.asList(RIGHT, LEFT, UP, DOWN);
@@ -62,6 +62,7 @@ public class RenderingAssets_PacMan extends Spritesheet {
 		return ghostType == 0 ? Color.RED : ghostType == 1 ? Color.pink : ghostType == 2 ? Color.CYAN : Color.ORANGE;
 	}
 
+	public final Spritesheet sheet;
 	public final Font scoreFont;
 
 	public final BufferedImage mazeFullImage;
@@ -74,7 +75,7 @@ public class RenderingAssets_PacMan extends Spritesheet {
 	public final BufferedImage nailSprite;
 
 	public RenderingAssets_PacMan() {
-		super(image("/pacman/graphics/sprites.png"), 16);
+		sheet = new Spritesheet(image("/pacman/graphics/sprites.png"), 16);
 
 		scoreFont = font("/emulogic.ttf", 8);
 
@@ -85,45 +86,46 @@ public class RenderingAssets_PacMan extends Spritesheet {
 
 		//@formatter:off
 		symbolSprites = Map.of(
-				PacManGame.CHERRIES,   sprite(2, 3),
-				PacManGame.STRAWBERRY, sprite(3, 3),
-				PacManGame.PEACH,      sprite(4, 3),
-				PacManGame.APPLE,      sprite(5, 3),
-				PacManGame.GRAPES,     sprite(6, 3),
-				PacManGame.GALAXIAN,   sprite(7, 3),
-				PacManGame.BELL,       sprite(8, 3),
-				PacManGame.KEY,        sprite(9, 3)
+				PacManGame.CHERRIES,   sheet.sprite(2, 3),
+				PacManGame.STRAWBERRY, sheet.sprite(3, 3),
+				PacManGame.PEACH,      sheet.sprite(4, 3),
+				PacManGame.APPLE,      sheet.sprite(5, 3),
+				PacManGame.GRAPES,     sheet.sprite(6, 3),
+				PacManGame.GALAXIAN,   sheet.sprite(7, 3),
+				PacManGame.BELL,       sheet.sprite(8, 3),
+				PacManGame.KEY,        sheet.sprite(9, 3)
 		);
 
 		numberSprites = Map.ofEntries(
-			entry(200,  sprite(0, 8)),
-			entry(400,  sprite(1, 8)),
-			entry(800,  sprite(2, 8)),
-			entry(1600, sprite(3, 8)),
+			entry(200,  sheet.sprite(0, 8)),
+			entry(400,  sheet.sprite(1, 8)),
+			entry(800,  sheet.sprite(2, 8)),
+			entry(1600, sheet.sprite(3, 8)),
 			
-			entry(100,  sprite(0, 9)),
-			entry(300,  sprite(1, 9)),
-			entry(500,  sprite(2, 9)),
-			entry(700,  sprite(3, 9)),
+			entry(100,  sheet.sprite(0, 9)),
+			entry(300,  sheet.sprite(1, 9)),
+			entry(500,  sheet.sprite(2, 9)),
+			entry(700,  sheet.sprite(3, 9)),
 			
-			entry(1000, spriteRegion(4, 9, 2, 1)), // left-aligned
-			entry(2000, spriteRegion(3, 10, 3, 1)),
-			entry(3000, spriteRegion(3, 11, 3, 1)),
-			entry(5000, spriteRegion(3, 12, 3, 1))
+			entry(1000, sheet.spriteRegion(4, 9, 2, 1)), // left-aligned
+			entry(2000, sheet.spriteRegion(3, 10, 3, 1)),
+			entry(3000, sheet.spriteRegion(3, 11, 3, 1)),
+			entry(5000, sheet.spriteRegion(3, 12, 3, 1))
 		);
 		//@formatter:on
 
 		// Animations
 
 		BufferedImage mazeEmptyDarkImage = image("/pacman/graphics/maze_empty.png");
-		BufferedImage mazeEmptyBrightImage = createBrightEffect(mazeEmptyDarkImage, new Color(33, 33, 255), Color.BLACK);
+		BufferedImage mazeEmptyBrightImage = sheet.createBrightEffect(mazeEmptyDarkImage, new Color(33, 33, 255),
+				Color.BLACK);
 		mazeFlashingAnim = TimedSequence.of(mazeEmptyBrightImage, mazeEmptyDarkImage).frameDuration(15);
 
-		blinkyPatched = TimedSequence.of(sprite(10, 7), sprite(11, 7)).restart().frameDuration(4).endless();
-		blinkyHalfNaked = TimedSequence.of(spriteRegion(8, 8, 2, 1), spriteRegion(10, 8, 2, 1)).endless().frameDuration(4)
-				.restart();
+		blinkyPatched = TimedSequence.of(sheet.sprite(10, 7), sheet.sprite(11, 7)).restart().frameDuration(4).endless();
+		blinkyHalfNaked = TimedSequence.of(sheet.spriteRegion(8, 8, 2, 1), sheet.spriteRegion(10, 8, 2, 1)).endless()
+				.frameDuration(4).restart();
 
-		nailSprite = sprite(8, 6);
+		nailSprite = sheet.sprite(8, 6);
 	}
 
 	public Font getScoreFont() {
@@ -131,13 +133,14 @@ public class RenderingAssets_PacMan extends Spritesheet {
 	}
 
 	public BufferedImage ghostImageByGhostByDir(int ghostID, Direction dir) {
-		return sprite(2 * index(dir), 4 + ghostID);
+		return sheet.sprite(2 * index(dir), 4 + ghostID);
 	}
 
 	public TimedSequence<BufferedImage> createPlayerDyingAnimation() {
-		return TimedSequence.of(//
-				sprite(3, 0), sprite(4, 0), sprite(5, 0), sprite(6, 0), sprite(7, 0), //
-				sprite(8, 0), sprite(9, 0), sprite(10, 0), sprite(11, 0), sprite(12, 0), sprite(13, 0))//
+		return TimedSequence.of( //
+				sheet.sprite(3, 0), sheet.sprite(4, 0), sheet.sprite(5, 0), sheet.sprite(6, 0), //
+				sheet.sprite(7, 0), sheet.sprite(8, 0), sheet.sprite(9, 0), sheet.sprite(10, 0), //
+				sheet.sprite(11, 0), sheet.sprite(12, 0), sheet.sprite(13, 0)) //
 				.frameDuration(8);
 	}
 
@@ -145,7 +148,7 @@ public class RenderingAssets_PacMan extends Spritesheet {
 		EnumMap<Direction, TimedSequence<BufferedImage>> munching = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
-			BufferedImage wide_open = sprite(0, d), open = sprite(1, d), closed = sprite(2, 0);
+			BufferedImage wide_open = sheet.sprite(0, d), open = sheet.sprite(1, d), closed = sheet.sprite(2, 0);
 			var animation = TimedSequence.of(closed, open, wide_open, open).frameDuration(2).endless().run();
 			munching.put(dir, animation);
 		}
@@ -155,8 +158,9 @@ public class RenderingAssets_PacMan extends Spritesheet {
 	public Map<Direction, TimedSequence<BufferedImage>> createGhostKickingAnimations(int ghostID) {
 		EnumMap<Direction, TimedSequence<BufferedImage>> walkingTo = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
-			TimedSequence<BufferedImage> anim = TimedSequence.of(sprite(2 * index(dir), 4 + ghostID),
-					sprite(2 * index(dir) + 1, 4 + ghostID));
+			TimedSequence<BufferedImage> anim = TimedSequence.of( //
+					sheet.sprite(2 * index(dir), 4 + ghostID), //
+					sheet.sprite(2 * index(dir) + 1, 4 + ghostID));
 			anim.frameDuration(8).endless();
 			walkingTo.put(dir, anim);
 		}
@@ -164,33 +168,36 @@ public class RenderingAssets_PacMan extends Spritesheet {
 	}
 
 	public TimedSequence<BufferedImage> createGhostFrightenedAnimation() {
-		TimedSequence<BufferedImage> animation = TimedSequence.of(sprite(8, 4), sprite(9, 4));
+		TimedSequence<BufferedImage> animation = TimedSequence.of(sheet.sprite(8, 4), sheet.sprite(9, 4));
 		animation.frameDuration(8).endless();
 		return animation;
 	}
 
 	public TimedSequence<BufferedImage> createGhostFlashingAnimation() {
-		return TimedSequence.of(sprite(8, 4), sprite(9, 4), sprite(10, 4), sprite(11, 4)).frameDuration(4);
+		return TimedSequence.of( //
+				sheet.sprite(8, 4), sheet.sprite(9, 4), sheet.sprite(10, 4), sheet.sprite(11, 4) //
+		).frameDuration(4);
 	}
 
 	public Map<Direction, TimedSequence<BufferedImage>> createGhostsReturningHomeAnimations() {
 		Map<Direction, TimedSequence<BufferedImage>> ghostEyesAnimsByDir = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
-			ghostEyesAnimsByDir.put(dir, TimedSequence.of(sprite(8 + index(dir), 5)));
+			ghostEyesAnimsByDir.put(dir, TimedSequence.of(sheet.sprite(8 + index(dir), 5)));
 		}
 		return ghostEyesAnimsByDir;
 	}
 
 	public TimedSequence<BufferedImage> createBigPacManMunchingAnimation() {
-		return TimedSequence.of(spriteRegion(2, 1, 2, 2), spriteRegion(4, 1, 2, 2), spriteRegion(6, 1, 2, 2))
+		return TimedSequence
+				.of(sheet.spriteRegion(2, 1, 2, 2), sheet.spriteRegion(4, 1, 2, 2), sheet.spriteRegion(6, 1, 2, 2))
 				.frameDuration(4).endless().run();
 	}
 
 	public TimedSequence<BufferedImage> createBlinkyStretchedAnimation() {
-		return TimedSequence.of(sprite(9, 6), sprite(10, 6), sprite(11, 6), sprite(12, 6));
+		return TimedSequence.of(sheet.sprite(9, 6), sheet.sprite(10, 6), sheet.sprite(11, 6), sheet.sprite(12, 6));
 	}
 
 	public TimedSequence<BufferedImage> createBlinkyDamagedAnimation() {
-		return TimedSequence.of(sprite(8, 7), sprite(9, 7));
+		return TimedSequence.of(sheet.sprite(8, 7), sheet.sprite(9, 7));
 	}
 }

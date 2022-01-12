@@ -99,30 +99,30 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 	@Override
 	public TimedSequence<BufferedImage> createFlapAnimation() {
 		return TimedSequence.of( //
-				assets.region(456, 208, 32, 32), //
-				assets.region(488, 208, 32, 32), //
-				assets.region(520, 208, 32, 32), //
-				assets.region(488, 208, 32, 32), //
-				assets.region(456, 208, 32, 32)//
+				assets.sheet.region(456, 208, 32, 32), //
+				assets.sheet.region(488, 208, 32, 32), //
+				assets.sheet.region(520, 208, 32, 32), //
+				assets.sheet.region(488, 208, 32, 32), //
+				assets.sheet.region(456, 208, 32, 32)//
 		).repetitions(1).frameDuration(4);
 	}
 
 	@Override
 	public TimedSequence<BufferedImage> createStorkFlyingAnimation() {
 		return TimedSequence.of(//
-				assets.region(489, 176, 32, 16), //
-				assets.region(521, 176, 32, 16)//
+				assets.sheet.region(489, 176, 32, 16), //
+				assets.sheet.region(521, 176, 32, 16)//
 		).endless().frameDuration(10);
 	}
 
 	@Override
 	public BufferedImage getBlueBag() {
-		return assets.region(488, 199, 8, 8);
+		return assets.sheet.region(488, 199, 8, 8);
 	}
 
 	@Override
 	public BufferedImage getJunior() {
-		return assets.region(509, 200, 8, 8);
+		return assets.sheet.region(509, 200, 8, 8);
 	}
 
 	@Override

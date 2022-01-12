@@ -35,37 +35,20 @@ import de.amr.games.pacman.lib.V2i;
  */
 public class Spritesheet {
 
-	public static BufferedImage createBrightEffect(BufferedImage src, Color borderColor, Color fillColor) {
-		BufferedImage dst = new BufferedImage(src.getWidth(), src.getHeight(), src.getType());
-		dst.getGraphics().drawImage(src, 0, 0, null);
-		for (int x = 0; x < src.getWidth(); ++x) {
-			for (int y = 0; y < src.getHeight(); ++y) {
-				if (src.getRGB(x, y) == borderColor.getRGB()) {
-					dst.setRGB(x, y, Color.WHITE.getRGB());
-				} else if (src.getRGB(x, y) == fillColor.getRGB()) {
-					dst.setRGB(x, y, Color.BLACK.getRGB());
-				} else {
-					dst.setRGB(x, y, src.getRGB(x, y));
-				}
-			}
-		}
-		return dst;
-	}
-
-	public final BufferedImage sheet;
+	public final BufferedImage image;
 	public final int raster;
 
 	public Spritesheet(BufferedImage image, int pixels) {
-		sheet = image;
+		this.image = image;
 		raster = pixels;
 	}
 
 	public BufferedImage region(int x, int y, int width, int height) {
-		return sheet.getSubimage(x, y, width, height);
+		return image.getSubimage(x, y, width, height);
 	}
 
 	public BufferedImage spriteRegion(int originX, int originY, int tileX, int tileY, int numTilesX, int numTilesY) {
-		return sheet.getSubimage(originX + tileX * raster, originY + tileY * raster, numTilesX * raster,
+		return image.getSubimage(originX + tileX * raster, originY + tileY * raster, numTilesX * raster,
 				numTilesY * raster);
 	}
 
@@ -83,5 +66,22 @@ public class Spritesheet {
 
 	public BufferedImage spriteAt(V2i tile) {
 		return sprite(tile.x, tile.y);
+	}
+
+	public BufferedImage createBrightEffect(BufferedImage src, Color borderColor, Color fillColor) {
+		BufferedImage dst = new BufferedImage(src.getWidth(), src.getHeight(), src.getType());
+		dst.getGraphics().drawImage(src, 0, 0, null);
+		for (int x = 0; x < src.getWidth(); ++x) {
+			for (int y = 0; y < src.getHeight(); ++y) {
+				if (src.getRGB(x, y) == borderColor.getRGB()) {
+					dst.setRGB(x, y, Color.WHITE.getRGB());
+				} else if (src.getRGB(x, y) == fillColor.getRGB()) {
+					dst.setRGB(x, y, Color.BLACK.getRGB());
+				} else {
+					dst.setRGB(x, y, src.getRGB(x, y));
+				}
+			}
+		}
+		return dst;
 	}
 }

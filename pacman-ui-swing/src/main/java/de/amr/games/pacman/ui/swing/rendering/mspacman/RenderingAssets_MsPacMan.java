@@ -49,7 +49,7 @@ import de.amr.games.pacman.ui.swing.assets.Spritesheet;
  * 
  * @author Armin Reichert
  */
-public class RenderingAssets_MsPacMan extends Spritesheet {
+public class RenderingAssets_MsPacMan {
 
 	/** Sprite sheet order of directions. */
 	static final List<Direction> order = Arrays.asList(RIGHT, LEFT, UP, DOWN);
@@ -80,6 +80,8 @@ public class RenderingAssets_MsPacMan extends Spritesheet {
 	
 	//@formatter:on
 
+	final Spritesheet sheet;
+
 	final Font scoreFont;
 
 	final Map<String, BufferedImage> symbolSprites;
@@ -91,7 +93,7 @@ public class RenderingAssets_MsPacMan extends Spritesheet {
 	final List<TimedSequence<BufferedImage>> mazesFlashingAnims;
 
 	public RenderingAssets_MsPacMan() {
-		super(image("/mspacman/graphics/sprites.png"), 16);
+		sheet = new Spritesheet(image("/mspacman/graphics/sprites.png"), 16);
 
 		scoreFont = font("/emulogic.ttf", 8);
 
@@ -100,9 +102,9 @@ public class RenderingAssets_MsPacMan extends Spritesheet {
 		mazeFullImages = new ArrayList<>(6);
 		mazesFlashingAnims = new ArrayList<>(6);
 		for (int i = 0; i < 6; ++i) {
-			mazeFullImages.add(sheet.getSubimage(0, i * 248, 226, 248));
-			mazeEmptyImages.add(sheet.getSubimage(226, i * 248, 226, 248));
-			BufferedImage mazeEmpzyBright = createBrightEffect(mazeEmptyImages.get(i), getMazeWallBorderColor(i),
+			mazeFullImages.add(sheet.image.getSubimage(0, i * 248, 226, 248));
+			mazeEmptyImages.add(sheet.image.getSubimage(226, i * 248, 226, 248));
+			BufferedImage mazeEmpzyBright = sheet.createBrightEffect(mazeEmptyImages.get(i), getMazeWallBorderColor(i),
 					getMazeWallColor(i));
 			mazesFlashingAnims.add(TimedSequence.of(mazeEmpzyBright, mazeEmptyImages.get(i)).frameDuration(15));
 		}
@@ -141,7 +143,7 @@ public class RenderingAssets_MsPacMan extends Spritesheet {
 	 * Picks sprite from the right part of the sheet, on the left are the maze images
 	 */
 	public BufferedImage s(int tileX, int tileY) {
-		return sprite(456, 0, tileX, tileY);
+		return sheet.sprite(456, 0, tileX, tileY);
 	}
 
 	/**

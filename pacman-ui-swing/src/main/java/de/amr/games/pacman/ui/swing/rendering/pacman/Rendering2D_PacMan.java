@@ -157,7 +157,7 @@ public class Rendering2D_PacMan extends Rendering2D {
 
 	@Override
 	public BufferedImage lifeSprite() {
-		return assets.sprite(8, 1);
+		return assets.sheet.sprite(8, 1);
 	}
 
 	@Override
