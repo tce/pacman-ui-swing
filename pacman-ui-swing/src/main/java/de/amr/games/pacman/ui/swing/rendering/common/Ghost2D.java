@@ -54,7 +54,11 @@ public class Ghost2D {
 		this.ghost = ghost;
 	}
 
-	public void setRendering(AbstractPacManGameRendering rendering) {
+	public void reset() {
+		// TODO
+	}
+
+	public void setRendering(Rendering2D rendering) {
 		setKickingAnimations(rendering.createGhostKickingAnimations(ghost.id));
 		setFrightenedAnimation(rendering.createGhostFrightenedAnimation());
 		setFlashingAnimation(rendering.createGhostFlashingAnimation());

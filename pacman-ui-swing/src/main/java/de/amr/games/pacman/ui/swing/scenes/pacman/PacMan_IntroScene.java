@@ -74,8 +74,7 @@ public class PacMan_IntroScene extends GameScene {
 
 		sceneController = new IntroController(gameController);
 		sceneController.init();
-		pacMan2D = new Player2D(sceneController.pacMan);
-		pacMan2D.setMunchingAnimations(rendering.createPlayerMunchingAnimations());
+		pacMan2D = new Player2D(sceneController.pacMan, rendering);
 		ghosts2D = Stream.of(sceneController.ghosts).map(Ghost2D::new).collect(Collectors.toList());
 		ghosts2D.forEach(ghost2D -> {
 			ghost2D.setKickingAnimations(rendering.createGhostKickingAnimations(ghost2D.ghost.id));

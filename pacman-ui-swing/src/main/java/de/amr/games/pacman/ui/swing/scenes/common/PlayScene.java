@@ -40,11 +40,11 @@ import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.model.common.GhostState;
 import de.amr.games.pacman.ui.PacManGameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
-import de.amr.games.pacman.ui.swing.rendering.common.AbstractPacManGameRendering;
 import de.amr.games.pacman.ui.swing.rendering.common.Bonus2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Energizer2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Player2D;
+import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**
  * The play scene for Pac-Man and Ms. Pac-Man.
@@ -60,7 +60,7 @@ public class PlayScene extends GameScene {
 
 	private TimedSequence<?> mazeFlashing;
 
-	public PlayScene(Dimension size, AbstractPacManGameRendering rendering, SoundManager sounds) {
+	public PlayScene(Dimension size, Rendering2D rendering, SoundManager sounds) {
 		super(size, rendering, sounds);
 	}
 
@@ -68,8 +68,7 @@ public class PlayScene extends GameScene {
 	public void init(PacManGameController gameController) {
 		super.init(gameController);
 
-		player2D = new Player2D(game.player);
-		player2D.setRendering(rendering);
+		player2D = new Player2D(game.player, rendering);
 
 		ghosts2D = game.ghosts().map(Ghost2D::new).collect(Collectors.toList());
 		ghosts2D.forEach(ghost2D -> ghost2D.setRendering(rendering));
@@ -105,8 +104,11 @@ public class PlayScene extends GameScene {
 
 		// enter READY
 		if (e.newGameState == PacManGameState.READY) {
+			sounds.stopAll();
 			energizers2D.forEach(energizer2D -> energizer2D.getBlinkingAnimation().reset());
 			rendering.mazeFlashing(game.mazeNumber).reset();
+			player2D.reset();
+			ghosts2D.forEach(Ghost2D::reset);
 			if (!gameController.isAttractMode() && !gameController.isGameRunning()) {
 				sounds.setMuted(false);
 				sounds.play(PacManGameSound.GAME_READY);
@@ -116,7 +118,7 @@ public class PlayScene extends GameScene {
 		// enter HUNTING
 		if (e.newGameState == PacManGameState.HUNTING) {
 			energizers2D.forEach(energizer2D -> energizer2D.getBlinkingAnimation().restart());
-			player2D.getMunchingAnimations().values().forEach(TimedSequence::restart);
+			player2D.munchingAnimations.values().forEach(TimedSequence::restart);
 			ghosts2D.forEach(ghost2D -> {
 				ghost2D.getKickingAnimations().values().forEach(TimedSequence::restart);
 			});
@@ -266,7 +268,7 @@ public class PlayScene extends GameScene {
 		ghosts2D.forEach(ghost2D -> {
 			ghost2D.getKickingAnimations().values().forEach(TimedSequence::reset);
 		});
-		player2D.getDyingAnimation().delay(60).onStart(() -> {
+		player2D.dyingAnimation.delay(60).onStart(() -> {
 			game.hideGhosts();
 			if (gameController.isGameRunning()) {
 				sounds.play(PacManGameSound.PACMAN_DEATH);

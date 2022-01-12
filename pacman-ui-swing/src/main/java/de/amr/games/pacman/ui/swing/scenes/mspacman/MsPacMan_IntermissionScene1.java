@@ -85,12 +85,9 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 		flap2D = new Flap2D(sceneController.flap);
 		flap2D.setFont(rendering.getScoreFont());
 		flap2D.setAnimation(rendering.createFlapAnimation());
-		msPacMan2D = new Player2D(sceneController.msPac);
-		msPacMan2D.setMunchingAnimations(rendering.createPlayerMunchingAnimations());
-		msPacMan2D.getMunchingAnimations().values().forEach(TimedSequence::restart);
-		pacMan2D = new Player2D(sceneController.pacMan);
-		pacMan2D.setMunchingAnimations(rendering.createSpouseMunchingAnimations());
-		pacMan2D.getMunchingAnimations().values().forEach(TimedSequence::restart);
+		msPacMan2D = new Player2D(sceneController.msPac, rendering);
+		pacMan2D = new Player2D(sceneController.pacMan, rendering);
+		pacMan2D.munchingAnimations = rendering.createSpouseMunchingAnimations();
 		inky2D = new Ghost2D(sceneController.inky);
 		inky2D.setKickingAnimations(rendering.createGhostKickingAnimations(inky2D.ghost.id));
 		inky2D.getKickingAnimations().values().forEach(TimedSequence::restart);

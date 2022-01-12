@@ -34,14 +34,14 @@ import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.model.common.GameEntity;
 import de.amr.games.pacman.model.common.Ghost;
 import de.amr.games.pacman.model.common.Pac;
-import de.amr.games.pacman.ui.swing.rendering.common.AbstractPacManGameRendering;
+import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**
  * Sprite-based rendering for the Pac-Man game.
  * 
  * @author Armin Reichert
  */
-public class PacManGameRendering extends AbstractPacManGameRendering {
+public class PacManGameRendering extends Rendering2D {
 
 	public final PacManGameRenderingAssets assets = new PacManGameRenderingAssets();
 
@@ -130,19 +130,19 @@ public class PacManGameRendering extends AbstractPacManGameRendering {
 	}
 
 	public void drawBigPacMan(Graphics2D g, Pac bigPacMan) {
-		drawEntitySprite(g, bigPacMan, assets.bigPacManAnim.animate());
+		renderEntity(g, bigPacMan, assets.bigPacManAnim.animate());
 	}
 
 	public void drawNail(Graphics2D g, GameEntity nail) {
-		drawEntitySprite(g, nail, assets.nailSprite);
+		renderEntity(g, nail, assets.nailSprite);
 	}
 
 	public void drawBlinkyPatched(Graphics2D g, Ghost blinky) {
-		drawEntitySprite(g, blinky, assets.blinkyPatched.animate());
+		renderEntity(g, blinky, assets.blinkyPatched.animate());
 	}
 
 	public void drawBlinkyNaked(Graphics2D g, Ghost blinky) {
-		drawEntitySprite(g, blinky, assets.blinkyHalfNaked.animate());
+		renderEntity(g, blinky, assets.blinkyHalfNaked.animate());
 	}
 
 	@Override

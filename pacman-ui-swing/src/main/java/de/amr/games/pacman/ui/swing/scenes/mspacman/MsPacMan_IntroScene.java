@@ -82,10 +82,7 @@ public class MsPacMan_IntroScene extends GameScene {
 			Logging.log("Could not load image %s", path);
 		}
 
-		msPacMan2D = new Player2D(sceneController.msPacMan);
-		msPacMan2D.setMunchingAnimations(rendering.createPlayerMunchingAnimations());
-		msPacMan2D.getMunchingAnimations().values().forEach(TimedSequence::restart);
-
+		msPacMan2D = new Player2D(sceneController.msPacMan, rendering);
 		ghosts2D = Stream.of(sceneController.ghosts).map(Ghost2D::new).collect(Collectors.toList());
 		ghosts2D.forEach(ghost2D -> {
 			ghost2D.setKickingAnimations(rendering.createGhostKickingAnimations(ghost2D.ghost.id));
@@ -117,6 +114,8 @@ public class MsPacMan_IntroScene extends GameScene {
 		} else if (state == IntroState.PRESENTING_MSPACMAN) {
 			drawStarringMsPacMan(g);
 		} else if (state == IntroState.WAITING_FOR_GAME) {
+			// TODO: this hack ensures that Ms. Pac-Man is displayed with mouth half open
+			msPacMan2D.reset();
 			drawStarringMsPacMan(g);
 			drawPressKeyToStart(g, 26);
 		}

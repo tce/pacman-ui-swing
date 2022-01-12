@@ -71,9 +71,7 @@ public class PacMan_IntermissionScene1 extends GameScene {
 
 		sceneController = new SceneController(gameController);
 		sceneController.init();
-		pacMan2D = new Player2D(sceneController.pac);
-		pacMan2D.setMunchingAnimations(rendering.createPlayerMunchingAnimations());
-		pacMan2D.getMunchingAnimations().values().forEach(TimedSequence::restart);
+		pacMan2D = new Player2D(sceneController.pac, rendering);
 		blinky2D = new Ghost2D(sceneController.blinky);
 		blinky2D.setKickingAnimations(rendering.createGhostKickingAnimations(blinky2D.ghost.id));
 		blinky2D.getKickingAnimations().values().forEach(TimedSequence::restart);

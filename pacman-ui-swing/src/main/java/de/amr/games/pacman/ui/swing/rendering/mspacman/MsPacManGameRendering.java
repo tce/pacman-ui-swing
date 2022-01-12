@@ -31,14 +31,14 @@ import java.util.Map;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TimedSequence;
-import de.amr.games.pacman.ui.swing.rendering.common.AbstractPacManGameRendering;
+import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**
  * Rendering for the Ms. Pac-Man game.
  * 
  * @author Armin Reichert
  */
-public class MsPacManGameRendering extends AbstractPacManGameRendering {
+public class MsPacManGameRendering extends Rendering2D {
 
 	public final MsPacManGameRenderingAssets assets = new MsPacManGameRenderingAssets();
 

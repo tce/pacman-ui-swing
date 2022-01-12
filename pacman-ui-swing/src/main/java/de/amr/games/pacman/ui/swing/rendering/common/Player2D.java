@@ -23,8 +23,6 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.rendering.common;
 
-import static de.amr.games.pacman.model.world.PacManGameWorld.TS;
-
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Map;
@@ -34,53 +32,47 @@ import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.model.common.Pac;
 
+/**
+ * 2D representation of the player (Pac-Man or Ms. Pac-Man).
+ * 
+ * @author Armin Reichert
+ */
 public class Player2D {
 
 	private final Pac player;
-	private Map<Direction, TimedSequence<BufferedImage>> munchingAnimations;
-	private TimedSequence<BufferedImage> dyingAnimation;
+	private final Rendering2D rendering;
 
-	public Player2D(Pac pac) {
+	public Map<Direction, TimedSequence<BufferedImage>> munchingAnimations;
+	public TimedSequence<BufferedImage> dyingAnimation;
+
+	private BufferedImage currentSprite;
+
+	public Player2D(Pac pac, Rendering2D rendering) {
 		this.player = pac;
+		this.rendering = rendering;
+		reset();
 	}
 
-	public void setRendering(AbstractPacManGameRendering rendering) {
-		setMunchingAnimations(rendering.createPlayerMunchingAnimations());
-		setDyingAnimation(rendering.createPlayerDyingAnimation());
-	}
-
-	public TimedSequence<BufferedImage> getDyingAnimation() {
-		return dyingAnimation;
-	}
-
-	public void setDyingAnimation(TimedSequence<BufferedImage> dyingAnimation) {
-		this.dyingAnimation = dyingAnimation;
-	}
-
-	public void setMunchingAnimations(Map<Direction, TimedSequence<BufferedImage>> munchingAnimations) {
-		this.munchingAnimations = munchingAnimations;
-	}
-
-	public Map<Direction, TimedSequence<BufferedImage>> getMunchingAnimations() {
-		return munchingAnimations;
+	public void reset() {
+		munchingAnimations = rendering.createPlayerMunchingAnimations();
+		dyingAnimation = rendering.createPlayerDyingAnimation();
+		// TODO set delay here
+		currentSprite = munchingAnimations.get(player.dir()).frame();
 	}
 
 	public void render(Graphics2D g) {
-		BufferedImage sprite = currentSprite();
-		if (player.visible) {
-			int dx = (TS - sprite.getWidth()) / 2, dy = (TS - sprite.getHeight()) / 2;
-			g.drawImage(sprite, (int) (player.position.x + dx), (int) (player.position.y + dy), null);
-		}
-	}
-
-	private BufferedImage currentSprite() {
+		final Direction dir = player.dir();
 		if (player.dead) {
-			return dyingAnimation.hasStarted() ? dyingAnimation.animate() : munchingAnimations.get(player.dir()).frame();
+			if (dyingAnimation.hasStarted()) {
+				dyingAnimation.animate();
+			}
+			currentSprite = dyingAnimation.frame();
+		} else {
+			if (!player.velocity.equals(V2d.NULL) && !player.stuck) {
+				munchingAnimations.get(dir).animate();
+			}
+			currentSprite = munchingAnimations.get(dir).frame();
 		}
-		if (player.velocity.equals(V2d.NULL)) {
-			boolean msPacMan = player.name.equals("Ms. Pac-Man");
-			return munchingAnimations.get(player.dir()).frame(msPacMan ? 1 : 2);
-		}
-		return player.stuck ? munchingAnimations.get(player.dir()).frame() : munchingAnimations.get(player.dir()).animate();
+		rendering.renderEntity(g, player, currentSprite);
 	}
 }

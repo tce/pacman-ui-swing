@@ -150,8 +150,7 @@ public class PacManGameRenderingAssets extends Spritesheet {
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
 			BufferedImage wide_open = sprite(0, d), open = sprite(1, d), closed = sprite(2, 0);
-			var animation = TimedSequence.of(open, open, closed, closed, closed, open, open, wide_open, wide_open)
-					.frameDuration(1).endless().run();
+			var animation = TimedSequence.of(closed, open, wide_open, open).frameDuration(2).endless().run();
 			munching.put(dir, animation);
 		}
 		return munching;
