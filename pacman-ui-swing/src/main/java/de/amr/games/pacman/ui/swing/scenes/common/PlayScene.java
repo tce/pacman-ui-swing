@@ -71,8 +71,7 @@ public class PlayScene extends GameScene {
 		player2D = new Player2D(game.player, rendering);
 		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, rendering)).collect(Collectors.toList());
 		energizers2D = game.world.energizerTiles().map(Energizer2D::new).collect(Collectors.toList());
-		bonus2D = new Bonus2D();
-		bonus2D.setRendering(rendering);
+		bonus2D = new Bonus2D(rendering);
 		mazeFlashing = rendering.mazeFlashing(game.mazeNumber).repetitions(game.numFlashes);
 		mazeFlashing.reset();
 		game.player.powerTimer.addEventListener(this::handleGhostsFlashing);
@@ -197,17 +196,17 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void onBonusActivated(PacManGameEvent e) {
-		bonus2D.setBonus(game.bonus);
-		if (bonus2D.getJumpAnimation() != null) {
-			bonus2D.getJumpAnimation().restart();
+		bonus2D.bonus = game.bonus;
+		if (bonus2D.jumpAnimation != null) {
+			bonus2D.jumpAnimation.restart();
 		}
 	}
 
 	@Override
 	public void onBonusEaten(PacManGameEvent e) {
 		sounds.play(PacManGameSound.BONUS_EATEN);
-		if (bonus2D.getJumpAnimation() != null) {
-			bonus2D.getJumpAnimation().reset();
+		if (bonus2D.jumpAnimation != null) {
+			bonus2D.jumpAnimation.reset();
 		}
 	}
 

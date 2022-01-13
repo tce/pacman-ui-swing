@@ -34,37 +34,23 @@ import de.amr.games.pacman.model.common.BonusState;
 import de.amr.games.pacman.model.pacman.entities.Bonus;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
+/**
+ * Bonus symbol. In Pac-Man game, it resides at a fixed position. In Ms. Pac-Man, it appears at some portal and wanders
+ * the maze before it exits the maze through some portal on the other side. Changes to bonus value when consumed.
+ * 
+ * @author Armin Reichert
+ */
 public class Bonus2D {
 
-	private Bonus bonus;
-	private Map<String, BufferedImage> symbolSprites;
-	private Map<Integer, BufferedImage> numberSprites;
-	private TimedSequence<Integer> jumpAnimation;
+	public Bonus bonus;
+	public final Map<String, BufferedImage> symbolSprites;
+	public final Map<Integer, BufferedImage> numberSprites;
+	public final TimedSequence<Integer> jumpAnimation;
 
-	public void setRendering(Rendering2D rendering) {
-		setJumpAnimation(rendering.createBonusAnimation());
-		setSymbolSprites(rendering.getSymbolSpritesMap());
-		setNumberSprites(rendering.getBonusNumberSprites());
-	}
-
-	public TimedSequence<Integer> getJumpAnimation() {
-		return jumpAnimation;
-	}
-
-	public void setJumpAnimation(TimedSequence<Integer> jumpAnimation) {
-		this.jumpAnimation = jumpAnimation;
-	}
-
-	public void setBonus(Bonus bonus) {
-		this.bonus = bonus;
-	}
-
-	public void setSymbolSprites(Map<String, BufferedImage> symbolSprites) {
-		this.symbolSprites = symbolSprites;
-	}
-
-	public void setNumberSprites(Map<Integer, BufferedImage> numberSprites) {
-		this.numberSprites = numberSprites;
+	public Bonus2D(Rendering2D rendering) {
+		jumpAnimation = rendering.createBonusAnimation();
+		symbolSprites = rendering.getSymbolSpritesMap();
+		numberSprites = rendering.getBonusNumberSprites();
 	}
 
 	public void render(Graphics2D g) {
