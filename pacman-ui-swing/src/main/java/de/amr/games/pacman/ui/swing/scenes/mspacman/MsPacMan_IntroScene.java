@@ -41,7 +41,6 @@ import javax.imageio.ImageIO;
 import de.amr.games.pacman.controller.PacManGameController;
 import de.amr.games.pacman.controller.mspacman.IntroController;
 import de.amr.games.pacman.controller.mspacman.IntroController.IntroState;
-import de.amr.games.pacman.lib.Logging;
 import de.amr.games.pacman.lib.TickTimer;
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.lib.V2i;
@@ -57,30 +56,29 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
  */
 public class MsPacMan_IntroScene extends GameScene {
 
+	private static final String MIDWAY_LOGO = "/mspacman/graphics/midway.png";
+
 	private final V2i titlePosition = new V2i(t(9), t(8));
+	private final TickTimer boardAnimationTimer = new TickTimer("boardAnimation-timer");
+	private final IntroController sceneController = new IntroController();
+
 	private BufferedImage midwayLogo;
-	private IntroController sceneController;
 	private Player2D msPacMan2D;
 	private List<Ghost2D> ghosts2D;
-	private TickTimer boardAnimationTimer = new TickTimer("boardAnimation-timer");
 
 	public MsPacMan_IntroScene(Dimension size) {
 		super(size, ScenesMsPacMan.RENDERING, ScenesMsPacMan.SOUNDS);
+		try {
+			midwayLogo = ImageIO.read(getClass().getResourceAsStream(MIDWAY_LOGO));
+		} catch (IOException e) {
+			throw new RuntimeException(String.format("Resource '%s' could not be read", MIDWAY_LOGO));
+		}
 	}
 
 	@Override
 	public void init(PacManGameController gameController) {
 		super.init(gameController);
-
-		sceneController = new IntroController(gameController);
-		sceneController.init();
-
-		String path = "/mspacman/graphics/midway.png";
-		try {
-			midwayLogo = ImageIO.read(getClass().getResourceAsStream(path));
-		} catch (IOException e) {
-			Logging.log("Could not load image %s", path);
-		}
+		sceneController.init(gameController);
 
 		msPacMan2D = new Player2D(sceneController.msPacMan, rendering);
 		msPacMan2D.munchingAnimations.values().forEach(TimedSequence::restart);
