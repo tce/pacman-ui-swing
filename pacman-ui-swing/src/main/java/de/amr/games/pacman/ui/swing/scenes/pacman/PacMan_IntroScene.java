@@ -55,7 +55,8 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
  */
 public class PacMan_IntroScene extends GameScene {
 
-	private IntroController sceneController;
+	private final IntroController sceneController = new IntroController();
+
 	private Player2D pacMan2D;
 	private List<Ghost2D> ghosts2D;
 	private List<Ghost2D> gallery2D;
@@ -67,11 +68,7 @@ public class PacMan_IntroScene extends GameScene {
 	@Override
 	public void init(PacManGameController gameController) {
 		super.init(gameController);
-
-		sceneController = new IntroController(gameController);
-		sceneController.init();
-
-		// TODO hide score points
+		sceneController.init(gameController);
 
 		pacMan2D = new Player2D(sceneController.pacMan, rendering);
 		pacMan2D.munchingAnimations.values().forEach(TimedSequence::restart);
@@ -91,7 +88,7 @@ public class PacMan_IntroScene extends GameScene {
 
 	@Override
 	public void update() {
-		sceneController.update();
+		sceneController.updateState();
 	}
 
 	@Override
