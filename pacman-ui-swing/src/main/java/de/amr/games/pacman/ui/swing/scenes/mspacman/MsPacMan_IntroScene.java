@@ -97,7 +97,7 @@ public class MsPacMan_IntroScene extends GameScene {
 
 	@Override
 	public void update() {
-		sceneController.update();
+		sceneController.updateState();
 		boardAnimationTimer.tick();
 	}
 
