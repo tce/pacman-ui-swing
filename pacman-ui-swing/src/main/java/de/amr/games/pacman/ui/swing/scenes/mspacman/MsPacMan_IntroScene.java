@@ -178,13 +178,14 @@ public class MsPacMan_IntroScene extends GameScene {
 	}
 
 	private void drawCopyright(Graphics2D g) {
-		double scale = 36.0 / 391;
-		g.drawImage(midwayLogo, t(6), t(28) + 3, (int) (scale * 400), (int) (scale * 391), null);
+		double scale = 36.0 / midwayLogo.getHeight();
+		g.drawImage(midwayLogo, t(4), t(28) + 3, (int) (scale * midwayLogo.getWidth()),
+				(int) (scale * midwayLogo.getHeight()), null);
 		g.setColor(Color.RED);
 		g.setFont(new Font("Dialog", Font.PLAIN, 11));
-		g.drawString("\u00a9", t(11), t(30) + 2); // (c) symbol
+		g.drawString("\u00a9", t(9), t(30) + 2); // (c) symbol
 		g.setFont(rendering.getScoreFont());
-		g.drawString("MIDWAY MFG CO", t(13), t(30));
-		g.drawString("1980/1981", t(14), t(32));
+		g.drawString("MIDWAY MFG CO", t(11), t(30));
+		g.drawString("1980/1981", t(12), t(32));
 	}
 }
