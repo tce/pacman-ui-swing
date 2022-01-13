@@ -31,21 +31,26 @@ import java.awt.Graphics2D;
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.lib.V2i;
 
+/**
+ * Blinking energizer pellet.
+ * 
+ * @author Armin Reichert
+ */
 public class Energizer2D {
 
 	private final V2i tile;
-	private TimedSequence<Boolean> blinkingAnimation = TimedSequence.pulse().frameDuration(10);
+	private final TimedSequence<Boolean> animation = TimedSequence.pulse().frameDuration(10);
 
 	public Energizer2D(V2i tile) {
 		this.tile = tile;
 	}
 
-	public TimedSequence<Boolean> getBlinkingAnimation() {
-		return blinkingAnimation;
+	public TimedSequence<Boolean> getAnimation() {
+		return animation;
 	}
 
 	public void render(Graphics2D g) {
-		if (!blinkingAnimation.animate()) {
+		if (!animation.animate()) {
 			g.setColor(Color.BLACK);
 			g.fillRect(tile.x * TS, tile.y * TS, TS, TS);
 		}
