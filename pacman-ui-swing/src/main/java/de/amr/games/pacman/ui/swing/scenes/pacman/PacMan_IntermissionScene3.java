@@ -43,19 +43,7 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
  */
 public class PacMan_IntermissionScene3 extends GameScene {
 
-	private class SceneController extends Intermission3Controller {
-
-		public SceneController(PacManGameController gameController) {
-			super(gameController);
-		}
-
-		@Override
-		public void playIntermissionSound() {
-			sounds.loop(PacManGameSound.INTERMISSION_3, 2);
-		}
-	}
-
-	private SceneController sceneController;
+	private Intermission3Controller sceneController;
 	private Player2D pacMan2D;
 
 	public PacMan_IntermissionScene3(Dimension size) {
@@ -66,14 +54,16 @@ public class PacMan_IntermissionScene3 extends GameScene {
 	public void init(PacManGameController gameController) {
 		super.init(gameController);
 
-		sceneController = new SceneController(gameController);
+		sceneController = new Intermission3Controller(gameController);
+		sceneController.playIntermissionSound = () -> sounds.loop(PacManGameSound.INTERMISSION_3, 2);
 		sceneController.init();
+
 		pacMan2D = new Player2D(sceneController.pac, rendering);
 	}
 
 	@Override
 	public void update() {
-		sceneController.update();
+		sceneController.updateState();
 	}
 
 	@Override
