@@ -117,13 +117,14 @@ public class PacMan_IntroScene extends GameScene {
 			if (sceneController.blinking.frame()) {
 				drawEnergizer(g);
 			}
-			drawGuys(g);
+			int offset = sceneController.stateTimer().ticked() % 5 < 2 ? 0 : -1;
+			drawGuys(g, offset);
 			break;
 		case CHASING_GHOSTS:
 			drawGallery(g);
 			drawPoints(g, 11, 25);
 			drawCopyright(g, 32);
-			drawGuys(g);
+			drawGuys(g, 0);
 			break;
 		case READY_TO_PLAY:
 			drawGallery(g);
@@ -135,8 +136,14 @@ public class PacMan_IntroScene extends GameScene {
 		g.dispose();
 	}
 
-	private void drawGuys(Graphics2D g) {
-		ghosts2D.forEach(ghost2D -> ghost2D.render(g));
+	private void drawGuys(Graphics2D g, int offset) {
+		Graphics2D gg = (Graphics2D) g.create();
+		gg.translate(offset, 0);
+		ghosts2D.get(1).render(gg);
+		ghosts2D.get(2).render(gg);
+		gg.dispose();
+		ghosts2D.get(0).render(g);
+		ghosts2D.get(3).render(g);
 		pacMan2D.render(g);
 	}
 
