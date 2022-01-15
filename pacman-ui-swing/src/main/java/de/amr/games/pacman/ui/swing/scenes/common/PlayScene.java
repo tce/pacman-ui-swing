@@ -119,7 +119,7 @@ public class PlayScene extends GameScene {
 
 		// enter PACMAN_DYING
 		if (e.newGameState == PacManGameState.PACMAN_DYING) {
-			gameController.stateTimer().resetSeconds(3);
+			gameController.stateTimer().setSeconds(3);
 			gameController.stateTimer().start();
 			sounds.stopAll();
 			ghosts2D.forEach(ghost2D -> {

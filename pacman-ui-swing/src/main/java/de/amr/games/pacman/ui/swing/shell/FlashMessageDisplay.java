@@ -47,7 +47,7 @@ public class FlashMessageDisplay {
 
 		public FlashMessage(String text, long ticks) {
 			this.text = text;
-			timer.reset(ticks);
+			timer.set(ticks);
 		}
 	}
 

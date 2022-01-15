@@ -89,8 +89,7 @@ public class MsPacMan_IntroScene extends GameScene {
 			return ghost2D;
 		}).collect(Collectors.toList());
 
-		boardAnimationTimer.resetIndefinite();
-		boardAnimationTimer.start();
+		boardAnimationTimer.setIndefinite().start();
 	}
 
 	@Override
