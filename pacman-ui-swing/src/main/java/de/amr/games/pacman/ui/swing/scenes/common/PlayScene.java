@@ -148,6 +148,7 @@ public class PlayScene extends GameScene {
 
 		// enter LEVEL_COMPLETE
 		if (e.newGameState == PacManGameState.LEVEL_COMPLETE) {
+			player2D.reset();
 			mazeFlashing = rendering.mazeFlashing(game.mazeNumber);
 			sounds.stopAll();
 		}
