@@ -165,7 +165,7 @@ public class PacManGameUI_Swing implements PacManGameUI, DefaultPacManGameEventH
 	}
 
 	@Override
-	public void update() {
+	public void onTick() {
 		handleNonPlayerKeys();
 		if (currentGameScene != null) {
 			currentGameScene.update();
