@@ -29,6 +29,7 @@ import java.awt.Graphics2D;
 import de.amr.games.pacman.controller.PacManGameController;
 import de.amr.games.pacman.controller.event.DefaultPacManGameEventHandler;
 import de.amr.games.pacman.model.common.GameModel;
+import de.amr.games.pacman.ui.PacManGameUI;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
@@ -39,13 +40,15 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
  */
 public abstract class GameScene implements DefaultPacManGameEventHandler {
 
+	protected final PacManGameUI ui;
 	protected final Dimension size;
 	protected final Rendering2D rendering;
 	protected final SoundManager sounds;
 	protected PacManGameController gameController;
 	protected GameModel game;
 
-	public GameScene(Dimension size, Rendering2D rendering, SoundManager sounds) {
+	public GameScene(PacManGameUI ui, Dimension size, Rendering2D rendering, SoundManager sounds) {
+		this.ui = ui;
 		this.size = size;
 		this.rendering = rendering;
 		this.sounds = sounds;

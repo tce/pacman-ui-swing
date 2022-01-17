@@ -35,6 +35,7 @@ import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.ui.PacManGameSound;
+import de.amr.games.pacman.ui.PacManGameUI;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Player2D;
 import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
@@ -54,8 +55,8 @@ public class PacMan_IntermissionScene2 extends GameScene {
 	private TimedSequence<BufferedImage> blinkyStretchedAnimation;
 	private TimedSequence<BufferedImage> blinkyDamagedAnimation;
 
-	public PacMan_IntermissionScene2(Dimension size) {
-		super(size, ScenesPacMan.RENDERING, ScenesPacMan.SOUNDS);
+	public PacMan_IntermissionScene2(PacManGameUI ui, Dimension size) {
+		super(ui, size, ScenesPacMan.RENDERING, ScenesPacMan.SOUNDS);
 	}
 
 	@Override

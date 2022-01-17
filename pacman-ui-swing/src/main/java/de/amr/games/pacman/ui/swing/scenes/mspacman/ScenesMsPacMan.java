@@ -48,6 +48,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import de.amr.games.pacman.ui.PacManGameSound;
+import de.amr.games.pacman.ui.PacManGameUI;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
@@ -61,40 +62,40 @@ import de.amr.games.pacman.ui.swing.scenes.common.PlayScene;
 public class ScenesMsPacMan {
 
 	public static final Dimension UNSCALED_SIZE = new Dimension(t(28), t(36));
-	public static Rendering2D_MsPacMan RENDERING = new Rendering2D_MsPacMan();
+	public static final Rendering2D_MsPacMan RENDERING = new Rendering2D_MsPacMan();
+	public static SoundManager SOUNDS;
+	public static List<GameScene> SCENES;
 
 	private static Entry<PacManGameSound, String> entry(PacManGameSound sound, String path) {
 		return new SimpleEntry<>(sound, "/mspacman/sound/" + path);
 	}
 
-	private static Map<PacManGameSound, String> soundPaths = Map.ofEntries(//
-			entry(CREDIT, "Coin Credit.wav"), //
-			entry(EXTRA_LIFE, "Extra Life.wav"), //
-			entry(GAME_READY, "Start.wav"), //
-			entry(BONUS_EATEN, "Fruit.wav"), //
-			entry(PACMAN_MUNCH, "Ms. Pac Man Pill.wav"), //
-			entry(PACMAN_DEATH, "Died.wav"), //
-			entry(PACMAN_POWER, "Scared Ghost.wav"), //
-			entry(GHOST_EATEN, "Ghost.wav"), //
-			entry(GHOST_RETURNING, "Ghost Eyes.wav"), //
-			entry(GHOST_SIREN_1, "Ghost Noise 1.wav"), //
-			entry(GHOST_SIREN_2, "Ghost Noise 2.wav"), //
-			entry(GHOST_SIREN_3, "Ghost Noise 3.wav"), //
-			entry(GHOST_SIREN_4, "Ghost Noise 4.wav"), //
-			entry(INTERMISSION_1, "They Meet Act 1.wav"), //
-			entry(INTERMISSION_2, "The Chase Act 2.wav"), //
-			entry(INTERMISSION_3, "Junior Act 3.wav") //
-	);
+	public static void init(PacManGameUI ui) {
+		Map<PacManGameSound, String> soundPaths = Map.ofEntries(//
+				entry(CREDIT, "Coin Credit.wav"), //
+				entry(EXTRA_LIFE, "Extra Life.wav"), //
+				entry(GAME_READY, "Start.wav"), //
+				entry(BONUS_EATEN, "Fruit.wav"), //
+				entry(PACMAN_MUNCH, "Ms. Pac Man Pill.wav"), //
+				entry(PACMAN_DEATH, "Died.wav"), //
+				entry(PACMAN_POWER, "Scared Ghost.wav"), //
+				entry(GHOST_EATEN, "Ghost.wav"), //
+				entry(GHOST_RETURNING, "Ghost Eyes.wav"), //
+				entry(GHOST_SIREN_1, "Ghost Noise 1.wav"), //
+				entry(GHOST_SIREN_2, "Ghost Noise 2.wav"), //
+				entry(GHOST_SIREN_3, "Ghost Noise 3.wav"), //
+				entry(GHOST_SIREN_4, "Ghost Noise 4.wav"), //
+				entry(INTERMISSION_1, "They Meet Act 1.wav"), //
+				entry(INTERMISSION_2, "The Chase Act 2.wav"), //
+				entry(INTERMISSION_3, "Junior Act 3.wav") //
+		);
+		SOUNDS = new SoundManager(soundPaths);
 
-	public static final SoundManager SOUNDS = new SoundManager(soundPaths);
-
-	public static final List<GameScene> SCENES = List.of(
-	//@formatter:off
-		new MsPacMan_IntroScene(UNSCALED_SIZE), //
-		new MsPacMan_IntermissionScene1(UNSCALED_SIZE), //
-		new MsPacMan_IntermissionScene2(UNSCALED_SIZE), //
-		new MsPacMan_IntermissionScene3(UNSCALED_SIZE), //
-		new PlayScene(UNSCALED_SIZE, RENDERING, SOUNDS)//
-	//@formatter:on
-	);
+		SCENES = List.of(new MsPacMan_IntroScene(ui, UNSCALED_SIZE), //
+				new MsPacMan_IntermissionScene1(ui, UNSCALED_SIZE), //
+				new MsPacMan_IntermissionScene2(ui, UNSCALED_SIZE), //
+				new MsPacMan_IntermissionScene3(ui, UNSCALED_SIZE), //
+				new PlayScene(ui, UNSCALED_SIZE, RENDERING, SOUNDS)//
+		);
+	}
 }

@@ -32,6 +32,7 @@ import de.amr.games.pacman.controller.PacManGameController;
 import de.amr.games.pacman.controller.pacman.Intermission3Controller;
 import de.amr.games.pacman.controller.pacman.Intermission3Controller.IntermissionState;
 import de.amr.games.pacman.ui.PacManGameSound;
+import de.amr.games.pacman.ui.PacManGameUI;
 import de.amr.games.pacman.ui.swing.entity.common.Player2D;
 import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
@@ -46,8 +47,8 @@ public class PacMan_IntermissionScene3 extends GameScene {
 	private final Intermission3Controller sceneController = new Intermission3Controller();
 	private Player2D pacMan2D;
 
-	public PacMan_IntermissionScene3(Dimension size) {
-		super(size, ScenesPacMan.RENDERING, ScenesPacMan.SOUNDS);
+	public PacMan_IntermissionScene3(PacManGameUI ui, Dimension size) {
+		super(ui, size, ScenesPacMan.RENDERING, ScenesPacMan.SOUNDS);
 	}
 
 	@Override

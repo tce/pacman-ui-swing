@@ -55,7 +55,6 @@ public class PacManGameAppSwing {
 	public PacManGameAppSwing(Options options) {
 		controller = new PacManGameController(options.gameVariant);
 		view = new PacManGameUI_Swing(gameLoop, controller, options.height);
-		controller.setUI(view);
 		controller.addGameEventListener(view);
 		controller.setPlayerControl(new ManualPlayerControl(view.keyboard, "Up", "Down", "Left", "Right"));
 		gameLoop.action = () -> {

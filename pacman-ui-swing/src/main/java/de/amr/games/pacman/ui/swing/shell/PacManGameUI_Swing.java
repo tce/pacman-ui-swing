@@ -81,6 +81,9 @@ public class PacManGameUI_Swing implements PacManGameUI, DefaultPacManGameEventH
 		this.gameLoop = gameLoop;
 		this.gameController = controller;
 
+		ScenesPacMan.init(this);
+		ScenesMsPacMan.init(this);
+
 		unscaledSize = ScenesPacMan.UNSCALED_SIZE;
 		scaling = Math.round(height / unscaledSize.height);
 		scaledSize = new V2d(unscaledSize.width, unscaledSize.height).scaled(this.scaling).toV2i();

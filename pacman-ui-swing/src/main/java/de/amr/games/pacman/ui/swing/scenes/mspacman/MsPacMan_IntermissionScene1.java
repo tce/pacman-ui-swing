@@ -30,6 +30,7 @@ import de.amr.games.pacman.controller.PacManGameController;
 import de.amr.games.pacman.controller.mspacman.Intermission1Controller;
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.ui.PacManGameSound;
+import de.amr.games.pacman.ui.PacManGameUI;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Player2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Flap2D;
@@ -56,8 +57,8 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 	private Flap2D flap2D;
 	private Heart2D heart2D;
 
-	public MsPacMan_IntermissionScene1(Dimension size) {
-		super(size, ScenesMsPacMan.RENDERING, ScenesMsPacMan.SOUNDS);
+	public MsPacMan_IntermissionScene1(PacManGameUI ui, Dimension size) {
+		super(ui, size, ScenesMsPacMan.RENDERING, ScenesMsPacMan.SOUNDS);
 	}
 
 	@Override
