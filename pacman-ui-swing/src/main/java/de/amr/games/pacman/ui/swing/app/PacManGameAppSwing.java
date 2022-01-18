@@ -49,17 +49,17 @@ public class PacManGameAppSwing {
 	}
 
 	private final PacManGameController controller;
-	private final PacManGameUI_Swing view;
+	private final PacManGameUI_Swing ui;
 	private final GameLoop gameLoop = new GameLoop();
 
 	public PacManGameAppSwing(Options options) {
 		controller = new PacManGameController(options.gameVariant);
-		view = new PacManGameUI_Swing(gameLoop, controller, options.height);
-		controller.addGameEventListener(view);
-		controller.setPlayerControl(new ManualPlayerControl(view.keyboard, "Up", "Down", "Left", "Right"));
+		ui = new PacManGameUI_Swing(gameLoop, controller, options.height);
+		controller.addGameEventListener(ui);
+		controller.setPlayerControl(new ManualPlayerControl(ui.keyboard, "Up", "Down", "Left", "Right"));
 		gameLoop.action = () -> {
 			gameLoop.clock.frame(controller::updateState);
-			view.onTick();
+			ui.update();
 		};
 		gameLoop.start();
 	}
