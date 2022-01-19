@@ -39,13 +39,13 @@ import de.amr.games.pacman.lib.TickTimerEvent;
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.model.common.GhostState;
 import de.amr.games.pacman.ui.PacManGameSound;
-import de.amr.games.pacman.ui.PacManGameUI;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Bonus2D;
 import de.amr.games.pacman.ui.swing.entity.common.Energizer2D;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Player2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
+import de.amr.games.pacman.ui.swing.shell.PacManGameUI_Swing;
 
 /**
  * The play scene for Pac-Man and Ms. Pac-Man.
@@ -61,7 +61,7 @@ public class PlayScene extends GameScene {
 
 	private TimedSequence<?> mazeFlashing;
 
-	public PlayScene(PacManGameUI ui, Dimension size, Rendering2D rendering, SoundManager sounds) {
+	public PlayScene(PacManGameUI_Swing ui, Dimension size, Rendering2D rendering, SoundManager sounds) {
 		super(ui, size, rendering, sounds);
 	}
 

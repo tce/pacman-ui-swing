@@ -48,11 +48,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import de.amr.games.pacman.ui.PacManGameSound;
-import de.amr.games.pacman.ui.PacManGameUI;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.scenes.common.PlayScene;
+import de.amr.games.pacman.ui.swing.shell.PacManGameUI_Swing;
 
 /**
  * Ms. Pac-Man game scenes.
@@ -70,7 +70,7 @@ public class ScenesMsPacMan {
 		return new SimpleEntry<>(sound, "/mspacman/sound/" + path);
 	}
 
-	public static void init(PacManGameUI ui) {
+	public static void init(PacManGameUI_Swing ui) {
 		Map<PacManGameSound, String> soundPaths = Map.ofEntries(//
 				entry(CREDIT, "Coin Credit.wav"), //
 				entry(EXTRA_LIFE, "Extra Life.wav"), //

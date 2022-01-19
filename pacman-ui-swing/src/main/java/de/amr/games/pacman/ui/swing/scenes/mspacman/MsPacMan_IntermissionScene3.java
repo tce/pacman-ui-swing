@@ -29,12 +29,12 @@ import java.awt.Graphics2D;
 import de.amr.games.pacman.controller.PacManGameController;
 import de.amr.games.pacman.controller.mspacman.Intermission3Controller;
 import de.amr.games.pacman.ui.PacManGameSound;
-import de.amr.games.pacman.ui.PacManGameUI;
 import de.amr.games.pacman.ui.swing.entity.common.Player2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Flap2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.JuniorBag2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Stork2D;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
+import de.amr.games.pacman.ui.swing.shell.PacManGameUI_Swing;
 
 /**
  * Intermission scene 3: "Junior".
@@ -56,7 +56,7 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 	private Stork2D stork2D;
 	private JuniorBag2D bag2D;
 
-	public MsPacMan_IntermissionScene3(PacManGameUI ui, Dimension size) {
+	public MsPacMan_IntermissionScene3(PacManGameUI_Swing ui, Dimension size) {
 		super(ui, size, ScenesMsPacMan.RENDERING, ScenesMsPacMan.SOUNDS);
 	}
 

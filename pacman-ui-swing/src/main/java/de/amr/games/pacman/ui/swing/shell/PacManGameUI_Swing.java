@@ -48,7 +48,6 @@ import de.amr.games.pacman.controller.event.PacManGameEvent;
 import de.amr.games.pacman.controller.event.PacManGameStateChangeEvent;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
-import de.amr.games.pacman.ui.PacManGameUI;
 import de.amr.games.pacman.ui.swing.app.GameLoop;
 import de.amr.games.pacman.ui.swing.assets.AssetLoader;
 import de.amr.games.pacman.ui.swing.rendering.common.Debug;
@@ -61,7 +60,7 @@ import de.amr.games.pacman.ui.swing.scenes.pacman.ScenesPacMan;
  * 
  * @author Armin Reichert
  */
-public class PacManGameUI_Swing implements PacManGameUI, DefaultPacManGameEventHandler {
+public class PacManGameUI_Swing implements DefaultPacManGameEventHandler {
 
 	private final GameLoop gameLoop;
 	private final PacManGameController gameController;
@@ -202,7 +201,6 @@ public class PacManGameUI_Swing implements PacManGameUI, DefaultPacManGameEventH
 		ScenesPacMan.SOUNDS.stopAll();
 	}
 
-	@Override
 	public void showFlashMessage(double seconds, String message, Object... args) {
 		flashMessageDisplay.addMessage(seconds, message, args);
 	}
