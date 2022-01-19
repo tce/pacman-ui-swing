@@ -43,7 +43,7 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 public class Bonus2D {
 
 	public Bonus bonus;
-	public final Map<String, BufferedImage> symbolSprites;
+	public final Map<Integer, BufferedImage> symbolSprites;
 	public final Map<Integer, BufferedImage> numberSprites;
 	public final TimedSequence<Integer> jumpAnimation;
 

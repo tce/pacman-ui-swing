@@ -88,7 +88,7 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 
 	final Spritesheet sheet;
 	final Font scoreFont;
-	final Map<String, BufferedImage> symbolSprites;
+	final Map<Integer, BufferedImage> symbolSprites;
 	final Map<Integer, BufferedImage> bonusNumberSprites;
 	final Map<Integer, BufferedImage> bountyNumberSprites;
 	final List<BufferedImage> mazeEmptyImages;
@@ -284,7 +284,7 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 	}
 
 	@Override
-	public Map<String, BufferedImage> getSymbolSpritesMap() {
+	public Map<Integer, BufferedImage> getSymbolSpritesMap() {
 		return symbolSprites;
 	}
 
@@ -304,7 +304,7 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 	}
 
 	@Override
-	public BufferedImage symbolSprite(String symbol) {
+	public BufferedImage symbolSprite(int symbol) {
 		return symbolSprites.get(symbol);
 	}
 

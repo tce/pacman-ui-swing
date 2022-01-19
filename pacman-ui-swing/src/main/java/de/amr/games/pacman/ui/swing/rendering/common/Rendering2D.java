@@ -76,13 +76,13 @@ public abstract class Rendering2D {
 
 	public abstract Map<Direction, TimedSequence<BufferedImage>> createGhostReturningHomeAnimations();
 
-	public abstract Map<String, BufferedImage> getSymbolSpritesMap();
+	public abstract Map<Integer, BufferedImage> getSymbolSpritesMap();
 
 	public abstract Map<Integer, BufferedImage> getBountyNumberSprites();
 
 	public abstract Map<Integer, BufferedImage> getBonusNumberSprites();
 
-	public abstract BufferedImage symbolSprite(String symbol);
+	public abstract BufferedImage symbolSprite(int symbol);
 
 	public abstract BufferedImage lifeSprite();
 
@@ -198,7 +198,7 @@ public abstract class Rendering2D {
 		int x = rightX;
 		int firstLevel = Math.max(1, game.levelNumber - 6);
 		for (int level = firstLevel; level <= game.levelNumber; ++level) {
-			String symbol = game.levelSymbol(level);
+			int symbol = game.levelSymbol(level);
 			g.drawImage(symbolSprite(symbol), x, y, null);
 			x -= t(2);
 		}

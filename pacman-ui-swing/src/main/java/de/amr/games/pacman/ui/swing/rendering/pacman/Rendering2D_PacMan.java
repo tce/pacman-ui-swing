@@ -70,7 +70,7 @@ public class Rendering2D_PacMan extends Rendering2D {
 	public final BufferedImage mazeFullImage;
 	public final BufferedImage mazeEmptyImage;
 	public final TimedSequence<BufferedImage> mazeFlashingAnim;
-	public final Map<String, BufferedImage> symbolSprites;
+	public final Map<Integer, BufferedImage> symbolSprites;
 	public final Map<Integer, BufferedImage> numberSprites;
 	public final TimedSequence<BufferedImage> blinkyHalfNaked;
 	public final TimedSequence<BufferedImage> blinkyPatched;
@@ -146,7 +146,7 @@ public class Rendering2D_PacMan extends Rendering2D {
 	}
 
 	@Override
-	public Map<String, BufferedImage> getSymbolSpritesMap() {
+	public Map<Integer, BufferedImage> getSymbolSpritesMap() {
 		return symbolSprites;
 	}
 
@@ -274,7 +274,7 @@ public class Rendering2D_PacMan extends Rendering2D {
 	}
 
 	@Override
-	public BufferedImage symbolSprite(String symbol) {
+	public BufferedImage symbolSprite(int symbol) {
 		return symbolSprites.get(symbol);
 	}
 }
