@@ -171,14 +171,14 @@ public abstract class Rendering2D {
 		}
 		if (!showHiscoreOnly) {
 			g.setColor(pointsColor);
-			g.drawString(String.format("%08d", game.score), t(1), t(2));
+			g.drawString(String.format("%7d", game.score), t(1), t(2));
 			g.setColor(Color.LIGHT_GRAY);
-			g.drawString(String.format("L%02d", game.levelNumber), t(9), t(2));
+			g.drawString(String.format("L%d", game.levelNumber), t(9), t(2));
 		}
 		g.setColor(pointsColor);
-		g.drawString(String.format("%08d", game.hiscorePoints), t(15), t(2));
+		g.drawString(String.format("%7d", game.hiscorePoints), t(15), t(2));
 		g.setColor(Color.LIGHT_GRAY);
-		g.drawString(String.format("L%02d", game.hiscoreLevel), t(23), t(2));
+		g.drawString(String.format("L%d", game.hiscoreLevel), t(23), t(2));
 		g.translate(0, -3);
 	}
 
