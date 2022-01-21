@@ -60,7 +60,7 @@ public abstract class GameScene implements DefaultPacManGameEventHandler {
 
 	public void init(PacManGameController gameController) {
 		this.gameController = gameController;
-		this.game = gameController.game();
+		this.game = gameController.game;
 	}
 
 	public abstract void update();

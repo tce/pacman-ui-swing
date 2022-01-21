@@ -94,7 +94,7 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void onPacManGameStateChange(PacManGameStateChangeEvent e) {
-		sounds.setMuted(gameController.isAttractMode());
+		sounds.setMuted(gameController.attractMode);
 
 		// enter READY
 		if (e.newGameState == PacManGameState.READY) {
@@ -103,7 +103,7 @@ public class PlayScene extends GameScene {
 			rendering.mazeFlashing(game.mazeNumber).reset();
 			player2D.reset();
 			ghosts2D.forEach(Ghost2D::reset);
-			if (!gameController.isAttractMode() && !gameController.isGameRunning()) {
+			if (!gameController.attractMode && !gameController.gameRunning) {
 				sounds.setMuted(false);
 				sounds.play(PacManGameSound.GAME_READY);
 			}
@@ -127,7 +127,7 @@ public class PlayScene extends GameScene {
 			});
 			player2D.dyingAnimation.delay(60).onStart(() -> {
 				game.hideGhosts();
-				if (gameController.isGameRunning()) {
+				if (gameController.gameRunning) {
 					sounds.play(PacManGameSound.PACMAN_DEATH);
 				}
 			}).restart();
@@ -164,7 +164,7 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void onGameEvent(PacManGameEvent gameEvent) {
-		sounds.setMuted(gameController.isAttractMode());
+		sounds.setMuted(gameController.attractMode);
 		super.onGameEvent(gameEvent);
 	}
 
@@ -236,7 +236,7 @@ public class PlayScene extends GameScene {
 			rendering.hideEatenFood(g, game.world.tiles(), game::isFoodEaten);
 			energizers2D.forEach(energizer2D -> energizer2D.render(g));
 		}
-		if (gameController.isAttractMode()) {
+		if (gameController.attractMode) {
 			rendering.drawGameState(g, game, PacManGameState.GAME_OVER);
 		} else {
 			rendering.drawGameState(g, game, gameController.currentStateID);
@@ -248,7 +248,7 @@ public class PlayScene extends GameScene {
 			ghost2D.looksFrightened = game.player.powerTimer.isRunning();
 			ghost2D.render(g);
 		});
-		if (gameController.isGameRunning()) {
+		if (gameController.gameRunning) {
 			rendering.drawScore(g, game, false);
 			rendering.drawLivesCounter(g, game, t(2), t(34));
 		} else {

@@ -112,10 +112,10 @@ public class PacManGameUI_Swing implements DefaultPacManGameEventHandler {
 		keyboard = new Keyboard(window);
 
 		titleUpdateTimer = new Timer(1000, e -> window.setTitle(String.format("%s (%d fps, JFC Swing)",
-				gameController.gameVariant() == MS_PACMAN ? "Ms. Pac-Man" : "Pac-Man", gameLoop.clock.getLastFPS())));
+				gameController.gameVariant == MS_PACMAN ? "Ms. Pac-Man" : "Pac-Man", gameLoop.clock.getLastFPS())));
 
 		// start initial game scene
-		onPacManGameStateChange(new PacManGameStateChangeEvent(gameController.game(), null, controller.currentStateID));
+		onPacManGameStateChange(new PacManGameStateChangeEvent(gameController.game, null, controller.currentStateID));
 		show();
 	}
 
@@ -152,8 +152,8 @@ public class PacManGameUI_Swing implements DefaultPacManGameEventHandler {
 	}
 
 	private GameScene getSceneForGameState(PacManGameState state) {
-		var game = gameController.game();
-		var scenes = gameController.gameVariant() == MS_PACMAN ? ScenesMsPacMan.SCENES : ScenesPacMan.SCENES;
+		var game = gameController.game;
+		var scenes = gameController.gameVariant == MS_PACMAN ? ScenesMsPacMan.SCENES : ScenesPacMan.SCENES;
 		switch (state) {
 		case INTRO:
 			return scenes.get(0); // intro scene
@@ -206,10 +206,11 @@ public class PacManGameUI_Swing implements DefaultPacManGameEventHandler {
 	}
 
 	private void handleNonPlayerKeys() {
+		final var game = gameController.game;
 
 		if (keyboard.keyPressed("A")) {
-			gameController.setAutoControlled(!gameController.isAutoControlled());
-			showFlashMessage(1, "Autopilot %s", gameController.isAutoControlled() ? "on" : "off");
+			gameController.autoControlled = !gameController.autoControlled;
+			showFlashMessage(1, "Autopilot %s", gameController.autoControlled ? "on" : "off");
 		}
 
 		else if (keyboard.keyPressed("D")) {
@@ -228,16 +229,16 @@ public class PacManGameUI_Swing implements DefaultPacManGameEventHandler {
 		}
 
 		else if (keyboard.keyPressed("I")) {
-			gameController.game().player.immune = !gameController.game().player.immune;
-			showFlashMessage(1, "Player is %s", gameController.game().player.immune ? "immune" : "vulnerable");
+			game.player.immune = !game.player.immune;
+			showFlashMessage(1, "Player is %s", game.player.immune ? "immune" : "vulnerable");
 		}
 
 		else if (keyboard.keyPressed("L")) {
-			gameController.game().player.lives += 3;
+			game.player.lives += 3;
 		}
 
 		else if (keyboard.keyPressed("N")) {
-			if (gameController.isGameRunning()) {
+			if (gameController.gameRunning) {
 				gameController.changeState(PacManGameState.LEVEL_COMPLETE);
 			}
 		}
@@ -257,7 +258,7 @@ public class PacManGameUI_Swing implements DefaultPacManGameEventHandler {
 
 		else if (keyboard.keyPressed("V")) {
 			if (gameController.currentStateID == PacManGameState.INTRO) {
-				gameController.selectGameVariant(gameController.gameVariant().succ());
+				gameController.selectGameVariant(gameController.gameVariant.succ());
 			}
 		}
 

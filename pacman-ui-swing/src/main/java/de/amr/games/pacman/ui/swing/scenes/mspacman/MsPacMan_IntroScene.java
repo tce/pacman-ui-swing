@@ -104,7 +104,7 @@ public class MsPacMan_IntroScene extends GameScene {
 		IntroState state = sceneController.currentStateID;
 		Graphics2D g = (Graphics2D) g_.create();
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		rendering.drawScore(g, gameController.game(), true);
+		rendering.drawScore(g, gameController.game, true);
 		g.setFont(rendering.getScoreFont());
 		g.setColor(Color.ORANGE);
 		g.drawString("\"MS PAC-MAN\"", titlePosition.x, titlePosition.y);
