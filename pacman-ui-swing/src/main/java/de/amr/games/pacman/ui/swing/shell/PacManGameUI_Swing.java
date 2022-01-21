@@ -271,7 +271,7 @@ public class PacManGameUI_Swing implements DefaultPacManGameEventHandler {
 		}
 
 		else if (keyboard.keyPressed("Space")) {
-			gameController.startGame();
+			gameController.requestGame();
 		}
 	}
 
