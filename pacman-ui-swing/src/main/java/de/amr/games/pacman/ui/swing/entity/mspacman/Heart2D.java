@@ -23,7 +23,7 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.entity.mspacman;
 
-import static de.amr.games.pacman.model.world.PacManGameWorld.TS;
+import static de.amr.games.pacman.model.world.World.TS;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
