@@ -27,7 +27,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.GameController;
-import de.amr.games.pacman.controller.event.DefaultPacManGameEventHandler;
+import de.amr.games.pacman.controller.event.DefaultGameEventHandler;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
@@ -38,7 +38,7 @@ import de.amr.games.pacman.ui.swing.shell.PacManGameUI_Swing;
  * 
  * @author Armin Reichert
  */
-public abstract class GameScene implements DefaultPacManGameEventHandler {
+public abstract class GameScene implements DefaultGameEventHandler {
 
 	protected final PacManGameUI_Swing ui;
 	protected final Dimension size;

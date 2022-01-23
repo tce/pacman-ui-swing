@@ -43,9 +43,9 @@ import javax.swing.Timer;
 
 import de.amr.games.pacman.controller.GameController;
 import de.amr.games.pacman.controller.GameState;
-import de.amr.games.pacman.controller.event.DefaultPacManGameEventHandler;
-import de.amr.games.pacman.controller.event.PacManGameEvent;
-import de.amr.games.pacman.controller.event.PacManGameStateChangeEvent;
+import de.amr.games.pacman.controller.event.DefaultGameEventHandler;
+import de.amr.games.pacman.controller.event.GameEvent;
+import de.amr.games.pacman.controller.event.GameStateChangeEvent;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.ui.swing.app.GameLoop;
@@ -60,7 +60,7 @@ import de.amr.games.pacman.ui.swing.scenes.pacman.ScenesPacMan;
  * 
  * @author Armin Reichert
  */
-public class PacManGameUI_Swing implements DefaultPacManGameEventHandler {
+public class PacManGameUI_Swing implements DefaultGameEventHandler {
 
 	private final GameLoop gameLoop;
 	private final GameController gameController;
@@ -115,18 +115,18 @@ public class PacManGameUI_Swing implements DefaultPacManGameEventHandler {
 				gameController.gameVariant == MS_PACMAN ? "Ms. Pac-Man" : "Pac-Man", gameLoop.clock.getLastFPS())));
 
 		// start initial game scene
-		onPacManGameStateChange(new PacManGameStateChangeEvent(gameController.game, null, controller.currentStateID));
+		onPacManGameStateChange(new GameStateChangeEvent(gameController.game, null, controller.currentStateID));
 		show();
 	}
 
 	@Override
-	public void onGameEvent(PacManGameEvent event) {
-		DefaultPacManGameEventHandler.super.onGameEvent(event);
+	public void onGameEvent(GameEvent event) {
+		DefaultGameEventHandler.super.onGameEvent(event);
 		currentGameScene.onGameEvent(event);
 	}
 
 	@Override
-	public void onPacManGameStateChange(PacManGameStateChangeEvent e) {
+	public void onPacManGameStateChange(GameStateChangeEvent e) {
 		GameScene newScene = getSceneForGameState(e.newGameState);
 		if (newScene == null) {
 			throw new IllegalStateException("No scene found for game state " + e.newGameState);
