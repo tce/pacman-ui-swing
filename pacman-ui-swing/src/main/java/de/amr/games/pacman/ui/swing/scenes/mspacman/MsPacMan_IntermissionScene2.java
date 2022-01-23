@@ -29,7 +29,7 @@ import java.awt.Graphics2D;
 import de.amr.games.pacman.controller.PacManGameController;
 import de.amr.games.pacman.controller.mspacman.Intermission2Controller;
 import de.amr.games.pacman.lib.TimedSequence;
-import de.amr.games.pacman.ui.PacManGameSound;
+import de.amr.games.pacman.ui.GameSounds;
 import de.amr.games.pacman.ui.swing.entity.common.Player2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Flap2D;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
@@ -59,7 +59,7 @@ public class MsPacMan_IntermissionScene2 extends GameScene {
 		super.init(gameController);
 
 		sceneController = new Intermission2Controller(gameController);
-		sceneController.playIntermissionSound = () -> sounds.play(PacManGameSound.INTERMISSION_2);
+		sceneController.playIntermissionSound = () -> sounds.play(GameSounds.INTERMISSION_2);
 		sceneController.playFlapAnimation = () -> flap2D.animation.restart();
 		sceneController.init();
 

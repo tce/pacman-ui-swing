@@ -32,7 +32,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
-import de.amr.games.pacman.ui.PacManGameSound;
+import de.amr.games.pacman.ui.GameSounds;
 
 /**
  * Sound manager for Pac-Man game variants.
@@ -43,23 +43,23 @@ import de.amr.games.pacman.ui.PacManGameSound;
  */
 public class SoundManager {
 
-	private final Map<PacManGameSound, URL> urlMap;
-	private final Map<PacManGameSound, Clip> clipCache = new EnumMap<>(PacManGameSound.class);
+	private final Map<GameSounds, URL> urlMap;
+	private final Map<GameSounds, Clip> clipCache = new EnumMap<>(GameSounds.class);
 	private Clip munch0, munch1;
 	private int munchIndex;
 	private boolean muted;
 
-	public SoundManager(Map<PacManGameSound, String> pathMap) {
+	public SoundManager(Map<GameSounds, String> pathMap) {
 		urlMap = new HashMap<>();
 		for (var entry : pathMap.entrySet()) {
 			put(entry.getKey(), entry.getValue());
 		}
 		munchIndex = 0;
-		munch0 = createAndOpenClip(urlMap.get(PacManGameSound.PACMAN_MUNCH));
-		munch1 = createAndOpenClip(urlMap.get(PacManGameSound.PACMAN_MUNCH));
+		munch0 = createAndOpenClip(urlMap.get(GameSounds.PACMAN_MUNCH));
+		munch1 = createAndOpenClip(urlMap.get(GameSounds.PACMAN_MUNCH));
 	}
 
-	private void put(PacManGameSound sound, String path) {
+	private void put(GameSounds sound, String path) {
 		URL url = getClass().getResource(path);
 		if (url == null) {
 			throw new RuntimeException("Sound resource not found: " + path);
@@ -81,9 +81,9 @@ public class SoundManager {
 		}
 	}
 
-	private Clip getClip(PacManGameSound sound) {
+	private Clip getClip(GameSounds sound) {
 		Clip clip = null;
-		if (sound == PacManGameSound.PACMAN_MUNCH) {
+		if (sound == GameSounds.PACMAN_MUNCH) {
 			clip = munchIndex == 0 ? munch0 : munch1;
 			munchIndex = (munchIndex + 1) % 2;
 		} else if (clipCache.containsKey(sound)) {
@@ -96,13 +96,13 @@ public class SoundManager {
 		return clip;
 	}
 
-	public void play(PacManGameSound sound) {
+	public void play(GameSounds sound) {
 		if (!muted) {
 			getClip(sound).start();
 		}
 	}
 
-	public void loop(PacManGameSound sound, int repetitions) {
+	public void loop(GameSounds sound, int repetitions) {
 		if (!muted) {
 			Clip clip = getClip(sound);
 			clip.setFramePosition(0);
@@ -110,7 +110,7 @@ public class SoundManager {
 		}
 	}
 
-	public void stop(PacManGameSound sound) {
+	public void stop(GameSounds sound) {
 		getClip(sound).stop();
 	}
 
