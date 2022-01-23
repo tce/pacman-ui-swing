@@ -26,7 +26,7 @@ package de.amr.games.pacman.ui.swing.scenes.mspacman;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 
-import de.amr.games.pacman.controller.PacManGameController;
+import de.amr.games.pacman.controller.GameController;
 import de.amr.games.pacman.controller.mspacman.Intermission1Controller;
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.ui.GameSounds;
@@ -62,7 +62,7 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 	}
 
 	@Override
-	public void init(PacManGameController gameController) {
+	public void init(GameController gameController) {
 		super.init(gameController);
 
 		sceneController.playIntermissionSound = () -> sounds.loop(GameSounds.INTERMISSION_1, 1);

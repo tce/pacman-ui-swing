@@ -29,7 +29,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import de.amr.games.pacman.controller.PacManGameController;
+import de.amr.games.pacman.controller.GameController;
 import de.amr.games.pacman.controller.pacman.Intermission2Controller;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TimedSequence;
@@ -60,7 +60,7 @@ public class PacMan_IntermissionScene2 extends GameScene {
 	}
 
 	@Override
-	public void init(PacManGameController gameController) {
+	public void init(GameController gameController) {
 		super.init(gameController);
 
 		sceneController.playIntermissionSound = () -> sounds.play(GameSounds.INTERMISSION_2);

@@ -41,8 +41,8 @@ import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-import de.amr.games.pacman.controller.PacManGameController;
-import de.amr.games.pacman.controller.PacManGameState;
+import de.amr.games.pacman.controller.GameController;
+import de.amr.games.pacman.controller.GameState;
 import de.amr.games.pacman.controller.event.DefaultPacManGameEventHandler;
 import de.amr.games.pacman.controller.event.PacManGameEvent;
 import de.amr.games.pacman.controller.event.PacManGameStateChangeEvent;
@@ -63,7 +63,7 @@ import de.amr.games.pacman.ui.swing.scenes.pacman.ScenesPacMan;
 public class PacManGameUI_Swing implements DefaultPacManGameEventHandler {
 
 	private final GameLoop gameLoop;
-	private final PacManGameController gameController;
+	private final GameController gameController;
 	private final Dimension unscaledSize;
 	private final V2i scaledSize;
 	private final double scaling;
@@ -76,7 +76,7 @@ public class PacManGameUI_Swing implements DefaultPacManGameEventHandler {
 
 	private GameScene currentGameScene;
 
-	public PacManGameUI_Swing(GameLoop gameLoop, PacManGameController controller, double height) {
+	public PacManGameUI_Swing(GameLoop gameLoop, GameController controller, double height) {
 		this.gameLoop = gameLoop;
 		this.gameController = controller;
 
@@ -151,7 +151,7 @@ public class PacManGameUI_Swing implements DefaultPacManGameEventHandler {
 		titleUpdateTimer.start();
 	}
 
-	private GameScene getSceneForGameState(PacManGameState state) {
+	private GameScene getSceneForGameState(GameState state) {
 		var game = gameController.game;
 		var scenes = gameController.gameVariant == MS_PACMAN ? ScenesMsPacMan.SCENES : ScenesPacMan.SCENES;
 		switch (state) {
@@ -239,14 +239,14 @@ public class PacManGameUI_Swing implements DefaultPacManGameEventHandler {
 
 		else if (keyboard.keyPressed("N")) {
 			if (gameController.gameRunning) {
-				gameController.changeState(PacManGameState.LEVEL_COMPLETE);
+				gameController.changeState(GameState.LEVEL_COMPLETE);
 			}
 		}
 
 		else if (keyboard.keyPressed("Q")) {
-			if (gameController.currentStateID != PacManGameState.INTRO) {
+			if (gameController.currentStateID != GameState.INTRO) {
 				reset();
-				gameController.changeState(PacManGameState.INTRO);
+				gameController.changeState(GameState.INTRO);
 			}
 		}
 
@@ -257,7 +257,7 @@ public class PacManGameUI_Swing implements DefaultPacManGameEventHandler {
 		}
 
 		else if (keyboard.keyPressed("V")) {
-			if (gameController.currentStateID == PacManGameState.INTRO) {
+			if (gameController.currentStateID == GameState.INTRO) {
 				gameController.selectGameVariant(gameController.gameVariant.succ());
 			}
 		}

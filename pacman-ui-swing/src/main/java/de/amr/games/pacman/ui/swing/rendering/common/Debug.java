@@ -34,7 +34,7 @@ import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.Stroke;
 
-import de.amr.games.pacman.controller.PacManGameController;
+import de.amr.games.pacman.controller.GameController;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TickTimer;
 import de.amr.games.pacman.lib.V2i;
@@ -44,7 +44,7 @@ public class Debug {
 
 	public static boolean on = false;
 
-	public static void drawPlaySceneDebugInfo(Graphics2D g, PacManGameController controller) {
+	public static void drawPlaySceneDebugInfo(Graphics2D g, GameController controller) {
 		GameModel game = controller.game;
 		final Color[] GHOST_COLORS = { Color.RED, Color.PINK, Color.CYAN, Color.ORANGE };
 		long remaining = controller.stateTimer().ticksRemaining();

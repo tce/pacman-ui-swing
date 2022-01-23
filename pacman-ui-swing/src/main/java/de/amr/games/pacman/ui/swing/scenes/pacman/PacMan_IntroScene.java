@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import de.amr.games.pacman.controller.PacManGameController;
+import de.amr.games.pacman.controller.GameController;
 import de.amr.games.pacman.controller.pacman.IntroController;
 import de.amr.games.pacman.controller.pacman.IntroController.GhostPortrait;
 import de.amr.games.pacman.lib.TimedSequence;
@@ -67,7 +67,7 @@ public class PacMan_IntroScene extends GameScene {
 	}
 
 	@Override
-	public void init(PacManGameController gameController) {
+	public void init(GameController gameController) {
 		super.init(gameController);
 		sceneController.init(gameController);
 

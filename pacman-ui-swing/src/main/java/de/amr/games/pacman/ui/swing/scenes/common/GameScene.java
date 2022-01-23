@@ -26,7 +26,7 @@ package de.amr.games.pacman.ui.swing.scenes.common;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 
-import de.amr.games.pacman.controller.PacManGameController;
+import de.amr.games.pacman.controller.GameController;
 import de.amr.games.pacman.controller.event.DefaultPacManGameEventHandler;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
@@ -44,7 +44,7 @@ public abstract class GameScene implements DefaultPacManGameEventHandler {
 	protected final Dimension size;
 	protected final Rendering2D rendering;
 	protected final SoundManager sounds;
-	protected PacManGameController gameController;
+	protected GameController gameController;
 	protected GameModel game;
 
 	public GameScene(PacManGameUI_Swing ui, Dimension size, Rendering2D rendering, SoundManager sounds) {
@@ -58,7 +58,7 @@ public abstract class GameScene implements DefaultPacManGameEventHandler {
 		return size;
 	}
 
-	public void init(PacManGameController gameController) {
+	public void init(GameController gameController) {
 		this.gameController = gameController;
 		this.game = gameController.game;
 	}

@@ -28,7 +28,7 @@ import static de.amr.games.pacman.model.world.PacManGameWorld.t;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 
-import de.amr.games.pacman.controller.PacManGameController;
+import de.amr.games.pacman.controller.GameController;
 import de.amr.games.pacman.controller.pacman.Intermission3Controller;
 import de.amr.games.pacman.controller.pacman.Intermission3Controller.IntermissionState;
 import de.amr.games.pacman.ui.GameSounds;
@@ -52,7 +52,7 @@ public class PacMan_IntermissionScene3 extends GameScene {
 	}
 
 	@Override
-	public void init(PacManGameController gameController) {
+	public void init(GameController gameController) {
 		super.init(gameController);
 		sceneController.playIntermissionSound = () -> sounds.loop(GameSounds.INTERMISSION_3, 2);
 		sceneController.init(gameController);

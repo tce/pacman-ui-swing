@@ -35,7 +35,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import de.amr.games.pacman.controller.PacManGameState;
+import de.amr.games.pacman.controller.GameState;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TimedSequence;
 import de.amr.games.pacman.lib.V2i;
@@ -204,12 +204,12 @@ public abstract class Rendering2D {
 		}
 	}
 
-	public void drawGameState(Graphics2D g, GameModel game, PacManGameState gameState) {
-		if (gameState == PacManGameState.READY) {
+	public void drawGameState(Graphics2D g, GameModel game, GameState gameState) {
+		if (gameState == GameState.READY) {
 			g.setFont(getScoreFont());
 			g.setColor(Color.YELLOW);
 			g.drawString("READY!", t(11), t(21));
-		} else if (gameState == PacManGameState.GAME_OVER) {
+		} else if (gameState == GameState.GAME_OVER) {
 			g.setFont(getScoreFont());
 			g.setColor(Color.RED);
 			g.drawString("GAME", t(9), t(21));

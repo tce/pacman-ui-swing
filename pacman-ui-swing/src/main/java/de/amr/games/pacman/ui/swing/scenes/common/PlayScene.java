@@ -30,8 +30,8 @@ import java.awt.Graphics2D;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import de.amr.games.pacman.controller.PacManGameController;
-import de.amr.games.pacman.controller.PacManGameState;
+import de.amr.games.pacman.controller.GameController;
+import de.amr.games.pacman.controller.GameState;
 import de.amr.games.pacman.controller.event.PacManGameEvent;
 import de.amr.games.pacman.controller.event.PacManGameStateChangeEvent;
 import de.amr.games.pacman.controller.event.ScatterPhaseStartedEvent;
@@ -66,7 +66,7 @@ public class PlayScene extends GameScene {
 	}
 
 	@Override
-	public void init(PacManGameController gameController) {
+	public void init(GameController gameController) {
 		super.init(gameController);
 
 		player2D = new Player2D(game.player, rendering);
@@ -80,9 +80,9 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void update() {
-		if (gameController.currentStateID == PacManGameState.LEVEL_COMPLETE) {
+		if (gameController.currentStateID == GameState.LEVEL_COMPLETE) {
 			playLevelCompleteAnimation(gameController.currentStateID);
-		} else if (gameController.currentStateID == PacManGameState.LEVEL_STARTING) {
+		} else if (gameController.currentStateID == GameState.LEVEL_STARTING) {
 			gameController.stateTimer().expire();
 		}
 	}
@@ -97,7 +97,7 @@ public class PlayScene extends GameScene {
 		sounds.setMuted(gameController.attractMode);
 
 		// enter READY
-		if (e.newGameState == PacManGameState.READY) {
+		if (e.newGameState == GameState.READY) {
 			sounds.stopAll();
 			energizers2D.forEach(energizer2D -> energizer2D.getAnimation().reset());
 			rendering.mazeFlashing(game.mazeNumber).reset();
@@ -110,7 +110,7 @@ public class PlayScene extends GameScene {
 		}
 
 		// enter HUNTING
-		if (e.newGameState == PacManGameState.HUNTING) {
+		if (e.newGameState == GameState.HUNTING) {
 			energizers2D.forEach(energizer2D -> energizer2D.getAnimation().restart());
 			player2D.munchingAnimations.values().forEach(TimedSequence::restart);
 			ghosts2D.forEach(ghost2D -> {
@@ -119,7 +119,7 @@ public class PlayScene extends GameScene {
 		}
 
 		// enter PACMAN_DYING
-		if (e.newGameState == PacManGameState.PACMAN_DYING) {
+		if (e.newGameState == GameState.PACMAN_DYING) {
 			gameController.stateTimer().setSeconds(3).start();
 			sounds.stopAll();
 			ghosts2D.forEach(ghost2D -> {
@@ -134,13 +134,13 @@ public class PlayScene extends GameScene {
 		}
 
 		// enter GHOST_DYING
-		if (e.newGameState == PacManGameState.GHOST_DYING) {
+		if (e.newGameState == GameState.GHOST_DYING) {
 			sounds.play(GameSounds.GHOST_EATEN);
 			energizers2D.forEach(energizer2D -> energizer2D.getAnimation().restart());
 		}
 
 		// exit GHOST_DYING
-		if (e.oldGameState == PacManGameState.GHOST_DYING) {
+		if (e.oldGameState == GameState.GHOST_DYING) {
 			// the dead ghost(s) will return home now
 			if (game.ghosts(GhostState.DEAD).count() > 0) {
 				sounds.loop(GameSounds.GHOST_RETURNING, Integer.MAX_VALUE);
@@ -148,14 +148,14 @@ public class PlayScene extends GameScene {
 		}
 
 		// enter LEVEL_COMPLETE
-		if (e.newGameState == PacManGameState.LEVEL_COMPLETE) {
+		if (e.newGameState == GameState.LEVEL_COMPLETE) {
 			player2D.reset();
 			mazeFlashing = rendering.mazeFlashing(game.mazeNumber);
 			sounds.stopAll();
 		}
 
 		// enter GAME_OVER
-		if (e.newGameState == PacManGameState.GAME_OVER) {
+		if (e.newGameState == GameState.GAME_OVER) {
 			ghosts2D.forEach(ghost2D -> {
 				ghost2D.kickingAnimations.values().forEach(TimedSequence::reset);
 			});
@@ -237,7 +237,7 @@ public class PlayScene extends GameScene {
 			energizers2D.forEach(energizer2D -> energizer2D.render(g));
 		}
 		if (gameController.attractMode) {
-			rendering.drawGameState(g, game, PacManGameState.GAME_OVER);
+			rendering.drawGameState(g, game, GameState.GAME_OVER);
 		} else {
 			rendering.drawGameState(g, game, gameController.currentStateID);
 			rendering.drawLevelCounter(g, game, t(25), t(34));
@@ -266,7 +266,7 @@ public class PlayScene extends GameScene {
 		}
 	}
 
-	private void playLevelCompleteAnimation(PacManGameState state) {
+	private void playLevelCompleteAnimation(GameState state) {
 		if (gameController.stateTimer().isRunningSeconds(2)) {
 			game.hideGhosts();
 		}
