@@ -115,7 +115,7 @@ public class PacManGameUI_Swing implements DefaultGameEventHandler {
 				gameController.gameVariant == MS_PACMAN ? "Ms. Pac-Man" : "Pac-Man", gameLoop.clock.getLastFPS())));
 
 		// start initial game scene
-		onPacManGameStateChange(new GameStateChangeEvent(gameController.game, null, controller.currentStateID));
+		onGameStateChange(new GameStateChangeEvent(gameController.game, null, controller.currentStateID));
 		show();
 	}
 
@@ -126,7 +126,7 @@ public class PacManGameUI_Swing implements DefaultGameEventHandler {
 	}
 
 	@Override
-	public void onPacManGameStateChange(GameStateChangeEvent e) {
+	public void onGameStateChange(GameStateChangeEvent e) {
 		GameScene newScene = getSceneForGameState(e.newGameState);
 		if (newScene == null) {
 			throw new IllegalStateException("No scene found for game state " + e.newGameState);

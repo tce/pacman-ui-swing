@@ -93,7 +93,7 @@ public class PlayScene extends GameScene {
 	}
 
 	@Override
-	public void onPacManGameStateChange(GameStateChangeEvent e) {
+	public void onGameStateChange(GameStateChangeEvent e) {
 		sounds.setMuted(gameController.attractMode);
 
 		// enter READY
