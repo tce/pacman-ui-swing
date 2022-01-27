@@ -266,7 +266,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 			gameController.cheatKillGhosts();
 		}
 
-		else if (keyboard.keyPressed("Z")) {
+		else if (keyboard.keyPressed("1")) {
 			gameController.startIntermissionTest();
 		}
 
