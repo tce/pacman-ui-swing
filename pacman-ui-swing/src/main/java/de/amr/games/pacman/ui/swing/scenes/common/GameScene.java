@@ -38,7 +38,7 @@ import de.amr.games.pacman.ui.swing.shell.PacManGameUI_Swing;
  * 
  * @author Armin Reichert
  */
-public abstract class GameScene implements DefaultGameEventHandler {
+public abstract class GameScene extends DefaultGameEventHandler {
 
 	protected final PacManGameUI_Swing ui;
 	protected final Dimension size;
