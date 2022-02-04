@@ -86,25 +86,16 @@ public class Keyboard {
 				return KeyEvent.VK_0 + index;
 			}
 		}
-		switch (keySpec) {
-		case "Up":
-			return KeyEvent.VK_UP;
-		case "Down":
-			return KeyEvent.VK_DOWN;
-		case "Left":
-			return KeyEvent.VK_LEFT;
-		case "Right":
-			return KeyEvent.VK_RIGHT;
-		case "Esc":
-			return KeyEvent.VK_ESCAPE;
-		case "Space":
-			return KeyEvent.VK_SPACE;
-		case "Plus":
-			return KeyEvent.VK_PLUS;
-		case "Minus":
-			return KeyEvent.VK_MINUS;
-		default:
-			throw new IllegalArgumentException(String.format("Unknown key specification: %s", keySpec));
-		}
+		return switch (keySpec) {
+		case "Up" -> KeyEvent.VK_UP;
+		case "Down" -> KeyEvent.VK_DOWN;
+		case "Left" -> KeyEvent.VK_LEFT;
+		case "Right" -> KeyEvent.VK_RIGHT;
+		case "Esc" -> KeyEvent.VK_ESCAPE;
+		case "Space" -> KeyEvent.VK_SPACE;
+		case "Plus" -> KeyEvent.VK_PLUS;
+		case "Minus" -> KeyEvent.VK_MINUS;
+		default -> throw new IllegalArgumentException(String.format("Unknown key specification: %s", keySpec));
+		};
 	}
 }

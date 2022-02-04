@@ -99,19 +99,19 @@ public class PacMan_IntroScene extends GameScene {
 
 		rendering.drawScore(g, game, true);
 		switch (sceneController.currentStateID) {
-		case BEGIN:
-		case PRESENTING_GHOSTS:
-			drawGallery(g);
-			break;
-		case SHOWING_POINTS:
+
+		case BEGIN, PRESENTING_GHOSTS -> drawGallery(g);
+
+		case SHOWING_POINTS -> {
 			drawGallery(g);
 			drawPoints(g, 11, 25);
 			if (sceneController.stateTimer().ticked() > sec_to_ticks(1)) {
 				drawEnergizer(g);
 				drawCopyright(g, 32);
 			}
-			break;
-		case CHASING_PAC:
+		}
+
+		case CHASING_PAC -> {
 			drawGallery(g);
 			drawPoints(g, 11, 25);
 			drawCopyright(g, 32);
@@ -120,19 +120,23 @@ public class PacMan_IntroScene extends GameScene {
 			}
 			int offset = sceneController.stateTimer().ticked() % 5 < 2 ? 0 : -1;
 			drawGuys(g, offset);
-			break;
-		case CHASING_GHOSTS:
+		}
+
+		case CHASING_GHOSTS -> {
 			drawGallery(g);
 			drawPoints(g, 11, 25);
 			drawCopyright(g, 32);
 			drawGuys(g, 0);
-			break;
-		case READY_TO_PLAY:
+		}
+
+		case READY_TO_PLAY -> {
 			drawGallery(g);
 			drawPressKeyToStart(g, 24);
-			break;
-		default:
-			break;
+		}
+
+		default -> {
+		}
+
 		}
 		g.dispose();
 	}

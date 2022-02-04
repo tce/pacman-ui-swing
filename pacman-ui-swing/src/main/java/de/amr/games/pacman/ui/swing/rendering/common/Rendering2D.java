@@ -50,18 +50,13 @@ import de.amr.games.pacman.model.common.GameModel;
 public abstract class Rendering2D {
 
 	public Color getGhostColor(int ghostID) {
-		switch (ghostID) {
-		case GameModel.RED_GHOST:
-			return Color.RED;
-		case GameModel.PINK_GHOST:
-			return new Color(252, 181, 255);
-		case GameModel.CYAN_GHOST:
-			return Color.CYAN;
-		case GameModel.ORANGE_GHOST:
-			return new Color(253, 192, 90);
-		default:
-			return Color.WHITE;
-		}
+		return switch (ghostID) {
+		case GameModel.RED_GHOST -> Color.RED;
+		case GameModel.PINK_GHOST -> new Color(252, 181, 255);
+		case GameModel.CYAN_GHOST -> Color.CYAN;
+		case GameModel.ORANGE_GHOST -> new Color(253, 192, 90);
+		default -> Color.WHITE;
+		};
 	}
 
 	public abstract Map<Direction, TimedSequence<BufferedImage>> createPlayerMunchingAnimations();

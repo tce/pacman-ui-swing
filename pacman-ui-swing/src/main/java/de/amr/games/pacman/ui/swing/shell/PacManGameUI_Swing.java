@@ -154,16 +154,12 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 	private GameScene getSceneForGameState(GameState state) {
 		var game = gameController.game;
 		var scenes = gameController.gameVariant == MS_PACMAN ? ScenesMsPacMan.SCENES : ScenesPacMan.SCENES;
-		switch (state) {
-		case INTRO:
-			return scenes.get(0); // intro scene
-		case INTERMISSION:
-			return scenes.get(game.intermissionNumber(game.levelNumber));
-		case INTERMISSION_TEST:
-			return scenes.get(gameController.intermissionTestNumber);
-		default:
-			return scenes.get(4); // play scene
-		}
+		return switch (state) {
+		case INTRO -> scenes.get(0); // intro scene
+		case INTERMISSION -> scenes.get(game.intermissionNumber(game.levelNumber));
+		case INTERMISSION_TEST -> scenes.get(gameController.intermissionTestNumber);
+		default -> scenes.get(4); // play scene
+		};
 	}
 
 	public void update() {
@@ -266,7 +262,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 			gameController.cheatKillGhosts();
 		}
 
-		else if (keyboard.keyPressed("1")) {
+		else if (keyboard.keyPressed("Z")) {
 			gameController.startIntermissionTest();
 		}
 
