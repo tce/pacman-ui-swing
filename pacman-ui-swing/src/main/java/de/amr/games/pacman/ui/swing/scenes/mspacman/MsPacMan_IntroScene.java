@@ -101,7 +101,7 @@ public class MsPacMan_IntroScene extends GameScene {
 
 	@Override
 	public void render(Graphics2D g_) {
-		IntroState state = sceneController.currentStateID;
+		IntroState state = sceneController.state;
 		Graphics2D g = (Graphics2D) g_.create();
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		rendering.drawScore(g, gameController.game, true);

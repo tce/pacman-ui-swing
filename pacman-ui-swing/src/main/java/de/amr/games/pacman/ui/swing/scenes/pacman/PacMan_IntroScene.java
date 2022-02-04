@@ -98,7 +98,7 @@ public class PacMan_IntroScene extends GameScene {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		rendering.drawScore(g, game, true);
-		switch (sceneController.currentStateID) {
+		switch (sceneController.state) {
 
 		case BEGIN, PRESENTING_GHOSTS -> drawGallery(g);
 

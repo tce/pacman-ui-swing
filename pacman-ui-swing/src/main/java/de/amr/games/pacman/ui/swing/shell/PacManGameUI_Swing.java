@@ -115,7 +115,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 				gameController.gameVariant == MS_PACMAN ? "Ms. Pac-Man" : "Pac-Man", gameLoop.clock.getLastFPS())));
 
 		// start initial game scene
-		onGameStateChange(new GameStateChangeEvent(gameController.game, null, controller.currentStateID));
+		onGameStateChange(new GameStateChangeEvent(gameController.game, null, controller.state));
 		show();
 	}
 
@@ -240,7 +240,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		}
 
 		else if (keyboard.keyPressed("Q")) {
-			if (gameController.currentStateID != GameState.INTRO) {
+			if (gameController.state != GameState.INTRO) {
 				reset();
 				gameController.changeState(GameState.INTRO);
 			}
@@ -253,7 +253,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		}
 
 		else if (keyboard.keyPressed("V")) {
-			if (gameController.currentStateID == GameState.INTRO) {
+			if (gameController.state == GameState.INTRO) {
 				gameController.selectGameVariant(gameController.gameVariant.succ());
 			}
 		}

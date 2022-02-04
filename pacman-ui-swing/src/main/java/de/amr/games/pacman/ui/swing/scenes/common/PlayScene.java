@@ -80,9 +80,9 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void update() {
-		if (gameController.currentStateID == GameState.LEVEL_COMPLETE) {
-			playLevelCompleteAnimation(gameController.currentStateID);
-		} else if (gameController.currentStateID == GameState.LEVEL_STARTING) {
+		if (gameController.state == GameState.LEVEL_COMPLETE) {
+			playLevelCompleteAnimation(gameController.state);
+		} else if (gameController.state == GameState.LEVEL_STARTING) {
 			gameController.stateTimer().expire();
 		}
 	}
@@ -239,7 +239,7 @@ public class PlayScene extends GameScene {
 		if (gameController.attractMode) {
 			rendering.drawGameState(g, game, GameState.GAME_OVER);
 		} else {
-			rendering.drawGameState(g, game, gameController.currentStateID);
+			rendering.drawGameState(g, game, gameController.state);
 			rendering.drawLevelCounter(g, game, t(25), t(34));
 		}
 		bonus2D.render(g);
