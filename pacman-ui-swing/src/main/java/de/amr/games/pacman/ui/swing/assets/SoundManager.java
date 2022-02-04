@@ -106,7 +106,7 @@ public class SoundManager {
 		if (!muted) {
 			Clip clip = getClip(sound);
 			clip.setFramePosition(0);
-			clip.loop(repetitions == Integer.MAX_VALUE ? Clip.LOOP_CONTINUOUSLY : repetitions - 1);
+			clip.loop(repetitions);
 		}
 	}
 

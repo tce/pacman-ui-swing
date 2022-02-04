@@ -30,6 +30,8 @@ import java.awt.Graphics2D;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.sound.sampled.Clip;
+
 import de.amr.games.pacman.controller.GameController;
 import de.amr.games.pacman.controller.GameState;
 import de.amr.games.pacman.controller.event.GameEvent;
@@ -143,7 +145,7 @@ public class PlayScene extends GameScene {
 		if (e.oldGameState == GameState.GHOST_DYING) {
 			// the dead ghost(s) will return home now
 			if (game.ghosts(GhostState.DEAD).count() > 0) {
-				sounds.loop(GameSounds.GHOST_RETURNING, Integer.MAX_VALUE);
+				sounds.loop(GameSounds.GHOST_RETURNING, Clip.LOOP_CONTINUOUSLY);
 			}
 		}
 
@@ -173,7 +175,7 @@ public class PlayScene extends GameScene {
 		if (e.scatterPhase > 0) {
 			sounds.stop(GameSounds.SIRENS.get(e.scatterPhase - 1));
 		}
-		sounds.loop(GameSounds.SIRENS.get(e.scatterPhase), Integer.MAX_VALUE);
+		sounds.loop(GameSounds.SIRENS.get(e.scatterPhase), Clip.LOOP_CONTINUOUSLY);
 	}
 
 	@Override
@@ -192,7 +194,7 @@ public class PlayScene extends GameScene {
 			ghost2D.flashingAnimation.reset();
 			ghost2D.frightenedAnimation.restart();
 		});
-		sounds.loop(GameSounds.PACMAN_POWER, Integer.MAX_VALUE);
+		sounds.loop(GameSounds.PACMAN_POWER, Clip.LOOP_CONTINUOUSLY);
 	}
 
 	@Override
