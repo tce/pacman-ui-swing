@@ -61,7 +61,7 @@ public class MsPacMan_IntroScene extends GameScene {
 
 	private final V2i titlePosition = new V2i(t(9), t(8));
 	private final TickTimer boardAnimationTimer = new TickTimer("boardAnimation-timer");
-	private final IntroController sceneController = new IntroController();
+	private final IntroController sc = new IntroController();
 
 	private BufferedImage midwayLogo;
 	private Player2D msPacMan2D;
@@ -79,12 +79,12 @@ public class MsPacMan_IntroScene extends GameScene {
 	@Override
 	public void init(GameController gameController) {
 		super.init(gameController);
-		sceneController.init(gameController);
+		sc.init(gameController);
 
-		msPacMan2D = new Player2D(sceneController.msPacMan, rendering);
+		msPacMan2D = new Player2D(sc.msPacMan, rendering);
 		msPacMan2D.munchingAnimations.values().forEach(TimedSequence::restart);
 
-		ghosts2D = Stream.of(sceneController.ghosts).map(ghost -> {
+		ghosts2D = Stream.of(sc.ghosts).map(ghost -> {
 			Ghost2D ghost2D = new Ghost2D(ghost, rendering);
 			ghost2D.kickingAnimations.values().forEach(TimedSequence::restart);
 			return ghost2D;
@@ -95,13 +95,13 @@ public class MsPacMan_IntroScene extends GameScene {
 
 	@Override
 	public void update() {
-		sceneController.updateState();
+		sc.updateState();
 		boardAnimationTimer.tick();
 	}
 
 	@Override
 	public void render(Graphics2D g_) {
-		IntroState state = sceneController.state;
+		IntroState state = sc.state;
 		Graphics2D g = (Graphics2D) g_.create();
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		rendering.drawScore(g, gameController.game, true);
@@ -110,7 +110,7 @@ public class MsPacMan_IntroScene extends GameScene {
 		g.drawString("\"MS PAC-MAN\"", titlePosition.x, titlePosition.y);
 		drawAnimatedBoard(g, 32, 16);
 		if (state == IntroState.PRESENTING_GHOSTS) {
-			drawPresentingGhost(g, sceneController.ghosts[sceneController.currentGhostIndex]);
+			drawPresentingGhost(g, sc.ghosts[sc.currentGhostIndex]);
 		} else if (state == IntroState.PRESENTING_MSPACMAN) {
 			drawStarringMsPacMan(g);
 		} else if (state == IntroState.WAITING_FOR_GAME) {
@@ -126,23 +126,21 @@ public class MsPacMan_IntroScene extends GameScene {
 	}
 
 	private void drawPresentingGhost(Graphics2D g, Ghost ghost) {
-		int top = sceneController.tileBoardTopLeft.y;
 		g.setColor(Color.WHITE);
 		g.setFont(rendering.getScoreFont());
-		if (ghost == sceneController.ghosts[0]) {
-			g.drawString("WITH", titlePosition.x, t(top + 3));
+		if (ghost == sc.ghosts[0]) {
+			g.drawString("WITH", titlePosition.x, sc.adBoardTopLeft.y + t(3));
 		}
 		g.setColor(ghost.id == 0 ? Color.RED : ghost.id == 1 ? Color.PINK : ghost.id == 2 ? Color.CYAN : Color.ORANGE);
-		g.drawString(ghost.name.toUpperCase(), t(14 - ghost.name.length() / 2), t(top + 6));
+		g.drawString(ghost.name.toUpperCase(), t(14 - ghost.name.length() / 2), sc.adBoardTopLeft.y + t(6));
 	}
 
 	private void drawStarringMsPacMan(Graphics2D g) {
-		int top = sceneController.tileBoardTopLeft.y;
 		g.setColor(Color.WHITE);
 		g.setFont(rendering.getScoreFont());
-		g.drawString("STARRING", titlePosition.x, t(top + 3));
+		g.drawString("STARRING", titlePosition.x, sc.adBoardTopLeft.y + t(3));
 		g.setColor(Color.YELLOW);
-		g.drawString("MS PAC-MAN", titlePosition.x, t(top + 6));
+		g.drawString("MS PAC-MAN", titlePosition.x, sc.adBoardTopLeft.y + t(6));
 	}
 
 	private void drawAnimatedBoard(Graphics2D g, int numDotsX, int numDotsY) {
@@ -162,12 +160,12 @@ public class MsPacMan_IntroScene extends GameScene {
 				y = 2 * (numDotsX + numDotsY) - dot;
 			}
 			g.setColor((dot + light) % (numDotsX / 2) == 0 ? Color.PINK : Color.RED);
-			g.fillRect(t(sceneController.tileBoardTopLeft.x) + 4 * x, t(sceneController.tileBoardTopLeft.y) + 4 * y, 2, 2);
+			g.fillRect(sc.adBoardTopLeft.x + 4 * x, sc.adBoardTopLeft.y + 4 * y, 2, 2);
 		}
 	}
 
 	private void drawPressKeyToStart(Graphics2D g, int tileY) {
-		if (sceneController.blinking.frame()) {
+		if (sc.blinking.frame()) {
 			String text = "PRESS SPACE TO PLAY";
 			g.setColor(Color.WHITE);
 			g.setFont(rendering.getScoreFont());
