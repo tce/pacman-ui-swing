@@ -38,7 +38,7 @@ import de.amr.games.pacman.controller.event.GameEvent;
 import de.amr.games.pacman.controller.event.GameStateChangeEvent;
 import de.amr.games.pacman.controller.event.ScatterPhaseStartedEvent;
 import de.amr.games.pacman.lib.TickTimerEvent;
-import de.amr.games.pacman.lib.TimedSequence;
+import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.model.common.GhostState;
 import de.amr.games.pacman.ui.GameSounds;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
@@ -61,7 +61,7 @@ public class PlayScene extends GameScene {
 	private List<Energizer2D> energizers2D;
 	private Bonus2D bonus2D;
 
-	private TimedSequence<?> mazeFlashing;
+	private TimedSeq<?> mazeFlashing;
 
 	public PlayScene(PacManGameUI_Swing ui, Dimension size, Rendering2D rendering, SoundManager sounds) {
 		super(ui, size, rendering, sounds);
@@ -114,9 +114,9 @@ public class PlayScene extends GameScene {
 		// enter HUNTING
 		if (e.newGameState == GameState.HUNTING) {
 			energizers2D.forEach(energizer2D -> energizer2D.getAnimation().restart());
-			player2D.munchingAnimations.values().forEach(TimedSequence::restart);
+			player2D.munchingAnimations.values().forEach(TimedSeq::restart);
 			ghosts2D.forEach(ghost2D -> {
-				ghost2D.kickingAnimations.values().forEach(TimedSequence::restart);
+				ghost2D.kickingAnimations.values().forEach(TimedSeq::restart);
 			});
 		}
 
@@ -125,7 +125,7 @@ public class PlayScene extends GameScene {
 			gameController.stateTimer().setSeconds(3).start();
 			sounds.stopAll();
 			ghosts2D.forEach(ghost2D -> {
-				ghost2D.kickingAnimations.values().forEach(TimedSequence::reset);
+				ghost2D.kickingAnimations.values().forEach(TimedSeq::reset);
 			});
 			player2D.dyingAnimation.delay(60).onStart(() -> {
 				game.hideGhosts();
@@ -159,7 +159,7 @@ public class PlayScene extends GameScene {
 		// enter GAME_OVER
 		if (e.newGameState == GameState.GAME_OVER) {
 			ghosts2D.forEach(ghost2D -> {
-				ghost2D.kickingAnimations.values().forEach(TimedSequence::reset);
+				ghost2D.kickingAnimations.values().forEach(TimedSeq::reset);
 			});
 		}
 	}
@@ -261,7 +261,7 @@ public class PlayScene extends GameScene {
 	private void handleGhostsFlashing(TickTimerEvent e) {
 		if (e.type == TickTimerEvent.Type.HALF_EXPIRED) {
 			game.ghosts(GhostState.FRIGHTENED).forEach(ghost -> {
-				TimedSequence<?> flashing = ghosts2D.get(ghost.id).flashingAnimation;
+				TimedSeq<?> flashing = ghosts2D.get(ghost.id).flashingAnimation;
 				long frameTime = e.ticks / (game.numFlashes * flashing.numFrames());
 				flashing.frameDuration(frameTime).repetitions(game.numFlashes).restart();
 			});

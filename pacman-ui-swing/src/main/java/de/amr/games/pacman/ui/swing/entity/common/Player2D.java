@@ -28,7 +28,7 @@ import java.awt.image.BufferedImage;
 import java.util.Map;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.TimedSequence;
+import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.model.common.Pac;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
@@ -43,8 +43,8 @@ public class Player2D {
 	private final Pac player;
 	private final Rendering2D rendering;
 
-	public Map<Direction, TimedSequence<BufferedImage>> munchingAnimations;
-	public TimedSequence<BufferedImage> dyingAnimation;
+	public Map<Direction, TimedSeq<BufferedImage>> munchingAnimations;
+	public TimedSeq<BufferedImage> dyingAnimation;
 
 	private BufferedImage currentSprite;
 

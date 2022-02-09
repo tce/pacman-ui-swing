@@ -32,7 +32,7 @@ import java.awt.image.BufferedImage;
 import de.amr.games.pacman.controller.GameController;
 import de.amr.games.pacman.controller.pacman.Intermission2Controller;
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.TimedSequence;
+import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.ui.GameSounds;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
@@ -52,8 +52,8 @@ public class PacMan_IntermissionScene2 extends GameScene {
 
 	private Player2D pacMan2D;
 	private Ghost2D blinky2D;
-	private TimedSequence<BufferedImage> blinkyStretchedAnimation;
-	private TimedSequence<BufferedImage> blinkyDamagedAnimation;
+	private TimedSeq<BufferedImage> blinkyStretchedAnimation;
+	private TimedSeq<BufferedImage> blinkyDamagedAnimation;
 
 	public PacMan_IntermissionScene2(PacManGameUI_Swing ui, Dimension size) {
 		super(ui, size, ScenesPacMan.RENDERING, ScenesPacMan.SOUNDS);

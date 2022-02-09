@@ -39,7 +39,7 @@ import java.util.stream.Stream;
 import de.amr.games.pacman.controller.GameController;
 import de.amr.games.pacman.controller.pacman.IntroController;
 import de.amr.games.pacman.controller.pacman.IntroController.GhostPortrait;
-import de.amr.games.pacman.lib.TimedSequence;
+import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Player2D;
@@ -72,11 +72,11 @@ public class PacMan_IntroScene extends GameScene {
 		sceneController.init(gameController);
 
 		pacMan2D = new Player2D(sceneController.pacMan, rendering);
-		pacMan2D.munchingAnimations.values().forEach(TimedSequence::restart);
+		pacMan2D.munchingAnimations.values().forEach(TimedSeq::restart);
 
 		ghosts2D = Stream.of(sceneController.ghosts).map(ghost -> {
 			Ghost2D ghost2D = new Ghost2D(ghost, rendering);
-			ghost2D.kickingAnimations.values().forEach(TimedSequence::restart);
+			ghost2D.kickingAnimations.values().forEach(TimedSeq::restart);
 			ghost2D.frightenedAnimation.restart();
 			return ghost2D;
 		}).collect(Collectors.toList());

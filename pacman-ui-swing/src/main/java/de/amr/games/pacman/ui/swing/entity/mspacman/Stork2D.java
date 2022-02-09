@@ -26,7 +26,7 @@ package de.amr.games.pacman.ui.swing.entity.mspacman;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import de.amr.games.pacman.lib.TimedSequence;
+import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.model.common.GameEntity;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
@@ -34,7 +34,7 @@ public class Stork2D {
 
 	private final GameEntity stork;
 	private final Rendering2D rendering;
-	public TimedSequence<BufferedImage> animation;
+	public TimedSeq<BufferedImage> animation;
 
 	public Stork2D(GameEntity stork, Rendering2D rendering) {
 		this.stork = stork;

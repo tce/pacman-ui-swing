@@ -29,7 +29,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Map;
 
-import de.amr.games.pacman.lib.TimedSequence;
+import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.model.common.BonusState;
 import de.amr.games.pacman.model.pacman.entities.Bonus;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
@@ -45,7 +45,7 @@ public class Bonus2D {
 	public Bonus bonus;
 	public final Map<Integer, BufferedImage> symbolSprites;
 	public final Map<Integer, BufferedImage> numberSprites;
-	public final TimedSequence<Integer> jumpAnimation;
+	public final TimedSeq<Integer> jumpAnimation;
 
 	public Bonus2D(Rendering2D rendering) {
 		jumpAnimation = rendering.createBonusAnimation();

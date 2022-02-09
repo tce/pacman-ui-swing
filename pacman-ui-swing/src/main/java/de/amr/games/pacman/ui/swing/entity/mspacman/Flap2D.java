@@ -28,7 +28,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import de.amr.games.pacman.lib.TimedSequence;
+import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.model.mspacman.entities.Flap;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
@@ -36,7 +36,7 @@ public class Flap2D {
 
 	public final Flap flap;
 	public final Rendering2D rendering;
-	public TimedSequence<BufferedImage> animation;
+	public TimedSeq<BufferedImage> animation;
 	public Font font;
 
 	public Flap2D(Flap flap, Rendering2D rendering) {

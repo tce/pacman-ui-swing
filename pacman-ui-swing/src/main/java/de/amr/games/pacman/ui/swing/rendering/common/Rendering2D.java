@@ -37,7 +37,7 @@ import java.util.stream.Stream;
 
 import de.amr.games.pacman.controller.GameState;
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.TimedSequence;
+import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameEntity;
 import de.amr.games.pacman.model.common.GameModel;
@@ -59,17 +59,17 @@ public abstract class Rendering2D {
 		};
 	}
 
-	public abstract Map<Direction, TimedSequence<BufferedImage>> createPlayerMunchingAnimations();
+	public abstract Map<Direction, TimedSeq<BufferedImage>> createPlayerMunchingAnimations();
 
-	public abstract TimedSequence<BufferedImage> createPlayerDyingAnimation();
+	public abstract TimedSeq<BufferedImage> createPlayerDyingAnimation();
 
-	public abstract Map<Direction, TimedSequence<BufferedImage>> createGhostKickingAnimations(int ghostID);
+	public abstract Map<Direction, TimedSeq<BufferedImage>> createGhostKickingAnimations(int ghostID);
 
-	public abstract TimedSequence<BufferedImage> createGhostFrightenedAnimation();
+	public abstract TimedSeq<BufferedImage> createGhostFrightenedAnimation();
 
-	public abstract TimedSequence<BufferedImage> createGhostFlashingAnimation();
+	public abstract TimedSeq<BufferedImage> createGhostFlashingAnimation();
 
-	public abstract Map<Direction, TimedSequence<BufferedImage>> createGhostReturningHomeAnimations();
+	public abstract Map<Direction, TimedSeq<BufferedImage>> createGhostReturningHomeAnimations();
 
 	public abstract Map<Integer, BufferedImage> getSymbolSpritesMap();
 
@@ -81,7 +81,7 @@ public abstract class Rendering2D {
 
 	public abstract BufferedImage lifeSprite();
 
-	public abstract TimedSequence<BufferedImage> mazeFlashing(int mazeNumber);
+	public abstract TimedSeq<BufferedImage> mazeFlashing(int mazeNumber);
 
 	public abstract Color getMazeWallColor(int mazeIndex);
 
@@ -97,29 +97,29 @@ public abstract class Rendering2D {
 
 	// only use in Pac-Man:
 
-	public TimedSequence<BufferedImage> createBlinkyStretchedAnimation() {
+	public TimedSeq<BufferedImage> createBlinkyStretchedAnimation() {
 		return null;
 	}
 
-	public TimedSequence<BufferedImage> createBlinkyDamagedAnimation() {
+	public TimedSeq<BufferedImage> createBlinkyDamagedAnimation() {
 		return null;
 	}
 
 	// only used in Ms. Pac-Man:
 
-	public TimedSequence<Integer> createBonusAnimation() {
+	public TimedSeq<Integer> createBonusAnimation() {
 		return null;
 	}
 
-	public Map<Direction, TimedSequence<BufferedImage>> createSpouseMunchingAnimations() {
+	public Map<Direction, TimedSeq<BufferedImage>> createSpouseMunchingAnimations() {
 		return null;
 	}
 
-	public TimedSequence<BufferedImage> createFlapAnimation() {
+	public TimedSeq<BufferedImage> createFlapAnimation() {
 		return null;
 	}
 
-	public TimedSequence<BufferedImage> createStorkFlyingAnimation() {
+	public TimedSeq<BufferedImage> createStorkFlyingAnimation() {
 		return null;
 	}
 

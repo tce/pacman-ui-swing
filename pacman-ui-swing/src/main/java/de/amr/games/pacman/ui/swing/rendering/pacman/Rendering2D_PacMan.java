@@ -41,7 +41,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.TimedSequence;
+import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.model.common.GameEntity;
 import de.amr.games.pacman.model.common.Ghost;
 import de.amr.games.pacman.model.pacman.PacManGame;
@@ -69,11 +69,11 @@ public class Rendering2D_PacMan extends Rendering2D {
 
 	public final BufferedImage mazeFullImage;
 	public final BufferedImage mazeEmptyImage;
-	public final TimedSequence<BufferedImage> mazeFlashingAnim;
+	public final TimedSeq<BufferedImage> mazeFlashingAnim;
 	public final Map<Integer, BufferedImage> symbolSprites;
 	public final Map<Integer, BufferedImage> numberSprites;
-	public final TimedSequence<BufferedImage> blinkyHalfNaked;
-	public final TimedSequence<BufferedImage> blinkyPatched;
+	public final TimedSeq<BufferedImage> blinkyHalfNaked;
+	public final TimedSeq<BufferedImage> blinkyPatched;
 	public final BufferedImage nailSprite;
 
 	public Rendering2D_PacMan() {
@@ -121,10 +121,10 @@ public class Rendering2D_PacMan extends Rendering2D {
 		BufferedImage mazeEmptyDarkImage = image("/pacman/graphics/maze_empty.png");
 		BufferedImage mazeEmptyBrightImage = sheet.createBrightEffect(mazeEmptyDarkImage, new Color(33, 33, 255),
 				Color.BLACK);
-		mazeFlashingAnim = TimedSequence.of(mazeEmptyBrightImage, mazeEmptyDarkImage).frameDuration(15);
+		mazeFlashingAnim = TimedSeq.of(mazeEmptyBrightImage, mazeEmptyDarkImage).frameDuration(15);
 
-		blinkyPatched = TimedSequence.of(sheet.sprite(10, 7), sheet.sprite(11, 7)).restart().frameDuration(4).endless();
-		blinkyHalfNaked = TimedSequence.of(sheet.spriteRegion(8, 8, 2, 1), sheet.spriteRegion(10, 8, 2, 1)).endless()
+		blinkyPatched = TimedSeq.of(sheet.sprite(10, 7), sheet.sprite(11, 7)).restart().frameDuration(4).endless();
+		blinkyHalfNaked = TimedSeq.of(sheet.spriteRegion(8, 8, 2, 1), sheet.spriteRegion(10, 8, 2, 1)).endless()
 				.frameDuration(4).restart();
 
 		nailSprite = sheet.sprite(8, 6);
@@ -155,8 +155,8 @@ public class Rendering2D_PacMan extends Rendering2D {
 	}
 
 	@Override
-	public TimedSequence<BufferedImage> createPlayerDyingAnimation() {
-		return TimedSequence.of( //
+	public TimedSeq<BufferedImage> createPlayerDyingAnimation() {
+		return TimedSeq.of( //
 				sheet.sprite(3, 0), sheet.sprite(4, 0), sheet.sprite(5, 0), sheet.sprite(6, 0), //
 				sheet.sprite(7, 0), sheet.sprite(8, 0), sheet.sprite(9, 0), sheet.sprite(10, 0), //
 				sheet.sprite(11, 0), sheet.sprite(12, 0), sheet.sprite(13, 0)) //
@@ -164,22 +164,22 @@ public class Rendering2D_PacMan extends Rendering2D {
 	}
 
 	@Override
-	public Map<Direction, TimedSequence<BufferedImage>> createPlayerMunchingAnimations() {
-		EnumMap<Direction, TimedSequence<BufferedImage>> munching = new EnumMap<>(Direction.class);
+	public Map<Direction, TimedSeq<BufferedImage>> createPlayerMunchingAnimations() {
+		EnumMap<Direction, TimedSeq<BufferedImage>> munching = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
 			BufferedImage wide_open = sheet.sprite(0, d), open = sheet.sprite(1, d), closed = sheet.sprite(2, 0);
-			var animation = TimedSequence.of(closed, open, wide_open, open).frameDuration(2).endless().run();
+			var animation = TimedSeq.of(closed, open, wide_open, open).frameDuration(2).endless().run();
 			munching.put(dir, animation);
 		}
 		return munching;
 	}
 
 	@Override
-	public Map<Direction, TimedSequence<BufferedImage>> createGhostKickingAnimations(int ghostID) {
-		EnumMap<Direction, TimedSequence<BufferedImage>> walkingTo = new EnumMap<>(Direction.class);
+	public Map<Direction, TimedSeq<BufferedImage>> createGhostKickingAnimations(int ghostID) {
+		EnumMap<Direction, TimedSeq<BufferedImage>> walkingTo = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
-			TimedSequence<BufferedImage> anim = TimedSequence.of( //
+			TimedSeq<BufferedImage> anim = TimedSeq.of( //
 					sheet.sprite(2 * index(dir), 4 + ghostID), //
 					sheet.sprite(2 * index(dir) + 1, 4 + ghostID));
 			anim.frameDuration(8).endless();
@@ -189,42 +189,42 @@ public class Rendering2D_PacMan extends Rendering2D {
 	}
 
 	@Override
-	public TimedSequence<BufferedImage> createGhostFrightenedAnimation() {
-		TimedSequence<BufferedImage> animation = TimedSequence.of(sheet.sprite(8, 4), sheet.sprite(9, 4));
+	public TimedSeq<BufferedImage> createGhostFrightenedAnimation() {
+		TimedSeq<BufferedImage> animation = TimedSeq.of(sheet.sprite(8, 4), sheet.sprite(9, 4));
 		animation.frameDuration(8).endless();
 		return animation;
 	}
 
 	@Override
-	public TimedSequence<BufferedImage> createGhostFlashingAnimation() {
-		return TimedSequence.of( //
+	public TimedSeq<BufferedImage> createGhostFlashingAnimation() {
+		return TimedSeq.of( //
 				sheet.sprite(8, 4), sheet.sprite(9, 4), sheet.sprite(10, 4), sheet.sprite(11, 4) //
 		).frameDuration(4);
 	}
 
 	@Override
-	public Map<Direction, TimedSequence<BufferedImage>> createGhostReturningHomeAnimations() {
-		Map<Direction, TimedSequence<BufferedImage>> ghostEyesAnimsByDir = new EnumMap<>(Direction.class);
+	public Map<Direction, TimedSeq<BufferedImage>> createGhostReturningHomeAnimations() {
+		Map<Direction, TimedSeq<BufferedImage>> ghostEyesAnimsByDir = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
-			ghostEyesAnimsByDir.put(dir, TimedSequence.of(sheet.sprite(8 + index(dir), 5)));
+			ghostEyesAnimsByDir.put(dir, TimedSeq.of(sheet.sprite(8 + index(dir), 5)));
 		}
 		return ghostEyesAnimsByDir;
 	}
 
-	public TimedSequence<BufferedImage> createBigPacManMunchingAnimation() {
-		return TimedSequence
+	public TimedSeq<BufferedImage> createBigPacManMunchingAnimation() {
+		return TimedSeq
 				.of(sheet.spriteRegion(2, 1, 2, 2), sheet.spriteRegion(4, 1, 2, 2), sheet.spriteRegion(6, 1, 2, 2))
 				.frameDuration(4).endless().run();
 	}
 
 	@Override
-	public TimedSequence<BufferedImage> createBlinkyStretchedAnimation() {
-		return TimedSequence.of(sheet.sprite(9, 6), sheet.sprite(10, 6), sheet.sprite(11, 6), sheet.sprite(12, 6));
+	public TimedSeq<BufferedImage> createBlinkyStretchedAnimation() {
+		return TimedSeq.of(sheet.sprite(9, 6), sheet.sprite(10, 6), sheet.sprite(11, 6), sheet.sprite(12, 6));
 	}
 
 	@Override
-	public TimedSequence<BufferedImage> createBlinkyDamagedAnimation() {
-		return TimedSequence.of(sheet.sprite(8, 7), sheet.sprite(9, 7));
+	public TimedSeq<BufferedImage> createBlinkyDamagedAnimation() {
+		return TimedSeq.of(sheet.sprite(8, 7), sheet.sprite(9, 7));
 	}
 
 	@Override
@@ -243,7 +243,7 @@ public class Rendering2D_PacMan extends Rendering2D {
 	}
 
 	@Override
-	public TimedSequence<BufferedImage> mazeFlashing(int mazeNumber) {
+	public TimedSeq<BufferedImage> mazeFlashing(int mazeNumber) {
 		return mazeFlashingAnim;
 	}
 

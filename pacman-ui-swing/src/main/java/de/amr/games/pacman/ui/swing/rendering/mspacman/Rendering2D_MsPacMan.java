@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.TimedSequence;
+import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.model.mspacman.MsPacManGame;
 import de.amr.games.pacman.ui.swing.assets.Spritesheet;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
@@ -93,7 +93,7 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 	final Map<Integer, BufferedImage> bountyNumberSprites;
 	final List<BufferedImage> mazeEmptyImages;
 	final List<BufferedImage> mazeFullImages;
-	final List<TimedSequence<BufferedImage>> mazesFlashingAnims;
+	final List<TimedSeq<BufferedImage>> mazesFlashingAnims;
 
 	public Rendering2D_MsPacMan() {
 		sheet = new Spritesheet(image("/mspacman/graphics/sprites.png"), 16);
@@ -109,7 +109,7 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 			mazeEmptyImages.add(sheet.image.getSubimage(226, i * 248, 226, 248));
 			BufferedImage mazeEmptyBright = sheet.createBrightEffect(mazeEmptyImages.get(i), getMazeWallBorderColor(i),
 					getMazeWallColor(i));
-			mazesFlashingAnims.add(TimedSequence.of(mazeEmptyBright, mazeEmptyImages.get(i)).frameDuration(15));
+			mazesFlashingAnims.add(TimedSeq.of(mazeEmptyBright, mazeEmptyImages.get(i)).frameDuration(15));
 		}
 
 		//@formatter:off
@@ -172,76 +172,76 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 	}
 
 	@Override
-	public TimedSequence<BufferedImage> createPlayerDyingAnimation() {
-		return TimedSequence.of(s(0, 3), s(0, 0), s(0, 1), s(0, 2)).frameDuration(10).repetitions(2);
+	public TimedSeq<BufferedImage> createPlayerDyingAnimation() {
+		return TimedSeq.of(s(0, 3), s(0, 0), s(0, 1), s(0, 2)).frameDuration(10).repetitions(2);
 	}
 
 	@Override
-	public Map<Direction, TimedSequence<BufferedImage>> createPlayerMunchingAnimations() {
-		Map<Direction, TimedSequence<BufferedImage>> munchings = new EnumMap<>(Direction.class);
+	public Map<Direction, TimedSeq<BufferedImage>> createPlayerMunchingAnimations() {
+		Map<Direction, TimedSeq<BufferedImage>> munchings = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
 			BufferedImage wide_open = s(0, d), open = s(1, d), closed = s(2, d);
-			var animation = TimedSequence.of(open, closed, open, wide_open).frameDuration(2).endless().run();
+			var animation = TimedSeq.of(open, closed, open, wide_open).frameDuration(2).endless().run();
 			munchings.put(dir, animation);
 		}
 		return munchings;
 	}
 
 	@Override
-	public Map<Direction, TimedSequence<BufferedImage>> createSpouseMunchingAnimations() {
-		Map<Direction, TimedSequence<BufferedImage>> munchings = new EnumMap<>(Direction.class);
+	public Map<Direction, TimedSeq<BufferedImage>> createSpouseMunchingAnimations() {
+		Map<Direction, TimedSeq<BufferedImage>> munchings = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
-			var munching = TimedSequence.of(s(0, 9 + d), s(1, 9 + d), s(2, 9)).frameDuration(2).endless();
+			var munching = TimedSeq.of(s(0, 9 + d), s(1, 9 + d), s(2, 9)).frameDuration(2).endless();
 			munchings.put(dir, munching);
 		}
 		return munchings;
 	}
 
 	@Override
-	public Map<Direction, TimedSequence<BufferedImage>> createGhostKickingAnimations(int ghostID) {
-		EnumMap<Direction, TimedSequence<BufferedImage>> kickingByDir = new EnumMap<>(Direction.class);
+	public Map<Direction, TimedSeq<BufferedImage>> createGhostKickingAnimations(int ghostID) {
+		EnumMap<Direction, TimedSeq<BufferedImage>> kickingByDir = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
-			var kicking = TimedSequence.of(s(2 * d, 4 + ghostID), s(2 * d + 1, 4 + ghostID)).frameDuration(4).endless();
+			var kicking = TimedSeq.of(s(2 * d, 4 + ghostID), s(2 * d + 1, 4 + ghostID)).frameDuration(4).endless();
 			kickingByDir.put(dir, kicking);
 		}
 		return kickingByDir;
 	}
 
 	@Override
-	public TimedSequence<BufferedImage> createGhostFrightenedAnimation() {
-		return TimedSequence.of(s(8, 4), s(9, 4)).frameDuration(8).endless().run();
+	public TimedSeq<BufferedImage> createGhostFrightenedAnimation() {
+		return TimedSeq.of(s(8, 4), s(9, 4)).frameDuration(8).endless().run();
 	}
 
 	@Override
-	public TimedSequence<BufferedImage> createGhostFlashingAnimation() {
-		return TimedSequence.of(s(8, 4), s(9, 4), s(10, 4), s(11, 4)).frameDuration(4);
+	public TimedSeq<BufferedImage> createGhostFlashingAnimation() {
+		return TimedSeq.of(s(8, 4), s(9, 4), s(10, 4), s(11, 4)).frameDuration(4);
 	}
 
 	@Override
-	public Map<Direction, TimedSequence<BufferedImage>> createGhostReturningHomeAnimations() {
-		Map<Direction, TimedSequence<BufferedImage>> ghostEyesAnimByDir = new EnumMap<>(Direction.class);
+	public Map<Direction, TimedSeq<BufferedImage>> createGhostReturningHomeAnimations() {
+		Map<Direction, TimedSeq<BufferedImage>> ghostEyesAnimByDir = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
-			ghostEyesAnimByDir.put(dir, TimedSequence.of(s(8 + index(dir), 5)));
+			ghostEyesAnimByDir.put(dir, TimedSeq.of(s(8 + index(dir), 5)));
 		}
 		return ghostEyesAnimByDir;
 	}
 
 	@Override
-	public TimedSequence<BufferedImage> mazeFlashing(int mazeNumber) {
+	public TimedSeq<BufferedImage> mazeFlashing(int mazeNumber) {
 		return mazesFlashingAnims.get(mazeNumber - 1);
 	}
 
 	@Override
-	public TimedSequence<Integer> createBonusAnimation() {
-		return TimedSequence.of(2, -2).frameDuration(15).endless();
+	public TimedSeq<Integer> createBonusAnimation() {
+		return TimedSeq.of(2, -2).frameDuration(15).endless();
 	}
 
 	@Override
-	public TimedSequence<BufferedImage> createFlapAnimation() {
-		return TimedSequence.of( //
+	public TimedSeq<BufferedImage> createFlapAnimation() {
+		return TimedSeq.of( //
 				sheet.region(456, 208, 32, 32), //
 				sheet.region(488, 208, 32, 32), //
 				sheet.region(520, 208, 32, 32), //
@@ -251,8 +251,8 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 	}
 
 	@Override
-	public TimedSequence<BufferedImage> createStorkFlyingAnimation() {
-		return TimedSequence.of( //
+	public TimedSeq<BufferedImage> createStorkFlyingAnimation() {
+		return TimedSeq.of( //
 				sheet.region(489, 176, 32, 16), //
 				sheet.region(521, 176, 32, 16) //
 		).endless().frameDuration(10);

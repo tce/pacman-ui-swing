@@ -28,7 +28,7 @@ import static de.amr.games.pacman.model.world.World.TS;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import de.amr.games.pacman.lib.TimedSequence;
+import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
 
 /**
@@ -39,13 +39,13 @@ import de.amr.games.pacman.lib.V2i;
 public class Energizer2D {
 
 	private final V2i tile;
-	private final TimedSequence<Boolean> animation = TimedSequence.pulse().frameDuration(10);
+	private final TimedSeq<Boolean> animation = TimedSeq.pulse().frameDuration(10);
 
 	public Energizer2D(V2i tile) {
 		this.tile = tile;
 	}
 
-	public TimedSequence<Boolean> getAnimation() {
+	public TimedSeq<Boolean> getAnimation() {
 		return animation;
 	}
 

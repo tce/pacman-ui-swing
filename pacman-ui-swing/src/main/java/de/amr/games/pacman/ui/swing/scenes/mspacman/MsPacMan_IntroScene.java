@@ -42,7 +42,7 @@ import de.amr.games.pacman.controller.GameController;
 import de.amr.games.pacman.controller.mspacman.IntroController;
 import de.amr.games.pacman.controller.mspacman.IntroController.IntroState;
 import de.amr.games.pacman.lib.TickTimer;
-import de.amr.games.pacman.lib.TimedSequence;
+import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.Ghost;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
@@ -82,11 +82,11 @@ public class MsPacMan_IntroScene extends GameScene {
 		sc.init(gameController);
 
 		msPacMan2D = new Player2D(sc.msPacMan, rendering);
-		msPacMan2D.munchingAnimations.values().forEach(TimedSequence::restart);
+		msPacMan2D.munchingAnimations.values().forEach(TimedSeq::restart);
 
 		ghosts2D = Stream.of(sc.ghosts).map(ghost -> {
 			Ghost2D ghost2D = new Ghost2D(ghost, rendering);
-			ghost2D.kickingAnimations.values().forEach(TimedSequence::restart);
+			ghost2D.kickingAnimations.values().forEach(TimedSeq::restart);
 			return ghost2D;
 		}).collect(Collectors.toList());
 
