@@ -58,11 +58,11 @@ public class Player2D {
 		munchingAnimations = rendering.createPlayerMunchingAnimations();
 		dyingAnimation = rendering.createPlayerDyingAnimation();
 		// TODO set delay here
-		currentSprite = munchingAnimations.get(player.dir()).frame();
+		currentSprite = munchingAnimations.get(player.moveDir()).frame();
 	}
 
 	public void render(Graphics2D g) {
-		final Direction dir = player.dir();
+		final Direction dir = player.moveDir();
 		if (player.dead) {
 			if (dyingAnimation.hasStarted()) {
 				dyingAnimation.animate();
