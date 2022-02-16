@@ -30,8 +30,8 @@ import java.awt.image.BufferedImage;
 import java.util.Map;
 
 import de.amr.games.pacman.lib.TimedSeq;
-import de.amr.games.pacman.model.common.BonusState;
 import de.amr.games.pacman.model.pacman.entities.Bonus;
+import de.amr.games.pacman.model.pacman.entities.Bonus.BonusState;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**
