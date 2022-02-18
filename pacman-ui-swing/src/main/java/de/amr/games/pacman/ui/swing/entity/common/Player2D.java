@@ -63,7 +63,7 @@ public class Player2D {
 
 	public void render(Graphics2D g) {
 		final Direction dir = player.moveDir();
-		if (player.dead) {
+		if (player.killed) {
 			if (dyingAnimation.hasStarted()) {
 				dyingAnimation.animate();
 			}
