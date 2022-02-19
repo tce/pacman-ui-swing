@@ -51,8 +51,8 @@ public class Flap2D {
 			g.drawImage(animation.animate(), (int) flap.position.x, (int) flap.position.y, null);
 			g.setFont(font);
 			g.setColor(new Color(222, 222, 255));
-			g.drawString(flap.sceneNumber + "", (int) flap.position.x + 20, (int) flap.position.y + 30);
-			g.drawString(flap.sceneTitle, (int) flap.position.x + 40, (int) flap.position.y + 20);
+			g.drawString(flap.number + "", (int) flap.position.x + 20, (int) flap.position.y + 30);
+			g.drawString(flap.title, (int) flap.position.x + 40, (int) flap.position.y + 20);
 		}
 	}
 }
