@@ -52,7 +52,7 @@ public class Flap2D {
 			g.setFont(font);
 			g.setColor(new Color(222, 222, 255));
 			g.drawString(flap.number + "", (int) flap.position.x + 20, (int) flap.position.y + 30);
-			g.drawString(flap.title, (int) flap.position.x + 40, (int) flap.position.y + 20);
+			g.drawString(flap.text, (int) flap.position.x + 40, (int) flap.position.y + 20);
 		}
 	}
 }
