@@ -171,9 +171,9 @@ public abstract class Rendering2D {
 			g.drawString(String.format("L%d", game.levelNumber), t(9), t(2));
 		}
 		g.setColor(pointsColor);
-		g.drawString(String.format("%7d", game.hiscorePoints), t(15), t(2));
+		g.drawString(String.format("%7d", game.highscorePoints), t(15), t(2));
 		g.setColor(Color.LIGHT_GRAY);
-		g.drawString(String.format("L%d", game.hiscoreLevel), t(23), t(2));
+		g.drawString(String.format("L%d", game.highscoreLevel), t(23), t(2));
 		g.translate(0, -3);
 	}
 
