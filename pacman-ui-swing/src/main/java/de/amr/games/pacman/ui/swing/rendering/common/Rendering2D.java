@@ -192,8 +192,8 @@ public abstract class Rendering2D {
 	public void drawLevelCounter(Graphics2D g, GameModel game, int rightX, int y) {
 		int x = rightX;
 		int firstLevel = Math.max(1, game.levelNumber - 6);
-		for (int level = firstLevel; level <= game.levelNumber; ++level) {
-			int symbol = game.levelSymbol(level);
+		for (int levelNumber = firstLevel; levelNumber <= game.levelNumber; ++levelNumber) {
+			int symbol = game.levelCounter.get(levelNumber - 1);
 			g.drawImage(symbolSprite(symbol), x, y, null);
 			x -= t(2);
 		}
