@@ -64,10 +64,10 @@ public class PacMan_IntermissionScene1 extends GameScene {
 		sceneController.playIntermissionSound = () -> sounds.loop(GameSounds.INTERMISSION_1, 1);
 		sceneController.init(gameController);
 
-		pacMan2D = new Player2D(sceneController.pac, rendering);
+		pacMan2D = new Player2D(sceneController.pac, game, rendering);
 		blinky2D = new Ghost2D(sceneController.blinky, game, rendering);
 		bigPacMan2D = new BigPacMan2D(sceneController.pac, ScenesPacMan.RENDERING);
-		pacMan2D.munchingAnimations.values().forEach(TimedSeq::restart);
+		pacMan2D.munchings.values().forEach(TimedSeq::restart);
 		blinky2D.animKicking.values().forEach(TimedSeq::restart);
 		blinky2D.animFrightened.restart();
 		bigPacMan2D.munchingAnimation.restart();

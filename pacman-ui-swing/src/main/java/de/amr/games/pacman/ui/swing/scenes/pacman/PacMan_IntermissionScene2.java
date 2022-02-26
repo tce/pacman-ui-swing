@@ -66,7 +66,7 @@ public class PacMan_IntermissionScene2 extends GameScene {
 		sceneController.playIntermissionSound = () -> sounds.play(GameSounds.INTERMISSION_2);
 		sceneController.init(gameController);
 
-		pacMan2D = new Player2D(sceneController.pac, rendering);
+		pacMan2D = new Player2D(sceneController.pac, game, rendering);
 		blinky2D = new Ghost2D(sceneController.blinky, game, rendering);
 		blinkyStretchedAnimation = rendering.createBlinkyStretchedAnimation();
 		blinkyDamagedAnimation = rendering.createBlinkyDamagedAnimation();

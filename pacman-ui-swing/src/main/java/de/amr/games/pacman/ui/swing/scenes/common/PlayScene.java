@@ -71,7 +71,7 @@ public class PlayScene extends GameScene {
 	public void init(GameController gameController) {
 		super.init(gameController);
 
-		player2D = new Player2D(game.player, rendering);
+		player2D = new Player2D(game.player, game, rendering);
 		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, rendering)).collect(Collectors.toList());
 		energizers2D = game.world.energizerTiles().stream().map(Energizer2D::new).collect(Collectors.toList());
 		bonus2D = new Bonus2D(rendering);
@@ -114,7 +114,7 @@ public class PlayScene extends GameScene {
 		// enter HUNTING
 		if (e.newGameState == GameState.HUNTING) {
 			energizers2D.forEach(energizer2D -> energizer2D.getAnimation().restart());
-			player2D.munchingAnimations.values().forEach(TimedSeq::restart);
+			player2D.munchings.values().forEach(TimedSeq::restart);
 			ghosts2D.forEach(ghost2D -> {
 				ghost2D.animKicking.values().forEach(TimedSeq::restart);
 			});
@@ -127,7 +127,7 @@ public class PlayScene extends GameScene {
 			ghosts2D.forEach(ghost2D -> {
 				ghost2D.animKicking.values().forEach(TimedSeq::reset);
 			});
-			player2D.dyingAnimation.delay(60).onStart(() -> {
+			player2D.dying.delay(60).onStart(() -> {
 				game.hideGhosts();
 				if (gameController.gameRunning) {
 					sounds.play(GameSounds.PACMAN_DEATH);

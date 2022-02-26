@@ -30,6 +30,7 @@ import java.util.Map;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2d;
+import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.Pac;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
@@ -38,42 +39,36 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
  * 
  * @author Armin Reichert
  */
-public class Player2D {
+public class Player2D extends GameEntity2D {
 
-	private final Pac player;
-	private final Rendering2D rendering;
+	public final Pac player;
+	public Map<Direction, TimedSeq<BufferedImage>> munchings;
+	public TimedSeq<BufferedImage> dying;
 
-	public Map<Direction, TimedSeq<BufferedImage>> munchingAnimations;
-	public TimedSeq<BufferedImage> dyingAnimation;
-
-	private BufferedImage currentSprite;
-
-	public Player2D(Pac pac, Rendering2D rendering) {
-		this.player = pac;
-		this.rendering = rendering;
+	public Player2D(Pac player, GameModel game, Rendering2D r2D) {
+		super(game, r2D);
+		this.player = player;
 		reset();
 	}
 
 	public void reset() {
-		munchingAnimations = rendering.createPlayerMunchingAnimations();
-		dyingAnimation = rendering.createPlayerDyingAnimation();
-		// TODO set delay here
-		currentSprite = munchingAnimations.get(player.moveDir()).frame();
+		munchings = r2D.createPlayerMunchingAnimations();
+		dying = r2D.createPlayerDyingAnimation();
 	}
 
 	public void render(Graphics2D g) {
-		final Direction dir = player.moveDir();
+		BufferedImage sprite = null;
 		if (player.killed) {
-			if (dyingAnimation.hasStarted()) {
-				dyingAnimation.animate();
+			if (dying.hasStarted()) {
+				dying.animate();
 			}
-			currentSprite = dyingAnimation.frame();
+			sprite = dying.frame();
 		} else {
 			if (!player.velocity.equals(V2d.NULL) && !player.stuck) {
-				munchingAnimations.get(dir).animate();
+				munchings.get(player.moveDir()).animate();
 			}
-			currentSprite = munchingAnimations.get(dir).frame();
+			sprite = munchings.get(player.moveDir()).frame();
 		}
-		rendering.renderEntity(g, player, currentSprite);
+		r2D.renderEntity(g, player, sprite);
 	}
 }

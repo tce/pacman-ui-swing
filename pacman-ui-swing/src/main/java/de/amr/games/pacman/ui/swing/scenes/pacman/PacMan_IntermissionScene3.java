@@ -56,7 +56,7 @@ public class PacMan_IntermissionScene3 extends GameScene {
 		super.init(gameController);
 		sceneController.playIntermissionSound = () -> sounds.loop(GameSounds.INTERMISSION_3, 1);
 		sceneController.init(gameController);
-		pacMan2D = new Player2D(sceneController.pac, rendering);
+		pacMan2D = new Player2D(sceneController.pac, game, rendering);
 	}
 
 	@Override
