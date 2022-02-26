@@ -72,7 +72,7 @@ public class PlayScene extends GameScene {
 		super.init(gameController);
 
 		player2D = new Player2D(game.player, rendering);
-		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, rendering)).collect(Collectors.toList());
+		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, rendering)).collect(Collectors.toList());
 		energizers2D = game.world.energizerTiles().stream().map(Energizer2D::new).collect(Collectors.toList());
 		bonus2D = new Bonus2D(rendering);
 		mazeFlashing = rendering.mazeFlashing(game.mazeNumber).repetitions(game.numFlashes);
@@ -116,7 +116,7 @@ public class PlayScene extends GameScene {
 			energizers2D.forEach(energizer2D -> energizer2D.getAnimation().restart());
 			player2D.munchingAnimations.values().forEach(TimedSeq::restart);
 			ghosts2D.forEach(ghost2D -> {
-				ghost2D.kickingAnimations.values().forEach(TimedSeq::restart);
+				ghost2D.animKicking.values().forEach(TimedSeq::restart);
 			});
 		}
 
@@ -125,7 +125,7 @@ public class PlayScene extends GameScene {
 			gameController.stateTimer().setSeconds(3).start();
 			sounds.stopAll();
 			ghosts2D.forEach(ghost2D -> {
-				ghost2D.kickingAnimations.values().forEach(TimedSeq::reset);
+				ghost2D.animKicking.values().forEach(TimedSeq::reset);
 			});
 			player2D.dyingAnimation.delay(60).onStart(() -> {
 				game.hideGhosts();
@@ -159,7 +159,7 @@ public class PlayScene extends GameScene {
 		// enter GAME_OVER
 		if (e.newGameState == GameState.GAME_OVER) {
 			ghosts2D.forEach(ghost2D -> {
-				ghost2D.kickingAnimations.values().forEach(TimedSeq::reset);
+				ghost2D.animKicking.values().forEach(TimedSeq::reset);
 			});
 		}
 	}
@@ -191,8 +191,8 @@ public class PlayScene extends GameScene {
 	@Override
 	public void onPlayerGainsPower(GameEvent e) {
 		game.ghosts(GhostState.FRIGHTENED).map(ghost -> ghosts2D.get(ghost.id)).forEach(ghost2D -> {
-			ghost2D.flashingAnimation.reset();
-			ghost2D.frightenedAnimation.restart();
+			ghost2D.animFlashing.reset();
+			ghost2D.animFrightened.restart();
 		});
 		sounds.loop(GameSounds.PACMAN_POWER, Clip.LOOP_CONTINUOUSLY);
 	}
@@ -247,7 +247,6 @@ public class PlayScene extends GameScene {
 		bonus2D.render(g);
 		player2D.render(g);
 		ghosts2D.forEach(ghost2D -> {
-			ghost2D.looksFrightened = game.player.powerTimer.isRunning();
 			ghost2D.render(g);
 		});
 		if (gameController.gameRunning) {
@@ -261,7 +260,7 @@ public class PlayScene extends GameScene {
 	private void handleGhostsFlashing(TickTimerEvent e) {
 		if (e.type == TickTimerEvent.Type.HALF_EXPIRED) {
 			game.ghosts(GhostState.FRIGHTENED).forEach(ghost -> {
-				TimedSeq<?> flashing = ghosts2D.get(ghost.id).flashingAnimation;
+				TimedSeq<?> flashing = ghosts2D.get(ghost.id).animFlashing;
 				long frameTime = e.ticks / (game.numFlashes * flashing.numFrames());
 				flashing.frameDuration(frameTime).repetitions(game.numFlashes).restart();
 			});

@@ -34,7 +34,7 @@ import java.util.Map;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TimedSeq;
-import de.amr.games.pacman.lib.V2d;
+import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.Ghost;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
@@ -43,59 +43,58 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
  * 
  * @author Armin Reichert
  */
-public class Ghost2D {
+public class Ghost2D extends GameEntity2D {
 
-	private final Ghost ghost;
-	private final Rendering2D rendering;
-
-	public Map<Direction, TimedSeq<BufferedImage>> kickingAnimations;
-	public Map<Direction, TimedSeq<BufferedImage>> returningHomeAnimations;
-	public TimedSeq<BufferedImage> flashingAnimation;
-	public TimedSeq<BufferedImage> frightenedAnimation;
-	public boolean looksFrightened;
-	private BufferedImage currentSprite;
-
-	// TODO
+	public final Ghost ghost;
+	public final Rendering2D r2D;
+	public Map<Direction, TimedSeq<BufferedImage>> animKicking;
+	public Map<Direction, TimedSeq<BufferedImage>> animReturningHome;
+	public TimedSeq<BufferedImage> animFlashing;
+	public TimedSeq<BufferedImage> animFrightened;
+	// TODO take from rendering:
 	public Map<Integer, BufferedImage> bountyNumberSprites;
 
-	public Ghost2D(Ghost ghost, Rendering2D rendering) {
+	public Ghost2D(Ghost ghost, GameModel game, Rendering2D r2D) {
+		super(game);
 		this.ghost = ghost;
-		this.rendering = rendering;
-		reset();
+		this.r2D = r2D;
+		animKicking = r2D.createGhostKickingAnimations(ghost.id);
+		animReturningHome = r2D.createGhostReturningHomeAnimations();
+		animFrightened = r2D.createGhostFrightenedAnimation();
+		animFlashing = r2D.createGhostFlashingAnimation();
+		bountyNumberSprites = r2D.getBountyNumberSprites();
 	}
 
 	public void reset() {
-		kickingAnimations = rendering.createGhostKickingAnimations(ghost.id);
-		returningHomeAnimations = rendering.createGhostReturningHomeAnimations();
-		frightenedAnimation = rendering.createGhostFrightenedAnimation();
-		flashingAnimation = rendering.createGhostFlashingAnimation();
-		bountyNumberSprites = rendering.getBountyNumberSprites();
-		currentSprite = kickingAnimations.get(ghost.wishDir()).frame();
+		for (Direction dir : Direction.values()) {
+			animKicking.get(dir).reset();
+			animReturningHome.get(dir).reset();
+		}
+		animFlashing.reset();
+		animFrightened.reset();
 	}
 
 	public void render(Graphics2D g) {
+		BufferedImage sprite = null;
 		final Direction dir = ghost.wishDir();
 		if (ghost.bounty > 0) {
-			currentSprite = rendering.getBountyNumberSprites().get(ghost.bounty);
+			sprite = r2D.getBountyNumberSprites().get(ghost.bounty);
 		} else if (ghost.is(DEAD) || ghost.is(ENTERING_HOUSE)) {
-			currentSprite = returningHomeAnimations.get(dir).animate();
+			sprite = animReturningHome.get(dir).animate();
 		} else if (ghost.is(FRIGHTENED)) {
-			if (flashingAnimation.isRunning()) {
-				currentSprite = flashingAnimation.animate();
+			if (animFlashing.isRunning()) {
+				sprite = animFlashing.animate();
 			} else {
-				if (ghost.velocity.equals(V2d.NULL)) {
-					currentSprite = frightenedAnimation.frame();
-				} else {
-					currentSprite = frightenedAnimation.animate();
-				}
+				sprite = animFrightened.animate();
 			}
-		} else if (ghost.is(LOCKED) && looksFrightened) {
-			currentSprite = frightenedAnimation.animate();
-		} else if (ghost.velocity.equals(V2d.NULL)) {
-			currentSprite = kickingAnimations.get(dir).frame();
+		} else if (ghost.is(LOCKED) && game.player.powerTimer.isRunning()) {
+			if (!animFrightened.isRunning()) {
+				animFrightened.restart();
+			}
+			sprite = animFrightened.animate();
 		} else {
-			currentSprite = kickingAnimations.get(dir).animate();
+			sprite = animKicking.get(dir).animate();
 		}
-		rendering.renderEntity(g, ghost, currentSprite);
+		r2D.renderEntity(g, ghost, sprite);
 	}
 }

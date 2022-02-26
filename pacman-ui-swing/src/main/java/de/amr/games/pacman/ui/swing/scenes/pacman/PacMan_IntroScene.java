@@ -75,15 +75,15 @@ public class PacMan_IntroScene extends GameScene {
 		pacMan2D.munchingAnimations.values().forEach(TimedSeq::restart);
 
 		ghosts2D = Stream.of(sceneController.ghosts).map(ghost -> {
-			Ghost2D ghost2D = new Ghost2D(ghost, rendering);
-			ghost2D.kickingAnimations.values().forEach(TimedSeq::restart);
-			ghost2D.frightenedAnimation.restart();
+			Ghost2D ghost2D = new Ghost2D(ghost, game, rendering);
+			ghost2D.animKicking.values().forEach(TimedSeq::restart);
+			ghost2D.animFrightened.restart();
 			return ghost2D;
 		}).collect(Collectors.toList());
 
 		gallery2D = new ArrayList<>();
 		for (int i = 0; i < 4; ++i) {
-			gallery2D.add(new Ghost2D(sceneController.portraits[i].ghost, rendering));
+			gallery2D.add(new Ghost2D(sceneController.portraits[i].ghost, game, rendering));
 		}
 	}
 
