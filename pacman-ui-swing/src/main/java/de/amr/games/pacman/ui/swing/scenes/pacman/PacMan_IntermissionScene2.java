@@ -66,10 +66,10 @@ public class PacMan_IntermissionScene2 extends GameScene {
 		sceneController.playIntermissionSound = () -> sounds.play(GameSounds.INTERMISSION_2);
 		sceneController.init(gameController);
 
-		pacMan2D = new Player2D(sceneController.pac, game, rendering);
-		blinky2D = new Ghost2D(sceneController.blinky, game, rendering);
-		blinkyStretchedAnimation = rendering.createBlinkyStretchedAnimation();
-		blinkyDamagedAnimation = rendering.createBlinkyDamagedAnimation();
+		pacMan2D = new Player2D(sceneController.pac, game, r2D);
+		blinky2D = new Ghost2D(sceneController.blinky, game, r2D);
+		blinkyStretchedAnimation = r2D.createBlinkyStretchedAnimation();
+		blinkyDamagedAnimation = r2D.createBlinkyDamagedAnimation();
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class PacMan_IntermissionScene2 extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		Rendering2D_PacMan r = (Rendering2D_PacMan) rendering;
+		Rendering2D_PacMan r = (Rendering2D_PacMan) r2D;
 		r.drawLevelCounter(g, gameController.game, t(25), t(34));
 		r.drawNail(g, sceneController.nail);
 		pacMan2D.render(g);

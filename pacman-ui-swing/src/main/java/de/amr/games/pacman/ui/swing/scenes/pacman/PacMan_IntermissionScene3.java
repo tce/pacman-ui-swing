@@ -56,7 +56,7 @@ public class PacMan_IntermissionScene3 extends GameScene {
 		super.init(gameController);
 		sceneController.playIntermissionSound = () -> sounds.loop(GameSounds.INTERMISSION_3, 1);
 		sceneController.init(gameController);
-		pacMan2D = new Player2D(sceneController.pac, game, rendering);
+		pacMan2D = new Player2D(sceneController.pac, game, r2D);
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class PacMan_IntermissionScene3 extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		Rendering2D_PacMan r = (Rendering2D_PacMan) rendering;
+		Rendering2D_PacMan r = (Rendering2D_PacMan) r2D;
 		r.drawLevelCounter(g, gameController.game, t(25), t(34));
 		pacMan2D.render(g);
 		if (sceneController.state == IntermissionState.CHASING) {

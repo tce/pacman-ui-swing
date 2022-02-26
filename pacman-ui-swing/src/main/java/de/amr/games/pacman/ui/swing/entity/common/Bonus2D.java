@@ -27,9 +27,9 @@ import static de.amr.games.pacman.model.world.World.TS;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.Map;
 
 import de.amr.games.pacman.lib.TimedSeq;
+import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.pacman.entities.Bonus;
 import de.amr.games.pacman.model.pacman.entities.Bonus.BonusState;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
@@ -40,17 +40,14 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
  * 
  * @author Armin Reichert
  */
-public class Bonus2D {
+public class Bonus2D extends GameEntity2D {
 
 	public Bonus bonus;
-	public final Map<Integer, BufferedImage> symbolSprites;
-	public final Map<Integer, BufferedImage> numberSprites;
 	public final TimedSeq<Integer> jumpAnimation;
 
-	public Bonus2D(Rendering2D rendering) {
-		jumpAnimation = rendering.createBonusAnimation();
-		symbolSprites = rendering.getSymbolSpritesMap();
-		numberSprites = rendering.getBonusNumberSprites();
+	public Bonus2D(GameModel game, Rendering2D r2D) {
+		super(game, r2D);
+		jumpAnimation = r2D.createBonusAnimation();
 	}
 
 	public void render(Graphics2D g) {
@@ -71,10 +68,10 @@ public class Bonus2D {
 			return null;
 		}
 		if (bonus.state == BonusState.EDIBLE) {
-			return symbolSprites.get(bonus.symbol);
+			return r2D.getSymbolSpritesMap().get(bonus.symbol);
 		}
 		if (bonus.state == BonusState.EATEN) {
-			return numberSprites.get(bonus.points);
+			return r2D.getBonusNumberSprites().get(bonus.points);
 		}
 		return null;
 	}

@@ -42,7 +42,7 @@ public abstract class GameScene extends DefaultGameEventHandler {
 
 	protected final PacManGameUI_Swing ui;
 	protected final Dimension size;
-	protected final Rendering2D rendering;
+	protected final Rendering2D r2D;
 	protected final SoundManager sounds;
 	protected GameController gameController;
 	protected GameModel game;
@@ -50,7 +50,7 @@ public abstract class GameScene extends DefaultGameEventHandler {
 	public GameScene(PacManGameUI_Swing ui, Dimension size, Rendering2D rendering, SoundManager sounds) {
 		this.ui = ui;
 		this.size = size;
-		this.rendering = rendering;
+		this.r2D = rendering;
 		this.sounds = sounds;
 	}
 

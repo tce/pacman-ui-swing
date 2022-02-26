@@ -81,11 +81,11 @@ public class MsPacMan_IntroScene extends GameScene {
 		super.init(gameController);
 		sc.init(gameController);
 
-		msPacMan2D = new Player2D(sc.msPacMan, game, rendering);
+		msPacMan2D = new Player2D(sc.msPacMan, game, r2D);
 		msPacMan2D.munchings.values().forEach(TimedSeq::restart);
 
 		ghosts2D = Stream.of(sc.ghosts).map(ghost -> {
-			Ghost2D ghost2D = new Ghost2D(ghost, game, rendering);
+			Ghost2D ghost2D = new Ghost2D(ghost, game, r2D);
 			ghost2D.animKicking.values().forEach(TimedSeq::restart);
 			return ghost2D;
 		}).collect(Collectors.toList());
@@ -104,8 +104,8 @@ public class MsPacMan_IntroScene extends GameScene {
 		IntroState state = sc.state;
 		Graphics2D g = (Graphics2D) g_.create();
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		rendering.drawScore(g, gameController.game, true);
-		g.setFont(rendering.getScoreFont());
+		r2D.drawScore(g, gameController.game, true);
+		g.setFont(r2D.getScoreFont());
 		g.setColor(Color.ORANGE);
 		g.drawString("\"MS PAC-MAN\"", titlePosition.x, titlePosition.y);
 		drawAnimatedBoard(g, 32, 16);
@@ -127,7 +127,7 @@ public class MsPacMan_IntroScene extends GameScene {
 
 	private void drawPresentingGhost(Graphics2D g, Ghost ghost) {
 		g.setColor(Color.WHITE);
-		g.setFont(rendering.getScoreFont());
+		g.setFont(r2D.getScoreFont());
 		if (ghost == sc.ghosts[0]) {
 			g.drawString("WITH", titlePosition.x, sc.adBoardTopLeft.y + t(3));
 		}
@@ -137,7 +137,7 @@ public class MsPacMan_IntroScene extends GameScene {
 
 	private void drawStarringMsPacMan(Graphics2D g) {
 		g.setColor(Color.WHITE);
-		g.setFont(rendering.getScoreFont());
+		g.setFont(r2D.getScoreFont());
 		g.drawString("STARRING", titlePosition.x, sc.adBoardTopLeft.y + t(3));
 		g.setColor(Color.YELLOW);
 		g.drawString("MS PAC-MAN", titlePosition.x, sc.adBoardTopLeft.y + t(6));
@@ -168,7 +168,7 @@ public class MsPacMan_IntroScene extends GameScene {
 		if (sc.blinking.frame()) {
 			String text = "PRESS SPACE TO PLAY";
 			g.setColor(Color.WHITE);
-			g.setFont(rendering.getScoreFont());
+			g.setFont(r2D.getScoreFont());
 			g.drawString(text, t(13 - text.length() / 2), t(tileY));
 		}
 	}
@@ -180,7 +180,7 @@ public class MsPacMan_IntroScene extends GameScene {
 		g.setColor(Color.RED);
 		g.setFont(new Font("Dialog", Font.PLAIN, 11));
 		g.drawString("\u00a9", t(9), t(30) + 2); // (c) symbol
-		g.setFont(rendering.getScoreFont());
+		g.setFont(r2D.getScoreFont());
 		g.drawString("MIDWAY MFG CO", t(11), t(30));
 		g.drawString("1980/1981", t(12), t(32));
 	}

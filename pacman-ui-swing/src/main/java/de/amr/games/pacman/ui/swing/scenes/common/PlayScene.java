@@ -63,19 +63,19 @@ public class PlayScene extends GameScene {
 
 	private TimedSeq<?> mazeFlashing;
 
-	public PlayScene(PacManGameUI_Swing ui, Dimension size, Rendering2D rendering, SoundManager sounds) {
-		super(ui, size, rendering, sounds);
+	public PlayScene(PacManGameUI_Swing ui, Dimension size, Rendering2D r2D, SoundManager sounds) {
+		super(ui, size, r2D, sounds);
 	}
 
 	@Override
 	public void init(GameController gameController) {
 		super.init(gameController);
 
-		player2D = new Player2D(game.player, game, rendering);
-		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, rendering)).collect(Collectors.toList());
+		player2D = new Player2D(game.player, game, r2D);
+		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, r2D)).collect(Collectors.toList());
 		energizers2D = game.world.energizerTiles().stream().map(Energizer2D::new).collect(Collectors.toList());
-		bonus2D = new Bonus2D(rendering);
-		mazeFlashing = rendering.mazeFlashing(game.mazeNumber).repetitions(game.numFlashes);
+		bonus2D = new Bonus2D(game, r2D);
+		mazeFlashing = r2D.mazeFlashing(game.mazeNumber).repetitions(game.numFlashes);
 		mazeFlashing.reset();
 		game.player.powerTimer.addEventListener(this::handleGhostsFlashing);
 	}
@@ -102,7 +102,7 @@ public class PlayScene extends GameScene {
 		if (e.newGameState == GameState.READY) {
 			sounds.stopAll();
 			energizers2D.forEach(energizer2D -> energizer2D.getAnimation().reset());
-			rendering.mazeFlashing(game.mazeNumber).reset();
+			r2D.mazeFlashing(game.mazeNumber).reset();
 			player2D.reset();
 			ghosts2D.forEach(Ghost2D::reset);
 			if (!gameController.attractMode && !gameController.gameRunning) {
@@ -152,7 +152,7 @@ public class PlayScene extends GameScene {
 		// enter LEVEL_COMPLETE
 		if (e.newGameState == GameState.LEVEL_COMPLETE) {
 			player2D.reset();
-			mazeFlashing = rendering.mazeFlashing(game.mazeNumber);
+			mazeFlashing = r2D.mazeFlashing(game.mazeNumber);
 			sounds.stopAll();
 		}
 
@@ -233,16 +233,16 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		rendering.drawMaze(g, game.mazeNumber, 0, t(3), mazeFlashing.isRunning());
+		r2D.drawMaze(g, game.mazeNumber, 0, t(3), mazeFlashing.isRunning());
 		if (!mazeFlashing.isRunning()) {
-			rendering.hideEatenFood(g, game.world.tiles(), game.world::isFoodEaten);
+			r2D.hideEatenFood(g, game.world.tiles(), game.world::isFoodEaten);
 			energizers2D.forEach(energizer2D -> energizer2D.render(g));
 		}
 		if (gameController.attractMode) {
-			rendering.drawGameState(g, game, GameState.GAME_OVER);
+			r2D.drawGameState(g, game, GameState.GAME_OVER);
 		} else {
-			rendering.drawGameState(g, game, gameController.state);
-			rendering.drawLevelCounter(g, game, t(25), t(34));
+			r2D.drawGameState(g, game, gameController.state);
+			r2D.drawLevelCounter(g, game, t(25), t(34));
 		}
 		bonus2D.render(g);
 		player2D.render(g);
@@ -250,10 +250,10 @@ public class PlayScene extends GameScene {
 			ghost2D.render(g);
 		});
 		if (gameController.gameRunning) {
-			rendering.drawScore(g, game, false);
-			rendering.drawLivesCounter(g, game, t(2), t(34));
+			r2D.drawScore(g, game, false);
+			r2D.drawLivesCounter(g, game, t(2), t(34));
 		} else {
-			rendering.drawScore(g, game, true);
+			r2D.drawScore(g, game, true);
 		}
 	}
 

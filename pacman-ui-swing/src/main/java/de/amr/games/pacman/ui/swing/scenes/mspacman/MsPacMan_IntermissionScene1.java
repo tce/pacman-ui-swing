@@ -69,15 +69,15 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 		sceneController.playFlapAnimation = () -> flap2D.animation.restart();
 		sceneController.init(gameController);
 
-		flap2D = new Flap2D(sceneController.flap, rendering);
-		msPacMan2D = new Player2D(sceneController.msPac, game, rendering);
-		pacMan2D = new Player2D(sceneController.pacMan, game, rendering);
+		flap2D = new Flap2D(sceneController.flap, r2D);
+		msPacMan2D = new Player2D(sceneController.msPac, game, r2D);
+		pacMan2D = new Player2D(sceneController.pacMan, game, r2D);
 		// overwrite by Pac-Man instead of Ms. Pac-Man sprites:
-		pacMan2D.munchings = rendering.createSpouseMunchingAnimations();
-		inky2D = new Ghost2D(sceneController.inky, game, rendering);
-		pinky2D = new Ghost2D(sceneController.pinky, game, rendering);
+		pacMan2D.munchings = r2D.createSpouseMunchingAnimations();
+		inky2D = new Ghost2D(sceneController.inky, game, r2D);
+		pinky2D = new Ghost2D(sceneController.pinky, game, r2D);
 		heart2D = new Heart2D(sceneController.heart);
-		heart2D.setImage(rendering.getHeart());
+		heart2D.setImage(r2D.getHeart());
 
 		// start animations
 		msPacMan2D.munchings.values().forEach(TimedSeq::restart);
