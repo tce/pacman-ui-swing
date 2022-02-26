@@ -24,35 +24,39 @@ SOFTWARE.
 package de.amr.games.pacman.ui.swing.entity.mspacman;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.lib.TimedSeq;
+import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.mspacman.entities.Flap;
+import de.amr.games.pacman.ui.swing.entity.common.GameEntity2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
-public class Flap2D {
+/**
+ * The film flap used at the beginning of the Ms. Pac-Man intermission scenes.
+ * 
+ * @author Armin Reichert
+ */
+public class Flap2D extends GameEntity2D {
 
 	public final Flap flap;
-	public final Rendering2D rendering;
 	public TimedSeq<BufferedImage> animation;
-	public Font font;
 
-	public Flap2D(Flap flap, Rendering2D rendering) {
+	public Flap2D(Flap flap, GameModel game, Rendering2D r2D) {
+		super(game, r2D);
 		this.flap = flap;
-		this.rendering = rendering;
-		font = rendering.getScoreFont();
-		animation = rendering.createFlapAnimation();
+		animation = r2D.createFlapAnimation();
 	}
 
 	public void render(Graphics2D g) {
 		if (flap.visible) {
-			g.drawImage(animation.animate(), (int) flap.position.x, (int) flap.position.y, null);
-			g.setFont(font);
+			BufferedImage sprite = animation.animate();
+			r2D.renderEntity(g, flap, sprite);
+			g.setFont(r2D.getScoreFont());
 			g.setColor(new Color(222, 222, 255));
-			g.drawString(flap.number + "", (int) flap.position.x + 20, (int) flap.position.y + 30);
-			g.drawString(flap.text, (int) flap.position.x + 40, (int) flap.position.y + 20);
+			g.drawString(flap.number + "", (int) flap.position.x + sprite.getWidth() - 25, (int) flap.position.y + 18);
+			g.drawString(flap.text, (int) flap.position.x + sprite.getWidth(), (int) flap.position.y);
 		}
 	}
 }

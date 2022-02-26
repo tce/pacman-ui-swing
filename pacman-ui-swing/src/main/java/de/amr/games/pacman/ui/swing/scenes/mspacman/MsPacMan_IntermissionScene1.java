@@ -69,7 +69,7 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 		sceneController.playFlapAnimation = () -> flap2D.animation.restart();
 		sceneController.init(gameController);
 
-		flap2D = new Flap2D(sceneController.flap, r2D);
+		flap2D = new Flap2D(sceneController.flap, game, r2D);
 		msPacMan2D = new Player2D(sceneController.msPac, game, r2D);
 		pacMan2D = new Player2D(sceneController.pacMan, game, r2D);
 		// overwrite by Pac-Man instead of Ms. Pac-Man sprites:

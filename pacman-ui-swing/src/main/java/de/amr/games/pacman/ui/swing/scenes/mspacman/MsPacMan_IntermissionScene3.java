@@ -72,7 +72,7 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 		pacMan2D = new Player2D(sceneController.pacMan, game, r2D);
 		pacMan2D.munchings = r2D.createSpouseMunchingAnimations();
 
-		flap2D = new Flap2D(sceneController.flap, r2D);
+		flap2D = new Flap2D(sceneController.flap, game, r2D);
 
 		stork2D = new Stork2D(sceneController.stork, r2D);
 		stork2D.animation.restart();
