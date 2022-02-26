@@ -124,9 +124,6 @@ public class PlayScene extends GameScene {
 		if (e.newGameState == GameState.PACMAN_DYING) {
 			gameController.stateTimer().setSeconds(3).start();
 			sounds.stopAll();
-			ghosts2D.forEach(ghost2D -> {
-				ghost2D.animKicking.values().forEach(TimedSeq::reset);
-			});
 			player2D.dying.delay(60).onStart(() -> {
 				game.hideGhosts();
 				if (gameController.gameRunning) {
