@@ -38,11 +38,12 @@ import de.amr.games.pacman.lib.V2i;
  */
 public class Energizer2D {
 
-	private final V2i tile;
-	private final TimedSeq<Boolean> animation = TimedSeq.pulse().frameDuration(10);
+	private V2i tile;
+	private TimedSeq<Boolean> animation;
 
 	public Energizer2D(V2i tile) {
 		this.tile = tile;
+		animation = TimedSeq.pulse().frameDuration(10);
 	}
 
 	public TimedSeq<Boolean> getAnimation() {
@@ -50,9 +51,10 @@ public class Energizer2D {
 	}
 
 	public void render(Graphics2D g) {
-		if (!animation.animate()) {
+		if (!animation.frame()) {
 			g.setColor(Color.BLACK);
 			g.fillRect(tile.x * TS, tile.y * TS, TS, TS);
 		}
+		animation.advance();
 	}
 }
