@@ -46,23 +46,18 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 public class Ghost2D extends GameEntity2D {
 
 	public final Ghost ghost;
-	public final Rendering2D r2D;
 	public Map<Direction, TimedSeq<BufferedImage>> animKicking;
 	public Map<Direction, TimedSeq<BufferedImage>> animReturningHome;
 	public TimedSeq<BufferedImage> animFlashing;
 	public TimedSeq<BufferedImage> animFrightened;
-	// TODO take from rendering:
-	public Map<Integer, BufferedImage> bountyNumberSprites;
 
 	public Ghost2D(Ghost ghost, GameModel game, Rendering2D r2D) {
-		super(game);
+		super(game, r2D);
 		this.ghost = ghost;
-		this.r2D = r2D;
 		animKicking = r2D.createGhostKickingAnimations(ghost.id);
 		animReturningHome = r2D.createGhostReturningHomeAnimations();
 		animFrightened = r2D.createGhostFrightenedAnimation();
 		animFlashing = r2D.createGhostFlashingAnimation();
-		bountyNumberSprites = r2D.getBountyNumberSprites();
 	}
 
 	public void reset() {
