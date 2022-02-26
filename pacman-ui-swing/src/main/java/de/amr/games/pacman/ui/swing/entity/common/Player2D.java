@@ -43,17 +43,18 @@ public class Player2D extends GameEntity2D {
 
 	public final Pac player;
 	public Map<Direction, TimedSeq<BufferedImage>> munchings;
-	public TimedSeq<BufferedImage> dying;
+	public final TimedSeq<BufferedImage> dying;
 
 	public Player2D(Pac player, GameModel game, Rendering2D r2D) {
 		super(game, r2D);
 		this.player = player;
-		reset();
+		munchings = r2D.createPlayerMunchingAnimations();
+		dying = r2D.createPlayerDyingAnimation();
 	}
 
 	public void reset() {
-		munchings = r2D.createPlayerMunchingAnimations();
-		dying = r2D.createPlayerDyingAnimation();
+		munchings.values().forEach(TimedSeq::reset);
+		dying.reset();
 	}
 
 	public void render(Graphics2D g) {
