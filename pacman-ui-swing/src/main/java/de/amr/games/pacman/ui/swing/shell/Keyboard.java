@@ -36,6 +36,9 @@ import java.util.BitSet;
 public class Keyboard {
 
 	private final BitSet pressedKeys = new BitSet(256);
+	private boolean controlDown;
+	private boolean shiftDown;
+	private boolean altDown;
 
 	public Keyboard(Component component) {
 		component.addKeyListener(new KeyAdapter() {
@@ -45,11 +48,17 @@ public class Keyboard {
 				if (e.getKeyCode() != 0 && e.getKeyCode() < 256) {
 					pressedKeys.set(e.getKeyCode());
 				}
+				controlDown = e.isControlDown();
+				shiftDown = e.isShiftDown();
+				altDown = e.isAltDown();
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
 				pressedKeys.clear(e.getKeyCode());
+				controlDown = e.isControlDown();
+				shiftDown = e.isShiftDown();
+				altDown = e.isAltDown();
 			}
 		});
 	}
@@ -68,10 +77,29 @@ public class Keyboard {
 
 	public void clear() {
 		pressedKeys.clear();
+		shiftDown = false;
+		controlDown = false;
+		altDown = false;
 	}
 
 	public void clearKey(String keySpec) {
 		pressedKeys.clear(keyCode(keySpec));
+	}
+
+	public boolean isControlDown() {
+		return controlDown;
+	}
+
+	public boolean isShiftDown() {
+		return shiftDown;
+	}
+
+	public boolean isAltDown() {
+		return altDown;
+	}
+
+	public boolean isAnyModifierDown() {
+		return shiftDown || controlDown || altDown;
 	}
 
 	private int keyCode(String keySpec) {

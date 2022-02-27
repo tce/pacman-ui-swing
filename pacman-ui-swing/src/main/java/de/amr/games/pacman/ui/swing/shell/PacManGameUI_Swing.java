@@ -204,69 +204,70 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 	private void handleNonPlayerKeys() {
 		final var game = gameController.game;
 
-		if (keyboard.keyPressed("A")) {
+		if (!keyboard.isAnyModifierDown() && keyboard.keyPressed("A")) {
 			gameController.autoControlled = !gameController.autoControlled;
 			showFlashMessage(1, "Autopilot %s", gameController.autoControlled ? "on" : "off");
 		}
 
-		else if (keyboard.keyPressed("D")) {
+		else if (keyboard.isControlDown() && keyboard.keyPressed("D")) {
 			Debug.on = !Debug.on;
 			log("UI debug mode is %s", Debug.on ? "on" : "off");
 		}
 
-		else if (keyboard.keyPressed("E")) {
+		else if (!keyboard.isAnyModifierDown() && keyboard.keyPressed("E")) {
 			gameController.cheatEatAllPellets();
 		}
 
-		else if (keyboard.keyPressed("F")) {
-			gameLoop.clock.setTargetFPS(gameLoop.clock.getTargetFPS() != 120 ? 120 : 60);
-			showFlashMessage(1, "Speed: %s", gameLoop.clock.getTargetFPS() == 60 ? "Normal" : "Fast");
-			log("Clock frequency changed to %d Hz", gameLoop.clock.getTargetFPS());
-		}
-
-		else if (keyboard.keyPressed("I")) {
+		else if (!keyboard.isAnyModifierDown() && keyboard.keyPressed("I")) {
 			game.player.immune = !game.player.immune;
 			showFlashMessage(1, "Player is %s", game.player.immune ? "immune" : "vulnerable");
 		}
 
-		else if (keyboard.keyPressed("L")) {
+		else if (!keyboard.isAnyModifierDown() && keyboard.keyPressed("L")) {
 			game.player.lives += 3;
 		}
 
-		else if (keyboard.keyPressed("N")) {
+		else if (!keyboard.isAnyModifierDown() && keyboard.keyPressed("N")) {
 			if (gameController.gameRunning) {
 				gameController.changeState(GameState.LEVEL_COMPLETE);
 			}
 		}
 
-		else if (keyboard.keyPressed("Q")) {
+		else if (!keyboard.isAnyModifierDown() && keyboard.keyPressed("Q")) {
 			if (gameController.state != GameState.INTRO) {
 				reset();
 				gameController.changeState(GameState.INTRO);
 			}
 		}
 
-		else if (keyboard.keyPressed("S")) {
-			gameLoop.clock.setTargetFPS(gameLoop.clock.getTargetFPS() != 30 ? 30 : 60);
-			showFlashMessage(1, "Speed: %s", gameLoop.clock.getTargetFPS() == 60 ? "Normal" : "Slow");
+		else if (keyboard.isControlDown() && keyboard.keyPressed("S")) {
+			int fps = gameLoop.clock.getTargetFPS();
+			if (keyboard.isShiftDown()) {
+				fps -= 10;
+				fps = Math.max(10, fps);
+			} else {
+				fps += 10;
+			}
+			gameLoop.clock.setTargetFPS(fps);
+			showFlashMessage(1, "Target FPS set to %s Hz", fps);
 			log("Clock frequency changed to %d Hz", gameLoop.clock.getTargetFPS());
 		}
 
-		else if (keyboard.keyPressed("V")) {
+		else if (!keyboard.isAnyModifierDown() && keyboard.keyPressed("V")) {
 			if (gameController.state == GameState.INTRO) {
 				gameController.selectGameVariant(gameController.gameVariant.succ());
 			}
 		}
 
-		else if (keyboard.keyPressed("X")) {
+		else if (!keyboard.isAnyModifierDown() && keyboard.keyPressed("X")) {
 			gameController.cheatKillGhosts();
 		}
 
-		else if (keyboard.keyPressed("Z")) {
+		else if (!keyboard.isAnyModifierDown() && keyboard.keyPressed("Z")) {
 			gameController.startIntermissionTest();
 		}
 
-		else if (keyboard.keyPressed("Space")) {
+		else if (!keyboard.isAnyModifierDown() && keyboard.keyPressed("Space")) {
 			gameController.requestGame();
 		}
 	}
