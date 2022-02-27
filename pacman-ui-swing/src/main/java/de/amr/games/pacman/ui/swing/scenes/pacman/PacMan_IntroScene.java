@@ -31,16 +31,16 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import de.amr.games.pacman.controller.GameController;
 import de.amr.games.pacman.controller.pacman.IntroController;
 import de.amr.games.pacman.controller.pacman.IntroController.GhostPortrait;
+import de.amr.games.pacman.controller.pacman.IntroController.IntroState;
 import de.amr.games.pacman.lib.TimedSeq;
+import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.model.common.GameModel;
+import de.amr.games.pacman.model.common.Ghost;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Player2D;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
@@ -56,11 +56,11 @@ import de.amr.games.pacman.ui.swing.shell.PacManGameUI_Swing;
  */
 public class PacMan_IntroScene extends GameScene {
 
-	private final IntroController sceneController = new IntroController();
+	private final IntroController sc = new IntroController();
 
 	private Player2D pacMan2D;
-	private List<Ghost2D> ghosts2D;
-	private List<Ghost2D> gallery2D;
+	private Ghost2D[] ghosts2D;
+	private Ghost2D[] gallery2D;
 
 	public PacMan_IntroScene(PacManGameUI_Swing ui, Dimension size) {
 		super(ui, size, ScenesPacMan.RENDERING, ScenesPacMan.SOUNDS);
@@ -69,27 +69,38 @@ public class PacMan_IntroScene extends GameScene {
 	@Override
 	public void init(GameController gameController) {
 		super.init(gameController);
-		sceneController.init(gameController);
+		sc.init(gameController);
 
-		pacMan2D = new Player2D(sceneController.pacMan, game, r2D);
+		pacMan2D = new Player2D(sc.pacMan, game, r2D);
 		pacMan2D.munchings.values().forEach(TimedSeq::restart);
 
-		ghosts2D = Stream.of(sceneController.ghosts).map(ghost -> {
+		ghosts2D = Stream.of(sc.ghosts).map(ghost -> {
 			Ghost2D ghost2D = new Ghost2D(ghost, game, r2D);
 			ghost2D.animKicking.values().forEach(TimedSeq::restart);
 			ghost2D.animFrightened.restart();
 			return ghost2D;
-		}).collect(Collectors.toList());
+		}).toArray(Ghost2D[]::new);
 
-		gallery2D = new ArrayList<>();
-		for (int i = 0; i < 4; ++i) {
-			gallery2D.add(new Ghost2D(sceneController.portraits[i].ghost, game, r2D));
-		}
+		gallery2D = new Ghost2D[] { //
+				new Ghost2D(sc.portraits[0].ghost, game, r2D), //
+				new Ghost2D(sc.portraits[1].ghost, game, r2D), //
+				new Ghost2D(sc.portraits[2].ghost, game, r2D), //
+				new Ghost2D(sc.portraits[3].ghost, game, r2D) };
 	}
 
 	@Override
 	public void update() {
-		sceneController.updateState();
+		sc.updateState();
+		// TODO find a better solution:
+		if (sc.state == IntroState.CHASING_GHOSTS) {
+			for (Ghost ghost : sc.ghosts) {
+				if (ghost.velocity.equals(V2d.NULL)) {
+					ghosts2D[ghost.id].animFrightened.stop();
+				} else if (!ghosts2D[ghost.id].animFrightened.isRunning()) {
+					ghosts2D[ghost.id].animFrightened.restart();
+				}
+			}
+		}
 	}
 
 	@Override
@@ -98,14 +109,14 @@ public class PacMan_IntroScene extends GameScene {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		r2D.drawScore(g, game, true);
-		switch (sceneController.state) {
+		switch (sc.state) {
 
 		case BEGIN, PRESENTING_GHOSTS -> drawGallery(g);
 
 		case SHOWING_POINTS -> {
 			drawGallery(g);
 			drawPoints(g, 11, 25);
-			if (sceneController.stateTimer().ticked() > sec_to_ticks(1)) {
+			if (sc.stateTimer().ticked() > sec_to_ticks(1)) {
 				drawEnergizer(g);
 				drawCopyright(g, 32);
 			}
@@ -115,10 +126,10 @@ public class PacMan_IntroScene extends GameScene {
 			drawGallery(g);
 			drawPoints(g, 11, 25);
 			drawCopyright(g, 32);
-			if (sceneController.blinking.frame()) {
+			if (sc.blinking.frame()) {
 				drawEnergizer(g);
 			}
-			int offset = sceneController.stateTimer().ticked() % 5 < 2 ? 0 : -1;
+			int offset = sc.stateTimer().ticked() % 5 < 2 ? 0 : -1;
 			drawGuys(g, offset);
 		}
 
@@ -144,25 +155,25 @@ public class PacMan_IntroScene extends GameScene {
 	private void drawGuys(Graphics2D g, int offset) {
 		Graphics2D gg = (Graphics2D) g.create();
 		gg.translate(offset, 0);
-		ghosts2D.get(1).render(gg);
-		ghosts2D.get(2).render(gg);
+		ghosts2D[1].render(gg);
+		ghosts2D[2].render(gg);
 		gg.dispose();
-		ghosts2D.get(0).render(g);
-		ghosts2D.get(3).render(g);
+		ghosts2D[0].render(g);
+		ghosts2D[3].render(g);
 		pacMan2D.render(g);
 	}
 
 	private void drawGallery(Graphics2D g) {
 		g.setColor(Color.WHITE);
 		g.setFont(r2D.getScoreFont());
-		g.drawString("CHARACTER", t(6), sceneController.topY);
-		g.drawString("/", t(16), sceneController.topY);
-		g.drawString("NICKNAME", t(18), sceneController.topY);
+		g.drawString("CHARACTER", t(6), sc.topY);
+		g.drawString("/", t(16), sc.topY);
+		g.drawString("NICKNAME", t(18), sc.topY);
 		for (int ghostID = 0; ghostID < 4; ++ghostID) {
-			GhostPortrait portrait = sceneController.portraits[ghostID];
+			GhostPortrait portrait = sc.portraits[ghostID];
 			if (portrait.ghost.visible) {
-				int y = sceneController.topY + t(1 + 3 * ghostID);
-				gallery2D.get(ghostID).render(g);
+				int y = sc.topY + t(1 + 3 * ghostID);
+				gallery2D[ghostID].render(g);
 				if (portrait.characterVisible) {
 					g.setColor(r2D.getGhostColor(ghostID));
 					g.drawString("-" + portrait.character, t(6), y + 8);
@@ -176,7 +187,7 @@ public class PacMan_IntroScene extends GameScene {
 	}
 
 	private void drawPressKeyToStart(Graphics2D g, int yTile) {
-		if (sceneController.slowBlinking.frame()) {
+		if (sc.slowBlinking.frame()) {
 			String text = "PRESS SPACE TO PLAY";
 			g.setColor(Color.WHITE);
 			g.setFont(r2D.getScoreFont());
@@ -187,7 +198,7 @@ public class PacMan_IntroScene extends GameScene {
 	private void drawPoints(Graphics2D g, int tileX, int tileY) {
 		g.setColor(r2D.getFoodColor(1));
 		g.fillRect(t(tileX) + 6, t(tileY - 1) + 2, 2, 2);
-		if (sceneController.blinking.frame()) {
+		if (sc.blinking.frame()) {
 			g.fillOval(t(tileX), t(tileY + 1) - 2, 10, 10);
 		}
 		g.setColor(Color.WHITE);
