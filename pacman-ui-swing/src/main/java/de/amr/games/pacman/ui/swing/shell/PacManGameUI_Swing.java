@@ -260,7 +260,9 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		}
 
 		else if (!keyboard.isAnyModifierDown() && keyboard.keyPressed("X")) {
-			gameController.cheatKillGhosts();
+			if (gameController.gameRunning) {
+				gameController.cheatKillGhosts();
+			}
 		}
 
 		else if (!keyboard.isAnyModifierDown() && keyboard.keyPressed("Z")) {

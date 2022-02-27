@@ -31,8 +31,6 @@ import java.awt.RenderingHints;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import de.amr.games.pacman.lib.TickTimer;
-
 /**
  * Implements display of flash messages which disappear after a defined timespan.
  * 
@@ -42,12 +40,18 @@ public class FlashMessageDisplay {
 
 	static class FlashMessage {
 
-		private final TickTimer timer = new TickTimer(this.toString());
 		public final String text;
+		private final long displayTimeMillis;
+		private final long createdAt;
 
-		public FlashMessage(String text, long ticks) {
+		public FlashMessage(String text, double seconds) {
 			this.text = text;
-			timer.set(ticks);
+			displayTimeMillis = (long) (1000 * seconds);
+			createdAt = System.currentTimeMillis();
+		}
+
+		public boolean hasExpired() {
+			return System.currentTimeMillis() - createdAt > displayTimeMillis;
 		}
 	}
 
@@ -61,11 +65,7 @@ public class FlashMessageDisplay {
 	public void update() {
 		FlashMessage message = flashMessageQ.peek();
 		if (message != null) {
-			if (!message.timer.isRunning()) {
-				message.timer.start();
-			}
-			message.timer.tick();
-			if (message.timer.hasExpired()) {
+			if (message.hasExpired()) {
 				flashMessageQ.remove();
 			}
 		}
@@ -74,11 +74,12 @@ public class FlashMessageDisplay {
 	public void render(Graphics2D g) {
 		FlashMessage message = flashMessageQ.peek();
 		if (message != null) {
-			double alpha = Math.cos(Math.PI * message.timer.ticked() / (2 * message.timer.duration()));
+			double t = ((double) System.currentTimeMillis() - message.createdAt) / message.displayTimeMillis;
+			double alpha = Math.abs(Math.cos(0.5 * Math.PI * t));
 			g.setColor(Color.BLACK);
 			g.fillRect(0, unscaledSize.height - 16, unscaledSize.width, 16);
 			g.setColor(new Color(1, 1, 0, (float) alpha));
-			g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
+			g.setFont(new Font("Arial Narrow", Font.BOLD, 16));
 			g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 			g.drawString(message.text, (unscaledSize.width - g.getFontMetrics().stringWidth(message.text)) / 2,
 					unscaledSize.height / 2);
@@ -87,7 +88,6 @@ public class FlashMessageDisplay {
 	}
 
 	public void addMessage(double seconds, String message, Object... args) {
-		flashMessageQ.add(new FlashMessage(String.format(message, args), (long) (60 * seconds)));
-
+		flashMessageQ.add(new FlashMessage(String.format(message, args), seconds));
 	}
 }
