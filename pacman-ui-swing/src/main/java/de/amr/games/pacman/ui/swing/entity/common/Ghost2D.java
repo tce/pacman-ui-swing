@@ -34,6 +34,7 @@ import java.util.Map;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TimedSeq;
+import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.Ghost;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
@@ -87,6 +88,8 @@ public class Ghost2D extends GameEntity2D {
 				animFrightened.restart();
 			}
 			sprite = animFrightened.animate();
+		} else if (ghost.velocity.equals(V2d.NULL)) {
+			sprite = animKicking.get(ghost.wishDir()).frame();
 		} else {
 			sprite = animKicking.get(dir).animate();
 		}
