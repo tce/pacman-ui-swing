@@ -98,8 +98,8 @@ public class Keyboard {
 		return altDown;
 	}
 
-	public boolean isAnyModifierDown() {
-		return shiftDown || controlDown || altDown;
+	public boolean noModifier() {
+		return !shiftDown && !controlDown && !altDown;
 	}
 
 	private int keyCode(String keySpec) {

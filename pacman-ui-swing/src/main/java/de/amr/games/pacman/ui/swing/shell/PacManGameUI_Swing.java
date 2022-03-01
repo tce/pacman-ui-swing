@@ -207,7 +207,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 	private void handleNonPlayerKeys() {
 		final var game = gameController.game;
 
-		if (!keyboard.isAnyModifierDown() && keyboard.keyPressed("A")) {
+		if (keyboard.noModifier() && keyboard.keyPressed("A")) {
 			gameController.autoControlled = !gameController.autoControlled;
 			showFlashMessage(1, "Autopilot %s", gameController.autoControlled ? "on" : "off");
 		}
@@ -217,26 +217,26 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 			log("UI debug mode is %s", Debug.on ? "on" : "off");
 		}
 
-		else if (!keyboard.isAnyModifierDown() && keyboard.keyPressed("E")) {
+		else if (keyboard.noModifier() && keyboard.keyPressed("E")) {
 			gameController.cheatEatAllPellets();
 		}
 
-		else if (!keyboard.isAnyModifierDown() && keyboard.keyPressed("I")) {
+		else if (keyboard.noModifier() && keyboard.keyPressed("I")) {
 			game.player.immune = !game.player.immune;
 			showFlashMessage(1, "Player is %s", game.player.immune ? "immune" : "vulnerable");
 		}
 
-		else if (!keyboard.isAnyModifierDown() && keyboard.keyPressed("L")) {
+		else if (keyboard.noModifier() && keyboard.keyPressed("L")) {
 			game.player.lives += 3;
 		}
 
-		else if (!keyboard.isAnyModifierDown() && keyboard.keyPressed("N")) {
+		else if (keyboard.noModifier() && keyboard.keyPressed("N")) {
 			if (gameController.gameRunning) {
 				gameController.changeState(GameState.LEVEL_COMPLETE);
 			}
 		}
 
-		else if (!keyboard.isAnyModifierDown() && keyboard.keyPressed("Q")) {
+		else if (keyboard.noModifier() && keyboard.keyPressed("Q")) {
 			if (gameController.state != GameState.INTRO) {
 				reset();
 				gameController.changeState(GameState.INTRO);
@@ -256,23 +256,23 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 			log("Clock frequency changed to %d Hz", gameLoop.clock.getTargetFPS());
 		}
 
-		else if (!keyboard.isAnyModifierDown() && keyboard.keyPressed("V")) {
+		else if (keyboard.noModifier() && keyboard.keyPressed("V")) {
 			if (gameController.state == GameState.INTRO) {
 				gameController.selectGameVariant(gameController.gameVariant.succ());
 			}
 		}
 
-		else if (!keyboard.isAnyModifierDown() && keyboard.keyPressed("X")) {
+		else if (keyboard.noModifier() && keyboard.keyPressed("X")) {
 			if (gameController.gameRunning) {
 				gameController.cheatKillGhosts();
 			}
 		}
 
-		else if (!keyboard.isAnyModifierDown() && keyboard.keyPressed("Z")) {
+		else if (keyboard.noModifier() && keyboard.keyPressed("Z")) {
 			gameController.startIntermissionTest();
 		}
 
-		else if (!keyboard.isAnyModifierDown() && keyboard.keyPressed("Space")) {
+		else if (keyboard.noModifier() && keyboard.keyPressed("Space")) {
 			gameController.requestGame();
 		}
 	}
