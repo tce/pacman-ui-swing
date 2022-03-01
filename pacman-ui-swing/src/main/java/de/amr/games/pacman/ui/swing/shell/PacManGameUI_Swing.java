@@ -82,13 +82,13 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		this.gameLoop = gameLoop;
 		this.gameController = controller;
 		this.unscaledSize = new V2i(t(28), t(36));
+		this.scaling = Math.round(height / unscaledSize.y);
+		this.scaledSize = new V2d(unscaledSize.x, unscaledSize.y).scaled(scaling).toV2i();
 
 		scenesMsPacMan = new ScenesMsPacMan(unscaledSize);
 		scenesPacMan = new ScenesPacMan(unscaledSize);
 
 		flashMessageDisplay = new FlashMessageDisplay(unscaledSize);
-		scaling = Math.round(height / unscaledSize.y);
-		scaledSize = new V2d(unscaledSize.x, unscaledSize.y).scaled(this.scaling).toV2i();
 
 		canvas = new Canvas();
 		canvas.setBackground(Color.BLACK);
