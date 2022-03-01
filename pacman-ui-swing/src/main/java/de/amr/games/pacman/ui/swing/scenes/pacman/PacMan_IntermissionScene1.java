@@ -47,7 +47,7 @@ import de.amr.games.pacman.ui.swing.shell.PacManGameUI_Swing;
  */
 public class PacMan_IntermissionScene1 extends GameScene {
 
-	private final Intermission1Controller sceneController = new Intermission1Controller();
+	private final Intermission1Controller sc = new Intermission1Controller();
 
 	private Player2D pacMan2D;
 	private Ghost2D blinky2D;
@@ -61,12 +61,12 @@ public class PacMan_IntermissionScene1 extends GameScene {
 	public void init(GameController gameController) {
 		super.init(gameController);
 
-		sceneController.playIntermissionSound = () -> sounds.loop(GameSounds.INTERMISSION_1, 1);
-		sceneController.init(gameController);
+		sc.playIntermissionSound = () -> sounds.loop(GameSounds.INTERMISSION_1, 1);
+		sc.init(gameController);
 
-		pacMan2D = new Player2D(sceneController.pac, game, r2D);
-		blinky2D = new Ghost2D(sceneController.blinky, game, r2D);
-		bigPacMan2D = new BigPacMan2D(sceneController.pac, ScenesPacMan.RENDERING);
+		pacMan2D = new Player2D(sc.pac, game, r2D);
+		blinky2D = new Ghost2D(sc.blinky, game, r2D);
+		bigPacMan2D = new BigPacMan2D(sc.pac, ScenesPacMan.RENDERING);
 		pacMan2D.munchings.values().forEach(TimedSeq::restart);
 		blinky2D.animKicking.values().forEach(TimedSeq::restart);
 		blinky2D.animFrightened.restart();
@@ -75,14 +75,14 @@ public class PacMan_IntermissionScene1 extends GameScene {
 
 	@Override
 	public void update() {
-		sceneController.updateState();
+		sc.updateState();
 	}
 
 	@Override
 	public void render(Graphics2D g) {
 		Rendering2D_PacMan r = (Rendering2D_PacMan) r2D;
 		blinky2D.render(g);
-		if (sceneController.state == IntermissionState.CHASING_PACMAN) {
+		if (sc.state == IntermissionState.CHASING_PACMAN) {
 			pacMan2D.render(g);
 		} else {
 			bigPacMan2D.render(g);

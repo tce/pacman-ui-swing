@@ -44,7 +44,7 @@ import de.amr.games.pacman.ui.swing.shell.PacManGameUI_Swing;
  */
 public class PacMan_IntermissionScene3 extends GameScene {
 
-	private final Intermission3Controller sceneController = new Intermission3Controller();
+	private final Intermission3Controller sc = new Intermission3Controller();
 	private Player2D pacMan2D;
 
 	public PacMan_IntermissionScene3(PacManGameUI_Swing ui, Dimension size) {
@@ -54,14 +54,14 @@ public class PacMan_IntermissionScene3 extends GameScene {
 	@Override
 	public void init(GameController gameController) {
 		super.init(gameController);
-		sceneController.playIntermissionSound = () -> sounds.loop(GameSounds.INTERMISSION_3, 1);
-		sceneController.init(gameController);
-		pacMan2D = new Player2D(sceneController.pac, game, r2D);
+		sc.playIntermissionSound = () -> sounds.loop(GameSounds.INTERMISSION_3, 1);
+		sc.init(gameController);
+		pacMan2D = new Player2D(sc.pac, game, r2D);
 	}
 
 	@Override
 	public void update() {
-		sceneController.updateState();
+		sc.updateState();
 	}
 
 	@Override
@@ -69,10 +69,10 @@ public class PacMan_IntermissionScene3 extends GameScene {
 		Rendering2D_PacMan r = (Rendering2D_PacMan) r2D;
 		r.drawLevelCounter(g, gameController.game, t(25), t(34));
 		pacMan2D.render(g);
-		if (sceneController.state == IntermissionState.CHASING) {
-			r.drawBlinkyPatched(g, sceneController.blinky);
+		if (sc.state == IntermissionState.CHASING) {
+			r.drawBlinkyPatched(g, sc.blinky);
 		} else {
-			r.drawBlinkyNaked(g, sceneController.blinky);
+			r.drawBlinkyNaked(g, sc.blinky);
 		}
 	}
 }

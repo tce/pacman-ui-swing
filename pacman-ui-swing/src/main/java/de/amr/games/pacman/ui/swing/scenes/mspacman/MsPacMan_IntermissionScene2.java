@@ -45,7 +45,7 @@ import de.amr.games.pacman.ui.swing.shell.PacManGameUI_Swing;
  */
 public class MsPacMan_IntermissionScene2 extends GameScene {
 
-	private final Intermission2Controller sceneController = new Intermission2Controller();
+	private final Intermission2Controller sc = new Intermission2Controller();
 	private Player2D msPacMan2D;
 	private Player2D pacMan2D;
 	private Flap2D flap2D;
@@ -58,23 +58,23 @@ public class MsPacMan_IntermissionScene2 extends GameScene {
 	public void init(GameController gameController) {
 		super.init(gameController);
 
-		sceneController.playIntermissionSound = () -> sounds.play(GameSounds.INTERMISSION_2);
-		sceneController.playFlapAnimation = () -> flap2D.animation.restart();
-		sceneController.init(gameController);
+		sc.playIntermissionSound = () -> sounds.play(GameSounds.INTERMISSION_2);
+		sc.playFlapAnimation = () -> flap2D.animation.restart();
+		sc.init(gameController);
 
-		flap2D = new Flap2D(sceneController.flap, game, r2D);
+		flap2D = new Flap2D(sc.flap, game, r2D);
 
-		msPacMan2D = new Player2D(sceneController.msPacMan, game, r2D);
+		msPacMan2D = new Player2D(sc.msPacMan, game, r2D);
 		msPacMan2D.munchings.values().forEach(TimedSeq::restart);
 
-		pacMan2D = new Player2D(sceneController.pacMan, game, r2D);
+		pacMan2D = new Player2D(sc.pacMan, game, r2D);
 		pacMan2D.munchings = r2D.createSpouseMunchingAnimations();
 		pacMan2D.munchings.values().forEach(TimedSeq::restart);
 	}
 
 	@Override
 	public void update() {
-		sceneController.updateState();
+		sc.updateState();
 	}
 
 	@Override

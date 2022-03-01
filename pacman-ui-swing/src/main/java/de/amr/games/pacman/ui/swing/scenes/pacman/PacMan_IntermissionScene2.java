@@ -48,7 +48,7 @@ import de.amr.games.pacman.ui.swing.shell.PacManGameUI_Swing;
  */
 public class PacMan_IntermissionScene2 extends GameScene {
 
-	private final Intermission2Controller sceneController = new Intermission2Controller();
+	private final Intermission2Controller sc = new Intermission2Controller();
 
 	private Player2D pacMan2D;
 	private Ghost2D blinky2D;
@@ -63,30 +63,30 @@ public class PacMan_IntermissionScene2 extends GameScene {
 	public void init(GameController gameController) {
 		super.init(gameController);
 
-		sceneController.playIntermissionSound = () -> sounds.play(GameSounds.INTERMISSION_2);
-		sceneController.init(gameController);
+		sc.playIntermissionSound = () -> sounds.play(GameSounds.INTERMISSION_2);
+		sc.init(gameController);
 
-		pacMan2D = new Player2D(sceneController.pac, game, r2D);
-		blinky2D = new Ghost2D(sceneController.blinky, game, r2D);
+		pacMan2D = new Player2D(sc.pac, game, r2D);
+		blinky2D = new Ghost2D(sc.blinky, game, r2D);
 		blinkyStretchedAnimation = r2D.createBlinkyStretchedAnimation();
 		blinkyDamagedAnimation = r2D.createBlinkyDamagedAnimation();
 	}
 
 	@Override
 	public void update() {
-		sceneController.updateState();
+		sc.updateState();
 	}
 
 	@Override
 	public void render(Graphics2D g) {
 		Rendering2D_PacMan r = (Rendering2D_PacMan) r2D;
 		r.drawLevelCounter(g, gameController.game, t(25), t(34));
-		r.drawNail(g, sceneController.nail);
+		r.drawNail(g, sc.nail);
 		pacMan2D.render(g);
-		if (sceneController.nailDistance() < 0) {
+		if (sc.nailDistance() < 0) {
 			blinky2D.render(g);
 		} else {
-			drawBlinkyStretched(g, sceneController.nail.position, sceneController.nailDistance() / 4);
+			drawBlinkyStretched(g, sc.nail.position, sc.nailDistance() / 4);
 		}
 	}
 
@@ -97,9 +97,9 @@ public class PacMan_IntermissionScene2 extends GameScene {
 			blinky2D.render(g);
 		} else {
 			BufferedImage blinkyDamaged = blinkyDamagedAnimation
-					.frame(sceneController.blinky.moveDir() == Direction.UP ? 0 : 1);
-			g.drawImage(blinkyDamaged, (int) (sceneController.blinky.position.x - 4),
-					(int) (sceneController.blinky.position.y - 4), null);
+					.frame(sc.blinky.moveDir() == Direction.UP ? 0 : 1);
+			g.drawImage(blinkyDamaged, (int) (sc.blinky.position.x - 4),
+					(int) (sc.blinky.position.y - 4), null);
 		}
 	}
 }
