@@ -45,10 +45,11 @@ import de.amr.games.pacman.lib.TickTimer;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.Ghost;
+import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Player2D;
+import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
-import de.amr.games.pacman.ui.swing.shell.PacManGameUI_Swing;
 
 /**
  * Intro scene of the Ms. Pac-Man game. The ghosts and Ms. Pac-Man are introduced one after another.
@@ -67,8 +68,8 @@ public class MsPacMan_IntroScene extends GameScene {
 	private Player2D msPacMan2D;
 	private List<Ghost2D> ghosts2D;
 
-	public MsPacMan_IntroScene(PacManGameUI_Swing ui, Dimension size) {
-		super(ui, size, ScenesMsPacMan.RENDERING, ScenesMsPacMan.SOUNDS);
+	public MsPacMan_IntroScene(Dimension size, Rendering2D r2D, SoundManager sounds) {
+		super(size, r2D, sounds);
 		try {
 			midwayLogo = ImageIO.read(getClass().getResourceAsStream(MIDWAY_LOGO));
 		} catch (IOException e) {

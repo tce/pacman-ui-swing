@@ -35,11 +35,12 @@ import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.ui.GameSounds;
+import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Player2D;
+import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
-import de.amr.games.pacman.ui.swing.shell.PacManGameUI_Swing;
 
 /**
  * Second intermission scene: Blinky pursues Pac but kicks a nail that tears his dress apart.
@@ -55,8 +56,8 @@ public class PacMan_IntermissionScene2 extends GameScene {
 	private TimedSeq<BufferedImage> blinkyStretchedAnimation;
 	private TimedSeq<BufferedImage> blinkyDamagedAnimation;
 
-	public PacMan_IntermissionScene2(PacManGameUI_Swing ui, Dimension size) {
-		super(ui, size, ScenesPacMan.RENDERING, ScenesPacMan.SOUNDS);
+	public PacMan_IntermissionScene2(Dimension size, Rendering2D r2D, SoundManager sounds) {
+		super(size, r2D, sounds);
 	}
 
 	@Override
@@ -96,10 +97,8 @@ public class PacMan_IntermissionScene2 extends GameScene {
 		if (stretching < 3) {
 			blinky2D.render(g);
 		} else {
-			BufferedImage blinkyDamaged = blinkyDamagedAnimation
-					.frame(sc.blinky.moveDir() == Direction.UP ? 0 : 1);
-			g.drawImage(blinkyDamaged, (int) (sc.blinky.position.x - 4),
-					(int) (sc.blinky.position.y - 4), null);
+			BufferedImage blinkyDamaged = blinkyDamagedAnimation.frame(sc.blinky.moveDir() == Direction.UP ? 0 : 1);
+			g.drawImage(blinkyDamaged, (int) (sc.blinky.position.x - 4), (int) (sc.blinky.position.y - 4), null);
 		}
 	}
 }

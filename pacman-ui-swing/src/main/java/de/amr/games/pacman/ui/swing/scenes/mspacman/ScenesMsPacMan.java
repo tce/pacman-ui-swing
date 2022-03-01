@@ -30,16 +30,16 @@ import static de.amr.games.pacman.ui.GameSounds.EXTRA_LIFE;
 import static de.amr.games.pacman.ui.GameSounds.GAME_READY;
 import static de.amr.games.pacman.ui.GameSounds.GHOST_EATEN;
 import static de.amr.games.pacman.ui.GameSounds.GHOST_RETURNING;
-import static de.amr.games.pacman.ui.GameSounds.SIREN_1;
-import static de.amr.games.pacman.ui.GameSounds.SIREN_2;
-import static de.amr.games.pacman.ui.GameSounds.SIREN_3;
-import static de.amr.games.pacman.ui.GameSounds.SIREN_4;
 import static de.amr.games.pacman.ui.GameSounds.INTERMISSION_1;
 import static de.amr.games.pacman.ui.GameSounds.INTERMISSION_2;
 import static de.amr.games.pacman.ui.GameSounds.INTERMISSION_3;
 import static de.amr.games.pacman.ui.GameSounds.PACMAN_DEATH;
 import static de.amr.games.pacman.ui.GameSounds.PACMAN_MUNCH;
 import static de.amr.games.pacman.ui.GameSounds.PACMAN_POWER;
+import static de.amr.games.pacman.ui.GameSounds.SIREN_1;
+import static de.amr.games.pacman.ui.GameSounds.SIREN_2;
+import static de.amr.games.pacman.ui.GameSounds.SIREN_3;
+import static de.amr.games.pacman.ui.GameSounds.SIREN_4;
 
 import java.awt.Dimension;
 import java.util.AbstractMap.SimpleEntry;
@@ -52,7 +52,6 @@ import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.scenes.common.PlayScene;
-import de.amr.games.pacman.ui.swing.shell.PacManGameUI_Swing;
 
 /**
  * Ms. Pac-Man game scenes.
@@ -61,41 +60,41 @@ import de.amr.games.pacman.ui.swing.shell.PacManGameUI_Swing;
  */
 public class ScenesMsPacMan {
 
-	public static final Dimension UNSCALED_SIZE = new Dimension(t(28), t(36));
-	public static final Rendering2D_MsPacMan RENDERING = new Rendering2D_MsPacMan();
-	public static SoundManager SOUNDS;
-	public static List<GameScene> SCENES;
-
 	private static Entry<GameSounds, String> entry(GameSounds sound, String path) {
 		return new SimpleEntry<>(sound, "/mspacman/sound/" + path);
 	}
 
-	public static void init(PacManGameUI_Swing ui) {
-		Map<GameSounds, String> soundPaths = Map.ofEntries(//
-				entry(CREDIT, "Coin Credit.wav"), //
-				entry(EXTRA_LIFE, "Extra Life.wav"), //
-				entry(GAME_READY, "Start.wav"), //
-				entry(BONUS_EATEN, "Fruit.wav"), //
-				entry(PACMAN_MUNCH, "Ms. Pac Man Pill.wav"), //
-				entry(PACMAN_DEATH, "Died.wav"), //
-				entry(PACMAN_POWER, "Scared Ghost.wav"), //
-				entry(GHOST_EATEN, "Ghost.wav"), //
-				entry(GHOST_RETURNING, "Ghost Eyes.wav"), //
-				entry(SIREN_1, "Ghost Noise 1.wav"), //
-				entry(SIREN_2, "Ghost Noise 2.wav"), //
-				entry(SIREN_3, "Ghost Noise 3.wav"), //
-				entry(SIREN_4, "Ghost Noise 4.wav"), //
-				entry(INTERMISSION_1, "They Meet Act 1.wav"), //
-				entry(INTERMISSION_2, "The Chase Act 2.wav"), //
-				entry(INTERMISSION_3, "Junior Act 3.wav") //
-		);
-		SOUNDS = new SoundManager(soundPaths);
+	private static final Map<GameSounds, String> soundPaths = Map.ofEntries(//
+			entry(CREDIT, "Coin Credit.wav"), //
+			entry(EXTRA_LIFE, "Extra Life.wav"), //
+			entry(GAME_READY, "Start.wav"), //
+			entry(BONUS_EATEN, "Fruit.wav"), //
+			entry(PACMAN_MUNCH, "Ms. Pac Man Pill.wav"), //
+			entry(PACMAN_DEATH, "Died.wav"), //
+			entry(PACMAN_POWER, "Scared Ghost.wav"), //
+			entry(GHOST_EATEN, "Ghost.wav"), //
+			entry(GHOST_RETURNING, "Ghost Eyes.wav"), //
+			entry(SIREN_1, "Ghost Noise 1.wav"), //
+			entry(SIREN_2, "Ghost Noise 2.wav"), //
+			entry(SIREN_3, "Ghost Noise 3.wav"), //
+			entry(SIREN_4, "Ghost Noise 4.wav"), //
+			entry(INTERMISSION_1, "They Meet Act 1.wav"), //
+			entry(INTERMISSION_2, "The Chase Act 2.wav"), //
+			entry(INTERMISSION_3, "Junior Act 3.wav") //
+	);
 
-		SCENES = List.of(new MsPacMan_IntroScene(ui, UNSCALED_SIZE), //
-				new MsPacMan_IntermissionScene1(ui, UNSCALED_SIZE), //
-				new MsPacMan_IntermissionScene2(ui, UNSCALED_SIZE), //
-				new MsPacMan_IntermissionScene3(ui, UNSCALED_SIZE), //
-				new PlayScene(ui, UNSCALED_SIZE, RENDERING, SOUNDS)//
+	public final Dimension unscaledSize = new Dimension(t(28), t(36));
+	public final Rendering2D_MsPacMan r2D = new Rendering2D_MsPacMan();
+	public final SoundManager sounds = new SoundManager(soundPaths);
+	public final List<GameScene> gameScenes;
+
+	public ScenesMsPacMan() {
+		gameScenes = List.of( //
+				new MsPacMan_IntroScene(unscaledSize, r2D, sounds), //
+				new MsPacMan_IntermissionScene1(unscaledSize, r2D, sounds), //
+				new MsPacMan_IntermissionScene2(unscaledSize, r2D, sounds), //
+				new MsPacMan_IntermissionScene3(unscaledSize, r2D, sounds), //
+				new PlayScene(unscaledSize, r2D, sounds)//
 		);
 	}
 }

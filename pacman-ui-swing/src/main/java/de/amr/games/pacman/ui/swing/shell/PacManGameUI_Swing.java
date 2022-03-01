@@ -70,9 +70,11 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 	private final JFrame window;
 	private final Timer titleUpdateTimer;
 	private final Canvas canvas;
-	private final FlashMessageDisplay flashMessageDisplay = new FlashMessageDisplay(ScenesPacMan.UNSCALED_SIZE);
+	private final FlashMessageDisplay flashMessageDisplay;
 
 	public final Keyboard keyboard;
+	public final ScenesMsPacMan scenesMsPacMan;
+	public final ScenesPacMan scenesPacMan;
 
 	private GameScene currentGameScene;
 
@@ -80,10 +82,11 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		this.gameLoop = gameLoop;
 		this.gameController = controller;
 
-		ScenesPacMan.init(this);
-		ScenesMsPacMan.init(this);
+		scenesMsPacMan = new ScenesMsPacMan();
+		scenesPacMan = new ScenesPacMan();
 
-		unscaledSize = ScenesPacMan.UNSCALED_SIZE;
+		unscaledSize = scenesPacMan.UNSCALED_SIZE;
+		flashMessageDisplay = new FlashMessageDisplay(unscaledSize);
 		scaling = Math.round(height / unscaledSize.height);
 		scaledSize = new V2d(unscaledSize.width, unscaledSize.height).scaled(this.scaling).toV2i();
 
@@ -153,7 +156,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 
 	private GameScene getSceneForGameState(GameState state) {
 		var game = gameController.game;
-		var scenes = gameController.gameVariant == MS_PACMAN ? ScenesMsPacMan.SCENES : ScenesPacMan.SCENES;
+		var scenes = gameController.gameVariant == MS_PACMAN ? scenesMsPacMan.gameScenes : scenesPacMan.SCENES;
 		return switch (state) {
 		case INTRO -> scenes.get(0); // intro scene
 		case INTERMISSION -> scenes.get(game.intermissionNumber(game.levelNumber));
@@ -193,8 +196,8 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 
 	public void reset() {
 		currentGameScene.end();
-		ScenesMsPacMan.SOUNDS.stopAll();
-		ScenesPacMan.SOUNDS.stopAll();
+		scenesMsPacMan.sounds.stopAll();
+		scenesPacMan.SOUNDS.stopAll();
 	}
 
 	public void showFlashMessage(double seconds, String message, Object... args) {

@@ -32,12 +32,13 @@ import de.amr.games.pacman.controller.mspacman.Intermission1Controller.Intermiss
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.ui.GameSounds;
+import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Player2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Flap2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Heart2D;
+import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
-import de.amr.games.pacman.ui.swing.shell.PacManGameUI_Swing;
 
 /**
  * Intermission scene 1: "They meet".
@@ -59,8 +60,8 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 	private Flap2D flap2D;
 	private Heart2D heart2D;
 
-	public MsPacMan_IntermissionScene1(PacManGameUI_Swing ui, Dimension size) {
-		super(ui, size, ScenesMsPacMan.RENDERING, ScenesMsPacMan.SOUNDS);
+	public MsPacMan_IntermissionScene1(Dimension size, Rendering2D r2D, SoundManager sounds) {
+		super(size, r2D, sounds);
 	}
 
 	@Override

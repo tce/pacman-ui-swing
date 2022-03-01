@@ -47,7 +47,6 @@ import de.amr.games.pacman.ui.swing.entity.common.Energizer2D;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Player2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
-import de.amr.games.pacman.ui.swing.shell.PacManGameUI_Swing;
 
 /**
  * The play scene for Pac-Man and Ms. Pac-Man.
@@ -63,8 +62,8 @@ public class PlayScene extends GameScene {
 
 	private TimedSeq<?> mazeFlashing;
 
-	public PlayScene(PacManGameUI_Swing ui, Dimension size, Rendering2D r2D, SoundManager sounds) {
-		super(ui, size, r2D, sounds);
+	public PlayScene(Dimension size, Rendering2D r2D, SoundManager sounds) {
+		super(size, r2D, sounds);
 	}
 
 	@Override
@@ -213,7 +212,6 @@ public class PlayScene extends GameScene {
 	@Override
 	public void onExtraLife(GameEvent e) {
 		sounds.play(GameSounds.EXTRA_LIFE);
-		ui.showFlashMessage(1, "Extra life!");
 	}
 
 	@Override

@@ -33,12 +33,13 @@ import de.amr.games.pacman.controller.pacman.Intermission1Controller;
 import de.amr.games.pacman.controller.pacman.Intermission1Controller.IntermissionState;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.ui.GameSounds;
+import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Player2D;
 import de.amr.games.pacman.ui.swing.entity.pacman.BigPacMan2D;
+import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
-import de.amr.games.pacman.ui.swing.shell.PacManGameUI_Swing;
 
 /**
  * First intermission scene: Blinky chases Pac-Man and is then chased by a huge Pac-Man.
@@ -53,8 +54,8 @@ public class PacMan_IntermissionScene1 extends GameScene {
 	private Ghost2D blinky2D;
 	private BigPacMan2D bigPacMan2D;
 
-	public PacMan_IntermissionScene1(PacManGameUI_Swing ui, Dimension size) {
-		super(ui, size, ScenesPacMan.RENDERING, ScenesPacMan.SOUNDS);
+	public PacMan_IntermissionScene1(Dimension size, Rendering2D r2D, SoundManager sounds) {
+		super(size, r2D, sounds);
 	}
 
 	@Override
@@ -66,7 +67,7 @@ public class PacMan_IntermissionScene1 extends GameScene {
 
 		pacMan2D = new Player2D(sc.pac, game, r2D);
 		blinky2D = new Ghost2D(sc.blinky, game, r2D);
-		bigPacMan2D = new BigPacMan2D(sc.pac, ScenesPacMan.RENDERING);
+		bigPacMan2D = new BigPacMan2D(sc.pac, (Rendering2D_PacMan) r2D);
 		pacMan2D.munchings.values().forEach(TimedSeq::restart);
 		blinky2D.animKicking.values().forEach(TimedSeq::restart);
 		blinky2D.animFrightened.restart();
