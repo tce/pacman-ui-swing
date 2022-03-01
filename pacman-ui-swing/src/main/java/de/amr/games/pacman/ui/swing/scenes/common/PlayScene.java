@@ -28,6 +28,7 @@ import static de.amr.games.pacman.model.world.World.t;
 import java.awt.Graphics2D;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.sound.sampled.Clip;
 
@@ -57,7 +58,7 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 public class PlayScene extends GameScene {
 
 	private Player2D player2D;
-	private List<Ghost2D> ghosts2D;
+	private Ghost2D[] ghosts2D;
 	private List<Energizer2D> energizers2D;
 	private Bonus2D bonus2D;
 
@@ -72,7 +73,7 @@ public class PlayScene extends GameScene {
 		super.init(game);
 
 		player2D = new Player2D(game.player, game, r2D);
-		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, r2D)).collect(Collectors.toList());
+		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, r2D)).toArray(Ghost2D[]::new);
 		energizers2D = game.world.energizerTiles().stream().map(Energizer2D::new).collect(Collectors.toList());
 		bonus2D = new Bonus2D(game, r2D);
 		mazeFlashing = r2D.mazeFlashing(game.mazeNumber).repetitions(game.numFlashes);
@@ -104,7 +105,7 @@ public class PlayScene extends GameScene {
 			energizers2D.forEach(energizer2D -> energizer2D.getAnimation().reset());
 			r2D.mazeFlashing(game.mazeNumber).reset();
 			player2D.reset();
-			ghosts2D.forEach(Ghost2D::reset);
+			Stream.of(ghosts2D).forEach(Ghost2D::reset);
 			if (!gameController.attractMode && !gameController.gameRunning) {
 				sounds.setMuted(false);
 				sounds.play(GameSounds.GAME_READY);
@@ -115,7 +116,7 @@ public class PlayScene extends GameScene {
 		if (e.newGameState == GameState.HUNTING) {
 			energizers2D.forEach(energizer2D -> energizer2D.getAnimation().restart());
 			player2D.munchings.values().forEach(TimedSeq::restart);
-			ghosts2D.forEach(ghost2D -> {
+			Stream.of(ghosts2D).forEach(ghost2D -> {
 				ghost2D.animKicking.values().forEach(TimedSeq::restart);
 			});
 		}
@@ -155,7 +156,7 @@ public class PlayScene extends GameScene {
 
 		// enter GAME_OVER
 		if (e.newGameState == GameState.GAME_OVER) {
-			ghosts2D.forEach(ghost2D -> {
+			Stream.of(ghosts2D).forEach(ghost2D -> {
 				ghost2D.animKicking.values().forEach(TimedSeq::reset);
 			});
 		}
@@ -187,7 +188,7 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void onPlayerGainsPower(GameEvent e) {
-		game.ghosts(GhostState.FRIGHTENED).map(ghost -> ghosts2D.get(ghost.id)).forEach(ghost2D -> {
+		game.ghosts(GhostState.FRIGHTENED).map(ghost -> ghosts2D[ghost.id]).forEach(ghost2D -> {
 			ghost2D.animFlashing.reset();
 			ghost2D.animFrightened.restart();
 		});
@@ -242,9 +243,7 @@ public class PlayScene extends GameScene {
 		}
 		bonus2D.render(g);
 		player2D.render(g);
-		ghosts2D.forEach(ghost2D -> {
-			ghost2D.render(g);
-		});
+		Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.render(g));
 		if (gameController.gameRunning) {
 			r2D.drawScore(g, game, false);
 			r2D.drawLivesCounter(g, game, t(2), t(34));
@@ -256,7 +255,7 @@ public class PlayScene extends GameScene {
 	private void handleGhostsFlashing(TickTimerEvent e) {
 		if (e.type == TickTimerEvent.Type.HALF_EXPIRED) {
 			game.ghosts(GhostState.FRIGHTENED).forEach(ghost -> {
-				TimedSeq<?> flashing = ghosts2D.get(ghost.id).animFlashing;
+				TimedSeq<?> flashing = ghosts2D[ghost.id].animFlashing;
 				long frameTime = e.ticks / (game.numFlashes * flashing.numFrames());
 				flashing.frameDuration(frameTime).repetitions(game.numFlashes).restart();
 			});
