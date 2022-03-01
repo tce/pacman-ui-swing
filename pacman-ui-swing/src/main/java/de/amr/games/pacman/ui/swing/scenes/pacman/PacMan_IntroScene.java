@@ -63,13 +63,13 @@ public class PacMan_IntroScene extends GameScene {
 	private Ghost2D[] ghosts2D;
 	private Ghost2D[] gallery2D;
 
-	public PacMan_IntroScene(V2i size, Rendering2D r2D, SoundManager sounds) {
-		super(size, r2D, sounds);
+	public PacMan_IntroScene(GameController gameController, V2i size, Rendering2D r2D, SoundManager sounds) {
+		super(gameController, size, r2D, sounds);
 	}
 
 	@Override
-	public void init(GameController gameController) {
-		super.init(gameController);
+	public void init(GameModel game) {
+		super.init(game);
 		sc.init(gameController);
 
 		pacMan2D = new Player2D(sc.pacMan, game, r2D);

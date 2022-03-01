@@ -39,6 +39,7 @@ import de.amr.games.pacman.controller.event.ScatterPhaseStartedEvent;
 import de.amr.games.pacman.lib.TickTimerEvent;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
+import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.GhostState;
 import de.amr.games.pacman.ui.GameSounds;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
@@ -62,13 +63,13 @@ public class PlayScene extends GameScene {
 
 	private TimedSeq<?> mazeFlashing;
 
-	public PlayScene(V2i size, Rendering2D r2D, SoundManager sounds) {
-		super(size, r2D, sounds);
+	public PlayScene(GameController gameController, V2i size, Rendering2D r2D, SoundManager sounds) {
+		super(gameController, size, r2D, sounds);
 	}
 
 	@Override
-	public void init(GameController gameController) {
-		super.init(gameController);
+	public void init(GameModel game) {
+		super.init(game);
 
 		player2D = new Player2D(game.player, game, r2D);
 		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, r2D)).collect(Collectors.toList());

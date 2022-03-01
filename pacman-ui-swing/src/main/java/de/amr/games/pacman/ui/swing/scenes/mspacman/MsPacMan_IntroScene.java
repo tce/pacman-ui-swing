@@ -43,6 +43,7 @@ import de.amr.games.pacman.controller.mspacman.IntroController.IntroState;
 import de.amr.games.pacman.lib.TickTimer;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
+import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.Ghost;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
@@ -67,8 +68,8 @@ public class MsPacMan_IntroScene extends GameScene {
 	private Player2D msPacMan2D;
 	private List<Ghost2D> ghosts2D;
 
-	public MsPacMan_IntroScene(V2i size, Rendering2D r2D, SoundManager sounds) {
-		super(size, r2D, sounds);
+	public MsPacMan_IntroScene(GameController gameController, V2i size, Rendering2D r2D, SoundManager sounds) {
+		super(gameController, size, r2D, sounds);
 		try {
 			midwayLogo = ImageIO.read(getClass().getResourceAsStream(MIDWAY_LOGO));
 		} catch (IOException e) {
@@ -77,8 +78,9 @@ public class MsPacMan_IntroScene extends GameScene {
 	}
 
 	@Override
-	public void init(GameController gameController) {
-		super.init(gameController);
+	public void init(GameModel game) {
+		super.init(game);
+
 		sc.init(gameController);
 
 		msPacMan2D = new Player2D(sc.msPacMan, game, r2D);

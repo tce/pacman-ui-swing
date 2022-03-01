@@ -85,8 +85,8 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		this.scaling = Math.round(height / unscaledSize.y);
 		this.scaledSize = new V2d(unscaledSize.x, unscaledSize.y).scaled(scaling).toV2i();
 
-		scenesMsPacMan = new ScenesMsPacMan(unscaledSize);
-		scenesPacMan = new ScenesPacMan(unscaledSize);
+		scenesMsPacMan = new ScenesMsPacMan(gameController, unscaledSize);
+		scenesPacMan = new ScenesPacMan(gameController, unscaledSize);
 
 		flashMessageDisplay = new FlashMessageDisplay(unscaledSize);
 
@@ -138,7 +138,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 			if (currentGameScene != null) {
 				currentGameScene.end();
 			}
-			newScene.init(gameController);
+			newScene.init(gameController.game);
 			log("Current scene changed from %s to %s", currentGameScene, newScene);
 		}
 		currentGameScene = newScene;

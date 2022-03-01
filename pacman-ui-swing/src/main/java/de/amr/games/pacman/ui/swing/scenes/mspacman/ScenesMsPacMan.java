@@ -45,6 +45,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import de.amr.games.pacman.controller.GameController;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.ui.GameSounds;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
@@ -86,13 +87,13 @@ public class ScenesMsPacMan {
 	public final SoundManager sounds = new SoundManager(SOUND_PATHS);
 	public final List<GameScene> gameScenes;
 
-	public ScenesMsPacMan(V2i unscaledSize) {
+	public ScenesMsPacMan(GameController gameController, V2i unscaledSize) {
 		gameScenes = List.of( //
-				new MsPacMan_IntroScene(unscaledSize, r2D, sounds), //
-				new MsPacMan_IntermissionScene1(unscaledSize, r2D, sounds), //
-				new MsPacMan_IntermissionScene2(unscaledSize, r2D, sounds), //
-				new MsPacMan_IntermissionScene3(unscaledSize, r2D, sounds), //
-				new PlayScene(unscaledSize, r2D, sounds)//
+				new MsPacMan_IntroScene(gameController, unscaledSize, r2D, sounds), //
+				new MsPacMan_IntermissionScene1(gameController, unscaledSize, r2D, sounds), //
+				new MsPacMan_IntermissionScene2(gameController, unscaledSize, r2D, sounds), //
+				new MsPacMan_IntermissionScene3(gameController, unscaledSize, r2D, sounds), //
+				new PlayScene(gameController, unscaledSize, r2D, sounds)//
 		);
 	}
 }

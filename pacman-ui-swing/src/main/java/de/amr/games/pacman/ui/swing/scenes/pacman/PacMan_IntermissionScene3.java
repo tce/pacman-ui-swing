@@ -31,6 +31,7 @@ import de.amr.games.pacman.controller.GameController;
 import de.amr.games.pacman.controller.pacman.Intermission3Controller;
 import de.amr.games.pacman.controller.pacman.Intermission3Controller.IntermissionState;
 import de.amr.games.pacman.lib.V2i;
+import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.ui.GameSounds;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Player2D;
@@ -48,13 +49,13 @@ public class PacMan_IntermissionScene3 extends GameScene {
 	private final Intermission3Controller sc = new Intermission3Controller();
 	private Player2D pacMan2D;
 
-	public PacMan_IntermissionScene3(V2i size, Rendering2D r2D, SoundManager sounds) {
-		super(size, r2D, sounds);
+	public PacMan_IntermissionScene3(GameController gameController, V2i size, Rendering2D r2D, SoundManager sounds) {
+		super(gameController, size, r2D, sounds);
 	}
 
 	@Override
-	public void init(GameController gameController) {
-		super.init(gameController);
+	public void init(GameModel game) {
+		super.init(game);
 		sc.playIntermissionSound = () -> sounds.loop(GameSounds.INTERMISSION_3, 1);
 		sc.init(gameController);
 		pacMan2D = new Player2D(sc.pac, game, r2D);

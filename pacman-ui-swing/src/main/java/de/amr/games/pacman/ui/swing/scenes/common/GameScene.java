@@ -42,10 +42,11 @@ public abstract class GameScene extends DefaultGameEventHandler {
 	protected final V2i size;
 	protected final Rendering2D r2D;
 	protected final SoundManager sounds;
-	protected GameController gameController;
+	protected final GameController gameController;
 	protected GameModel game;
 
-	public GameScene(V2i size, Rendering2D r2D, SoundManager sounds) {
+	public GameScene(GameController gameController, V2i size, Rendering2D r2D, SoundManager sounds) {
+		this.gameController = gameController;
 		this.size = size;
 		this.r2D = r2D;
 		this.sounds = sounds;
@@ -55,15 +56,16 @@ public abstract class GameScene extends DefaultGameEventHandler {
 		return size;
 	}
 
-	public void init(GameController gameController) {
-		this.gameController = gameController;
-		this.game = gameController.game;
+	public void init(GameModel game) {
+		this.game = game;
 	}
 
-	public abstract void update();
+	public void update() {
+	}
 
 	public void end() {
 	}
 
-	public abstract void render(Graphics2D g);
+	public void render(Graphics2D g) {
+	}
 }

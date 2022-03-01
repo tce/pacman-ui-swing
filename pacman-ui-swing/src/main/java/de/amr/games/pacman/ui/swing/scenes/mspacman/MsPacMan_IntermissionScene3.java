@@ -28,6 +28,7 @@ import java.awt.Graphics2D;
 import de.amr.games.pacman.controller.GameController;
 import de.amr.games.pacman.controller.mspacman.Intermission3Controller;
 import de.amr.games.pacman.lib.V2i;
+import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.ui.GameSounds;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Player2D;
@@ -57,13 +58,13 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 	private Stork2D stork2D;
 	private JuniorBag2D bag2D;
 
-	public MsPacMan_IntermissionScene3(V2i size, Rendering2D r2D, SoundManager sounds) {
-		super(size, r2D, sounds);
+	public MsPacMan_IntermissionScene3(GameController gameController, V2i size, Rendering2D r2D, SoundManager sounds) {
+		super(gameController, size, r2D, sounds);
 	}
 
 	@Override
-	public void init(GameController gameController) {
-		super.init(gameController);
+	public void init(GameModel game) {
+		super.init(game);
 
 		sc.playIntermissionSound = () -> sounds.play(GameSounds.INTERMISSION_3);
 		sc.playFlapAnimation = () -> flap2D.animation.restart();
