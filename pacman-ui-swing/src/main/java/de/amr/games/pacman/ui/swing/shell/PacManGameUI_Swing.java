@@ -227,7 +227,9 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		}
 
 		else if (keyboard.pressed("L")) {
-			game.player.lives += 3;
+			if (gameController.gameRunning) {
+				game.player.lives += 3;
+			}
 		}
 
 		else if (keyboard.pressed("N")) {
@@ -265,9 +267,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		}
 
 		else if (keyboard.pressed("X")) {
-			if (gameController.gameRunning) {
-				gameController.cheatKillGhosts();
-			}
+			gameController.cheatKillGhosts();
 		}
 
 		else if (keyboard.pressed("Z")) {
