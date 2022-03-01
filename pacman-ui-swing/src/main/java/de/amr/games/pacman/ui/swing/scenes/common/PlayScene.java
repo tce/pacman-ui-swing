@@ -26,8 +26,6 @@ package de.amr.games.pacman.ui.swing.scenes.common;
 import static de.amr.games.pacman.model.world.World.t;
 
 import java.awt.Graphics2D;
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.sound.sampled.Clip;
@@ -59,7 +57,7 @@ public class PlayScene extends GameScene {
 
 	private Player2D player2D;
 	private Ghost2D[] ghosts2D;
-	private List<Energizer2D> energizers2D;
+	private Energizer2D[] energizers2D;
 	private Bonus2D bonus2D;
 
 	private TimedSeq<?> mazeFlashing;
@@ -74,7 +72,7 @@ public class PlayScene extends GameScene {
 
 		player2D = new Player2D(game.player, game, r2D);
 		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, r2D)).toArray(Ghost2D[]::new);
-		energizers2D = game.world.energizerTiles().stream().map(Energizer2D::new).collect(Collectors.toList());
+		energizers2D = game.world.energizerTiles().stream().map(Energizer2D::new).toArray(Energizer2D[]::new);
 		bonus2D = new Bonus2D(game, r2D);
 		mazeFlashing = r2D.mazeFlashing(game.mazeNumber).repetitions(game.numFlashes);
 		mazeFlashing.reset();
@@ -102,7 +100,7 @@ public class PlayScene extends GameScene {
 		// enter READY
 		if (e.newGameState == GameState.READY) {
 			sounds.stopAll();
-			energizers2D.forEach(energizer2D -> energizer2D.getAnimation().reset());
+			Stream.of(energizers2D).forEach(energizer2D -> energizer2D.getAnimation().reset());
 			r2D.mazeFlashing(game.mazeNumber).reset();
 			player2D.reset();
 			Stream.of(ghosts2D).forEach(Ghost2D::reset);
@@ -114,7 +112,7 @@ public class PlayScene extends GameScene {
 
 		// enter HUNTING
 		if (e.newGameState == GameState.HUNTING) {
-			energizers2D.forEach(energizer2D -> energizer2D.getAnimation().restart());
+			Stream.of(energizers2D).forEach(energizer2D -> energizer2D.getAnimation().restart());
 			player2D.munchings.values().forEach(TimedSeq::restart);
 			Stream.of(ghosts2D).forEach(ghost2D -> {
 				ghost2D.animKicking.values().forEach(TimedSeq::restart);
@@ -136,7 +134,7 @@ public class PlayScene extends GameScene {
 		// enter GHOST_DYING
 		if (e.newGameState == GameState.GHOST_DYING) {
 			sounds.play(GameSounds.GHOST_EATEN);
-			energizers2D.forEach(energizer2D -> energizer2D.getAnimation().restart());
+			Stream.of(energizers2D).forEach(energizer2D -> energizer2D.getAnimation().restart());
 		}
 
 		// exit GHOST_DYING
@@ -233,7 +231,7 @@ public class PlayScene extends GameScene {
 		r2D.drawMaze(g, game.mazeNumber, 0, t(3), mazeFlashing.isRunning());
 		if (!mazeFlashing.isRunning()) {
 			r2D.hideEatenFood(g, game.world.tiles(), game.world::isFoodEaten);
-			energizers2D.forEach(energizer2D -> energizer2D.render(g));
+			Stream.of(energizers2D).forEach(energizer2D -> energizer2D.render(g));
 		}
 		if (gameController.attractMode) {
 			r2D.drawGameState(g, game, GameState.GAME_OVER);
