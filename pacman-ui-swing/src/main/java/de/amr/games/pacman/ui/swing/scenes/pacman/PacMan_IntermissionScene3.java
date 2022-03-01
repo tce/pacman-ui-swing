@@ -25,12 +25,12 @@ package de.amr.games.pacman.ui.swing.scenes.pacman;
 
 import static de.amr.games.pacman.model.world.World.t;
 
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.GameController;
 import de.amr.games.pacman.controller.pacman.Intermission3Controller;
 import de.amr.games.pacman.controller.pacman.Intermission3Controller.IntermissionState;
+import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.ui.GameSounds;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Player2D;
@@ -48,7 +48,7 @@ public class PacMan_IntermissionScene3 extends GameScene {
 	private final Intermission3Controller sc = new Intermission3Controller();
 	private Player2D pacMan2D;
 
-	public PacMan_IntermissionScene3(Dimension size, Rendering2D r2D, SoundManager sounds) {
+	public PacMan_IntermissionScene3(V2i size, Rendering2D r2D, SoundManager sounds) {
 		super(size, r2D, sounds);
 	}
 

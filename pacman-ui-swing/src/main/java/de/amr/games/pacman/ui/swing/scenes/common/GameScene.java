@@ -23,11 +23,11 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.scenes.common;
 
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.GameController;
 import de.amr.games.pacman.controller.event.DefaultGameEventHandler;
+import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
@@ -39,19 +39,19 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
  */
 public abstract class GameScene extends DefaultGameEventHandler {
 
-	protected final Dimension size;
+	protected final V2i size;
 	protected final Rendering2D r2D;
 	protected final SoundManager sounds;
 	protected GameController gameController;
 	protected GameModel game;
 
-	public GameScene(Dimension size, Rendering2D r2D, SoundManager sounds) {
+	public GameScene(V2i size, Rendering2D r2D, SoundManager sounds) {
 		this.size = size;
 		this.r2D = r2D;
 		this.sounds = sounds;
 	}
 
-	public Dimension size() {
+	public V2i size() {
 		return size;
 	}
 

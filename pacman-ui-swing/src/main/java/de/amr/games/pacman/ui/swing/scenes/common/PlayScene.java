@@ -25,7 +25,6 @@ package de.amr.games.pacman.ui.swing.scenes.common;
 
 import static de.amr.games.pacman.model.world.World.t;
 
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,6 +38,7 @@ import de.amr.games.pacman.controller.event.GameStateChangeEvent;
 import de.amr.games.pacman.controller.event.ScatterPhaseStartedEvent;
 import de.amr.games.pacman.lib.TickTimerEvent;
 import de.amr.games.pacman.lib.TimedSeq;
+import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GhostState;
 import de.amr.games.pacman.ui.GameSounds;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
@@ -62,7 +62,7 @@ public class PlayScene extends GameScene {
 
 	private TimedSeq<?> mazeFlashing;
 
-	public PlayScene(Dimension size, Rendering2D r2D, SoundManager sounds) {
+	public PlayScene(V2i size, Rendering2D r2D, SoundManager sounds) {
 		super(size, r2D, sounds);
 	}
 

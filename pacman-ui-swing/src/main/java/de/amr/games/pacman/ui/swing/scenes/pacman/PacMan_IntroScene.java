@@ -28,7 +28,6 @@ import static de.amr.games.pacman.model.world.World.TS;
 import static de.amr.games.pacman.model.world.World.t;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.util.stream.Stream;
@@ -39,6 +38,7 @@ import de.amr.games.pacman.controller.pacman.IntroController.GhostPortrait;
 import de.amr.games.pacman.controller.pacman.IntroController.IntroState;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2d;
+import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.Ghost;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
@@ -63,7 +63,7 @@ public class PacMan_IntroScene extends GameScene {
 	private Ghost2D[] ghosts2D;
 	private Ghost2D[] gallery2D;
 
-	public PacMan_IntroScene(Dimension size, Rendering2D r2D, SoundManager sounds) {
+	public PacMan_IntroScene(V2i size, Rendering2D r2D, SoundManager sounds) {
 		super(size, r2D, sounds);
 	}
 

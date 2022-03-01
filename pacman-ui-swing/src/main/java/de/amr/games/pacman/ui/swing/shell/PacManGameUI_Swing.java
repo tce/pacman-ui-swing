@@ -25,11 +25,11 @@ package de.amr.games.pacman.ui.swing.shell;
 
 import static de.amr.games.pacman.lib.Logging.log;
 import static de.amr.games.pacman.model.common.GameVariant.MS_PACMAN;
+import static de.amr.games.pacman.model.world.World.t;
 
 import java.awt.AWTException;
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -64,7 +64,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 
 	private final GameLoop gameLoop;
 	private final GameController gameController;
-	private final Dimension unscaledSize;
+	private final V2i unscaledSize;
 	private final V2i scaledSize;
 	private final double scaling;
 	private final JFrame window;
@@ -81,14 +81,14 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 	public PacManGameUI_Swing(GameLoop gameLoop, GameController controller, double height) {
 		this.gameLoop = gameLoop;
 		this.gameController = controller;
+		this.unscaledSize = new V2i(t(28), t(36));
 
-		scenesMsPacMan = new ScenesMsPacMan();
-		scenesPacMan = new ScenesPacMan();
+		scenesMsPacMan = new ScenesMsPacMan(unscaledSize);
+		scenesPacMan = new ScenesPacMan(unscaledSize);
 
-		unscaledSize = scenesPacMan.unscaledSize;
 		flashMessageDisplay = new FlashMessageDisplay(unscaledSize);
-		scaling = Math.round(height / unscaledSize.height);
-		scaledSize = new V2d(unscaledSize.width, unscaledSize.height).scaled(this.scaling).toV2i();
+		scaling = Math.round(height / unscaledSize.y);
+		scaledSize = new V2d(unscaledSize.x, unscaledSize.y).scaled(this.scaling).toV2i();
 
 		canvas = new Canvas();
 		canvas.setBackground(Color.BLACK);

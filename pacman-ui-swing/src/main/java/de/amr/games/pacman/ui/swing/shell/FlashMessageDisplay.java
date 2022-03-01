@@ -24,12 +24,13 @@ SOFTWARE.
 package de.amr.games.pacman.ui.swing.shell;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.util.ArrayDeque;
 import java.util.Deque;
+
+import de.amr.games.pacman.lib.V2i;
 
 /**
  * Implements display of flash messages which disappear after a defined timespan.
@@ -55,10 +56,10 @@ public class FlashMessageDisplay {
 		}
 	}
 
-	private final Dimension unscaledSize;
+	private final V2i unscaledSize;
 	private final Deque<FlashMessage> flashMessageQ = new ArrayDeque<>();
 
-	public FlashMessageDisplay(Dimension unscaledSize) {
+	public FlashMessageDisplay(V2i unscaledSize) {
 		this.unscaledSize = unscaledSize;
 	}
 
@@ -77,12 +78,12 @@ public class FlashMessageDisplay {
 			double t = ((double) System.currentTimeMillis() - message.createdAt) / message.displayTimeMillis;
 			double alpha = Math.abs(Math.cos(0.5 * Math.PI * t));
 			g.setColor(Color.BLACK);
-			g.fillRect(0, unscaledSize.height - 16, unscaledSize.width, 16);
+			g.fillRect(0, unscaledSize.y - 16, unscaledSize.x, 16);
 			g.setColor(new Color(1, 1, 0, (float) alpha));
 			g.setFont(new Font("Arial Narrow", Font.BOLD, 16));
 			g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-			g.drawString(message.text, (unscaledSize.width - g.getFontMetrics().stringWidth(message.text)) / 2,
-					unscaledSize.height / 2);
+			g.drawString(message.text, (unscaledSize.x - g.getFontMetrics().stringWidth(message.text)) / 2,
+					unscaledSize.y / 2);
 			g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
 		}
 	}

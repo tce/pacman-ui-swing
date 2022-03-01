@@ -26,7 +26,6 @@ package de.amr.games.pacman.ui.swing.scenes.mspacman;
 import static de.amr.games.pacman.model.world.World.t;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -68,7 +67,7 @@ public class MsPacMan_IntroScene extends GameScene {
 	private Player2D msPacMan2D;
 	private List<Ghost2D> ghosts2D;
 
-	public MsPacMan_IntroScene(Dimension size, Rendering2D r2D, SoundManager sounds) {
+	public MsPacMan_IntroScene(V2i size, Rendering2D r2D, SoundManager sounds) {
 		super(size, r2D, sounds);
 		try {
 			midwayLogo = ImageIO.read(getClass().getResourceAsStream(MIDWAY_LOGO));

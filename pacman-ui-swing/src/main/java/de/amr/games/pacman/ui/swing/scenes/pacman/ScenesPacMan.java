@@ -23,7 +23,6 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.scenes.pacman;
 
-import static de.amr.games.pacman.model.world.World.t;
 import static de.amr.games.pacman.ui.GameSounds.BONUS_EATEN;
 import static de.amr.games.pacman.ui.GameSounds.CREDIT;
 import static de.amr.games.pacman.ui.GameSounds.EXTRA_LIFE;
@@ -41,12 +40,12 @@ import static de.amr.games.pacman.ui.GameSounds.SIREN_2;
 import static de.amr.games.pacman.ui.GameSounds.SIREN_3;
 import static de.amr.games.pacman.ui.GameSounds.SIREN_4;
 
-import java.awt.Dimension;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.ui.GameSounds;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
@@ -83,12 +82,11 @@ public class ScenesPacMan {
 			entry(INTERMISSION_3, "intermission.wav") //
 	);
 
-	public final Dimension unscaledSize = new Dimension(t(28), t(36));
 	public final Rendering2D_PacMan r2D = new Rendering2D_PacMan();
 	public final SoundManager sounds = new SoundManager(SOUND_PATHS);
 	public final List<GameScene> gameScenes;
 
-	public ScenesPacMan() {
+	public ScenesPacMan(V2i unscaledSize) {
 		gameScenes = List.of( //
 				new PacMan_IntroScene(unscaledSize, r2D, sounds), //
 				new PacMan_IntermissionScene1(unscaledSize, r2D, sounds), //
