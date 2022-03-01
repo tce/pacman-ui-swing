@@ -85,7 +85,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		scenesMsPacMan = new ScenesMsPacMan();
 		scenesPacMan = new ScenesPacMan();
 
-		unscaledSize = scenesPacMan.UNSCALED_SIZE;
+		unscaledSize = scenesPacMan.unscaledSize;
 		flashMessageDisplay = new FlashMessageDisplay(unscaledSize);
 		scaling = Math.round(height / unscaledSize.height);
 		scaledSize = new V2d(unscaledSize.width, unscaledSize.height).scaled(this.scaling).toV2i();
@@ -156,7 +156,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 
 	private GameScene getSceneForGameState(GameState state) {
 		var game = gameController.game;
-		var scenes = gameController.gameVariant == MS_PACMAN ? scenesMsPacMan.gameScenes : scenesPacMan.SCENES;
+		var scenes = gameController.gameVariant == MS_PACMAN ? scenesMsPacMan.gameScenes : scenesPacMan.gameScenes;
 		return switch (state) {
 		case INTRO -> scenes.get(0); // intro scene
 		case INTERMISSION -> scenes.get(game.intermissionNumber(game.levelNumber));
@@ -197,7 +197,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 	public void reset() {
 		currentGameScene.end();
 		scenesMsPacMan.sounds.stopAll();
-		scenesPacMan.SOUNDS.stopAll();
+		scenesPacMan.sounds.stopAll();
 	}
 
 	public void showFlashMessage(double seconds, String message, Object... args) {

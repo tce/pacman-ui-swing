@@ -64,7 +64,7 @@ public class ScenesPacMan {
 		return new SimpleEntry<>(sound, "/pacman/sound/" + path);
 	}
 
-	private static final Map<GameSounds, String> soundPaths = Map.ofEntries(//
+	private static final Map<GameSounds, String> SOUND_PATHS = Map.ofEntries(//
 			entry(CREDIT, "credit.wav"), //
 			entry(EXTRA_LIFE, "extend.wav"), //
 			entry(GAME_READY, "game_start.wav"), //
@@ -83,18 +83,18 @@ public class ScenesPacMan {
 			entry(INTERMISSION_3, "intermission.wav") //
 	);
 
-	public final Dimension UNSCALED_SIZE = new Dimension(t(28), t(36));
-	public final Rendering2D_PacMan RENDERING = new Rendering2D_PacMan();
-	public final SoundManager SOUNDS = new SoundManager(soundPaths);
-	public final List<GameScene> SCENES;
+	public final Dimension unscaledSize = new Dimension(t(28), t(36));
+	public final Rendering2D_PacMan r2D = new Rendering2D_PacMan();
+	public final SoundManager sounds = new SoundManager(SOUND_PATHS);
+	public final List<GameScene> gameScenes;
 
 	public ScenesPacMan() {
-		SCENES = List.of( //
-				new PacMan_IntroScene(UNSCALED_SIZE, RENDERING, SOUNDS), //
-				new PacMan_IntermissionScene1(UNSCALED_SIZE, RENDERING, SOUNDS), //
-				new PacMan_IntermissionScene2(UNSCALED_SIZE, RENDERING, SOUNDS), //
-				new PacMan_IntermissionScene3(UNSCALED_SIZE, RENDERING, SOUNDS), //
-				new PlayScene(UNSCALED_SIZE, RENDERING, SOUNDS) //
+		gameScenes = List.of( //
+				new PacMan_IntroScene(unscaledSize, r2D, sounds), //
+				new PacMan_IntermissionScene1(unscaledSize, r2D, sounds), //
+				new PacMan_IntermissionScene2(unscaledSize, r2D, sounds), //
+				new PacMan_IntermissionScene3(unscaledSize, r2D, sounds), //
+				new PlayScene(unscaledSize, r2D, sounds) //
 		);
 	}
 }

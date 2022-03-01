@@ -64,7 +64,7 @@ public class ScenesMsPacMan {
 		return new SimpleEntry<>(sound, "/mspacman/sound/" + path);
 	}
 
-	private static final Map<GameSounds, String> soundPaths = Map.ofEntries(//
+	private static final Map<GameSounds, String> SOUND_PATHS = Map.ofEntries(//
 			entry(CREDIT, "Coin Credit.wav"), //
 			entry(EXTRA_LIFE, "Extra Life.wav"), //
 			entry(GAME_READY, "Start.wav"), //
@@ -85,7 +85,7 @@ public class ScenesMsPacMan {
 
 	public final Dimension unscaledSize = new Dimension(t(28), t(36));
 	public final Rendering2D_MsPacMan r2D = new Rendering2D_MsPacMan();
-	public final SoundManager sounds = new SoundManager(soundPaths);
+	public final SoundManager sounds = new SoundManager(SOUND_PATHS);
 	public final List<GameScene> gameScenes;
 
 	public ScenesMsPacMan() {
