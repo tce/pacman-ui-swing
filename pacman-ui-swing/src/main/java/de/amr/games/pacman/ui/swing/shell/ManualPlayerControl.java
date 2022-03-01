@@ -47,16 +47,13 @@ public class ManualPlayerControl implements PlayerControl {
 
 	@Override
 	public void steer(Pac player) {
-		if (keyboard.keyPressed(upKey)) {
+		if (keyboard.pressed(upKey)) {
 			player.setWishDir(Direction.UP);
-		}
-		if (keyboard.keyPressed(downKey)) {
+		} else if (keyboard.pressed(downKey)) {
 			player.setWishDir(Direction.DOWN);
-		}
-		if (keyboard.keyPressed(leftKey)) {
+		} else if (keyboard.pressed(leftKey)) {
 			player.setWishDir(Direction.LEFT);
-		}
-		if (keyboard.keyPressed(rightKey)) {
+		} else if (keyboard.pressed(rightKey)) {
 			player.setWishDir(Direction.RIGHT);
 		}
 	}
