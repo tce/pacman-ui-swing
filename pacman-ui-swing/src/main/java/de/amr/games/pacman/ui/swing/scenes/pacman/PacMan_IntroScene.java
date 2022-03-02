@@ -57,7 +57,7 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
  */
 public class PacMan_IntroScene extends GameScene {
 
-	private final IntroController sc = new IntroController();
+	private final IntroController sc;
 
 	private Player2D pacMan2D;
 	private Ghost2D[] ghosts2D;
@@ -65,12 +65,13 @@ public class PacMan_IntroScene extends GameScene {
 
 	public PacMan_IntroScene(GameController gameController, V2i size, Rendering2D r2D, SoundManager sounds) {
 		super(gameController, size, r2D, sounds);
+		sc = new IntroController(gameController);
 	}
 
 	@Override
 	public void init(GameModel game) {
 		super.init(game);
-		sc.init(gameController);
+		sc.init();
 
 		pacMan2D = new Player2D(sc.pacMan, game, r2D);
 		pacMan2D.munchings.values().forEach(TimedSeq::restart);
@@ -127,7 +128,7 @@ public class PacMan_IntroScene extends GameScene {
 			drawGallery(g);
 			drawPoints(g, 11, 25);
 			drawCopyright(g, 32);
-			if (sc.blinking.frame()) {
+			if (sc.fastBlinking.frame()) {
 				drawEnergizer(g);
 			}
 			int offset = sc.stateTimer().ticked() % 5 < 2 ? 0 : -1;
@@ -199,7 +200,7 @@ public class PacMan_IntroScene extends GameScene {
 	private void drawPoints(Graphics2D g, int tileX, int tileY) {
 		g.setColor(r2D.getFoodColor(1));
 		g.fillRect(t(tileX) + 6, t(tileY - 1) + 2, 2, 2);
-		if (sc.blinking.frame()) {
+		if (sc.fastBlinking.frame()) {
 			g.fillOval(t(tileX), t(tileY + 1) - 2, 10, 10);
 		}
 		g.setColor(Color.WHITE);

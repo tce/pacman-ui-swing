@@ -111,9 +111,9 @@ public class MsPacMan_IntroScene extends GameScene {
 		g.setColor(Color.ORANGE);
 		g.drawString("\"MS PAC-MAN\"", titlePosition.x, titlePosition.y);
 		drawAnimatedBoard(g, 32, 16);
-		if (state == IntroState.PRESENTING_GHOSTS) {
+		if (state == IntroState.GHOSTS) {
 			drawPresentingGhost(g, sc.ghosts[sc.currentGhostIndex]);
-		} else if (state == IntroState.PRESENTING_MSPACMAN) {
+		} else if (state == IntroState.MSPACMAN) {
 			drawStarringMsPacMan(g);
 		} else if (state == IntroState.WAITING_FOR_GAME) {
 			// TODO: this hack ensures that Ms. Pac-Man is displayed with mouth half open
