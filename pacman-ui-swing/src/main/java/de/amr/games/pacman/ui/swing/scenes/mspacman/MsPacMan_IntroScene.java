@@ -62,14 +62,15 @@ public class MsPacMan_IntroScene extends GameScene {
 
 	private final V2i titlePosition = new V2i(t(9), t(8));
 	private final TickTimer boardAnimationTimer = new TickTimer("boardAnimation-timer");
-	private final IntroController sc = new IntroController();
-
+	private final IntroController sc;
 	private BufferedImage midwayLogo;
 	private Player2D msPacMan2D;
 	private List<Ghost2D> ghosts2D;
 
 	public MsPacMan_IntroScene(GameController gameController, V2i size, Rendering2D r2D, SoundManager sounds) {
 		super(gameController, size, r2D, sounds);
+		sc = new IntroController(gameController);
+
 		try {
 			midwayLogo = ImageIO.read(getClass().getResourceAsStream(MIDWAY_LOGO));
 		} catch (IOException e) {
@@ -80,8 +81,7 @@ public class MsPacMan_IntroScene extends GameScene {
 	@Override
 	public void init(GameModel game) {
 		super.init(game);
-
-		sc.init(gameController);
+		sc.init();
 
 		msPacMan2D = new Player2D(sc.msPacMan, game, r2D);
 		msPacMan2D.munchings.values().forEach(TimedSeq::restart);
