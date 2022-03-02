@@ -60,15 +60,14 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 	public MsPacMan_IntermissionScene3(GameController gameController, V2i size, Rendering2D r2D, SoundManager sounds) {
 		super(gameController, size, r2D, sounds);
 		sc = new Intermission3Controller(gameController);
+		sc.playIntermissionSound = () -> sounds.play(GameSounds.INTERMISSION_3);
+		sc.playFlapAnimation = () -> flap2D.animation.restart();
 	}
 
 	@Override
 	public void init(GameModel game) {
 		super.init(game);
 		sc.init();
-
-		sc.playIntermissionSound = () -> sounds.play(GameSounds.INTERMISSION_3);
-		sc.playFlapAnimation = () -> flap2D.animation.restart();
 
 		msPacMan2D = new Player2D(sc.msPacMan, game, r2D);
 		pacMan2D = new Player2D(sc.pacMan, game, r2D);
