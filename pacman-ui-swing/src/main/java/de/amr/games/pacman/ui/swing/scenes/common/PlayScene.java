@@ -108,11 +108,11 @@ public class PlayScene extends GameScene {
 		switch (e.newGameState) {
 
 		case READY -> {
-			sounds.stopAll();
-			Stream.of(energizers2D).forEach(energizer2D -> energizer2D.getAnimation().reset());
+			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(TimedSeq::reset);
 			r2D.mazeFlashing(game.mazeNumber).reset();
 			player2D.reset();
 			Stream.of(ghosts2D).forEach(Ghost2D::reset);
+			sounds.stopAll();
 			if (!gameController.attractMode && !gameController.gameRunning) {
 				sounds.setMuted(false);
 				sounds.play(GameSounds.GAME_READY);
@@ -120,11 +120,9 @@ public class PlayScene extends GameScene {
 		}
 
 		case HUNTING -> {
-			Stream.of(energizers2D).forEach(energizer2D -> energizer2D.getAnimation().restart());
+			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(TimedSeq::restart);
 			player2D.munchings.values().forEach(TimedSeq::restart);
-			Stream.of(ghosts2D).forEach(ghost2D -> {
-				ghost2D.animKicking.values().forEach(TimedSeq::restart);
-			});
+			Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.animKicking.values().forEach(TimedSeq::restart));
 		}
 
 		case PACMAN_DYING -> {
@@ -139,8 +137,8 @@ public class PlayScene extends GameScene {
 		}
 
 		case GHOST_DYING -> {
+			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(TimedSeq::restart);
 			sounds.play(GameSounds.GHOST_EATEN);
-			Stream.of(energizers2D).forEach(energizer2D -> energizer2D.getAnimation().restart());
 		}
 
 		case LEVEL_COMPLETE -> {
@@ -150,7 +148,7 @@ public class PlayScene extends GameScene {
 		}
 
 		case GAME_OVER -> {
-			Stream.of(energizers2D).forEach(energizer -> energizer.getAnimation().stop());
+			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(TimedSeq::stop);
 			sounds.stopAll();
 		}
 
@@ -210,10 +208,10 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void onBonusEaten(GameEvent e) {
-		sounds.play(GameSounds.BONUS_EATEN);
 		if (bonus2D.jumpAnimation != null) {
 			bonus2D.jumpAnimation.reset();
 		}
+		sounds.play(GameSounds.BONUS_EATEN);
 	}
 
 	@Override
@@ -231,7 +229,7 @@ public class PlayScene extends GameScene {
 		if (game.ghosts(GhostState.DEAD).count() == 0) {
 			sounds.stop(GameSounds.GHOST_RETURNING);
 		}
-	};
+	}
 
 	@Override
 	public void render(Graphics2D g) {
