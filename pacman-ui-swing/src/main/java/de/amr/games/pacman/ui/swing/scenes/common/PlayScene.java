@@ -157,6 +157,7 @@ public class PlayScene extends GameScene {
 			Stream.of(ghosts2D).forEach(ghost2D -> {
 				ghost2D.animKicking.values().forEach(TimedSeq::reset);
 			});
+			Stream.of(energizers2D).forEach(energizer -> energizer.getAnimation().stop());
 		}
 	}
 
