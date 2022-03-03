@@ -25,7 +25,7 @@ package de.amr.games.pacman.ui.swing.shell;
 
 import static de.amr.games.pacman.lib.Logging.log;
 import static de.amr.games.pacman.model.common.GameVariant.MS_PACMAN;
-import static de.amr.games.pacman.model.world.World.t;
+import static de.amr.games.pacman.model.common.world.World.t;
 
 import java.awt.AWTException;
 import java.awt.Canvas;

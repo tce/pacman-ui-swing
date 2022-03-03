@@ -29,7 +29,7 @@ import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.model.common.GameModel;
-import de.amr.games.pacman.model.mspacman.entities.Flap;
+import de.amr.games.pacman.model.mspacman.Flap;
 import de.amr.games.pacman.ui.swing.entity.common.GameEntity2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 

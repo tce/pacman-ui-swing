@@ -23,9 +23,9 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.rendering.common;
 
-import static de.amr.games.pacman.model.world.World.HTS;
-import static de.amr.games.pacman.model.world.World.TS;
-import static de.amr.games.pacman.model.world.World.t;
+import static de.amr.games.pacman.model.common.world.World.HTS;
+import static de.amr.games.pacman.model.common.world.World.TS;
+import static de.amr.games.pacman.model.common.world.World.t;
 
 import java.awt.Color;
 import java.awt.Font;

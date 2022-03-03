@@ -23,15 +23,15 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.entity.common;
 
-import static de.amr.games.pacman.model.world.World.TS;
+import static de.amr.games.pacman.model.common.world.World.TS;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.model.common.GameModel;
-import de.amr.games.pacman.model.pacman.entities.Bonus;
-import de.amr.games.pacman.model.pacman.entities.Bonus.BonusState;
+import de.amr.games.pacman.model.pacman.Bonus;
+import de.amr.games.pacman.model.pacman.Bonus.BonusState;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**

@@ -26,7 +26,7 @@ package de.amr.games.pacman.ui.swing.entity.mspacman;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import de.amr.games.pacman.model.mspacman.entities.JuniorBag;
+import de.amr.games.pacman.model.mspacman.JuniorBag;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 public class JuniorBag2D {
