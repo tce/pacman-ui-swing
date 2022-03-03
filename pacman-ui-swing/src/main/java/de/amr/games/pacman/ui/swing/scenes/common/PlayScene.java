@@ -154,10 +154,8 @@ public class PlayScene extends GameScene {
 
 		// enter GAME_OVER
 		if (e.newGameState == GameState.GAME_OVER) {
-			Stream.of(ghosts2D).forEach(ghost2D -> {
-				ghost2D.animKicking.values().forEach(TimedSeq::reset);
-			});
 			Stream.of(energizers2D).forEach(energizer -> energizer.getAnimation().stop());
+			sounds.stopAll();
 		}
 	}
 
