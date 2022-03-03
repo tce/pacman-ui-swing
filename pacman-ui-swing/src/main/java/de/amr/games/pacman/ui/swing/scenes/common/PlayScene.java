@@ -82,7 +82,15 @@ public class PlayScene extends GameScene {
 	@Override
 	public void update() {
 		if (gameController.state == GameState.LEVEL_COMPLETE) {
-			playLevelCompleteAnimation(gameController.state);
+			if (mazeFlashing.isComplete()) {
+				gameController.stateTimer().expire();
+			} else if (gameController.stateTimer().isRunningSeconds(2)) {
+				game.hideGhosts();
+			} else if (gameController.stateTimer().isRunningSeconds(3)) {
+				mazeFlashing.restart();
+			} else if (mazeFlashing.isRunning()) {
+				mazeFlashing.animate();
+			}
 		} else if (gameController.state == GameState.LEVEL_STARTING) {
 			gameController.stateTimer().expire();
 		}
@@ -256,19 +264,6 @@ public class PlayScene extends GameScene {
 				long frameTime = e.ticks / (game.numFlashes * flashing.numFrames());
 				flashing.frameDuration(frameTime).repetitions(game.numFlashes).restart();
 			});
-		}
-	}
-
-	private void playLevelCompleteAnimation(GameState state) {
-		if (gameController.stateTimer().isRunningSeconds(2)) {
-			game.hideGhosts();
-		}
-		if (gameController.stateTimer().isRunningSeconds(3)) {
-			mazeFlashing.restart();
-		}
-		mazeFlashing.animate();
-		if (mazeFlashing.isComplete()) {
-			gameController.stateTimer().expire();
 		}
 	}
 }
