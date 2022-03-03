@@ -26,6 +26,7 @@ package de.amr.games.pacman.ui.swing.scenes.common;
 import static de.amr.games.pacman.model.world.World.t;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.stream.Stream;
 
 import javax.sound.sampled.Clip;
@@ -59,8 +60,7 @@ public class PlayScene extends GameScene {
 	private Ghost2D[] ghosts2D;
 	private Energizer2D[] energizers2D;
 	private Bonus2D bonus2D;
-
-	private TimedSeq<?> mazeFlashing;
+	private TimedSeq<BufferedImage> mazeFlashing;
 
 	public PlayScene(GameController gameController, V2i size, Rendering2D r2D, SoundManager sounds) {
 		super(gameController, size, r2D, sounds);
@@ -74,8 +74,7 @@ public class PlayScene extends GameScene {
 		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, r2D)).toArray(Ghost2D[]::new);
 		energizers2D = game.world.energizerTiles().stream().map(Energizer2D::new).toArray(Energizer2D[]::new);
 		bonus2D = new Bonus2D(game, r2D);
-		mazeFlashing = r2D.mazeFlashing(game.mazeNumber).repetitions(game.numFlashes);
-		mazeFlashing.reset();
+		mazeFlashing = r2D.mazeFlashing(game.mazeNumber).repetitions(game.numFlashes).reset();
 		game.player.powerTimer.addEventListener(this::handleGhostsFlashing);
 	}
 
