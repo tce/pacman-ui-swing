@@ -97,8 +97,9 @@ public class PlayScene extends GameScene {
 	public void onGameStateChange(GameStateChangeEvent e) {
 		sounds.setMuted(gameController.attractMode);
 
-		// enter READY
-		if (e.newGameState == GameState.READY) {
+		switch (e.newGameState) {
+
+		case READY -> {
 			sounds.stopAll();
 			Stream.of(energizers2D).forEach(energizer2D -> energizer2D.getAnimation().reset());
 			r2D.mazeFlashing(game.mazeNumber).reset();
@@ -110,8 +111,7 @@ public class PlayScene extends GameScene {
 			}
 		}
 
-		// enter HUNTING
-		if (e.newGameState == GameState.HUNTING) {
+		case HUNTING -> {
 			Stream.of(energizers2D).forEach(energizer2D -> energizer2D.getAnimation().restart());
 			player2D.munchings.values().forEach(TimedSeq::restart);
 			Stream.of(ghosts2D).forEach(ghost2D -> {
@@ -119,8 +119,7 @@ public class PlayScene extends GameScene {
 			});
 		}
 
-		// enter PACMAN_DYING
-		if (e.newGameState == GameState.PACMAN_DYING) {
+		case PACMAN_DYING -> {
 			gameController.stateTimer().setSeconds(3).start();
 			sounds.stopAll();
 			player2D.dying.delay(60).onStart(() -> {
@@ -131,31 +130,32 @@ public class PlayScene extends GameScene {
 			}).restart();
 		}
 
-		// enter GHOST_DYING
-		if (e.newGameState == GameState.GHOST_DYING) {
+		case GHOST_DYING -> {
 			sounds.play(GameSounds.GHOST_EATEN);
 			Stream.of(energizers2D).forEach(energizer2D -> energizer2D.getAnimation().restart());
 		}
 
-		// exit GHOST_DYING
-		if (e.oldGameState == GameState.GHOST_DYING) {
-			// the dead ghost(s) will return home now
-			if (game.ghosts(GhostState.DEAD).count() > 0) {
-				sounds.loop(GameSounds.GHOST_RETURNING, Clip.LOOP_CONTINUOUSLY);
-			}
-		}
-
-		// enter LEVEL_COMPLETE
-		if (e.newGameState == GameState.LEVEL_COMPLETE) {
+		case LEVEL_COMPLETE -> {
 			player2D.reset();
 			mazeFlashing = r2D.mazeFlashing(game.mazeNumber);
 			sounds.stopAll();
 		}
 
-		// enter GAME_OVER
-		if (e.newGameState == GameState.GAME_OVER) {
+		case GAME_OVER -> {
 			Stream.of(energizers2D).forEach(energizer -> energizer.getAnimation().stop());
 			sounds.stopAll();
+		}
+
+		default -> {
+		}
+
+		}
+
+		// exit GHOST_DYING
+		if (e.oldGameState == GameState.GHOST_DYING) {
+			if (game.ghosts(GhostState.DEAD).count() > 0) {
+				sounds.loop(GameSounds.GHOST_RETURNING, Clip.LOOP_CONTINUOUSLY);
+			}
 		}
 	}
 
