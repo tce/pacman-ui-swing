@@ -112,10 +112,10 @@ public class MsPacMan_IntroScene extends GameScene {
 		g.drawString("\"MS PAC-MAN\"", titlePosition.x, titlePosition.y);
 		drawAnimatedBoard(g, 32, 16);
 		if (state == IntroState.GHOSTS) {
-			drawPresentingGhost(g, sc.ghosts[sc.currentGhostIndex]);
+			drawPresentingGhost(g, sc.ghosts[sc.ghostIndex]);
 		} else if (state == IntroState.MSPACMAN) {
 			drawStarringMsPacMan(g);
-		} else if (state == IntroState.WAITING_FOR_GAME) {
+		} else if (state == IntroState.READY) {
 			// TODO: this hack ensures that Ms. Pac-Man is displayed with mouth half open
 			msPacMan2D.reset();
 			drawStarringMsPacMan(g);
@@ -131,18 +131,18 @@ public class MsPacMan_IntroScene extends GameScene {
 		g.setColor(Color.WHITE);
 		g.setFont(r2D.getScoreFont());
 		if (ghost == sc.ghosts[0]) {
-			g.drawString("WITH", titlePosition.x, sc.adBoardTopLeft.y + t(3));
+			g.drawString("WITH", titlePosition.x, sc.boardTopLeft.y + t(3));
 		}
 		g.setColor(ghost.id == 0 ? Color.RED : ghost.id == 1 ? Color.PINK : ghost.id == 2 ? Color.CYAN : Color.ORANGE);
-		g.drawString(ghost.name.toUpperCase(), t(14 - ghost.name.length() / 2), sc.adBoardTopLeft.y + t(6));
+		g.drawString(ghost.name.toUpperCase(), t(14 - ghost.name.length() / 2), sc.boardTopLeft.y + t(6));
 	}
 
 	private void drawStarringMsPacMan(Graphics2D g) {
 		g.setColor(Color.WHITE);
 		g.setFont(r2D.getScoreFont());
-		g.drawString("STARRING", titlePosition.x, sc.adBoardTopLeft.y + t(3));
+		g.drawString("STARRING", titlePosition.x, sc.boardTopLeft.y + t(3));
 		g.setColor(Color.YELLOW);
-		g.drawString("MS PAC-MAN", titlePosition.x, sc.adBoardTopLeft.y + t(6));
+		g.drawString("MS PAC-MAN", titlePosition.x, sc.boardTopLeft.y + t(6));
 	}
 
 	private void drawAnimatedBoard(Graphics2D g, int numDotsX, int numDotsY) {
@@ -162,7 +162,7 @@ public class MsPacMan_IntroScene extends GameScene {
 				y = 2 * (numDotsX + numDotsY) - dot;
 			}
 			g.setColor((dot + light) % (numDotsX / 2) == 0 ? Color.PINK : Color.RED);
-			g.fillRect(sc.adBoardTopLeft.x + 4 * x, sc.adBoardTopLeft.y + 4 * y, 2, 2);
+			g.fillRect(sc.boardTopLeft.x + 4 * x, sc.boardTopLeft.y + 4 * y, 2, 2);
 		}
 	}
 
