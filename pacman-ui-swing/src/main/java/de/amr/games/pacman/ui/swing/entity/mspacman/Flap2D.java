@@ -53,7 +53,7 @@ public class Flap2D extends GameEntity2D {
 		if (flap.visible) {
 			BufferedImage sprite = animation.animate();
 			r2D.renderEntity(g, flap, sprite);
-			g.setFont(r2D.getScoreFont());
+			g.setFont(r2D.getArcadeFont());
 			g.setColor(new Color(222, 222, 255));
 			g.drawString(flap.number + "", (int) flap.position.x + sprite.getWidth() - 25, (int) flap.position.y + 18);
 			g.drawString(flap.text, (int) flap.position.x + sprite.getWidth(), (int) flap.position.y);

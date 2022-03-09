@@ -93,7 +93,7 @@ public abstract class Rendering2D {
 	 */
 	public abstract Color getFoodColor(int mazeNumber);
 
-	public abstract Font getScoreFont();
+	public abstract Font getArcadeFont();
 
 	// only use in Pac-Man:
 
@@ -154,7 +154,7 @@ public abstract class Rendering2D {
 	public abstract void drawMaze(Graphics2D g, int mazeNumber, int i, int t, boolean running);
 
 	public void drawScore(Graphics2D g, GameModel game, boolean showHiscoreOnly) {
-		g.setFont(getScoreFont());
+		g.setFont(getArcadeFont());
 		g.translate(0, 2);
 		g.setColor(Color.WHITE);
 		g.drawString("SCORE", t(1), t(1));
@@ -201,11 +201,11 @@ public abstract class Rendering2D {
 
 	public void drawGameState(Graphics2D g, GameModel game, GameState gameState) {
 		if (gameState == GameState.READY) {
-			g.setFont(getScoreFont());
+			g.setFont(getArcadeFont());
 			g.setColor(Color.YELLOW);
 			g.drawString("READY!", t(11), t(21));
 		} else if (gameState == GameState.GAME_OVER) {
-			g.setFont(getScoreFont());
+			g.setFont(getArcadeFont());
 			g.setColor(Color.RED);
 			g.drawString("GAME", t(9), t(21));
 			g.drawString("OVER", t(15), t(21));

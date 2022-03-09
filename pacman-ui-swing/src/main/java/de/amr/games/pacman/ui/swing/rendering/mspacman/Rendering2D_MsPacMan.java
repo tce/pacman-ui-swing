@@ -289,7 +289,7 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 	}
 
 	@Override
-	public Font getScoreFont() {
+	public Font getArcadeFont() {
 		return scoreFont;
 	}
 

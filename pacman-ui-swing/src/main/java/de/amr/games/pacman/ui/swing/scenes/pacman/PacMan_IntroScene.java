@@ -167,7 +167,7 @@ public class PacMan_IntroScene extends GameScene {
 
 	private void drawGallery(Graphics2D g) {
 		g.setColor(Color.WHITE);
-		g.setFont(r2D.getScoreFont());
+		g.setFont(r2D.getArcadeFont());
 		g.drawString("CHARACTER", t(6), sc.topY);
 		g.drawString("/", t(16), sc.topY);
 		g.drawString("NICKNAME", t(18), sc.topY);
@@ -192,7 +192,7 @@ public class PacMan_IntroScene extends GameScene {
 		if (sc.slowBlinking.frame()) {
 			String text = "PRESS SPACE TO PLAY";
 			g.setColor(Color.WHITE);
-			g.setFont(r2D.getScoreFont());
+			g.setFont(r2D.getArcadeFont());
 			g.drawString(text, t(14 - text.length() / 2), t(yTile));
 		}
 	}
@@ -204,10 +204,10 @@ public class PacMan_IntroScene extends GameScene {
 			g.fillOval(t(tileX), t(tileY + 1) - 2, 10, 10);
 		}
 		g.setColor(Color.WHITE);
-		g.setFont(r2D.getScoreFont());
+		g.setFont(r2D.getArcadeFont());
 		g.drawString("10", t(tileX + 2), t(tileY));
 		g.drawString("50", t(tileX + 2), t(tileY + 2));
-		g.setFont(r2D.getScoreFont().deriveFont(6f));
+		g.setFont(r2D.getArcadeFont().deriveFont(6f));
 		g.drawString("PTS", t(tileX + 5), t(tileY));
 		g.drawString("PTS", t(tileX + 5), t(tileY + 2));
 	}
@@ -219,7 +219,7 @@ public class PacMan_IntroScene extends GameScene {
 
 	private void drawCopyright(Graphics2D g, int yTile) {
 		String text = "\u00A9" + "  1980 MIDWAY MFG. CO.";
-		g.setFont(r2D.getScoreFont());
+		g.setFont(r2D.getArcadeFont());
 		g.setColor(r2D.getGhostColor(GameModel.PINK_GHOST));
 		g.drawString(text, t(3), t(yTile));
 	}

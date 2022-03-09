@@ -131,7 +131,7 @@ public class Rendering2D_PacMan extends Rendering2D {
 	}
 
 	@Override
-	public Font getScoreFont() {
+	public Font getArcadeFont() {
 		return scoreFont;
 	}
 
