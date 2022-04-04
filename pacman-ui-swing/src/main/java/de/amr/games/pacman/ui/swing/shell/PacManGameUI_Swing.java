@@ -222,8 +222,8 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		}
 
 		else if (keyboard.pressed("I")) {
-			game.player.immune = !game.player.immune;
-			showFlashMessage(1, "Player is %s", game.player.immune ? "immune" : "vulnerable");
+			gameController.playerImmune = !gameController.playerImmune;
+			showFlashMessage(1, "Player is %s", gameController.playerImmune ? "immune" : "vulnerable");
 		}
 
 		else if (keyboard.pressed("L")) {
