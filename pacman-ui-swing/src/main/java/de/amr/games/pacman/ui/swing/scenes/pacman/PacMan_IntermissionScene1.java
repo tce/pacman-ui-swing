@@ -33,7 +33,7 @@ import de.amr.games.pacman.controller.pacman.Intermission1Controller.Intermissio
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
-import de.amr.games.pacman.ui.GameSounds;
+import de.amr.games.pacman.ui.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Player2D;
@@ -57,7 +57,7 @@ public class PacMan_IntermissionScene1 extends GameScene {
 	public PacMan_IntermissionScene1(GameController gameController, V2i size, Rendering2D r2D, SoundManager sounds) {
 		super(gameController, size, r2D, sounds);
 		sc = new Intermission1Controller(gameController);
-		sc.playIntermissionSound = () -> sounds.loop(GameSounds.INTERMISSION_1, 1);
+		sc.playIntermissionSound = () -> sounds.loop(GameSound.INTERMISSION_1, 1);
 	}
 
 	@Override

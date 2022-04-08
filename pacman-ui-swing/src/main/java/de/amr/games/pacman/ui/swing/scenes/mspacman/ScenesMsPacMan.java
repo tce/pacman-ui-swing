@@ -23,22 +23,22 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.scenes.mspacman;
 
-import static de.amr.games.pacman.ui.GameSounds.BONUS_EATEN;
-import static de.amr.games.pacman.ui.GameSounds.CREDIT;
-import static de.amr.games.pacman.ui.GameSounds.EXTRA_LIFE;
-import static de.amr.games.pacman.ui.GameSounds.GAME_READY;
-import static de.amr.games.pacman.ui.GameSounds.GHOST_EATEN;
-import static de.amr.games.pacman.ui.GameSounds.GHOST_RETURNING;
-import static de.amr.games.pacman.ui.GameSounds.INTERMISSION_1;
-import static de.amr.games.pacman.ui.GameSounds.INTERMISSION_2;
-import static de.amr.games.pacman.ui.GameSounds.INTERMISSION_3;
-import static de.amr.games.pacman.ui.GameSounds.PACMAN_DEATH;
-import static de.amr.games.pacman.ui.GameSounds.PACMAN_MUNCH;
-import static de.amr.games.pacman.ui.GameSounds.PACMAN_POWER;
-import static de.amr.games.pacman.ui.GameSounds.SIREN_1;
-import static de.amr.games.pacman.ui.GameSounds.SIREN_2;
-import static de.amr.games.pacman.ui.GameSounds.SIREN_3;
-import static de.amr.games.pacman.ui.GameSounds.SIREN_4;
+import static de.amr.games.pacman.ui.GameSound.BONUS_EATEN;
+import static de.amr.games.pacman.ui.GameSound.CREDIT;
+import static de.amr.games.pacman.ui.GameSound.EXTRA_LIFE;
+import static de.amr.games.pacman.ui.GameSound.GAME_READY;
+import static de.amr.games.pacman.ui.GameSound.GHOST_EATEN;
+import static de.amr.games.pacman.ui.GameSound.GHOST_RETURNING;
+import static de.amr.games.pacman.ui.GameSound.INTERMISSION_1;
+import static de.amr.games.pacman.ui.GameSound.INTERMISSION_2;
+import static de.amr.games.pacman.ui.GameSound.INTERMISSION_3;
+import static de.amr.games.pacman.ui.GameSound.PACMAN_DEATH;
+import static de.amr.games.pacman.ui.GameSound.PACMAN_MUNCH;
+import static de.amr.games.pacman.ui.GameSound.PACMAN_POWER;
+import static de.amr.games.pacman.ui.GameSound.SIREN_1;
+import static de.amr.games.pacman.ui.GameSound.SIREN_2;
+import static de.amr.games.pacman.ui.GameSound.SIREN_3;
+import static de.amr.games.pacman.ui.GameSound.SIREN_4;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
@@ -47,7 +47,7 @@ import java.util.Map.Entry;
 
 import de.amr.games.pacman.controller.GameController;
 import de.amr.games.pacman.lib.V2i;
-import de.amr.games.pacman.ui.GameSounds;
+import de.amr.games.pacman.ui.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
@@ -60,11 +60,11 @@ import de.amr.games.pacman.ui.swing.scenes.common.PlayScene;
  */
 public class ScenesMsPacMan {
 
-	private static Entry<GameSounds, String> entry(GameSounds sound, String path) {
+	private static Entry<GameSound, String> entry(GameSound sound, String path) {
 		return new SimpleEntry<>(sound, "/mspacman/sound/" + path);
 	}
 
-	private static final Map<GameSounds, String> SOUND_PATHS = Map.ofEntries(//
+	private static final Map<GameSound, String> SOUND_PATHS = Map.ofEntries(//
 			entry(CREDIT, "Coin Credit.wav"), //
 			entry(EXTRA_LIFE, "Extra Life.wav"), //
 			entry(GAME_READY, "Start.wav"), //

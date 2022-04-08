@@ -41,7 +41,7 @@ import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.GhostState;
-import de.amr.games.pacman.ui.GameSounds;
+import de.amr.games.pacman.ui.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Bonus2D;
 import de.amr.games.pacman.ui.swing.entity.common.Energizer2D;
@@ -114,7 +114,7 @@ public class PlayScene extends GameScene {
 			sounds.stopAll();
 			if (!gameController.attractMode && !gameController.gameRunning) {
 				sounds.setMuted(false);
-				sounds.play(GameSounds.GAME_READY);
+				sounds.play(GameSound.GAME_READY);
 			}
 		}
 
@@ -130,14 +130,14 @@ public class PlayScene extends GameScene {
 			player2D.dying.delay(60).onStart(() -> {
 				game.hideGhosts();
 				if (gameController.gameRunning) {
-					sounds.play(GameSounds.PACMAN_DEATH);
+					sounds.play(GameSound.PACMAN_DEATH);
 				}
 			}).restart();
 		}
 
 		case GHOST_DYING -> {
 			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(TimedSeq::restart);
-			sounds.play(GameSounds.GHOST_EATEN);
+			sounds.play(GameSound.GHOST_EATEN);
 		}
 
 		case LEVEL_COMPLETE -> {
@@ -159,7 +159,7 @@ public class PlayScene extends GameScene {
 		// exit GHOST_DYING
 		if (e.oldGameState == GameState.GHOST_DYING) {
 			if (game.ghosts(GhostState.DEAD).count() > 0) {
-				sounds.loop(GameSounds.GHOST_RETURNING, Clip.LOOP_CONTINUOUSLY);
+				sounds.loop(GameSound.GHOST_RETURNING, Clip.LOOP_CONTINUOUSLY);
 			}
 		}
 	}
@@ -173,19 +173,19 @@ public class PlayScene extends GameScene {
 	@Override
 	public void onScatterPhaseStarted(ScatterPhaseStartedEvent e) {
 		if (e.scatterPhase > 0) {
-			sounds.stop(GameSounds.SIRENS.get(e.scatterPhase - 1));
+			sounds.stop(GameSound.SIRENS.get(e.scatterPhase - 1));
 		}
-		sounds.loop(GameSounds.SIRENS.get(e.scatterPhase), Clip.LOOP_CONTINUOUSLY);
+		sounds.loop(GameSound.SIRENS.get(e.scatterPhase), Clip.LOOP_CONTINUOUSLY);
 	}
 
 	@Override
 	public void onPlayerLostPower(GameEvent e) {
-		sounds.stop(GameSounds.PACMAN_POWER);
+		sounds.stop(GameSound.PACMAN_POWER);
 	}
 
 	@Override
 	public void onPlayerFoundFood(GameEvent e) {
-		sounds.play(GameSounds.PACMAN_MUNCH);
+		sounds.play(GameSound.PACMAN_MUNCH);
 	}
 
 	@Override
@@ -194,7 +194,7 @@ public class PlayScene extends GameScene {
 			ghost2D.animFlashing.reset();
 			ghost2D.animFrightened.restart();
 		});
-		sounds.loop(GameSounds.PACMAN_POWER, Clip.LOOP_CONTINUOUSLY);
+		sounds.loop(GameSound.PACMAN_POWER, Clip.LOOP_CONTINUOUSLY);
 	}
 
 	@Override
@@ -210,23 +210,23 @@ public class PlayScene extends GameScene {
 		if (bonus2D.jumpAnimation != null) {
 			bonus2D.jumpAnimation.reset();
 		}
-		sounds.play(GameSounds.BONUS_EATEN);
+		sounds.play(GameSound.BONUS_EATEN);
 	}
 
 	@Override
 	public void onExtraLife(GameEvent e) {
-		sounds.play(GameSounds.EXTRA_LIFE);
+		sounds.play(GameSound.EXTRA_LIFE);
 	}
 
 	@Override
 	public void onGhostReturnsHome(GameEvent e) {
-		sounds.play(GameSounds.GHOST_RETURNING);
+		sounds.play(GameSound.GHOST_RETURNING);
 	}
 
 	@Override
 	public void onGhostEntersHouse(GameEvent e) {
 		if (game.ghosts(GhostState.DEAD).count() == 0) {
-			sounds.stop(GameSounds.GHOST_RETURNING);
+			sounds.stop(GameSound.GHOST_RETURNING);
 		}
 	}
 

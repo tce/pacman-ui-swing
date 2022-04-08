@@ -32,7 +32,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
-import de.amr.games.pacman.ui.GameSounds;
+import de.amr.games.pacman.ui.GameSound;
 
 /**
  * Sound manager for Pac-Man game variants.
@@ -43,23 +43,23 @@ import de.amr.games.pacman.ui.GameSounds;
  */
 public class SoundManager {
 
-	private final Map<GameSounds, URL> urlMap;
-	private final Map<GameSounds, Clip> clipCache = new EnumMap<>(GameSounds.class);
+	private final Map<GameSound, URL> urlMap;
+	private final Map<GameSound, Clip> clipCache = new EnumMap<>(GameSound.class);
 	private Clip munch0, munch1;
 	private int munchIndex;
 	private boolean muted;
 
-	public SoundManager(Map<GameSounds, String> pathMap) {
+	public SoundManager(Map<GameSound, String> pathMap) {
 		urlMap = new HashMap<>();
 		for (var entry : pathMap.entrySet()) {
 			put(entry.getKey(), entry.getValue());
 		}
 		munchIndex = 0;
-		munch0 = createAndOpenClip(urlMap.get(GameSounds.PACMAN_MUNCH));
-		munch1 = createAndOpenClip(urlMap.get(GameSounds.PACMAN_MUNCH));
+		munch0 = createAndOpenClip(urlMap.get(GameSound.PACMAN_MUNCH));
+		munch1 = createAndOpenClip(urlMap.get(GameSound.PACMAN_MUNCH));
 	}
 
-	private void put(GameSounds sound, String path) {
+	private void put(GameSound sound, String path) {
 		URL url = getClass().getResource(path);
 		if (url == null) {
 			throw new RuntimeException("Sound resource not found: " + path);
@@ -81,9 +81,9 @@ public class SoundManager {
 		}
 	}
 
-	private Clip getClip(GameSounds sound) {
+	private Clip getClip(GameSound sound) {
 		Clip clip = null;
-		if (sound == GameSounds.PACMAN_MUNCH) {
+		if (sound == GameSound.PACMAN_MUNCH) {
 			clip = munchIndex == 0 ? munch0 : munch1;
 			munchIndex = (munchIndex + 1) % 2;
 		} else if (clipCache.containsKey(sound)) {
@@ -96,13 +96,13 @@ public class SoundManager {
 		return clip;
 	}
 
-	public void play(GameSounds sound) {
+	public void play(GameSound sound) {
 		if (!muted) {
 			getClip(sound).start();
 		}
 	}
 
-	public void loop(GameSounds sound, int repetitions) {
+	public void loop(GameSound sound, int repetitions) {
 		if (!muted) {
 			Clip clip = getClip(sound);
 			clip.setFramePosition(0);
@@ -110,7 +110,7 @@ public class SoundManager {
 		}
 	}
 
-	public void stop(GameSounds sound) {
+	public void stop(GameSound sound) {
 		getClip(sound).stop();
 	}
 
