@@ -54,10 +54,10 @@ public class PacMan_IntermissionScene1 extends GameScene {
 	private Ghost2D blinky2D;
 	private BigPacMan2D bigPacMan2D;
 
-	public PacMan_IntermissionScene1(GameController gameController, V2i size, Rendering2D r2D, SoundManager sounds) {
-		super(gameController, size, r2D, sounds);
+	public PacMan_IntermissionScene1(GameController gameController, V2i size, Rendering2D r2D) {
+		super(gameController, size, r2D);
 		sc = new Intermission1Controller(gameController);
-		sc.playIntermissionSound = () -> sounds.loop(GameSound.INTERMISSION_1, 1);
+		sc.playIntermissionSound = () -> SoundManager.get().loop(GameSound.INTERMISSION_1, 1);
 	}
 
 	@Override

@@ -29,7 +29,6 @@ import de.amr.games.pacman.controller.GameController;
 import de.amr.games.pacman.controller.event.DefaultGameEventHandler;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
-import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**
@@ -41,15 +40,13 @@ public abstract class GameScene extends DefaultGameEventHandler {
 
 	protected final V2i size;
 	protected final Rendering2D r2D;
-	protected final SoundManager sounds;
 	protected final GameController gameController;
 	protected GameModel game;
 
-	public GameScene(GameController gameController, V2i size, Rendering2D r2D, SoundManager sounds) {
+	public GameScene(GameController gameController, V2i size, Rendering2D r2D) {
 		this.gameController = gameController;
 		this.size = size;
 		this.r2D = r2D;
-		this.sounds = sounds;
 	}
 
 	public V2i size() {

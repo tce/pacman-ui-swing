@@ -57,10 +57,10 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 	private Stork2D stork2D;
 	private JuniorBag2D bag2D;
 
-	public MsPacMan_IntermissionScene3(GameController gameController, V2i size, Rendering2D r2D, SoundManager sounds) {
-		super(gameController, size, r2D, sounds);
+	public MsPacMan_IntermissionScene3(GameController gameController, V2i size, Rendering2D r2D) {
+		super(gameController, size, r2D);
 		sc = new Intermission3Controller(gameController);
-		sc.playIntermissionSound = () -> sounds.play(GameSound.INTERMISSION_3);
+		sc.playIntermissionSound = () -> SoundManager.get().play(GameSound.INTERMISSION_3);
 		sc.playFlapAnimation = () -> flap2D.animation.restart();
 	}
 

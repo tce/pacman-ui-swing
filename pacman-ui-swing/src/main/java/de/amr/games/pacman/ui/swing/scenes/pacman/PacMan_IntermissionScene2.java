@@ -56,10 +56,10 @@ public class PacMan_IntermissionScene2 extends GameScene {
 	private TimedSeq<BufferedImage> blinkyStretchedAnimation;
 	private TimedSeq<BufferedImage> blinkyDamagedAnimation;
 
-	public PacMan_IntermissionScene2(GameController gameController, V2i size, Rendering2D r2D, SoundManager sounds) {
-		super(gameController, size, r2D, sounds);
+	public PacMan_IntermissionScene2(GameController gameController, V2i size, Rendering2D r2D) {
+		super(gameController, size, r2D);
 		sc = new Intermission2Controller(gameController);
-		sc.playIntermissionSound = () -> sounds.play(GameSound.INTERMISSION_2);
+		sc.playIntermissionSound = () -> SoundManager.get().play(GameSound.INTERMISSION_2);
 	}
 
 	@Override

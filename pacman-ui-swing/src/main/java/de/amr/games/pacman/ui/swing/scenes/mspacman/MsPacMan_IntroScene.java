@@ -41,7 +41,6 @@ import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.Ghost;
-import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Player2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
@@ -59,8 +58,8 @@ public class MsPacMan_IntroScene extends GameScene {
 	private Player2D msPacMan2D;
 	private Ghost2D[] ghosts2D;
 
-	public MsPacMan_IntroScene(GameController gameController, V2i size, Rendering2D r2D, SoundManager sounds) {
-		super(gameController, size, r2D, sounds);
+	public MsPacMan_IntroScene(GameController gameController, V2i size, Rendering2D r2D) {
+		super(gameController, size, r2D);
 		sc = new IntroController(gameController);
 	}
 

@@ -62,8 +62,8 @@ public class PlayScene extends GameScene {
 	private Bonus2D bonus2D;
 	private TimedSeq<BufferedImage> mazeFlashing;
 
-	public PlayScene(GameController gameController, V2i size, Rendering2D r2D, SoundManager sounds) {
-		super(gameController, size, r2D, sounds);
+	public PlayScene(GameController gameController, V2i size, Rendering2D r2D) {
+		super(gameController, size, r2D);
 	}
 
 	@Override
@@ -78,9 +78,11 @@ public class PlayScene extends GameScene {
 		game.player.powerTimer.addEventListener(this::handleGhostsFlashing);
 	}
 
+	@SuppressWarnings("incomplete-switch")
 	@Override
 	public void update() {
-		if (gameController.state == GameState.LEVEL_COMPLETE) {
+		switch (gameController.state) {
+		case LEVEL_COMPLETE -> {
 			if (mazeFlashing.isComplete()) {
 				gameController.stateTimer().expire();
 			} else if (gameController.stateTimer().isRunningSeconds(2)) {
@@ -90,8 +92,15 @@ public class PlayScene extends GameScene {
 			} else if (mazeFlashing.isRunning()) {
 				mazeFlashing.animate();
 			}
-		} else if (gameController.state == GameState.LEVEL_STARTING) {
+		}
+		case LEVEL_STARTING -> {
 			gameController.stateTimer().expire();
+		}
+		case HUNTING -> {
+			if (!SoundManager.get().isAnySirenPlaying() && !game.player.powerTimer.isRunning()) {
+				SoundManager.get().startSiren(game.huntingPhase / 2);
+			}
+		}
 		}
 	}
 
@@ -102,7 +111,7 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void onGameStateChange(GameStateChangeEvent e) {
-		sounds.setMuted(gameController.attractMode);
+		SoundManager.get().setMuted(gameController.attractMode);
 
 		switch (e.newGameState) {
 
@@ -111,10 +120,10 @@ public class PlayScene extends GameScene {
 			r2D.mazeFlashing(game.mazeNumber).reset();
 			player2D.reset();
 			Stream.of(ghosts2D).forEach(Ghost2D::reset);
-			sounds.stopAll();
+			SoundManager.get().stopAll();
 			if (!gameController.attractMode && !gameController.gameRunning) {
-				sounds.setMuted(false);
-				sounds.play(GameSound.GAME_READY);
+				SoundManager.get().setMuted(false);
+				SoundManager.get().play(GameSound.GAME_READY);
 			}
 		}
 
@@ -126,29 +135,29 @@ public class PlayScene extends GameScene {
 
 		case PACMAN_DYING -> {
 			gameController.stateTimer().setSeconds(3).start();
-			sounds.stopAll();
+			SoundManager.get().stopAll();
 			player2D.dying.delay(60).onStart(() -> {
 				game.hideGhosts();
 				if (gameController.gameRunning) {
-					sounds.play(GameSound.PACMAN_DEATH);
+					SoundManager.get().play(GameSound.PACMAN_DEATH);
 				}
 			}).restart();
 		}
 
 		case GHOST_DYING -> {
 			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(TimedSeq::restart);
-			sounds.play(GameSound.GHOST_EATEN);
+			SoundManager.get().play(GameSound.GHOST_EATEN);
 		}
 
 		case LEVEL_COMPLETE -> {
 			player2D.reset();
 			mazeFlashing = r2D.mazeFlashing(game.mazeNumber);
-			sounds.stopAll();
+			SoundManager.get().stopAll();
 		}
 
 		case GAME_OVER -> {
 			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(TimedSeq::stop);
-			sounds.stopAll();
+			SoundManager.get().stopAll();
 		}
 
 		default -> {
@@ -159,33 +168,31 @@ public class PlayScene extends GameScene {
 		// exit GHOST_DYING
 		if (e.oldGameState == GameState.GHOST_DYING) {
 			if (game.ghosts(GhostState.DEAD).count() > 0) {
-				sounds.loop(GameSound.GHOST_RETURNING, Clip.LOOP_CONTINUOUSLY);
+				SoundManager.get().loop(GameSound.GHOST_RETURNING, Clip.LOOP_CONTINUOUSLY);
 			}
 		}
 	}
 
 	@Override
 	public void onGameEvent(GameEvent gameEvent) {
-		sounds.setMuted(gameController.attractMode);
+		SoundManager.get().setMuted(gameController.attractMode);
 		super.onGameEvent(gameEvent);
 	}
 
 	@Override
 	public void onScatterPhaseStarted(ScatterPhaseStartedEvent e) {
-		if (e.scatterPhase > 0) {
-			sounds.stop(GameSound.SIRENS.get(e.scatterPhase - 1));
-		}
-		sounds.loop(GameSound.SIRENS.get(e.scatterPhase), Clip.LOOP_CONTINUOUSLY);
+		SoundManager.get().stopSirens();
+		SoundManager.get().startSiren(e.scatterPhase);
 	}
 
 	@Override
 	public void onPlayerLostPower(GameEvent e) {
-		sounds.stop(GameSound.PACMAN_POWER);
+		SoundManager.get().stop(GameSound.PACMAN_POWER);
 	}
 
 	@Override
 	public void onPlayerFoundFood(GameEvent e) {
-		sounds.play(GameSound.PACMAN_MUNCH);
+		SoundManager.get().play(GameSound.PACMAN_MUNCH);
 	}
 
 	@Override
@@ -194,7 +201,8 @@ public class PlayScene extends GameScene {
 			ghost2D.animFlashing.reset();
 			ghost2D.animFrightened.restart();
 		});
-		sounds.loop(GameSound.PACMAN_POWER, Clip.LOOP_CONTINUOUSLY);
+		SoundManager.get().stopSirens();
+		SoundManager.get().loop(GameSound.PACMAN_POWER, Clip.LOOP_CONTINUOUSLY);
 	}
 
 	@Override
@@ -210,23 +218,23 @@ public class PlayScene extends GameScene {
 		if (bonus2D.jumpAnimation != null) {
 			bonus2D.jumpAnimation.reset();
 		}
-		sounds.play(GameSound.BONUS_EATEN);
+		SoundManager.get().play(GameSound.BONUS_EATEN);
 	}
 
 	@Override
 	public void onExtraLife(GameEvent e) {
-		sounds.play(GameSound.EXTRA_LIFE);
+		SoundManager.get().play(GameSound.EXTRA_LIFE);
 	}
 
 	@Override
 	public void onGhostReturnsHome(GameEvent e) {
-		sounds.play(GameSound.GHOST_RETURNING);
+		SoundManager.get().play(GameSound.GHOST_RETURNING);
 	}
 
 	@Override
 	public void onGhostEntersHouse(GameEvent e) {
 		if (game.ghosts(GhostState.DEAD).count() == 0) {
-			sounds.stop(GameSound.GHOST_RETURNING);
+			SoundManager.get().stop(GameSound.GHOST_RETURNING);
 		}
 	}
 

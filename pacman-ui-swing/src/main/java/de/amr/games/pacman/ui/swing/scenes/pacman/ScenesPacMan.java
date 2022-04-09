@@ -23,32 +23,10 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.scenes.pacman;
 
-import static de.amr.games.pacman.ui.GameSound.BONUS_EATEN;
-import static de.amr.games.pacman.ui.GameSound.CREDIT;
-import static de.amr.games.pacman.ui.GameSound.EXTRA_LIFE;
-import static de.amr.games.pacman.ui.GameSound.GAME_READY;
-import static de.amr.games.pacman.ui.GameSound.GHOST_EATEN;
-import static de.amr.games.pacman.ui.GameSound.GHOST_RETURNING;
-import static de.amr.games.pacman.ui.GameSound.INTERMISSION_1;
-import static de.amr.games.pacman.ui.GameSound.INTERMISSION_2;
-import static de.amr.games.pacman.ui.GameSound.INTERMISSION_3;
-import static de.amr.games.pacman.ui.GameSound.PACMAN_DEATH;
-import static de.amr.games.pacman.ui.GameSound.PACMAN_MUNCH;
-import static de.amr.games.pacman.ui.GameSound.PACMAN_POWER;
-import static de.amr.games.pacman.ui.GameSound.SIREN_1;
-import static de.amr.games.pacman.ui.GameSound.SIREN_2;
-import static de.amr.games.pacman.ui.GameSound.SIREN_3;
-import static de.amr.games.pacman.ui.GameSound.SIREN_4;
-
-import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import de.amr.games.pacman.controller.GameController;
 import de.amr.games.pacman.lib.V2i;
-import de.amr.games.pacman.ui.GameSound;
-import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.scenes.common.PlayScene;
@@ -60,40 +38,16 @@ import de.amr.games.pacman.ui.swing.scenes.common.PlayScene;
  */
 public class ScenesPacMan {
 
-	private static Entry<GameSound, String> entry(GameSound sound, String path) {
-		return new SimpleEntry<>(sound, "/pacman/sound/" + path);
-	}
-
-	private static final Map<GameSound, String> SOUND_PATHS = Map.ofEntries(//
-			entry(CREDIT, "credit.wav"), //
-			entry(EXTRA_LIFE, "extend.wav"), //
-			entry(GAME_READY, "game_start.wav"), //
-			entry(BONUS_EATEN, "eat_fruit.wav"), //
-			entry(PACMAN_MUNCH, "munch_1.wav"), //
-			entry(PACMAN_DEATH, "pacman_death.wav"), //
-			entry(PACMAN_POWER, "power_pellet.wav"), //
-			entry(GHOST_EATEN, "eat_ghost.wav"), //
-			entry(GHOST_RETURNING, "retreating.wav"), //
-			entry(SIREN_1, "siren_1.wav"), //
-			entry(SIREN_2, "siren_2.wav"), //
-			entry(SIREN_3, "siren_3.wav"), //
-			entry(SIREN_4, "siren_4.wav"), //
-			entry(INTERMISSION_1, "intermission.wav"), //
-			entry(INTERMISSION_2, "intermission.wav"), //
-			entry(INTERMISSION_3, "intermission.wav") //
-	);
-
 	public final Rendering2D_PacMan r2D = new Rendering2D_PacMan();
-	public final SoundManager sounds = new SoundManager(SOUND_PATHS);
 	public final List<GameScene> gameScenes;
 
 	public ScenesPacMan(GameController gameController, V2i unscaledSize) {
 		gameScenes = List.of( //
-				new PacMan_IntroScene(gameController, unscaledSize, r2D, sounds), //
-				new PacMan_IntermissionScene1(gameController, unscaledSize, r2D, sounds), //
-				new PacMan_IntermissionScene2(gameController, unscaledSize, r2D, sounds), //
-				new PacMan_IntermissionScene3(gameController, unscaledSize, r2D, sounds), //
-				new PlayScene(gameController, unscaledSize, r2D, sounds) //
+				new PacMan_IntroScene(gameController, unscaledSize, r2D), //
+				new PacMan_IntermissionScene1(gameController, unscaledSize, r2D), //
+				new PacMan_IntermissionScene2(gameController, unscaledSize, r2D), //
+				new PacMan_IntermissionScene3(gameController, unscaledSize, r2D), //
+				new PlayScene(gameController, unscaledSize, r2D) //
 		);
 	}
 }

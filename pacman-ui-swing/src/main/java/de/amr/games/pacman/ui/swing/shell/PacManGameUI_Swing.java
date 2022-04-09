@@ -50,6 +50,7 @@ import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.ui.swing.app.GameLoop;
 import de.amr.games.pacman.ui.swing.assets.AssetLoader;
+import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.rendering.common.Debug;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.scenes.mspacman.ScenesMsPacMan;
@@ -118,6 +119,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 				gameController.gameVariant == MS_PACMAN ? "Ms. Pac-Man" : "Pac-Man", gameLoop.clock.getLastFPS())));
 
 		// start initial game scene
+		SoundManager.get().selectGameVariant(gameController.gameVariant);
 		onGameStateChange(new GameStateChangeEvent(gameController.game, null, controller.state));
 		show();
 	}
@@ -141,6 +143,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 			newScene.init(gameController.game);
 			log("Current scene changed from %s to %s", currentGameScene, newScene);
 		}
+		SoundManager.get().selectGameVariant(gameController.gameVariant);
 		currentGameScene = newScene;
 	}
 
@@ -196,8 +199,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 
 	public void reset() {
 		currentGameScene.end();
-		scenesMsPacMan.sounds.stopAll();
-		scenesPacMan.sounds.stopAll();
+		SoundManager.get().stopAll();
 	}
 
 	public void showFlashMessage(double seconds, String message, Object... args) {
