@@ -35,7 +35,6 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 import de.amr.games.pacman.model.common.GameVariant;
-import de.amr.games.pacman.ui.GameSound;
 
 /**
  * Sound manager for Pac-Man game variants.
