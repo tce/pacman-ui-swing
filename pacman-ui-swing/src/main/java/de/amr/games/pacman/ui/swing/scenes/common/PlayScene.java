@@ -242,7 +242,7 @@ public class PlayScene extends GameScene {
 	public void render(Graphics2D g) {
 		r2D.drawMaze(g, game.mazeNumber, 0, t(3), mazeFlashing.isRunning());
 		if (!mazeFlashing.isRunning()) {
-			r2D.hideEatenFood(g, game.world.tiles(), game.world::isFoodEaten);
+			r2D.hideEatenFood(g, game.world.tiles(), game.world::containsEatenFood);
 			Stream.of(energizers2D).forEach(energizer2D -> energizer2D.render(g));
 		}
 		if (gameController.attractMode) {
