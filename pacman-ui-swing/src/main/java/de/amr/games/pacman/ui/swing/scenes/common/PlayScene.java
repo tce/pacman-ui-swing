@@ -249,7 +249,7 @@ public class PlayScene extends GameScene {
 			r2D.drawGameState(g, game, GameState.GAME_OVER);
 		} else {
 			r2D.drawGameState(g, game, gameController.state);
-			r2D.drawLevelCounter(g, game, t(25), t(34));
+			r2D.drawLevelCounter(g, game, t(24), t(34));
 		}
 		bonus2D.render(g);
 		player2D.render(g);
