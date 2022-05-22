@@ -89,7 +89,7 @@ public class MsPacMan_IntroScene extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		r2D.drawScore(g, gameController.game, true);
+		r2D.drawScore(g, gameController.game(), true);
 
 		g.setFont(r2D.getArcadeFont());
 		g.setColor(Color.ORANGE);

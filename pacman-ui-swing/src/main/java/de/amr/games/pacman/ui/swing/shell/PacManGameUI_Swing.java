@@ -120,7 +120,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 
 		// start initial game scene
 		SoundManager.get().selectGameVariant(gameController.gameVariant());
-		onGameStateChange(new GameStateChangeEvent(gameController.game, null, controller.state));
+		onGameStateChange(new GameStateChangeEvent(gameController.game(), null, controller.state));
 		show();
 	}
 
@@ -140,7 +140,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 			if (currentGameScene != null) {
 				currentGameScene.end();
 			}
-			newScene.init(gameController.game);
+			newScene.init(gameController.game());
 			log("Current scene changed from %s to %s", currentGameScene, newScene);
 		}
 		SoundManager.get().selectGameVariant(gameController.gameVariant());
@@ -158,12 +158,12 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 	}
 
 	private GameScene getSceneForGameState(GameState state) {
-		var game = gameController.game;
+		var game = gameController.game();
 		var scenes = gameController.gameVariant() == MS_PACMAN ? scenesMsPacMan.gameScenes : scenesPacMan.gameScenes;
 		return switch (state) {
 		case INTRO -> scenes.get(0); // intro scene
 		case INTERMISSION -> scenes.get(game.intermissionNumber(game.levelNumber));
-		case INTERMISSION_TEST -> scenes.get(gameController.intermissionTestNumber);
+		case INTERMISSION_TEST -> scenes.get(game.intermissionTestNumber);
 		default -> scenes.get(4); // play scene
 		};
 	}
@@ -207,11 +207,11 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 	}
 
 	private void handleNonPlayerKeys() {
-		final var game = gameController.game;
+		final var game = gameController.game();
 
 		if (keyboard.pressed("A")) {
-			gameController.autoControlled = !gameController.autoControlled;
-			showFlashMessage(1, "Autopilot %s", gameController.autoControlled ? "on" : "off");
+			gameController.playerAutomove = !gameController.playerAutomove;
+			showFlashMessage(1, "Autopilot %s", gameController.playerAutomove ? "on" : "off");
 		}
 
 		else if (keyboard.pressed(Keyboard.CONTROL, "D")) {
@@ -220,7 +220,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		}
 
 		else if (keyboard.pressed("E")) {
-			gameController.cheatEatAllPellets();
+			game.cheatEatAllPellets();
 		}
 
 		else if (keyboard.pressed("I")) {
@@ -229,13 +229,13 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		}
 
 		else if (keyboard.pressed("L")) {
-			if (gameController.game.running) {
+			if (game.running) {
 				game.player.lives += 3;
 			}
 		}
 
 		else if (keyboard.pressed("N")) {
-			if (gameController.game.running) {
+			if (game.running) {
 				gameController.changeState(GameState.LEVEL_COMPLETE);
 			}
 		}
