@@ -116,10 +116,10 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		keyboard = new Keyboard(window);
 
 		titleUpdateTimer = new Timer(1000, e -> window.setTitle(String.format("%s (%d fps, JFC Swing)",
-				gameController.gameVariant == MS_PACMAN ? "Ms. Pac-Man" : "Pac-Man", gameLoop.clock.getLastFPS())));
+				gameController.gameVariant() == MS_PACMAN ? "Ms. Pac-Man" : "Pac-Man", gameLoop.clock.getLastFPS())));
 
 		// start initial game scene
-		SoundManager.get().selectGameVariant(gameController.gameVariant);
+		SoundManager.get().selectGameVariant(gameController.gameVariant());
 		onGameStateChange(new GameStateChangeEvent(gameController.game, null, controller.state));
 		show();
 	}
@@ -143,7 +143,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 			newScene.init(gameController.game);
 			log("Current scene changed from %s to %s", currentGameScene, newScene);
 		}
-		SoundManager.get().selectGameVariant(gameController.gameVariant);
+		SoundManager.get().selectGameVariant(gameController.gameVariant());
 		currentGameScene = newScene;
 	}
 
@@ -159,7 +159,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 
 	private GameScene getSceneForGameState(GameState state) {
 		var game = gameController.game;
-		var scenes = gameController.gameVariant == MS_PACMAN ? scenesMsPacMan.gameScenes : scenesPacMan.gameScenes;
+		var scenes = gameController.gameVariant() == MS_PACMAN ? scenesMsPacMan.gameScenes : scenesPacMan.gameScenes;
 		return switch (state) {
 		case INTRO -> scenes.get(0); // intro scene
 		case INTERMISSION -> scenes.get(game.intermissionNumber(game.levelNumber));
@@ -264,7 +264,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 
 		else if (keyboard.pressed("V")) {
 			if (gameController.state == GameState.INTRO) {
-				gameController.selectGameVariant(gameController.gameVariant.succ());
+				gameController.selectGameVariant(gameController.gameVariant().succ());
 			}
 		}
 
