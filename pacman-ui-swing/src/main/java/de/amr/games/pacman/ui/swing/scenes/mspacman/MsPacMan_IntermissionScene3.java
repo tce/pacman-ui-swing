@@ -26,6 +26,7 @@ package de.amr.games.pacman.ui.swing.scenes.mspacman;
 import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.GameController;
+import de.amr.games.pacman.controller.mspacman.Intermission3Context;
 import de.amr.games.pacman.controller.mspacman.Intermission3Controller;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
@@ -51,6 +52,8 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 public class MsPacMan_IntermissionScene3 extends GameScene {
 
 	private final Intermission3Controller sc;
+	private final Intermission3Context context;
+
 	private Player2D msPacMan2D;
 	private Player2D pacMan2D;
 	private Flap2D flap2D;
@@ -60,25 +63,22 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 	public MsPacMan_IntermissionScene3(GameController gameController, V2i size, Rendering2D r2D) {
 		super(gameController, size, r2D);
 		sc = new Intermission3Controller(gameController);
-		sc.playIntermissionSound = () -> SoundManager.get().play(GameSound.INTERMISSION_3);
-		sc.playFlapAnimation = () -> flap2D.animation.restart();
+		context = sc.getContext();
+		context.playIntermissionSound = () -> SoundManager.get().play(GameSound.INTERMISSION_3);
+		context.playFlapAnimation = () -> flap2D.animation.restart();
 	}
 
 	@Override
 	public void init(GameModel game) {
 		super.init(game);
 		sc.init();
-
-		msPacMan2D = new Player2D(sc.msPacMan, game, r2D);
-		pacMan2D = new Player2D(sc.pacMan, game, r2D);
+		msPacMan2D = new Player2D(context.msPacMan, game, r2D);
+		pacMan2D = new Player2D(context.pacMan, game, r2D);
 		pacMan2D.munchings = r2D.createSpouseMunchingAnimations();
-
-		flap2D = new Flap2D(sc.flap, game, r2D);
-
-		stork2D = new Stork2D(sc.stork, r2D);
+		flap2D = new Flap2D(context.flap, game, r2D);
+		stork2D = new Stork2D(context.stork, r2D);
 		stork2D.animation.restart();
-
-		bag2D = new JuniorBag2D(sc.bag, r2D);
+		bag2D = new JuniorBag2D(context.bag, r2D);
 	}
 
 	@Override

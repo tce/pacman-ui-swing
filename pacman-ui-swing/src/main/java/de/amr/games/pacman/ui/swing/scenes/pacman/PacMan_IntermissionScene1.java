@@ -28,6 +28,7 @@ import static de.amr.games.pacman.model.common.world.World.t;
 import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.GameController;
+import de.amr.games.pacman.controller.pacman.Intermission1Context;
 import de.amr.games.pacman.controller.pacman.Intermission1Controller;
 import de.amr.games.pacman.controller.pacman.Intermission1State;
 import de.amr.games.pacman.lib.TimedSeq;
@@ -50,6 +51,8 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 public class PacMan_IntermissionScene1 extends GameScene {
 
 	private final Intermission1Controller sc;
+	private final Intermission1Context context;
+
 	private Player2D pacMan2D;
 	private Ghost2D blinky2D;
 	private BigPacMan2D bigPacMan2D;
@@ -57,7 +60,8 @@ public class PacMan_IntermissionScene1 extends GameScene {
 	public PacMan_IntermissionScene1(GameController gameController, V2i size, Rendering2D r2D) {
 		super(gameController, size, r2D);
 		sc = new Intermission1Controller(gameController);
-		sc.playIntermissionSound = () -> SoundManager.get().loop(GameSound.INTERMISSION_1, 1);
+		context = sc.getContext();
+		context.playIntermissionSound = () -> SoundManager.get().loop(GameSound.INTERMISSION_1, 1);
 	}
 
 	@Override
@@ -65,9 +69,9 @@ public class PacMan_IntermissionScene1 extends GameScene {
 		super.init(game);
 		sc.init();
 
-		pacMan2D = new Player2D(sc.pac, game, r2D);
-		blinky2D = new Ghost2D(sc.blinky, game, r2D);
-		bigPacMan2D = new BigPacMan2D(sc.pac, (Rendering2D_PacMan) r2D);
+		pacMan2D = new Player2D(context.pac, game, r2D);
+		blinky2D = new Ghost2D(context.blinky, game, r2D);
+		bigPacMan2D = new BigPacMan2D(context.pac, (Rendering2D_PacMan) r2D);
 		pacMan2D.munchings.values().forEach(TimedSeq::restart);
 		blinky2D.animKicking.values().forEach(TimedSeq::restart);
 		blinky2D.animFrightened.restart();

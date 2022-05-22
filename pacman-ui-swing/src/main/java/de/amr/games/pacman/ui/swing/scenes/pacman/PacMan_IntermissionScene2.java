@@ -29,6 +29,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.controller.GameController;
+import de.amr.games.pacman.controller.pacman.Intermission2Context;
 import de.amr.games.pacman.controller.pacman.Intermission2Controller;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TimedSeq;
@@ -51,6 +52,8 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 public class PacMan_IntermissionScene2 extends GameScene {
 
 	private final Intermission2Controller sc;
+	private final Intermission2Context context;
+
 	private Player2D pacMan2D;
 	private Ghost2D blinky2D;
 	private TimedSeq<BufferedImage> blinkyStretchedAnimation;
@@ -59,7 +62,8 @@ public class PacMan_IntermissionScene2 extends GameScene {
 	public PacMan_IntermissionScene2(GameController gameController, V2i size, Rendering2D r2D) {
 		super(gameController, size, r2D);
 		sc = new Intermission2Controller(gameController);
-		sc.playIntermissionSound = () -> SoundManager.get().play(GameSound.INTERMISSION_2);
+		context = sc.getContext();
+		context.playIntermissionSound = () -> SoundManager.get().play(GameSound.INTERMISSION_2);
 	}
 
 	@Override
@@ -67,8 +71,8 @@ public class PacMan_IntermissionScene2 extends GameScene {
 		super.init(game);
 		sc.init();
 
-		pacMan2D = new Player2D(sc.pac, game, r2D);
-		blinky2D = new Ghost2D(sc.blinky, game, r2D);
+		pacMan2D = new Player2D(context.pac, game, r2D);
+		blinky2D = new Ghost2D(context.blinky, game, r2D);
 		blinkyStretchedAnimation = r2D.createBlinkyStretchedAnimation();
 		blinkyDamagedAnimation = r2D.createBlinkyDamagedAnimation();
 	}
@@ -82,12 +86,12 @@ public class PacMan_IntermissionScene2 extends GameScene {
 	public void render(Graphics2D g) {
 		Rendering2D_PacMan r = (Rendering2D_PacMan) r2D;
 		r.drawLevelCounter(g, gameController.game(), t(25), t(34));
-		r.drawNail(g, sc.nail);
+		r.drawNail(g, context.nail);
 		pacMan2D.render(g);
 		if (sc.nailDistance() < 0) {
 			blinky2D.render(g);
 		} else {
-			drawBlinkyStretched(g, sc.nail.position, sc.nailDistance() / 4);
+			drawBlinkyStretched(g, context.nail.position, sc.nailDistance() / 4);
 		}
 	}
 
@@ -97,8 +101,8 @@ public class PacMan_IntermissionScene2 extends GameScene {
 		if (stretching < 3) {
 			blinky2D.render(g);
 		} else {
-			BufferedImage blinkyDamaged = blinkyDamagedAnimation.frame(sc.blinky.moveDir() == Direction.UP ? 0 : 1);
-			g.drawImage(blinkyDamaged, (int) (sc.blinky.position.x - 4), (int) (sc.blinky.position.y - 4), null);
+			BufferedImage blinkyDamaged = blinkyDamagedAnimation.frame(context.blinky.moveDir() == Direction.UP ? 0 : 1);
+			g.drawImage(blinkyDamaged, (int) (context.blinky.position.x - 4), (int) (context.blinky.position.y - 4), null);
 		}
 	}
 }
