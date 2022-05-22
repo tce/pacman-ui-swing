@@ -29,7 +29,7 @@ import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.GameController;
 import de.amr.games.pacman.controller.pacman.Intermission1Controller;
-import de.amr.games.pacman.controller.pacman.Intermission1Controller.IntermissionState;
+import de.amr.games.pacman.controller.pacman.Intermission1State;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
@@ -83,7 +83,7 @@ public class PacMan_IntermissionScene1 extends GameScene {
 	public void render(Graphics2D g) {
 		Rendering2D_PacMan r = (Rendering2D_PacMan) r2D;
 		blinky2D.render(g);
-		if (sc.state == IntermissionState.CHASING_PACMAN) {
+		if (sc.state == Intermission1State.CHASING_PACMAN) {
 			pacMan2D.render(g);
 		} else {
 			bigPacMan2D.render(g);

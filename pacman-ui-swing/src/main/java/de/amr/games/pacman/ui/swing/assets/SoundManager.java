@@ -174,7 +174,7 @@ public class SoundManager {
 		default -> throw new IllegalArgumentException();
 		};
 		loop(siren, Clip.LOOP_CONTINUOUSLY);
-		log("Siren %s started", siren);
+//		log("Siren %s started", siren);
 	}
 
 	public void stopSirens() {

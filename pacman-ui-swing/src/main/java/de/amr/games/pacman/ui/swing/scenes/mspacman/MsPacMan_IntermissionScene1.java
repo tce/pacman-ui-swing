@@ -27,7 +27,7 @@ import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.GameController;
 import de.amr.games.pacman.controller.mspacman.Intermission1Controller;
-import de.amr.games.pacman.controller.mspacman.Intermission1Controller.IntermissonState;
+import de.amr.games.pacman.controller.mspacman.Intermission1State;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
@@ -93,7 +93,7 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 	public void update() {
 		sc.updateState();
 		// stop ghost animation when Pac-Man and Ms. Pac-Man are in heaven
-		if (sc.state == IntermissonState.IN_HEAVEN && sc.pacMan.velocity.equals(V2d.NULL)) {
+		if (sc.state == Intermission1State.IN_HEAVEN && sc.pacMan.velocity.equals(V2d.NULL)) {
 			inky2D.animKicking.values().forEach(TimedSeq::stop);
 			pinky2D.animKicking.values().forEach(TimedSeq::stop);
 		}

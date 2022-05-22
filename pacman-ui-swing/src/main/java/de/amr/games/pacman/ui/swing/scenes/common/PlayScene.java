@@ -84,17 +84,17 @@ public class PlayScene extends GameScene {
 		switch (gameController.state) {
 		case LEVEL_COMPLETE -> {
 			if (mazeFlashing.isComplete()) {
-				gameController.stateTimer().expire();
-			} else if (gameController.stateTimer().isRunningSeconds(2)) {
+				gameController.state.timer().expire();
+			} else if (gameController.state.timer().isRunningSeconds(2)) {
 				game.hideGhosts();
-			} else if (gameController.stateTimer().isRunningSeconds(3)) {
+			} else if (gameController.state.timer().isRunningSeconds(3)) {
 				mazeFlashing.restart();
 			} else if (mazeFlashing.isRunning()) {
 				mazeFlashing.animate();
 			}
 		}
 		case LEVEL_STARTING -> {
-			gameController.stateTimer().expire();
+			gameController.state.timer().expire();
 		}
 		case HUNTING -> {
 			if (!SoundManager.get().isAnySirenPlaying() && !game.player.powerTimer.isRunning()) {
@@ -134,7 +134,7 @@ public class PlayScene extends GameScene {
 		}
 
 		case PACMAN_DYING -> {
-			gameController.stateTimer().setSeconds(3).start();
+			gameController.state.timer().setSeconds(3).start();
 			SoundManager.get().stopAll();
 			player2D.dying.delay(60).onStart(() -> {
 				game.hideGhosts();

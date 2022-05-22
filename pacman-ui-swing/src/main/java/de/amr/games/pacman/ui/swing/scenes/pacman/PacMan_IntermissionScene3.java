@@ -29,7 +29,7 @@ import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.GameController;
 import de.amr.games.pacman.controller.pacman.Intermission3Controller;
-import de.amr.games.pacman.controller.pacman.Intermission3Controller.IntermissionState;
+import de.amr.games.pacman.controller.pacman.Intermission3State;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
@@ -72,7 +72,7 @@ public class PacMan_IntermissionScene3 extends GameScene {
 		Rendering2D_PacMan r = (Rendering2D_PacMan) r2D;
 		r.drawLevelCounter(g, gameController.game, t(25), t(34));
 		pacMan2D.render(g);
-		if (sc.state == IntermissionState.CHASING) {
+		if (sc.state == Intermission3State.CHASING) {
 			r.drawBlinkyPatched(g, sc.blinky);
 		} else {
 			r.drawBlinkyNaked(g, sc.blinky);
