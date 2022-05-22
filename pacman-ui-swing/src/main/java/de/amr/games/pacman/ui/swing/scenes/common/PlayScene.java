@@ -111,7 +111,7 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void onGameStateChange(GameStateChangeEvent e) {
-		SoundManager.get().setMuted(gameController.attractMode);
+		SoundManager.get().setMuted(gameController.game.attractMode);
 
 		switch (e.newGameState) {
 
@@ -121,7 +121,7 @@ public class PlayScene extends GameScene {
 			player2D.reset();
 			Stream.of(ghosts2D).forEach(Ghost2D::reset);
 			SoundManager.get().stopAll();
-			if (!gameController.attractMode && !gameController.gameRunning) {
+			if (!gameController.game.attractMode && !gameController.gameRunning) {
 				SoundManager.get().setMuted(false);
 				SoundManager.get().play(GameSound.GAME_READY);
 			}
@@ -175,7 +175,7 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void onGameEvent(GameEvent gameEvent) {
-		SoundManager.get().setMuted(gameController.attractMode);
+		SoundManager.get().setMuted(gameController.game.attractMode);
 		super.onGameEvent(gameEvent);
 	}
 
@@ -245,7 +245,7 @@ public class PlayScene extends GameScene {
 			r2D.hideEatenFood(g, game.world.tiles(), game.world::containsEatenFood);
 			Stream.of(energizers2D).forEach(energizer2D -> energizer2D.render(g));
 		}
-		if (gameController.attractMode) {
+		if (gameController.game.attractMode) {
 			r2D.drawGameState(g, game, GameState.GAME_OVER);
 		} else {
 			r2D.drawGameState(g, game, gameController.state);
