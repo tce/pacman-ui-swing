@@ -229,13 +229,13 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		}
 
 		else if (keyboard.pressed("L")) {
-			if (gameController.gameRunning) {
+			if (gameController.game.running) {
 				game.player.lives += 3;
 			}
 		}
 
 		else if (keyboard.pressed("N")) {
-			if (gameController.gameRunning) {
+			if (gameController.game.running) {
 				gameController.changeState(GameState.LEVEL_COMPLETE);
 			}
 		}

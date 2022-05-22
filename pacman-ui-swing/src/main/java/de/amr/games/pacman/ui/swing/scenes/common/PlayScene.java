@@ -121,7 +121,7 @@ public class PlayScene extends GameScene {
 			player2D.reset();
 			Stream.of(ghosts2D).forEach(Ghost2D::reset);
 			SoundManager.get().stopAll();
-			if (!gameController.game.attractMode && !gameController.gameRunning) {
+			if (!gameController.game.attractMode && !gameController.game.running) {
 				SoundManager.get().setMuted(false);
 				SoundManager.get().play(GameSound.GAME_READY);
 			}
@@ -138,7 +138,7 @@ public class PlayScene extends GameScene {
 			SoundManager.get().stopAll();
 			player2D.dying.delay(60).onStart(() -> {
 				game.hideGhosts();
-				if (gameController.gameRunning) {
+				if (gameController.game.running) {
 					SoundManager.get().play(GameSound.PACMAN_DEATH);
 				}
 			}).restart();
@@ -254,7 +254,7 @@ public class PlayScene extends GameScene {
 		bonus2D.render(g);
 		player2D.render(g);
 		Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.render(g));
-		if (gameController.gameRunning) {
+		if (gameController.game.running) {
 			r2D.drawScore(g, game, false);
 			r2D.drawLivesCounter(g, game, t(2), t(34));
 		} else {
