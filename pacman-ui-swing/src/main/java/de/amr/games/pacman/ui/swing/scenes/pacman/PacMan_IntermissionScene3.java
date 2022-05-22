@@ -76,7 +76,7 @@ public class PacMan_IntermissionScene3 extends GameScene {
 		Rendering2D_PacMan r = (Rendering2D_PacMan) r2D;
 		r.drawLevelCounter(g, gameController.game(), t(25), t(34));
 		pacMan2D.render(g);
-		if (sc.state == Intermission3State.CHASING) {
+		if (sc.state() == Intermission3State.CHASING) {
 			r.drawBlinkyPatched(g, context.blinky);
 		} else {
 			r.drawBlinkyNaked(g, context.blinky);

@@ -87,7 +87,7 @@ public class PacMan_IntermissionScene1 extends GameScene {
 	public void render(Graphics2D g) {
 		Rendering2D_PacMan r = (Rendering2D_PacMan) r2D;
 		blinky2D.render(g);
-		if (sc.state == Intermission1State.CHASING_PACMAN) {
+		if (sc.state() == Intermission1State.CHASING_PACMAN) {
 			pacMan2D.render(g);
 		} else {
 			bigPacMan2D.render(g);

@@ -93,7 +93,7 @@ public class PacMan_IntroScene extends GameScene {
 	public void update() {
 		sc.updateState();
 		// TODO find a better solution:
-		if (sc.state == IntroState.CHASING_GHOSTS) {
+		if (sc.state() == IntroState.CHASING_GHOSTS) {
 			for (Ghost ghost : sc.context.ghosts) {
 				if (ghost.velocity.equals(V2d.NULL)) {
 					ghosts2D[ghost.id].animFrightened.stop();
@@ -110,19 +110,16 @@ public class PacMan_IntroScene extends GameScene {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		r2D.drawScore(g, game, true);
-		switch (sc.state) {
-
+		switch (sc.state()) {
 		case BEGIN, PRESENTING_GHOSTS -> drawGallery(g);
-
 		case SHOWING_POINTS -> {
 			drawGallery(g);
 			drawPoints(g, 11, 25);
-			if (sc.state.timer().ticked() > sec_to_ticks(1)) {
+			if (sc.state().timer().ticked() > sec_to_ticks(1)) {
 				drawEnergizer(g);
 				drawCopyright(g, 32);
 			}
 		}
-
 		case CHASING_PAC -> {
 			drawGallery(g);
 			drawPoints(g, 11, 25);
@@ -130,25 +127,21 @@ public class PacMan_IntroScene extends GameScene {
 			if (sc.context.fastBlinking.frame()) {
 				drawEnergizer(g);
 			}
-			int offset = sc.state.timer().ticked() % 5 < 2 ? 0 : -1;
+			int offset = sc.state().timer().ticked() % 5 < 2 ? 0 : -1;
 			drawGuys(g, offset);
 		}
-
 		case CHASING_GHOSTS -> {
 			drawGallery(g);
 			drawPoints(g, 11, 25);
 			drawCopyright(g, 32);
 			drawGuys(g, 0);
 		}
-
 		case READY_TO_PLAY -> {
 			drawGallery(g);
 			drawPressKeyToStart(g, 24);
 		}
-
 		default -> {
 		}
-
 		}
 		g.dispose();
 	}

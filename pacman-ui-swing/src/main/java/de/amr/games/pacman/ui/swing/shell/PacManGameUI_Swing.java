@@ -120,7 +120,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 
 		// start initial game scene
 		SoundManager.get().selectGameVariant(gameController.gameVariant());
-		onGameStateChange(new GameStateChangeEvent(gameController.game(), null, controller.state));
+		onGameStateChange(new GameStateChangeEvent(gameController.game(), null, controller.state()));
 		show();
 	}
 
@@ -241,7 +241,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		}
 
 		else if (keyboard.pressed("Q")) {
-			if (gameController.state != GameState.INTRO) {
+			if (gameController.state() != GameState.INTRO) {
 				reset();
 				gameController.changeState(GameState.INTRO);
 			}
@@ -263,7 +263,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		}
 
 		else if (keyboard.pressed("V")) {
-			if (gameController.state == GameState.INTRO) {
+			if (gameController.state() == GameState.INTRO) {
 				gameController.selectGameVariant(gameController.gameVariant().succ());
 			}
 		}

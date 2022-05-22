@@ -99,7 +99,7 @@ public class MsPacMan_IntroScene extends GameScene {
 		g.drawString("\"MS PAC-MAN\"", context.titlePosition.x, context.titlePosition.y);
 
 		drawAnimatedBoard(g, 32, 16);
-		switch (sc.state) {
+		switch (sc.state()) {
 		case GHOSTS -> drawGhostText(g);
 		case MSPACMAN -> drawMsPacManText(g);
 		case READY -> {

@@ -47,9 +47,9 @@ public class Debug {
 	public static void drawPlaySceneDebugInfo(Graphics2D g, GameController controller) {
 		GameModel game = controller.game();
 		final Color[] GHOST_COLORS = { Color.RED, Color.PINK, Color.CYAN, Color.ORANGE };
-		long remaining = controller.state.timer().ticksRemaining();
+		long remaining = controller.state().timer().ticksRemaining();
 		String ticksText = remaining == TickTimer.INDEFINITE ? "indefinite" : remaining + " ticks remaining";
-		String stateText = String.format("%s (%s)", controller.state, ticksText);
+		String stateText = String.format("%s (%s)", controller.state(), ticksText);
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Arial", Font.PLAIN, 6));
 		g.drawString(stateText, t(1), t(3));
