@@ -33,8 +33,8 @@ import java.awt.RenderingHints;
 import java.util.stream.Stream;
 
 import de.amr.games.pacman.controller.GameController;
+import de.amr.games.pacman.controller.pacman.IntroContext.GhostPortrait;
 import de.amr.games.pacman.controller.pacman.IntroController;
-import de.amr.games.pacman.controller.pacman.IntroController.GhostPortrait;
 import de.amr.games.pacman.controller.pacman.IntroState;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2d;
