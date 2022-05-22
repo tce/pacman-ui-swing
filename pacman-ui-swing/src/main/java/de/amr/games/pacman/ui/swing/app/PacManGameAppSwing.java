@@ -55,7 +55,10 @@ public class PacManGameAppSwing {
 	public PacManGameAppSwing(Options options) {
 		controller = new GameController(options.gameVariant);
 		ui = new PacManGameUI_Swing(gameLoop, controller, options.height);
-		controller.addGameEventListener(ui);
+		// listens to events from all game variants
+		controller.games.values().forEach(game -> {
+			game.addEventListener(ui);
+		});
 		controller.setPlayerControl(new ManualPlayerControl(ui.keyboard, "Up", "Down", "Left", "Right"));
 		gameLoop.action = () -> {
 			gameLoop.clock.frame(controller::updateState);
