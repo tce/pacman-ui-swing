@@ -23,7 +23,8 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.shell;
 
-import de.amr.games.pacman.controller.common.PlayerControl;
+import java.util.function.Consumer;
+
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.model.common.Pac;
 
@@ -32,7 +33,7 @@ import de.amr.games.pacman.model.common.Pac;
  * 
  * @author Armin Reichert
  */
-public class ManualPlayerControl implements PlayerControl {
+public class ManualPlayerControl implements Consumer<Pac> {
 
 	private final Keyboard keyboard;
 	private final String upKey, downKey, leftKey, rightKey;
@@ -46,7 +47,7 @@ public class ManualPlayerControl implements PlayerControl {
 	}
 
 	@Override
-	public void steer(Pac player) {
+	public void accept(Pac player) {
 		if (keyboard.pressed(upKey)) {
 			player.setWishDir(Direction.UP);
 		} else if (keyboard.pressed(downKey)) {
