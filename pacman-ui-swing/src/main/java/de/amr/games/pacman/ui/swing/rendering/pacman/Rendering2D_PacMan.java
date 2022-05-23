@@ -131,6 +131,11 @@ public class Rendering2D_PacMan extends Rendering2D {
 	}
 
 	@Override
+	public BufferedImage s(int tileX, int tileY) {
+		return sheet.sprite(tileX, tileY);
+	}
+
+	@Override
 	public Font getArcadeFont() {
 		return scoreFont;
 	}
@@ -212,8 +217,7 @@ public class Rendering2D_PacMan extends Rendering2D {
 	}
 
 	public TimedSeq<BufferedImage> createBigPacManMunchingAnimation() {
-		return TimedSeq
-				.of(sheet.spriteRegion(2, 1, 2, 2), sheet.spriteRegion(4, 1, 2, 2), sheet.spriteRegion(6, 1, 2, 2))
+		return TimedSeq.of(sheet.spriteRegion(2, 1, 2, 2), sheet.spriteRegion(4, 1, 2, 2), sheet.spriteRegion(6, 1, 2, 2))
 				.frameDuration(4).endless().run();
 	}
 

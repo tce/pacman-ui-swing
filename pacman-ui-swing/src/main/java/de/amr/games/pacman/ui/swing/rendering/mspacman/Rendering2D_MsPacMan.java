@@ -145,6 +145,7 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 	/**
 	 * Picks sprite from the right part of the sheet, on the left are the maze images
 	 */
+	@Override
 	public BufferedImage s(int tileX, int tileY) {
 		return sheet.sprite(456, 0, tileX, tileY);
 	}

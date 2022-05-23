@@ -30,10 +30,11 @@ import static de.amr.games.pacman.model.common.world.World.t;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.util.stream.Stream;
 
-import de.amr.games.pacman.controller.pacman.IntroContext.GhostPortrait;
 import de.amr.games.pacman.controller.common.GameController;
+import de.amr.games.pacman.controller.pacman.IntroContext.GhostPortrait;
 import de.amr.games.pacman.controller.pacman.IntroController;
 import de.amr.games.pacman.controller.pacman.IntroState;
 import de.amr.games.pacman.lib.TimedSeq;
@@ -60,7 +61,6 @@ public class PacMan_IntroScene extends GameScene {
 
 	private Player2D pacMan2D;
 	private Ghost2D[] ghosts2D;
-	private Ghost2D[] gallery2D;
 
 	public PacMan_IntroScene(GameController gameController, V2i size, Rendering2D r2D) {
 		super(gameController, size, r2D);
@@ -81,12 +81,6 @@ public class PacMan_IntroScene extends GameScene {
 			ghost2D.animFrightened.restart();
 			return ghost2D;
 		}).toArray(Ghost2D[]::new);
-
-		gallery2D = new Ghost2D[] { //
-				new Ghost2D(sc.context.portraits[0].ghost, game, r2D), //
-				new Ghost2D(sc.context.portraits[1].ghost, game, r2D), //
-				new Ghost2D(sc.context.portraits[2].ghost, game, r2D), //
-				new Ghost2D(sc.context.portraits[3].ghost, game, r2D) };
 	}
 
 	@Override
@@ -160,24 +154,30 @@ public class PacMan_IntroScene extends GameScene {
 	private void drawGallery(Graphics2D g) {
 		g.setColor(Color.WHITE);
 		g.setFont(r2D.getArcadeFont());
-		g.drawString("CHARACTER", t(6), sc.context.topY);
-		g.drawString("/", t(16), sc.context.topY);
-		g.drawString("NICKNAME", t(18), sc.context.topY);
+		g.drawString("CHARACTER", t(6), t(6));
+		g.drawString("/", t(16), t(6));
+		g.drawString("NICKNAME", t(18), t(6));
 		for (int ghostID = 0; ghostID < 4; ++ghostID) {
 			GhostPortrait portrait = sc.context.portraits[ghostID];
-			if (portrait.ghost.visible) {
-				int y = sc.context.topY + t(1 + 3 * ghostID);
-				gallery2D[ghostID].render(g);
+			if (portrait.pictureVisible) {
+				int tileX = portrait.tileX;
+				int tileY = 7 + 3 * ghostID;
+				drawGhost(g, ghostID, t(tileX), t(tileY));
 				if (portrait.characterVisible) {
 					g.setColor(r2D.getGhostColor(ghostID));
-					g.drawString("-" + portrait.character, t(6), y + 8);
+					g.drawString("-" + portrait.character, t(6), t(tileY + 1));
 				}
 				if (portrait.nicknameVisible) {
 					g.setColor(r2D.getGhostColor(ghostID));
-					g.drawString("\"" + portrait.ghost.name + "\"", t(18), y + 8);
+					g.drawString("\"" + portrait.nickname + "\"", t(18), t(tileY + 1));
 				}
 			}
 		}
+	}
+
+	private void drawGhost(Graphics2D g, int ghostID, int x, int y) {
+		BufferedImage sprite = r2D.s(0, 4 + ghostID);
+		r2D.renderSprite(g, sprite, x, y);
 	}
 
 	private void drawPressKeyToStart(Graphics2D g, int yTile) {

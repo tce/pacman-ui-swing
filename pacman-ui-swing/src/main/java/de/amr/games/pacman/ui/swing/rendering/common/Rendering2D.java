@@ -59,6 +59,8 @@ public abstract class Rendering2D {
 		};
 	}
 
+	public abstract BufferedImage s(int tileX, int tileY);
+
 	public abstract Map<Direction, TimedSeq<BufferedImage>> createPlayerMunchingAnimations();
 
 	public abstract TimedSeq<BufferedImage> createPlayerDyingAnimation();
@@ -139,9 +141,13 @@ public abstract class Rendering2D {
 
 	public void renderEntity(Graphics2D g, GameEntity entity, BufferedImage sprite) {
 		if (entity.visible && sprite != null) {
-			int dx = HTS - sprite.getWidth() / 2, dy = HTS - sprite.getHeight() / 2;
-			g.drawImage(sprite, (int) (entity.position.x + dx), (int) (entity.position.y + dy), null);
+			renderSprite(g, sprite, (int) entity.position.x, (int) entity.position.y);
 		}
+	}
+
+	public void renderSprite(Graphics2D g, BufferedImage sprite, int x, int y) {
+		int dx = HTS - sprite.getWidth() / 2, dy = HTS - sprite.getHeight() / 2;
+		g.drawImage(sprite, x + dx, y + dy, null);
 	}
 
 	public void hideEatenFood(Graphics2D g, Stream<V2i> tiles, Predicate<V2i> eaten) {
