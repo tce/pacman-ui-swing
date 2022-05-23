@@ -115,7 +115,7 @@ public class PacMan_IntroScene extends GameScene {
 		case SHOWING_POINTS -> {
 			drawGallery(g);
 			drawPoints(g, 11, 25);
-			if (sc.state().timer().ticked() > sec_to_ticks(1)) {
+			if (sc.state().timer().tick() > sec_to_ticks(1)) {
 				drawEnergizer(g);
 				drawCopyright(g, 32);
 			}
@@ -127,7 +127,7 @@ public class PacMan_IntroScene extends GameScene {
 			if (sc.context.fastBlinking.frame()) {
 				drawEnergizer(g);
 			}
-			int offset = sc.state().timer().ticked() % 5 < 2 ? 0 : -1;
+			int offset = sc.state().timer().tick() % 5 < 2 ? 0 : -1;
 			drawGuys(g, offset);
 		}
 		case CHASING_GHOSTS -> {

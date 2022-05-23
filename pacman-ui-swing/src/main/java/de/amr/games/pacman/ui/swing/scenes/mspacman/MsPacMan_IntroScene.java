@@ -136,7 +136,7 @@ public class MsPacMan_IntroScene extends GameScene {
 	}
 
 	private void drawAnimatedBoard(Graphics2D g, int numDotsX, int numDotsY) {
-		long time = context.boardAnimationTimer.ticked();
+		long time = context.boardAnimationTimer.tick();
 		int light = (int) (time / 2) % (numDotsX / 2);
 		for (int dot = 0; dot < 2 * (numDotsX + numDotsY); ++dot) {
 			int x = 0, y = 0;
