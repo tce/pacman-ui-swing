@@ -35,7 +35,6 @@ import java.util.stream.Stream;
 import javax.imageio.ImageIO;
 
 import de.amr.games.pacman.controller.common.GameController;
-import de.amr.games.pacman.controller.mspacman.IntroContext;
 import de.amr.games.pacman.controller.mspacman.IntroController;
 import de.amr.games.pacman.controller.mspacman.IntroState;
 import de.amr.games.pacman.lib.Logging;
@@ -56,7 +55,7 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 public class MsPacMan_IntroScene extends GameScene {
 
 	private final IntroController sc;
-	private final IntroContext context;
+	private final IntroController.Context context;
 	private BufferedImage midwayLogo = loadImage("/mspacman/graphics/midway.png");
 	private Player2D msPacMan2D;
 	private Ghost2D[] ghosts2D;

@@ -26,7 +26,6 @@ package de.amr.games.pacman.ui.swing.scenes.mspacman;
 import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
-import de.amr.games.pacman.controller.mspacman.Intermission3Context;
 import de.amr.games.pacman.controller.mspacman.Intermission3Controller;
 import de.amr.games.pacman.controller.mspacman.Intermission3State;
 import de.amr.games.pacman.lib.V2i;
@@ -53,7 +52,7 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 public class MsPacMan_IntermissionScene3 extends GameScene {
 
 	private final Intermission3Controller sceneController;
-	private final Intermission3Context context;
+	private final Intermission3Controller.Context context;
 
 	private Player2D msPacMan2D;
 	private Player2D pacMan2D;
