@@ -25,7 +25,7 @@ package de.amr.games.pacman.ui.swing.scenes.pacman;
 
 import java.util.List;
 
-import de.amr.games.pacman.controller.GameController;
+import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;

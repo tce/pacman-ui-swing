@@ -41,11 +41,11 @@ import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-import de.amr.games.pacman.controller.GameController;
-import de.amr.games.pacman.controller.GameState;
-import de.amr.games.pacman.controller.event.DefaultGameEventHandler;
-import de.amr.games.pacman.controller.event.GameEvent;
-import de.amr.games.pacman.controller.event.GameStateChangeEvent;
+import de.amr.games.pacman.controller.common.GameController;
+import de.amr.games.pacman.controller.common.GameState;
+import de.amr.games.pacman.controller.common.event.DefaultGameEventHandler;
+import de.amr.games.pacman.controller.common.event.GameEvent;
+import de.amr.games.pacman.controller.common.event.GameStateChangeEvent;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.ui.swing.app.GameLoop;

@@ -25,7 +25,7 @@ package de.amr.games.pacman.ui.swing.app;
 
 import static java.awt.EventQueue.invokeLater;
 
-import de.amr.games.pacman.controller.GameController;
+import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.ui.swing.shell.ManualPlayerControl;
 import de.amr.games.pacman.ui.swing.shell.PacManGameUI_Swing;
 

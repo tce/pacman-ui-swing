@@ -25,8 +25,8 @@ package de.amr.games.pacman.ui.swing.scenes.common;
 
 import java.awt.Graphics2D;
 
-import de.amr.games.pacman.controller.GameController;
-import de.amr.games.pacman.controller.event.DefaultGameEventHandler;
+import de.amr.games.pacman.controller.common.GameController;
+import de.amr.games.pacman.controller.common.event.DefaultGameEventHandler;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;

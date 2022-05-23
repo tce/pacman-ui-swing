@@ -27,7 +27,7 @@ import static de.amr.games.pacman.model.common.world.World.t;
 
 import java.awt.Graphics2D;
 
-import de.amr.games.pacman.controller.GameController;
+import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.pacman.Intermission1Context;
 import de.amr.games.pacman.controller.pacman.Intermission1Controller;
 import de.amr.games.pacman.controller.pacman.Intermission1State;

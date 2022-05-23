@@ -25,7 +25,7 @@ package de.amr.games.pacman.ui.swing.scenes.mspacman;
 
 import java.awt.Graphics2D;
 
-import de.amr.games.pacman.controller.GameController;
+import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.Intermission3Context;
 import de.amr.games.pacman.controller.mspacman.Intermission3Controller;
 import de.amr.games.pacman.lib.V2i;
