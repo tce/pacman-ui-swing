@@ -36,7 +36,6 @@ import javax.imageio.ImageIO;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.IntroController;
-import de.amr.games.pacman.controller.mspacman.IntroState;
 import de.amr.games.pacman.lib.Logging;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
@@ -54,7 +53,7 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
  */
 public class MsPacMan_IntroScene extends GameScene {
 
-	private final IntroController sc;
+	private final IntroController sceneController;
 	private final IntroController.Context context;
 	private BufferedImage midwayLogo = loadImage("/mspacman/graphics/midway.png");
 	private Player2D msPacMan2D;
@@ -62,8 +61,8 @@ public class MsPacMan_IntroScene extends GameScene {
 
 	public MsPacMan_IntroScene(GameController gameController, V2i size, Rendering2D r2D) {
 		super(gameController, size, r2D);
-		sc = new IntroController(gameController);
-		context = sc.getContext();
+		sceneController = new IntroController(gameController);
+		context = sceneController.getContext();
 	}
 
 	private BufferedImage loadImage(String path) {
@@ -78,7 +77,7 @@ public class MsPacMan_IntroScene extends GameScene {
 	@Override
 	public void init(GameModel game) {
 		super.init(game);
-		sc.reset(IntroState.BEGIN);
+		sceneController.reset(IntroController.State.BEGIN);
 		msPacMan2D = new Player2D(context.msPacMan, game, r2D);
 		msPacMan2D.munchings.values().forEach(TimedSeq::restart);
 		ghosts2D = Stream.of(context.ghosts).map(ghost -> new Ghost2D(ghost, game, r2D)).toArray(Ghost2D[]::new);
@@ -87,7 +86,7 @@ public class MsPacMan_IntroScene extends GameScene {
 
 	@Override
 	public void update() {
-		sc.update();
+		sceneController.update();
 	}
 
 	@Override
@@ -99,7 +98,7 @@ public class MsPacMan_IntroScene extends GameScene {
 		g.drawString("\"MS PAC-MAN\"", context.titlePosition.x, context.titlePosition.y);
 
 		drawAnimatedBoard(g, 32, 16);
-		switch (sc.state()) {
+		switch (sceneController.state()) {
 		case GHOSTS -> drawGhostText(g);
 		case MSPACMAN -> drawMsPacManText(g);
 		case READY_TO_PLAY -> {
