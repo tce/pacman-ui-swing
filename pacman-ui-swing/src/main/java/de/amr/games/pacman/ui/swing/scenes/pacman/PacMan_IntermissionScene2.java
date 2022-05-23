@@ -29,7 +29,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.controller.common.GameController;
-import de.amr.games.pacman.controller.pacman.Intermission2Context;
 import de.amr.games.pacman.controller.pacman.Intermission2Controller;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TimedSeq;
@@ -51,8 +50,8 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
  */
 public class PacMan_IntermissionScene2 extends GameScene {
 
-	private final Intermission2Controller sc;
-	private final Intermission2Context context;
+	private final Intermission2Controller sceneController;
+	private final Intermission2Controller.Context context;
 
 	private Player2D pacMan2D;
 	private Ghost2D blinky2D;
@@ -61,15 +60,15 @@ public class PacMan_IntermissionScene2 extends GameScene {
 
 	public PacMan_IntermissionScene2(GameController gameController, V2i size, Rendering2D r2D) {
 		super(gameController, size, r2D);
-		sc = new Intermission2Controller(gameController);
-		context = sc.getContext();
+		sceneController = new Intermission2Controller(gameController);
+		context = sceneController.getContext();
 		context.playIntermissionSound = () -> SoundManager.get().play(GameSound.INTERMISSION_2);
 	}
 
 	@Override
 	public void init(GameModel game) {
 		super.init(game);
-		sc.init();
+		sceneController.init();
 
 		pacMan2D = new Player2D(context.pac, game, r2D);
 		blinky2D = new Ghost2D(context.blinky, game, r2D);
@@ -79,7 +78,7 @@ public class PacMan_IntermissionScene2 extends GameScene {
 
 	@Override
 	public void update() {
-		sc.update();
+		sceneController.update();
 	}
 
 	@Override
@@ -88,10 +87,10 @@ public class PacMan_IntermissionScene2 extends GameScene {
 		r.drawLevelCounter(g, gameController.game(), t(25), t(34));
 		r.drawNail(g, context.nail);
 		pacMan2D.render(g);
-		if (sc.nailDistance() < 0) {
+		if (sceneController.nailDistance() < 0) {
 			blinky2D.render(g);
 		} else {
-			drawBlinkyStretched(g, context.nail.position, sc.nailDistance() / 4);
+			drawBlinkyStretched(g, context.nail.position, sceneController.nailDistance() / 4);
 		}
 	}
 
