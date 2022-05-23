@@ -134,7 +134,7 @@ public class PlayScene extends GameScene {
 		}
 
 		case PACMAN_DYING -> {
-			gameController.state().timer().setSecond(3).start();
+			gameController.state().timer().setDurationSeconds(3).start();
 			SoundManager.get().stopAll();
 			player2D.dying.delay(60).onStart(() -> {
 				game.hideGhosts();
