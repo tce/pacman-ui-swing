@@ -35,7 +35,6 @@ import java.util.stream.Stream;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.pacman.IntroController;
-import de.amr.games.pacman.controller.pacman.IntroState;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
@@ -86,7 +85,7 @@ public class PacMan_IntroScene extends GameScene {
 	public void update() {
 		sc.update();
 		// TODO find a better solution:
-		if (sc.state() == IntroState.CHASING_GHOSTS) {
+		if (sc.state() == IntroController.State.CHASING_GHOSTS) {
 			for (Ghost ghost : sc.context.ghosts) {
 				if (ghost.velocity.equals(V2d.NULL)) {
 					ghosts2D[ghost.id].animFrightened.stop();
