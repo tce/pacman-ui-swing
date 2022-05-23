@@ -34,7 +34,6 @@ import java.awt.image.BufferedImage;
 import java.util.stream.Stream;
 
 import de.amr.games.pacman.controller.common.GameController;
-import de.amr.games.pacman.controller.pacman.IntroContext.GhostPortrait;
 import de.amr.games.pacman.controller.pacman.IntroController;
 import de.amr.games.pacman.controller.pacman.IntroState;
 import de.amr.games.pacman.lib.TimedSeq;
@@ -158,18 +157,16 @@ public class PacMan_IntroScene extends GameScene {
 		g.drawString("/", t(16), t(6));
 		g.drawString("NICKNAME", t(18), t(6));
 		for (int ghostID = 0; ghostID < 4; ++ghostID) {
-			GhostPortrait portrait = sc.context.portraits[ghostID];
-			if (portrait.pictureVisible) {
-				int tileX = portrait.tileX;
-				int tileY = 7 + 3 * ghostID;
+			if (sc.context.pictureVisible[ghostID]) {
+				int tileX = 3, tileY = 7 + 3 * ghostID;
 				drawGhost(g, ghostID, t(tileX), t(tileY));
-				if (portrait.characterVisible) {
+				if (sc.context.characterVisible[ghostID]) {
 					g.setColor(r2D.getGhostColor(ghostID));
-					g.drawString("-" + portrait.character, t(6), t(tileY + 1));
+					g.drawString("-" + sc.context.characters[ghostID], t(6), t(tileY + 1));
 				}
-				if (portrait.nicknameVisible) {
+				if (sc.context.nicknameVisible[ghostID]) {
 					g.setColor(r2D.getGhostColor(ghostID));
-					g.drawString("\"" + portrait.nickname + "\"", t(18), t(tileY + 1));
+					g.drawString("\"" + sc.context.nicknames[ghostID] + "\"", t(18), t(tileY + 1));
 				}
 			}
 		}
@@ -206,7 +203,7 @@ public class PacMan_IntroScene extends GameScene {
 
 	private void drawEnergizer(Graphics2D g) {
 		g.setColor(r2D.getFoodColor(1));
-		g.fillOval(t(2), t(20), TS, TS);
+		g.fillOval(t(3), t(20), TS, TS);
 	}
 
 	private void drawCopyright(Graphics2D g, int yTile) {
