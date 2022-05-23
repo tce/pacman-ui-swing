@@ -37,6 +37,7 @@ import javax.imageio.ImageIO;
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.IntroContext;
 import de.amr.games.pacman.controller.mspacman.IntroController;
+import de.amr.games.pacman.controller.mspacman.IntroState;
 import de.amr.games.pacman.lib.Logging;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
@@ -78,7 +79,7 @@ public class MsPacMan_IntroScene extends GameScene {
 	@Override
 	public void init(GameModel game) {
 		super.init(game);
-		sc.init();
+		sc.reset(IntroState.BEGIN);
 		msPacMan2D = new Player2D(context.msPacMan, game, r2D);
 		msPacMan2D.munchings.values().forEach(TimedSeq::restart);
 		ghosts2D = Stream.of(context.ghosts).map(ghost -> new Ghost2D(ghost, game, r2D)).toArray(Ghost2D[]::new);
@@ -87,7 +88,7 @@ public class MsPacMan_IntroScene extends GameScene {
 
 	@Override
 	public void update() {
-		sc.updateState();
+		sc.update();
 	}
 
 	@Override
@@ -102,7 +103,7 @@ public class MsPacMan_IntroScene extends GameScene {
 		switch (sc.state()) {
 		case GHOSTS -> drawGhostText(g);
 		case MSPACMAN -> drawMsPacManText(g);
-		case READY -> {
+		case READY_TO_PLAY -> {
 			msPacMan2D.reset();// ensure Ms. Pac-Man is displayed with mouth half open
 			drawMsPacManText(g);
 			drawPressKeyToStart(g, 26);

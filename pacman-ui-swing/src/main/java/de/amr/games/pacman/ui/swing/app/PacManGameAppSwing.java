@@ -61,7 +61,7 @@ public class PacManGameAppSwing {
 		});
 		controller.setPlayerControl(new ManualPlayerControl(ui.keyboard, "Up", "Down", "Left", "Right"));
 		gameLoop.action = () -> {
-			gameLoop.clock.frame(controller::updateState);
+			gameLoop.clock.frame(controller::update);
 			ui.update();
 		};
 		gameLoop.start();

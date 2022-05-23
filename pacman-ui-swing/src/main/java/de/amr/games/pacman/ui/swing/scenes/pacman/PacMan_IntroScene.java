@@ -84,7 +84,7 @@ public class PacMan_IntroScene extends GameScene {
 
 	@Override
 	public void update() {
-		sc.updateState();
+		sc.update();
 		// TODO find a better solution:
 		if (sc.state() == IntroState.CHASING_GHOSTS) {
 			for (Ghost ghost : sc.context.ghosts) {
