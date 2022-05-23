@@ -120,23 +120,23 @@ public class MsPacMan_IntroScene extends GameScene {
 		g.setColor(Color.WHITE);
 		g.setFont(r2D.getArcadeFont());
 		if (context.ghostIndex == 0) {
-			g.drawString("WITH", context.titlePosition.x, context.boardTopLeft.y + t(3));
+			g.drawString("WITH", context.titlePosition.x, context.lightsTopLeft.y + t(3));
 		}
 		Ghost ghost = context.ghosts[context.ghostIndex];
 		g.setColor(r2D.getGhostColor(ghost.id));
-		g.drawString(ghost.name.toUpperCase(), t(14 - ghost.name.length() / 2), context.boardTopLeft.y + t(6));
+		g.drawString(ghost.name.toUpperCase(), t(14 - ghost.name.length() / 2), context.lightsTopLeft.y + t(6));
 	}
 
 	private void drawMsPacManText(Graphics2D g) {
 		g.setColor(Color.WHITE);
 		g.setFont(r2D.getArcadeFont());
-		g.drawString("STARRING", context.titlePosition.x, context.boardTopLeft.y + t(3));
+		g.drawString("STARRING", context.titlePosition.x, context.lightsTopLeft.y + t(3));
 		g.setColor(Color.YELLOW);
-		g.drawString("MS PAC-MAN", context.titlePosition.x, context.boardTopLeft.y + t(6));
+		g.drawString("MS PAC-MAN", context.titlePosition.x, context.lightsTopLeft.y + t(6));
 	}
 
 	private void drawAnimatedBoard(Graphics2D g, int numDotsX, int numDotsY) {
-		long time = context.boardAnimationTimer.tick();
+		long time = context.lightsTimer.tick();
 		int light = (int) (time / 2) % (numDotsX / 2);
 		for (int dot = 0; dot < 2 * (numDotsX + numDotsY); ++dot) {
 			int x = 0, y = 0;
@@ -152,7 +152,7 @@ public class MsPacMan_IntroScene extends GameScene {
 				y = 2 * (numDotsX + numDotsY) - dot;
 			}
 			g.setColor((dot + light) % (numDotsX / 2) == 0 ? Color.PINK : Color.RED);
-			g.fillRect(context.boardTopLeft.x + 4 * x, context.boardTopLeft.y + 4 * y, 2, 2);
+			g.fillRect(context.lightsTopLeft.x + 4 * x, context.lightsTopLeft.y + 4 * y, 2, 2);
 		}
 	}
 
