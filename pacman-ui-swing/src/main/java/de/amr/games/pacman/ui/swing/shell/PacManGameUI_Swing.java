@@ -54,6 +54,7 @@ import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.rendering.common.Debug;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
+import de.amr.games.pacman.ui.swing.scenes.common.PlayScene;
 import de.amr.games.pacman.ui.swing.scenes.mspacman.ScenesMsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.pacman.ScenesPacMan;
 
@@ -242,10 +243,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		}
 
 		else if (keyboard.pressed("Q")) {
-			if (gameController.state() != GameState.INTRO) {
-				reset();
-				gameController.changeState(GameState.INTRO);
-			}
+			quitCurrentScene();
 		}
 
 		else if (keyboard.pressed(Keyboard.CONTROL, "S")) {
@@ -285,6 +283,15 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 			SoundManager.get().play(GameSound.CREDIT);
 			gameController.addCredit();
 		}
+	}
+
+	private void quitCurrentScene() {
+		currentGameScene.end();
+		SoundManager.get().stopAll();
+		if (currentGameScene instanceof PlayScene) {
+			gameController.consumeCredit();
+		}
+		gameController.changeState(GameState.INTRO);
 	}
 
 	private void moveMousePointerOutOfSight() {
