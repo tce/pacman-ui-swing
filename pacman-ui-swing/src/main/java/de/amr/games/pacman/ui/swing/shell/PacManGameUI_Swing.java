@@ -50,6 +50,7 @@ import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.ui.swing.app.GameLoop;
 import de.amr.games.pacman.ui.swing.assets.AssetLoader;
+import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.rendering.common.Debug;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
@@ -278,6 +279,11 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 
 		else if (keyboard.pressed("Space")) {
 			gameController.requestGame();
+		}
+
+		else if (keyboard.pressed("5")) {
+			SoundManager.get().play(GameSound.CREDIT);
+			gameController.credit++;
 		}
 	}
 
