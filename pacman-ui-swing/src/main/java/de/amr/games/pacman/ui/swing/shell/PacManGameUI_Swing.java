@@ -222,7 +222,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		}
 
 		else if (keyboard.pressed("E")) {
-			game.cheatEatAllPellets();
+			gameController.cheatEatAllPellets();
 		}
 
 		else if (keyboard.pressed("I")) {
@@ -231,13 +231,13 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		}
 
 		else if (keyboard.pressed("L")) {
-			if (game.running) {
+			if (gameController.gameRunning) {
 				game.player.lives += 3;
 			}
 		}
 
 		else if (keyboard.pressed("N")) {
-			if (game.running) {
+			if (gameController.gameRunning) {
 				gameController.changeState(GameState.LEVEL_COMPLETE);
 			}
 		}
