@@ -23,6 +23,7 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.rendering.common;
 
+import static de.amr.games.pacman.model.common.Ghost.*;
 import static de.amr.games.pacman.model.common.world.World.HTS;
 import static de.amr.games.pacman.model.common.world.World.TS;
 import static de.amr.games.pacman.model.common.world.World.t;
@@ -51,10 +52,10 @@ public abstract class Rendering2D {
 
 	public Color getGhostColor(int ghostID) {
 		return switch (ghostID) {
-		case GameModel.RED_GHOST -> Color.RED;
-		case GameModel.PINK_GHOST -> new Color(252, 181, 255);
-		case GameModel.CYAN_GHOST -> Color.CYAN;
-		case GameModel.ORANGE_GHOST -> new Color(253, 192, 90);
+		case RED_GHOST -> Color.RED;
+		case PINK_GHOST -> new Color(252, 181, 255);
+		case CYAN_GHOST -> Color.CYAN;
+		case ORANGE_GHOST -> new Color(253, 192, 90);
 		default -> Color.WHITE;
 		};
 	}

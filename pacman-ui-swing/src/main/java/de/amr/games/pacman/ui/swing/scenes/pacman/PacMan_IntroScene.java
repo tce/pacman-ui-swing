@@ -24,6 +24,7 @@ SOFTWARE.
 package de.amr.games.pacman.ui.swing.scenes.pacman;
 
 import static de.amr.games.pacman.lib.TickTimer.sec_to_ticks;
+import static de.amr.games.pacman.model.common.Ghost.PINK_GHOST;
 import static de.amr.games.pacman.model.common.world.World.TS;
 import static de.amr.games.pacman.model.common.world.World.t;
 
@@ -209,7 +210,7 @@ public class PacMan_IntroScene extends GameScene {
 	private void drawCopyright(Graphics2D g, int yTile) {
 		String text = "\u00A9" + "  1980 MIDWAY MFG. CO.";
 		g.setFont(r2D.getArcadeFont());
-		g.setColor(r2D.getGhostColor(GameModel.PINK_GHOST));
+		g.setColor(r2D.getGhostColor(PINK_GHOST));
 		g.drawString(text, t(3), t(yTile));
 	}
 }
