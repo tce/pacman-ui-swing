@@ -283,7 +283,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 
 		else if (keyboard.pressed("5")) {
 			SoundManager.get().play(GameSound.CREDIT);
-			gameController.credit++;
+			gameController.addCredit();
 		}
 	}
 

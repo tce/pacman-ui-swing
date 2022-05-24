@@ -142,7 +142,7 @@ public class PacMan_IntroScene extends GameScene {
 	private void drawCredit(Graphics2D g) {
 		g.setFont(r2D.getArcadeFont());
 		g.setColor(Color.WHITE);
-		g.drawString("CREDIT  %d".formatted(gameController.credit), t(2), t(36));
+		g.drawString("CREDIT  %d".formatted(gameController.credit()), t(2), t(36));
 	}
 
 	private void drawGuys(Graphics2D g, int offset) {
