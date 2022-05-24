@@ -102,7 +102,7 @@ public class PacMan_IntroScene extends GameScene {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		r2D.drawScore(g, game, true);
-		drawCredit(g);
+		r2D.drawCredit(g, gameController.credit());
 		switch (sceneController.state()) {
 		case BEGIN, PRESENTING_GHOSTS -> drawGallery(g);
 		case SHOWING_POINTS -> {
@@ -137,12 +137,6 @@ public class PacMan_IntroScene extends GameScene {
 		}
 		}
 		g.dispose();
-	}
-
-	private void drawCredit(Graphics2D g) {
-		g.setFont(r2D.getArcadeFont());
-		g.setColor(Color.WHITE);
-		g.drawString("CREDIT  %d".formatted(gameController.credit()), t(2), t(36));
 	}
 
 	private void drawGuys(Graphics2D g, int offset) {

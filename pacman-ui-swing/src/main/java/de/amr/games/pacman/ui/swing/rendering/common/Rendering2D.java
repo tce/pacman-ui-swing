@@ -159,6 +159,12 @@ public abstract class Rendering2D {
 
 	public abstract void drawMaze(Graphics2D g, int mazeNumber, int i, int t, boolean running);
 
+	public void drawCredit(Graphics2D g, int credit) {
+		g.setFont(getArcadeFont());
+		g.setColor(Color.WHITE);
+		g.drawString("CREDIT  %d".formatted(credit), t(2), t(36));
+	}
+
 	public void drawScore(Graphics2D g, GameModel game, boolean showHiscoreOnly) {
 		g.setFont(getArcadeFont());
 		g.translate(0, 2);

@@ -259,6 +259,7 @@ public class PlayScene extends GameScene {
 			r2D.drawLivesCounter(g, game, t(2), t(34));
 		} else {
 			r2D.drawScore(g, game, true);
+			r2D.drawCredit(g, gameController.credit());
 		}
 	}
 

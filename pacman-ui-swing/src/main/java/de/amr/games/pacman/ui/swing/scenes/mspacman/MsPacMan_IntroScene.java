@@ -92,7 +92,7 @@ public class MsPacMan_IntroScene extends GameScene {
 	@Override
 	public void render(Graphics2D g) {
 		r2D.drawScore(g, gameController.game(), true);
-		drawCredit(g);
+		r2D.drawCredit(g, gameController.credit());
 
 		g.setFont(r2D.getArcadeFont());
 		g.setColor(Color.ORANGE);
@@ -114,12 +114,6 @@ public class MsPacMan_IntroScene extends GameScene {
 		Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.render(g));
 		msPacMan2D.render(g);
 		drawCopyright(g);
-	}
-
-	private void drawCredit(Graphics2D g) {
-		g.setFont(r2D.getArcadeFont());
-		g.setColor(Color.WHITE);
-		g.drawString("CREDIT  %d".formatted(gameController.credit()), t(2), t(36));
 	}
 
 	private void drawGhostText(Graphics2D g) {
