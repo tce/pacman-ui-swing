@@ -40,6 +40,7 @@ import de.amr.games.pacman.lib.TickTimerEvent;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
+import de.amr.games.pacman.model.common.Ghost;
 import de.amr.games.pacman.model.common.GhostState;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
@@ -86,7 +87,7 @@ public class PlayScene extends GameScene {
 			if (mazeFlashing.isComplete()) {
 				gameController.state().timer().expire();
 			} else if (gameController.state().timer().atSecond(2)) {
-				game.hideGhosts();
+				game.ghosts().forEach(Ghost::hide);
 			} else if (gameController.state().timer().atSecond(3)) {
 				mazeFlashing.restart();
 			} else if (mazeFlashing.isRunning()) {
@@ -137,7 +138,7 @@ public class PlayScene extends GameScene {
 			gameController.state().timer().setDurationSeconds(3).start();
 			SoundManager.get().stopAll();
 			player2D.dying.delay(60).onStart(() -> {
-				game.hideGhosts();
+				game.ghosts().forEach(Ghost::hide);
 				if (game.running) {
 					SoundManager.get().play(GameSound.PACMAN_DEATH);
 				}
