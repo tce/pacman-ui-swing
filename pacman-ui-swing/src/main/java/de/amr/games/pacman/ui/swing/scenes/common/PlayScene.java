@@ -196,7 +196,7 @@ public class PlayScene extends GameScene {
 	}
 
 	@Override
-	public void onPlayerGainsPower(GameEvent e) {
+	public void onPlayerGotPower(GameEvent e) {
 		game.ghosts(GhostState.FRIGHTENED).map(ghost -> ghosts2D[ghost.id]).forEach(ghost2D -> {
 			ghost2D.animFlashing.reset();
 			ghost2D.animFrightened.restart();
@@ -222,17 +222,17 @@ public class PlayScene extends GameScene {
 	}
 
 	@Override
-	public void onExtraLife(GameEvent e) {
+	public void onPlayerGotExtraLife(GameEvent e) {
 		SoundManager.get().play(GameSound.EXTRA_LIFE);
 	}
 
 	@Override
-	public void onGhostReturnsHome(GameEvent e) {
+	public void onGhostStartedReturningHome(GameEvent e) {
 		SoundManager.get().play(GameSound.GHOST_RETURNING);
 	}
 
 	@Override
-	public void onGhostEntersHouse(GameEvent e) {
+	public void onGhostEnteredHouse(GameEvent e) {
 		if (game.ghosts(GhostState.DEAD).count() == 0) {
 			SoundManager.get().stop(GameSound.GHOST_RETURNING);
 		}
