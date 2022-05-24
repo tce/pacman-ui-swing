@@ -74,7 +74,7 @@ public class PlayScene extends GameScene {
 		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, r2D)).toArray(Ghost2D[]::new);
 		energizers2D = game.world.energizerTiles().map(Energizer2D::new).toArray(Energizer2D[]::new);
 		bonus2D = new Bonus2D(game, r2D);
-		mazeFlashing = r2D.mazeFlashing(game.mazeNumber).repetitions(game.numFlashes).reset();
+		mazeFlashing = r2D.mazeFlashing(game.mazeNumber).repetitions(game.level.numFlashes).reset();
 		game.player.powerTimer.addEventListener(this::handleGhostsFlashing);
 	}
 
@@ -267,8 +267,8 @@ public class PlayScene extends GameScene {
 		if (e.type == TickTimerEvent.Type.HALF_EXPIRED) {
 			game.ghosts(GhostState.FRIGHTENED).forEach(ghost -> {
 				TimedSeq<?> flashing = ghosts2D[ghost.id].animFlashing;
-				long frameTime = e.ticks / (game.numFlashes * flashing.numFrames());
-				flashing.frameDuration(frameTime).repetitions(game.numFlashes).restart();
+				long frameTime = e.ticks / (game.level.numFlashes * flashing.numFrames());
+				flashing.frameDuration(frameTime).repetitions(game.level.numFlashes).restart();
 			});
 		}
 	}
