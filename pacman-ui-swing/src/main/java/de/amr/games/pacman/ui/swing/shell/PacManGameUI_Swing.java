@@ -43,9 +43,9 @@ import javax.swing.Timer;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.common.GameState;
-import de.amr.games.pacman.controller.common.event.DefaultGameEventHandler;
-import de.amr.games.pacman.controller.common.event.GameEvent;
-import de.amr.games.pacman.controller.common.event.GameStateChangeEvent;
+import de.amr.games.pacman.event.DefaultGameEventHandler;
+import de.amr.games.pacman.event.GameEvent;
+import de.amr.games.pacman.event.GameStateChangeEvent;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.ui.swing.app.GameLoop;
@@ -54,7 +54,6 @@ import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.rendering.common.Debug;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
-import de.amr.games.pacman.ui.swing.scenes.common.PlayScene;
 import de.amr.games.pacman.ui.swing.scenes.mspacman.ScenesMsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.pacman.ScenesPacMan;
 
@@ -231,13 +230,13 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		}
 
 		else if (keyboard.pressed("L")) {
-			if (gameController.gameRunning) {
+			if (gameController.isGameRunning()) {
 				game.player.lives += 3;
 			}
 		}
 
 		else if (keyboard.pressed("N")) {
-			if (gameController.gameRunning) {
+			if (gameController.isGameRunning()) {
 				gameController.changeState(GameState.LEVEL_COMPLETE);
 			}
 		}
@@ -288,10 +287,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 	private void quitCurrentScene() {
 		currentGameScene.end();
 		SoundManager.get().stopAll();
-		if (currentGameScene instanceof PlayScene) {
-			gameController.consumeCredit();
-		}
-		gameController.changeState(GameState.INTRO);
+		gameController.returnToIntro();
 	}
 
 	private void moveMousePointerOutOfSight() {
