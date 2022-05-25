@@ -261,9 +261,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		}
 
 		else if (keyboard.pressed("V")) {
-			if (gameController.state() == GameState.INTRO) {
-				gameController.selectGameVariant(gameController.gameVariant().succ());
-			}
+			gameController.selectGameVariant(gameController.gameVariant().succ());
 		}
 
 		else if (keyboard.pressed("X")) {
