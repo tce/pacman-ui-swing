@@ -42,10 +42,13 @@ import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.Ghost;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
+import de.amr.games.pacman.ui.swing.assets.GameSound;
+import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Player2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
+import de.amr.games.pacman.ui.swing.shell.Keyboard;
 
 /**
  * Intro scene of the Ms. Pac-Man game. The ghosts and Ms. Pac-Man are introduced one after another.
@@ -87,6 +90,14 @@ public class MsPacMan_IntroScene extends GameScene {
 
 	@Override
 	public void update() {
+		if (Keyboard.get().pressed("5")) {
+			SoundManager.get().play(GameSound.CREDIT);
+			gameController.addCredit();
+			return;
+		} else if (Keyboard.get().pressed("Space")) {
+			gameController.requestGame();
+			return;
+		}
 		sceneController.update();
 	}
 
