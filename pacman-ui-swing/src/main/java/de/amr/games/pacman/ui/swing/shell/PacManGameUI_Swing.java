@@ -51,7 +51,6 @@ import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.model.common.world.World;
 import de.amr.games.pacman.ui.swing.app.GameLoop;
 import de.amr.games.pacman.ui.swing.assets.AssetLoader;
-import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.rendering.common.Debug;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
@@ -76,8 +75,6 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 	private final FlashMessageDisplay flashMessageDisplay;
 	private final ScenesMsPacMan scenesMsPacMan;
 	private final ScenesPacMan scenesPacMan;
-
-	public final Keyboard keyboard;
 
 	private GameScene currentGameScene;
 
@@ -112,10 +109,8 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 				gameLoop.end();
 			}
 		});
-
 		window.getContentPane().add(canvas);
-
-		keyboard = new Keyboard(window);
+		Keyboard.get().setSource(window);
 
 		titleUpdateTimer = new Timer(1000, e -> window.setTitle(String.format("%s (%d fps, JFC Swing)",
 				gameController.gameVariant() == MS_PACMAN ? "Ms. Pac-Man" : "Pac-Man", gameLoop.clock.getLastFPS())));
@@ -123,7 +118,6 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		// start initial game scene
 		SoundManager.get().selectGameVariant(gameController.gameVariant());
 		onGameStateChange(new GameStateChangeEvent(gameController.game(), null, controller.state()));
-		show();
 	}
 
 	@Override
@@ -149,12 +143,10 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		currentGameScene = newScene;
 	}
 
-	private void show() {
+	public void show() {
 		window.pack();
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
-		window.requestFocus();
-		canvas.createBufferStrategy(2);
 		moveMousePointerOutOfSight();
 		titleUpdateTimer.start();
 	}
@@ -164,9 +156,10 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		var scenes = gameController.gameVariant() == MS_PACMAN ? scenesMsPacMan.gameScenes : scenesPacMan.gameScenes;
 		return switch (state) {
 		case INTRO -> scenes.get(0); // intro scene
-		case INTERMISSION -> scenes.get(game.intermissionNumber(game.levelNumber));
-		case INTERMISSION_TEST -> scenes.get(game.intermissionTestNumber);
-		default -> scenes.get(4); // play scene
+		case CREDIT -> scenes.get(1);
+		case INTERMISSION -> scenes.get(1 + game.intermissionNumber(game.levelNumber));
+		case INTERMISSION_TEST -> scenes.get(1 + game.intermissionTestNumber);
+		default -> scenes.get(5); // play scene
 		};
 	}
 
@@ -182,6 +175,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 	private void renderScreen() {
 		BufferStrategy buffers = canvas.getBufferStrategy();
 		if (buffers == null) {
+			canvas.createBufferStrategy(2);
 			return;
 		}
 		do {
@@ -211,49 +205,49 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 	private void handleNonPlayerKeys() {
 		final var game = gameController.game();
 
-		if (keyboard.pressed("A")) {
+		if (Keyboard.get().pressed("A")) {
 			gameController.toggleAutoMoving();
 			showFlashMessage(1, "Autopilot %s", gameController.isAutoMoving() ? "on" : "off");
 		}
 
-		else if (keyboard.pressed(Keyboard.CONTROL, "D")) {
+		else if (Keyboard.get().pressed(Keyboard.CONTROL, "D")) {
 			Debug.on = !Debug.on;
 			log("UI debug mode is %s", Debug.on ? "on" : "off");
 		}
 
-		else if (keyboard.pressed("E")) {
+		else if (Keyboard.get().pressed("E")) {
 			gameController.cheatEatAllPellets();
 		}
 
-		else if (keyboard.pressed("I")) {
+		else if (Keyboard.get().pressed("I")) {
 			gameController.togglePlayerImmune();
 			showFlashMessage(1, "Player is %s", gameController.isPlayerImmune() ? "immune" : "vulnerable");
 		}
 
-		else if (keyboard.pressed("L")) {
+		else if (Keyboard.get().pressed("L")) {
 			if (gameController.isGameRunning()) {
 				game.player.lives += 3;
 			}
 		}
 
-		else if (keyboard.pressed("N")) {
+		else if (Keyboard.get().pressed("N")) {
 			if (gameController.isGameRunning()) {
 				gameController.changeState(GameState.LEVEL_COMPLETE);
 			}
 		}
 
-		else if (keyboard.pressed("Q")) {
+		else if (Keyboard.get().pressed("Q")) {
 			quitCurrentScene();
 		}
 
-		else if (keyboard.pressed(Keyboard.CONTROL, "S")) {
+		else if (Keyboard.get().pressed(Keyboard.CONTROL, "S")) {
 			int fps = gameLoop.clock.getTargetFPS() + 10;
 			gameLoop.clock.setTargetFPS(fps);
 			showFlashMessage(1, "Target FPS set to %s Hz", fps);
 			log("Clock frequency changed to %d Hz", gameLoop.clock.getTargetFPS());
 		}
 
-		else if (keyboard.pressed(Keyboard.CONTROL | Keyboard.SHIFT, "S")) {
+		else if (Keyboard.get().pressed(Keyboard.CONTROL | Keyboard.SHIFT, "S")) {
 			int fps = gameLoop.clock.getTargetFPS() - 10;
 			fps = Math.max(10, fps);
 			gameLoop.clock.setTargetFPS(fps);
@@ -261,26 +255,18 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 			log("Clock frequency changed to %d Hz", gameLoop.clock.getTargetFPS());
 		}
 
-		else if (keyboard.pressed("V")) {
+		else if (Keyboard.get().pressed("V")) {
 			gameController.selectGameVariant(gameController.gameVariant().succ());
 		}
 
-		else if (keyboard.pressed("X")) {
+		else if (Keyboard.get().pressed("X")) {
 			gameController.cheatKillAllPossibleGhosts();
 		}
 
-		else if (keyboard.pressed("Z")) {
+		else if (Keyboard.get().pressed("Z")) {
 			gameController.startIntermissionTest();
 		}
 
-		else if (keyboard.pressed("Space")) {
-			gameController.requestGame();
-		}
-
-		else if (keyboard.pressed("5")) {
-			SoundManager.get().play(GameSound.CREDIT);
-			gameController.addCredit();
-		}
 	}
 
 	private void quitCurrentScene() {

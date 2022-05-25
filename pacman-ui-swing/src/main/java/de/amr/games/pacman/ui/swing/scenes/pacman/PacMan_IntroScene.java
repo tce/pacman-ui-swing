@@ -41,10 +41,13 @@ import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.Ghost;
+import de.amr.games.pacman.ui.swing.assets.GameSound;
+import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Player2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
+import de.amr.games.pacman.ui.swing.shell.Keyboard;
 
 /**
  * Intro scene of the PacMan game.
@@ -84,6 +87,15 @@ public class PacMan_IntroScene extends GameScene {
 
 	@Override
 	public void update() {
+		if (Keyboard.get().pressed("5")) {
+			SoundManager.get().play(GameSound.CREDIT);
+			gameController.addCredit();
+			return;
+		} else if (Keyboard.get().pressed("Space")) {
+			gameController.requestGame();
+			return;
+		}
+
 		sceneController.update();
 		// TODO find a better solution:
 		if (sceneController.state() == IntroController.State.CHASING_GHOSTS) {

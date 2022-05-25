@@ -33,7 +33,13 @@ import java.util.BitSet;
  * 
  * @author Armin Reichert
  */
-public class Keyboard {
+public class Keyboard extends KeyAdapter {
+
+	private static final Keyboard theKeyboard = new Keyboard();
+
+	public static Keyboard get() {
+		return theKeyboard;
+	}
 
 	public static final int ALT = 0x1;
 	public static final int CONTROL = 0x2;
@@ -67,41 +73,40 @@ public class Keyboard {
 	private final BitSet keysDown = new BitSet(256);
 	private int modifierMask;
 
-	public Keyboard(Component component) {
-		component.addKeyListener(new KeyAdapter() {
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (0 < e.getKeyCode() && e.getKeyCode() < 256) {
+			keysDown.set(e.getKeyCode());
+		}
+		modifierMask = 0;
+		if (e.isAltDown()) {
+			modifierMask |= ALT;
+		}
+		if (e.isControlDown()) {
+			modifierMask |= CONTROL;
+		}
+		if (e.isShiftDown()) {
+			modifierMask |= SHIFT;
+		}
+	}
 
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (0 < e.getKeyCode() && e.getKeyCode() < 256) {
-					keysDown.set(e.getKeyCode());
-				}
-				modifierMask = 0;
-				if (e.isAltDown()) {
-					modifierMask |= ALT;
-				}
-				if (e.isControlDown()) {
-					modifierMask |= CONTROL;
-				}
-				if (e.isShiftDown()) {
-					modifierMask |= SHIFT;
-				}
-			}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		keysDown.clear(e.getKeyCode());
+		modifierMask = 0;
+		if (e.isAltDown()) {
+			modifierMask |= ALT;
+		}
+		if (e.isControlDown()) {
+			modifierMask |= CONTROL;
+		}
+		if (e.isShiftDown()) {
+			modifierMask |= SHIFT;
+		}
+	}
 
-			@Override
-			public void keyReleased(KeyEvent e) {
-				keysDown.clear(e.getKeyCode());
-				modifierMask = 0;
-				if (e.isAltDown()) {
-					modifierMask |= ALT;
-				}
-				if (e.isControlDown()) {
-					modifierMask |= CONTROL;
-				}
-				if (e.isShiftDown()) {
-					modifierMask |= SHIFT;
-				}
-			}
-		});
+	public void setSource(Component component) {
+		component.addKeyListener(this);
 	}
 
 	/**

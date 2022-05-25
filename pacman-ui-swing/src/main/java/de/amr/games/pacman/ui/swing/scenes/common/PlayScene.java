@@ -256,11 +256,16 @@ public class PlayScene extends GameScene {
 		bonus2D.render(g);
 		player2D.render(g);
 		Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.render(g));
-		if (gameController.isGameRunning()) {
-			r2D.drawScore(g, game, false);
+
+		boolean showCredit = !gameController.isGameRunning() && gameController.credit() == 0;
+		boolean showHighScoreOnly = !gameController.isGameRunning() && gameController.state() != GameState.READY
+				&& gameController.state() != GameState.GAME_OVER;
+		boolean showLivesCounter = !showHighScoreOnly;
+		r2D.drawScore(g, game, showHighScoreOnly);
+		if (showLivesCounter) {
 			r2D.drawLivesCounter(g, game, t(2), t(34));
-		} else {
-			r2D.drawScore(g, game, true);
+		}
+		if (showCredit) {
 			r2D.drawCredit(g, gameController.credit());
 		}
 	}

@@ -44,19 +44,25 @@ import de.amr.games.pacman.ui.swing.shell.PacManGameUI_Swing;
 public class PacManGameAppSwing {
 
 	public static void main(String[] args) {
-		Options options = new Options(args);
-		invokeLater(() -> new PacManGameAppSwing(options));
+		PacManGameAppSwing app = new PacManGameAppSwing(new Options(args));
+		invokeLater(() -> app.createAndShowUI());
 	}
 
-	private final GameController controller;
-	private final PacManGameUI_Swing ui;
-	private final GameLoop gameLoop = new GameLoop();
+	private Options options;
+	private GameController controller;
+	private PacManGameUI_Swing ui;
+	private GameLoop gameLoop = new GameLoop();
 
 	public PacManGameAppSwing(Options options) {
+		this.options = options;
 		controller = new GameController(options.gameVariant);
+	}
+
+	private void createAndShowUI() {
 		ui = new PacManGameUI_Swing(gameLoop, controller, options.height);
+		ui.show();
 		controller.addListener(ui);
-		controller.setPlayerControl(new ManualPlayerControl(ui.keyboard, "Up", "Down", "Left", "Right"));
+		controller.setPlayerControl(new ManualPlayerControl("Up", "Down", "Left", "Right"));
 		gameLoop.action = () -> {
 			gameLoop.clock.frame(controller::update);
 			ui.update();

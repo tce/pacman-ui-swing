@@ -44,6 +44,7 @@ public class ScenesPacMan {
 	public ScenesPacMan(GameController gameController, V2i unscaledSize) {
 		gameScenes = List.of( //
 				new PacMan_IntroScene(gameController, unscaledSize, r2D), //
+				new PacMan_CreditScene(gameController, unscaledSize, r2D), //
 				new PacMan_IntermissionScene1(gameController, unscaledSize, r2D), //
 				new PacMan_IntermissionScene2(gameController, unscaledSize, r2D), //
 				new PacMan_IntermissionScene3(gameController, unscaledSize, r2D), //
