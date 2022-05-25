@@ -41,6 +41,7 @@ import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.Ghost;
+import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Player2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
@@ -166,7 +167,7 @@ public class MsPacMan_IntroScene extends GameScene {
 	}
 
 	private void drawCopyright(Graphics2D g) {
-		double scale = 36.0 / midwayLogo.getHeight();
+		double scale = (double) ArcadeWorld.TILES_Y / midwayLogo.getHeight();
 		g.drawImage(midwayLogo, t(4), t(28) + 3, (int) (scale * midwayLogo.getWidth()),
 				(int) (scale * midwayLogo.getHeight()), null);
 		g.setColor(Color.RED);

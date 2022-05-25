@@ -42,6 +42,7 @@ import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameEntity;
 import de.amr.games.pacman.model.common.GameModel;
+import de.amr.games.pacman.model.common.world.ArcadeWorld;
 
 /**
  * Spritesheet-based rendering for Pac-Man and Ms. Pac-Man game.
@@ -163,7 +164,7 @@ public abstract class Rendering2D {
 	public void drawCredit(Graphics2D g, int credit) {
 		g.setFont(getArcadeFont());
 		g.setColor(Color.WHITE);
-		g.drawString("CREDIT  %d".formatted(credit), t(2), t(36));
+		g.drawString("CREDIT  %d".formatted(credit), t(2), t(ArcadeWorld.TILES_Y));
 	}
 
 	public void drawScore(Graphics2D g, GameModel game, boolean showHiscoreOnly) {

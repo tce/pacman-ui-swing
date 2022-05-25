@@ -25,7 +25,6 @@ package de.amr.games.pacman.ui.swing.shell;
 
 import static de.amr.games.pacman.lib.Logging.log;
 import static de.amr.games.pacman.model.common.GameVariant.MS_PACMAN;
-import static de.amr.games.pacman.model.common.world.World.t;
 
 import java.awt.AWTException;
 import java.awt.Canvas;
@@ -48,6 +47,8 @@ import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameStateChangeEvent;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
+import de.amr.games.pacman.model.common.world.ArcadeWorld;
+import de.amr.games.pacman.model.common.world.World;
 import de.amr.games.pacman.ui.swing.app.GameLoop;
 import de.amr.games.pacman.ui.swing.assets.AssetLoader;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
@@ -83,7 +84,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 	public PacManGameUI_Swing(GameLoop gameLoop, GameController controller, double height) {
 		this.gameLoop = gameLoop;
 		this.gameController = controller;
-		this.unscaledSize = new V2i(t(28), t(36));
+		this.unscaledSize = new V2i(ArcadeWorld.TILES_X, ArcadeWorld.TILES_Y).scaled(World.TS);
 		this.scaling = height / unscaledSize.y;
 		this.scaledSize = new V2d(unscaledSize.x, unscaledSize.y).scaled(scaling).toV2i();
 
