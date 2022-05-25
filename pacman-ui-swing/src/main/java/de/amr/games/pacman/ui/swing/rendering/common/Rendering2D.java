@@ -167,7 +167,7 @@ public abstract class Rendering2D {
 	public void drawCredit(Graphics2D g, int credit) {
 		g.setFont(getArcadeFont());
 		g.setColor(Color.WHITE);
-		g.drawString("CREDIT  %d".formatted(credit), t(2), t(ArcadeWorld.TILES_Y));
+		g.drawString("CREDIT  %d".formatted(credit), t(2), t(ArcadeWorld.TILES_Y) - 2);
 	}
 
 	public abstract void drawCopyright(Graphics2D g, int x, int y);
