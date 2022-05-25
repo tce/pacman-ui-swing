@@ -260,7 +260,7 @@ public class PlayScene extends GameScene {
 		boolean showCredit = !gameController.isGameRunning() && gameController.credit() == 0;
 		boolean showHighScoreOnly = !gameController.isGameRunning() && gameController.state() != GameState.READY
 				&& gameController.state() != GameState.GAME_OVER;
-		boolean showLivesCounter = !showHighScoreOnly;
+		boolean showLivesCounter = gameController.credit() > 0 && !showHighScoreOnly;
 		r2D.drawScore(g, game, showHighScoreOnly);
 		if (showLivesCounter) {
 			r2D.drawLivesCounter(g, game, t(2), t(34));

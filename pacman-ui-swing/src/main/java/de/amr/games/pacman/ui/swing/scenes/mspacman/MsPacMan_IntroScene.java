@@ -100,7 +100,9 @@ public class MsPacMan_IntroScene extends GameScene {
 		case READY_TO_PLAY -> {
 			msPacMan2D.reset();// ensure Ms. Pac-Man is displayed with mouth half open
 			drawMsPacManText(g);
-			drawPressKeyToStart(g, 26);
+			if (gameController.credit() > 0) {
+				drawPressKeyToStart(g, 26);
+			}
 		}
 		default -> {
 		}
