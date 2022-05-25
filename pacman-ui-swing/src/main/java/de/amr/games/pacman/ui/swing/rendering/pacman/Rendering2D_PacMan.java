@@ -260,6 +260,13 @@ public class Rendering2D_PacMan extends Rendering2D {
 		}
 	}
 
+	@Override
+	public void drawCopyright(Graphics2D g, int x, int y) {
+		g.setFont(getArcadeFont());
+		g.setColor(getGhostColor(Ghost.PINK_GHOST));
+		g.drawString("\u00A9 1980 MIDWAY MFG. CO.", x, y);
+	}
+
 	public void drawNail(Graphics2D g, GameEntity nail) {
 		renderEntity(g, nail, nailSprite);
 	}

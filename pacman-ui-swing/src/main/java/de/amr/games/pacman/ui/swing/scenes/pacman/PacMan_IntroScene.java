@@ -24,7 +24,6 @@ SOFTWARE.
 package de.amr.games.pacman.ui.swing.scenes.pacman;
 
 import static de.amr.games.pacman.lib.TickTimer.sec_to_ticks;
-import static de.amr.games.pacman.model.common.Ghost.PINK_GHOST;
 import static de.amr.games.pacman.model.common.world.World.TS;
 import static de.amr.games.pacman.model.common.world.World.t;
 
@@ -123,13 +122,13 @@ public class PacMan_IntroScene extends GameScene {
 			drawPoints(g, 11, 25);
 			if (sceneController.state().timer().tick() > sec_to_ticks(1)) {
 				drawEnergizer(g);
-				drawCopyright(g, 32);
+				r2D.drawCopyright(g, t(4), t(29));
 			}
 		}
 		case CHASING_PAC -> {
 			drawGallery(g);
 			drawPoints(g, 11, 25);
-			drawCopyright(g, 32);
+			r2D.drawCopyright(g, t(4), t(29));
 			if (sceneController.context.fastBlinking.frame()) {
 				drawEnergizer(g);
 			}
@@ -139,7 +138,7 @@ public class PacMan_IntroScene extends GameScene {
 		case CHASING_GHOSTS -> {
 			drawGallery(g);
 			drawPoints(g, 11, 25);
-			drawCopyright(g, 32);
+			r2D.drawCopyright(g, t(4), t(29));
 			drawGuys(g, 0);
 		}
 		case READY_TO_PLAY -> {
@@ -217,12 +216,5 @@ public class PacMan_IntroScene extends GameScene {
 	private void drawEnergizer(Graphics2D g) {
 		g.setColor(r2D.getFoodColor(1));
 		g.fillOval(t(3), t(20), TS, TS);
-	}
-
-	private void drawCopyright(Graphics2D g, int yTile) {
-		String text = "\u00A9" + "  1980 MIDWAY MFG. CO.";
-		g.setFont(r2D.getArcadeFont());
-		g.setColor(r2D.getGhostColor(PINK_GHOST));
-		g.drawString(text, t(3), t(yTile));
 	}
 }

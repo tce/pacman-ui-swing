@@ -23,7 +23,10 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.rendering.common;
 
-import static de.amr.games.pacman.model.common.Ghost.*;
+import static de.amr.games.pacman.model.common.Ghost.CYAN_GHOST;
+import static de.amr.games.pacman.model.common.Ghost.ORANGE_GHOST;
+import static de.amr.games.pacman.model.common.Ghost.PINK_GHOST;
+import static de.amr.games.pacman.model.common.Ghost.RED_GHOST;
 import static de.amr.games.pacman.model.common.world.World.HTS;
 import static de.amr.games.pacman.model.common.world.World.TS;
 import static de.amr.games.pacman.model.common.world.World.t;
@@ -166,6 +169,8 @@ public abstract class Rendering2D {
 		g.setColor(Color.WHITE);
 		g.drawString("CREDIT  %d".formatted(credit), t(2), t(ArcadeWorld.TILES_Y));
 	}
+
+	public abstract void drawCopyright(Graphics2D g, int x, int y);
 
 	public void drawScore(Graphics2D g, GameModel game, boolean showHiscoreOnly) {
 		g.setFont(getArcadeFont());

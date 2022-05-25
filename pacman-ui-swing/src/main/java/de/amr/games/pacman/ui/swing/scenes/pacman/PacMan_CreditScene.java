@@ -79,10 +79,7 @@ public class PacMan_CreditScene extends GameScene {
 		g.setFont(r2D.getArcadeFont().deriveFont(6.0f));
 		g.drawString("PTS", t(25), t(25));
 
-		g.setFont(r2D.getArcadeFont());
-		g.setColor(r2D.getGhostColor(Ghost.PINK_GHOST));
-		g.drawString("\u00A9 1980 MIDWAY MFG. CO.", t(4), t(29));
-
+		r2D.drawCopyright(g, t(4), t(29));
 		r2D.drawCredit(g, gameController.credit());
 	}
 }

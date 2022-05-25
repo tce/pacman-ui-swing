@@ -26,22 +26,15 @@ package de.amr.games.pacman.ui.swing.scenes.mspacman;
 import static de.amr.games.pacman.model.common.world.World.t;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.stream.Stream;
-
-import javax.imageio.ImageIO;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.IntroController;
-import de.amr.games.pacman.lib.Logging;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.Ghost;
-import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
@@ -59,7 +52,6 @@ public class MsPacMan_IntroScene extends GameScene {
 
 	private final IntroController sceneController;
 	private final IntroController.Context context;
-	private BufferedImage midwayLogo = loadImage("/mspacman/graphics/midway.png");
 	private Player2D msPacMan2D;
 	private Ghost2D[] ghosts2D;
 
@@ -67,15 +59,6 @@ public class MsPacMan_IntroScene extends GameScene {
 		super(gameController, size, r2D);
 		sceneController = new IntroController(gameController);
 		context = sceneController.getContext();
-	}
-
-	private BufferedImage loadImage(String path) {
-		try {
-			return ImageIO.read(getClass().getResourceAsStream(path));
-		} catch (IOException e) {
-			Logging.log("Could not load image '%s'", path);
-			return new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-		}
 	}
 
 	@Override
@@ -125,7 +108,7 @@ public class MsPacMan_IntroScene extends GameScene {
 
 		Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.render(g));
 		msPacMan2D.render(g);
-		drawCopyright(g);
+		r2D.drawCopyright(g, t(4), t(28));
 	}
 
 	private void drawGhostText(Graphics2D g) {
@@ -177,15 +160,4 @@ public class MsPacMan_IntroScene extends GameScene {
 		}
 	}
 
-	private void drawCopyright(Graphics2D g) {
-		double scale = (double) ArcadeWorld.TILES_Y / midwayLogo.getHeight();
-		g.drawImage(midwayLogo, t(4), t(28) + 3, (int) (scale * midwayLogo.getWidth()),
-				(int) (scale * midwayLogo.getHeight()), null);
-		g.setColor(Color.RED);
-		g.setFont(new Font("Dialog", Font.PLAIN, 11));
-		g.drawString("\u00a9", t(9), t(30) + 2); // (c) symbol
-		g.setFont(r2D.getArcadeFont());
-		g.drawString("MIDWAY MFG CO", t(11), t(30));
-		g.drawString("1980/1981", t(12), t(32));
-	}
 }

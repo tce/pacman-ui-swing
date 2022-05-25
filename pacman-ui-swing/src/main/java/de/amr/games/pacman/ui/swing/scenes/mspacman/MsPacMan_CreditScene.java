@@ -26,17 +26,13 @@ package de.amr.games.pacman.ui.swing.scenes.mspacman;
 
 import static de.amr.games.pacman.model.common.world.World.t;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.Ghost;
-import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.model.common.world.World;
-import de.amr.games.pacman.ui.swing.assets.AssetLoader;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
@@ -47,8 +43,6 @@ import de.amr.games.pacman.ui.swing.shell.Keyboard;
  * @author Armin Reichert
  */
 public class MsPacMan_CreditScene extends GameScene {
-
-	private BufferedImage midwayLogo = AssetLoader.image("/mspacman/graphics/midway.png");
 
 	public MsPacMan_CreditScene(GameController gameController, V2i size, Rendering2D r2D) {
 		super(gameController, size, r2D);
@@ -82,21 +76,8 @@ public class MsPacMan_CreditScene extends GameScene {
 		g.setFont(r2D.getArcadeFont().deriveFont(6.0f));
 		g.drawString("PTS", t(25), t(25));
 
-		drawCopyright(g);
-
+		r2D.drawCopyright(g, t(4), t(28));
 		r2D.drawCredit(g, gameController.credit());
-	}
-
-	private void drawCopyright(Graphics2D g) {
-		double scale = (double) ArcadeWorld.TILES_Y / midwayLogo.getHeight();
-		g.drawImage(midwayLogo, t(4), t(28) + 3, (int) (scale * midwayLogo.getWidth()),
-				(int) (scale * midwayLogo.getHeight()), null);
-		g.setColor(Color.RED);
-		g.setFont(new Font("Dialog", Font.PLAIN, 11));
-		g.drawString("\u00a9", t(9), t(30) + 2); // (c) symbol
-		g.setFont(r2D.getArcadeFont());
-		g.drawString("MIDWAY MFG CO", t(11), t(30));
-		g.drawString("1980/1981", t(12), t(32));
 	}
 
 }

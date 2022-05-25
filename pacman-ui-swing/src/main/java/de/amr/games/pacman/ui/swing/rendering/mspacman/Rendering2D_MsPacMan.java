@@ -23,6 +23,7 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.rendering.mspacman;
 
+import static de.amr.games.pacman.model.common.world.World.t;
 import static de.amr.games.pacman.ui.swing.assets.AssetLoader.font;
 import static de.amr.games.pacman.ui.swing.assets.AssetLoader.image;
 
@@ -37,6 +38,7 @@ import java.util.Map;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TimedSeq;
+import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.model.mspacman.MsPacManGame;
 import de.amr.games.pacman.ui.swing.assets.Spritesheet;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
@@ -88,6 +90,7 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 
 	final Spritesheet sheet;
 	final Font scoreFont;
+	final BufferedImage midwayLogo = image("/mspacman/graphics/midway.png");
 	final Map<Integer, BufferedImage> symbolSprites;
 	final Map<Integer, BufferedImage> bonusNumberSprites;
 	final Map<Integer, BufferedImage> bountyNumberSprites;
@@ -316,5 +319,18 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 		} else {
 			g.drawImage(mazeFullImages.get(mazeNumber - 1), x, y, null);
 		}
+	}
+
+	@Override
+	public void drawCopyright(Graphics2D g, int x, int y) { // t(4), t(28)
+		double scale = (double) ArcadeWorld.TILES_Y / midwayLogo.getHeight();
+		g.drawImage(midwayLogo, x, y + 3, (int) (scale * midwayLogo.getWidth()), (int) (scale * midwayLogo.getHeight()),
+				null);
+		g.setColor(Color.RED);
+		g.setFont(new Font("Dialog", Font.PLAIN, 11));
+		g.drawString("\u00a9", x + t(5), y + t(2) + 2); // (c) symbol
+		g.setFont(getArcadeFont());
+		g.drawString("MIDWAY MFG CO", x + t(7), y + t(2));
+		g.drawString("1980/1981", x + t(8), y + t(4));
 	}
 }
