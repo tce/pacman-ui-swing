@@ -211,8 +211,8 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		final var game = gameController.game();
 
 		if (keyboard.pressed("A")) {
-			game.player.autoMoving = !game.player.autoMoving;
-			showFlashMessage(1, "Autopilot %s", game.player.autoMoving ? "on" : "off");
+			gameController.toggleAutoMoving();
+			showFlashMessage(1, "Autopilot %s", gameController.isAutoMoving() ? "on" : "off");
 		}
 
 		else if (keyboard.pressed(Keyboard.CONTROL, "D")) {
@@ -225,8 +225,8 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		}
 
 		else if (keyboard.pressed("I")) {
-			game.player.immune = !game.player.immune;
-			showFlashMessage(1, "Player is %s", game.player.immune ? "immune" : "vulnerable");
+			gameController.togglePlayerImmune();
+			showFlashMessage(1, "Player is %s", gameController.isPlayerImmune() ? "immune" : "vulnerable");
 		}
 
 		else if (keyboard.pressed("L")) {
