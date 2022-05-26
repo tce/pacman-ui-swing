@@ -122,7 +122,7 @@ public class PacMan_IntroScene extends GameScene {
 			drawPoints(g, 11, 25);
 			if (sceneController.state().timer().tick() > sec_to_ticks(1)) {
 				drawEnergizer(g);
-				r2D.drawCopyright(g, t(4), t(31));
+				r2D.drawCopyright(g, t(4), t(32));
 			}
 		}
 		case CHASING_PAC -> {
@@ -133,20 +133,20 @@ public class PacMan_IntroScene extends GameScene {
 			}
 			int offset = sceneController.state().timer().tick() % 5 < 2 ? 0 : -1;
 			drawGuys(g, offset);
-			r2D.drawCopyright(g, t(4), t(31));
+			r2D.drawCopyright(g, t(4), t(32));
 		}
 		case CHASING_GHOSTS -> {
 			drawGallery(g);
 			drawPoints(g, 11, 25);
 			drawGuys(g, 0);
-			r2D.drawCopyright(g, t(4), t(31));
+			r2D.drawCopyright(g, t(4), t(32));
 		}
 		case READY_TO_PLAY -> {
 			drawGallery(g);
 			if (gameController.credit() > 0) {
 				drawPressKeyToStart(g, 24);
 			}
-			r2D.drawCopyright(g, t(4), t(31));
+			r2D.drawCopyright(g, t(4), t(32));
 		}
 		default -> {
 		}

@@ -182,13 +182,13 @@ public abstract class Rendering2D {
 		// Score
 		g.setColor(Color.WHITE);
 		if (showHiscoreOnly) {
-			g.drawString("0", t(7), t(2));
+			g.drawString("00", t(6), t(2));
 		} else {
 			g.drawString(String.format("%7d", game.score), t(1), t(2));
+			g.setColor(Color.LIGHT_GRAY);
+			g.drawString(String.format("L%d", game.levelNumber), t(9), t(2));
 		}
 		// Highscore
-		g.setColor(Color.LIGHT_GRAY);
-		g.drawString(String.format("L%d", game.levelNumber), t(9), t(2));
 		g.setColor(Color.WHITE);
 		g.drawString(String.format("%7d", game.highscorePoints), t(15), t(2));
 		g.setColor(Color.LIGHT_GRAY);
