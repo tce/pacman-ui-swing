@@ -39,7 +39,7 @@ public class Keyboard {
 
 	public static final byte MOD_NONE = 0x0;
 	public static final byte MOD_ALT = 0x1;
-	public static final byte MOD_CONTROL = 0x2;
+	public static final byte MOD_CTRL = 0x2;
 	public static final byte MOD_SHIFT = 0x4;
 
 	private static final String LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -126,7 +126,7 @@ public class Keyboard {
 			modifierMask |= MOD_ALT;
 		}
 		if (e.isControlDown()) {
-			modifierMask |= MOD_CONTROL;
+			modifierMask |= MOD_CTRL;
 		}
 		if (e.isShiftDown()) {
 			modifierMask |= MOD_SHIFT;

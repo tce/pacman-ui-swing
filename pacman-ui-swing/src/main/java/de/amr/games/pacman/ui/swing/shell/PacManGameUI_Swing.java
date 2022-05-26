@@ -25,6 +25,8 @@ package de.amr.games.pacman.ui.swing.shell;
 
 import static de.amr.games.pacman.lib.Logging.log;
 import static de.amr.games.pacman.model.common.GameVariant.MS_PACMAN;
+import static de.amr.games.pacman.ui.swing.shell.Keyboard.MOD_CTRL;
+import static de.amr.games.pacman.ui.swing.shell.Keyboard.MOD_SHIFT;
 
 import java.awt.AWTException;
 import java.awt.Canvas;
@@ -215,7 +217,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 			showFlashMessage(1, "Autopilot %s", gameController.isAutoMoving() ? "on" : "off");
 		}
 
-		else if (Keyboard.keyPressed(Keyboard.MOD_CONTROL, "D")) {
+		else if (Keyboard.keyPressed(MOD_CTRL, "D")) {
 			Debug.on = !Debug.on;
 			log("UI debug mode is %s", Debug.on ? "on" : "off");
 		}
@@ -245,14 +247,14 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 			restartIntroScene();
 		}
 
-		else if (Keyboard.keyPressed(Keyboard.MOD_CONTROL, "S")) {
+		else if (Keyboard.keyPressed(MOD_CTRL, "S")) {
 			int fps = gameLoop.clock.getTargetFPS() + 10;
 			gameLoop.clock.setTargetFPS(fps);
 			showFlashMessage(2, "Target FPS set to %s Hz", fps);
 			log("Clock frequency changed to %d Hz", gameLoop.clock.getTargetFPS());
 		}
 
-		else if (Keyboard.keyPressed(Keyboard.MOD_CONTROL | Keyboard.MOD_SHIFT, "S")) {
+		else if (Keyboard.keyPressed(MOD_CTRL | MOD_SHIFT, "S")) {
 			int fps = gameLoop.clock.getTargetFPS() - 10;
 			fps = Math.max(10, fps);
 			gameLoop.clock.setTargetFPS(fps);
