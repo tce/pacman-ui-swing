@@ -1,12 +1,14 @@
 ##  A JFC/Swing UI for the Pac-Man + Ms. Pac-Man games
 
-### Pac-Man
+<details>
+  <summary>### Pac-Man</summary>
 
 ![Pac-Man Intro Screen](screenshots/pacman-intro.png "Pac-Man Intro Screen")
 
 ![Pac-Man Credit Screen](screenshots/pacman-credit.png "Pac-Man Credit Screen")
 
 ![Pac-Man Play Screen](screenshots/pacman-play.png "Pac-Man Play Screen")
+</details>
 
 ### Ms. Pac-Man
 
