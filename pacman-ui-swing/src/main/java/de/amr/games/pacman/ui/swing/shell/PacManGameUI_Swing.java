@@ -106,6 +106,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
+				titleUpdateTimer.stop();
 				gameLoop.end();
 			}
 		});
@@ -193,17 +194,12 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		} while (buffers.contentsLost());
 	}
 
-	public void reset() {
-		currentGameScene.end();
-		SoundManager.get().stopAll();
-	}
-
 	public void showFlashMessage(double seconds, String message, Object... args) {
 		flashMessageDisplay.addMessage(seconds, message, args);
 	}
 
 	private void handleNonPlayerKeys() {
-		final var game = gameController.game();
+		var game = gameController.game();
 
 		if (Keyboard.get().pressed("A")) {
 			gameController.toggleAutoMoving();
@@ -266,13 +262,14 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		else if (Keyboard.get().pressed("Z")) {
 			gameController.startIntermissionTest();
 		}
-
 	}
 
 	private void quitCurrentScene() {
-		currentGameScene.end();
-		SoundManager.get().stopAll();
-		gameController.returnToIntro();
+		if (gameController.state() != GameState.INTRO) {
+			currentGameScene.end();
+			SoundManager.get().stopAll();
+			gameController.returnToIntro();
+		}
 	}
 
 	private void moveMousePointerOutOfSight() {
