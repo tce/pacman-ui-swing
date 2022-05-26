@@ -111,7 +111,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 			}
 		});
 		window.getContentPane().add(canvas);
-		window.addKeyListener(Keyboard.get().keyListener());
+		window.addKeyListener(Keyboard.theKeyboard.handler);
 
 		titleUpdateTimer = new Timer(1000, e -> window.setTitle(String.format("%s (%d fps, JFC Swing)",
 				gameController.gameVariant() == MS_PACMAN ? "Ms. Pac-Man" : "Pac-Man", gameLoop.clock.getLastFPS())));
@@ -210,49 +210,49 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 	private void handleNonPlayerKeys() {
 		var game = gameController.game();
 
-		if (Keyboard.get().pressed("A")) {
+		if (Keyboard.keyPressed("A")) {
 			gameController.toggleAutoMoving();
 			showFlashMessage(1, "Autopilot %s", gameController.isAutoMoving() ? "on" : "off");
 		}
 
-		else if (Keyboard.get().pressed(Keyboard.MASK_CONTROL, "D")) {
+		else if (Keyboard.keyPressed(Keyboard.MOD_CONTROL, "D")) {
 			Debug.on = !Debug.on;
 			log("UI debug mode is %s", Debug.on ? "on" : "off");
 		}
 
-		else if (Keyboard.get().pressed("E")) {
+		else if (Keyboard.keyPressed("E")) {
 			gameController.cheatEatAllPellets();
 		}
 
-		else if (Keyboard.get().pressed("I")) {
+		else if (Keyboard.keyPressed("I")) {
 			gameController.togglePlayerImmune();
 			showFlashMessage(1, "Player is %s", gameController.isPlayerImmune() ? "immune" : "vulnerable");
 		}
 
-		else if (Keyboard.get().pressed("L")) {
+		else if (Keyboard.keyPressed("L")) {
 			if (gameController.isGameRunning()) {
 				game.player.lives += 3;
 			}
 		}
 
-		else if (Keyboard.get().pressed("N")) {
+		else if (Keyboard.keyPressed("N")) {
 			if (gameController.isGameRunning()) {
 				gameController.changeState(GameState.LEVEL_COMPLETE);
 			}
 		}
 
-		else if (Keyboard.get().pressed("Q")) {
+		else if (Keyboard.keyPressed("Q")) {
 			restartIntroScene();
 		}
 
-		else if (Keyboard.get().pressed(Keyboard.MASK_CONTROL, "S")) {
+		else if (Keyboard.keyPressed(Keyboard.MOD_CONTROL, "S")) {
 			int fps = gameLoop.clock.getTargetFPS() + 10;
 			gameLoop.clock.setTargetFPS(fps);
 			showFlashMessage(2, "Target FPS set to %s Hz", fps);
 			log("Clock frequency changed to %d Hz", gameLoop.clock.getTargetFPS());
 		}
 
-		else if (Keyboard.get().pressed(Keyboard.MASK_CONTROL | Keyboard.MASK_SHIFT, "S")) {
+		else if (Keyboard.keyPressed(Keyboard.MOD_CONTROL | Keyboard.MOD_SHIFT, "S")) {
 			int fps = gameLoop.clock.getTargetFPS() - 10;
 			fps = Math.max(10, fps);
 			gameLoop.clock.setTargetFPS(fps);
@@ -260,15 +260,15 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 			log("Clock frequency changed to %d Hz", gameLoop.clock.getTargetFPS());
 		}
 
-		else if (Keyboard.get().pressed("V")) {
+		else if (Keyboard.keyPressed("V")) {
 			gameController.selectGameVariant(gameController.gameVariant().succ());
 		}
 
-		else if (Keyboard.get().pressed("X")) {
+		else if (Keyboard.keyPressed("X")) {
 			gameController.cheatKillAllPossibleGhosts();
 		}
 
-		else if (Keyboard.get().pressed("Z")) {
+		else if (Keyboard.keyPressed("Z")) {
 			gameController.startIntermissionTest();
 		}
 	}

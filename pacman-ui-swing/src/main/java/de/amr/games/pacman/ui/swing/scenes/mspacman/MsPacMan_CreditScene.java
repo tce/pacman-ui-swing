@@ -50,11 +50,11 @@ public class MsPacMan_CreditScene extends GameScene {
 
 	@Override
 	public void update() {
-		if (Keyboard.get().pressed("5")) {
+		if (Keyboard.keyPressed("5")) {
 			SoundManager.get().play(GameSound.CREDIT);
 			gameController.addCredit();
 			return;
-		} else if (Keyboard.get().pressed("Space") || Keyboard.get().pressed("1")) {
+		} else if (Keyboard.keyPressed("Space") || Keyboard.keyPressed("1")) {
 			gameController.requestGame();
 			return;
 		}

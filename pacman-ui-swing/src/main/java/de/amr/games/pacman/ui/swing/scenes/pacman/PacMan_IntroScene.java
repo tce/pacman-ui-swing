@@ -86,11 +86,11 @@ public class PacMan_IntroScene extends GameScene {
 
 	@Override
 	public void update() {
-		if (Keyboard.get().pressed("5")) {
+		if (Keyboard.keyPressed("5")) {
 			SoundManager.get().play(GameSound.CREDIT);
 			gameController.addCredit();
 			return;
-		} else if (Keyboard.get().pressed("Space")) {
+		} else if (Keyboard.keyPressed("Space")) {
 			gameController.requestGame();
 			return;
 		}

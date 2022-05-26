@@ -29,30 +29,30 @@ import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.model.common.Pac;
 
 /**
- * Controls the player using the Keyboard.get().
+ * Controls the player using the keyboard.
  * 
  * @author Armin Reichert
  */
 public class ManualPlayerControl implements Consumer<Pac> {
 
-	private final String upKey, downKey, leftKey, rightKey;
+	private final String up, down, left, right;
 
-	public ManualPlayerControl(String upKey, String downKey, String leftKey, String rightKey) {
-		this.upKey = upKey;
-		this.downKey = downKey;
-		this.leftKey = leftKey;
-		this.rightKey = rightKey;
+	public ManualPlayerControl(String up, String down, String left, String right) {
+		this.up = up;
+		this.down = down;
+		this.left = left;
+		this.right = right;
 	}
 
 	@Override
 	public void accept(Pac player) {
-		if (Keyboard.get().pressed(upKey)) {
+		if (Keyboard.keyPressed(up)) {
 			player.setWishDir(Direction.UP);
-		} else if (Keyboard.get().pressed(downKey)) {
+		} else if (Keyboard.keyPressed(down)) {
 			player.setWishDir(Direction.DOWN);
-		} else if (Keyboard.get().pressed(leftKey)) {
+		} else if (Keyboard.keyPressed(left)) {
 			player.setWishDir(Direction.LEFT);
-		} else if (Keyboard.get().pressed(rightKey)) {
+		} else if (Keyboard.keyPressed(right)) {
 			player.setWishDir(Direction.RIGHT);
 		}
 	}

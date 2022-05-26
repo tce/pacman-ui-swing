@@ -25,8 +25,8 @@ package de.amr.games.pacman.ui.swing.shell;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.BitSet;
+import java.util.Map;
 
 /**
  * Keyboard handler.
@@ -35,23 +35,30 @@ import java.util.BitSet;
  */
 public class Keyboard {
 
-	private static final Keyboard theKeyboard = new Keyboard();
+	public static final Keyboard theKeyboard = new Keyboard();
 
-	public static Keyboard get() {
-		return theKeyboard;
-	}
-
-	public static final byte MASK_NONE = 0x0;
-	public static final byte MASK_ALT = 0x1;
-	public static final byte MASK_CONTROL = 0x2;
-	public static final byte MASK_SHIFT = 0x4;
+	public static final byte MOD_NONE = 0x0;
+	public static final byte MOD_ALT = 0x1;
+	public static final byte MOD_CONTROL = 0x2;
+	public static final byte MOD_SHIFT = 0x4;
 
 	private static final String LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	private static final String DIGITS = "0123456789";
+	//@formatter:off
+	private static final Map<String, Integer> SPECS = Map.of(
+			"Up",			KeyEvent.VK_UP, 
+			"Down",		KeyEvent.VK_DOWN, 
+			"Left",		KeyEvent.VK_LEFT, 
+			"Right",	KeyEvent.VK_RIGHT, 
+			"Esc",		KeyEvent.VK_ESCAPE, 
+			"Space",	KeyEvent.VK_SPACE, 
+			"Plus",		KeyEvent.VK_PLUS, 
+			"Minus",	KeyEvent.VK_MINUS);
+	//@formatter:on
 
-	private static int code(String keySpec) {
-		if (keySpec.length() == 1) {
-			int symbol = keySpec.charAt(0);
+	private static int code(String spec) {
+		if (spec.length() == 1) {
+			int symbol = spec.charAt(0);
 			int index = LETTERS.indexOf(symbol);
 			if (index != -1) {
 				return KeyEvent.VK_A + index;
@@ -61,21 +68,35 @@ public class Keyboard {
 				return KeyEvent.VK_0 + index;
 			}
 		}
-		return switch (keySpec) {
-		case "Up" -> KeyEvent.VK_UP;
-		case "Down" -> KeyEvent.VK_DOWN;
-		case "Left" -> KeyEvent.VK_LEFT;
-		case "Right" -> KeyEvent.VK_RIGHT;
-		case "Esc" -> KeyEvent.VK_ESCAPE;
-		case "Space" -> KeyEvent.VK_SPACE;
-		case "Plus" -> KeyEvent.VK_PLUS;
-		case "Minus" -> KeyEvent.VK_MINUS;
-		default -> throw new IllegalArgumentException(String.format("Unknown key specification: %s", keySpec));
-		};
+		if (SPECS.containsKey(spec)) {
+			return SPECS.get(spec);
+		}
+		throw new IllegalArgumentException(String.format("Unknown key specification: %s", spec));
 	}
 
-	private final KeyAdapter handler;
-	private final BitSet downState = new BitSet(256);
+	/**
+	 * @param keySpec key specifier
+	 * @return {@code true} if the specified key is pressed without any modifier key (ALT, CONTROL, SHIFT)
+	 */
+	public static boolean keyPressed(String spec) {
+		return keyPressed(MOD_NONE, spec);
+	}
+
+	/**
+	 * @param keySpec key specifier like "A", "5", "Up", "Esc", "Space".
+	 * @return {@code true} if the specified key is pressed with the specified modifiers (MOD_ALT | MOD_CONTROL |
+	 *         MOD_SHIFT)
+	 */
+	public static boolean keyPressed(int modifiers, String spec) {
+		boolean pressed = theKeyboard.pressedState.get(code(spec));
+		if (pressed) {
+			theKeyboard.pressedState.clear(code(spec)); // TODO hack
+		}
+		return theKeyboard.modifierMask == modifiers && pressed;
+	}
+
+	public final KeyAdapter handler;
+	private final BitSet pressedState = new BitSet(256);
 	private byte modifierMask;
 
 	public Keyboard() {
@@ -83,68 +104,32 @@ public class Keyboard {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				int code = e.getKeyCode();
 				updateModifierMask(e);
+				int code = e.getKeyCode();
 				if (0 < code && code <= 255) {
-					downState.set(code);
+					pressedState.set(code);
 				}
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
 				updateModifierMask(e);
-				downState.clear(e.getKeyCode());
+				int code = e.getKeyCode();
+				pressedState.clear(code);
 			}
 		};
 	}
 
 	private void updateModifierMask(KeyEvent e) {
-		modifierMask = MASK_NONE;
+		modifierMask = MOD_NONE;
 		if (e.isAltDown()) {
-			modifierMask |= MASK_ALT;
+			modifierMask |= MOD_ALT;
 		}
 		if (e.isControlDown()) {
-			modifierMask |= MASK_CONTROL;
+			modifierMask |= MOD_CONTROL;
 		}
 		if (e.isShiftDown()) {
-			modifierMask |= MASK_SHIFT;
+			modifierMask |= MOD_SHIFT;
 		}
-	}
-
-	public KeyListener keyListener() {
-		return handler;
-	}
-
-	/**
-	 * @param keySpec key specifier
-	 * @return {@code true} if the specified key is pressed without any modifier key (ALT, CONTROL. SHIFT)
-	 */
-	public boolean pressed(String keySpec) {
-		return modifierMask == 0 && consume(keySpec);
-	}
-
-	/**
-	 * @param keySpec key specifier
-	 * @return {@code true} if the specified key is pressed with the specified modifier mask (ALT | CONTROL | SHIFT)
-	 */
-	public boolean pressed(int modifiers, String keySpec) {
-		return modifierMask == modifiers && consume(keySpec);
-	}
-
-	private boolean consume(String spec) {
-		int code = code(spec);
-		boolean down = downState.get(code);
-		if (down) {
-			downState.clear(code); // TODO check this
-		}
-		return down;
-	}
-
-	/**
-	 * Clears the keyboard state.
-	 */
-	public void clear() {
-		downState.clear();
-		modifierMask = 0;
 	}
 }
