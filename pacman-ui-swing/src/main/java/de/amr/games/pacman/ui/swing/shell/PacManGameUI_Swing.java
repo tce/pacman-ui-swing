@@ -123,6 +123,14 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		onGameStateChange(new GameStateChangeEvent(gameController.game(), null, controller.state()));
 	}
 
+	public void show() {
+		window.pack();
+		window.setLocationRelativeTo(null);
+		window.setVisible(true);
+		moveMousePointerOutOfSight();
+		titleUpdateTimer.start();
+	}
+
 	@Override
 	public void onGameEvent(GameEvent event) {
 		super.onGameEvent(event);
@@ -140,27 +148,19 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 	}
 
 	private void updateGameScene(GameState gameState, boolean forced) {
-		GameScene newScene = getSceneForGameState(gameState);
-		if (newScene == null) {
+		var newGameScene = getSceneForGameState(gameState);
+		if (newGameScene == null) {
 			throw new IllegalStateException("No scene found for game state " + gameState);
 		}
-		if (currentGameScene != newScene || forced) {
+		if (currentGameScene != newGameScene || forced) {
 			if (currentGameScene != null) {
 				currentGameScene.end();
 			}
-			newScene.init(gameController.game());
-			log("Current scene changed from %s to %s", currentGameScene, newScene);
+			newGameScene.init(gameController.game());
+			log("Current scene changed from %s to %s", currentGameScene, newGameScene);
 		}
 		SoundManager.get().selectGameVariant(gameController.gameVariant());
-		currentGameScene = newScene;
-	}
-
-	public void show() {
-		window.pack();
-		window.setLocationRelativeTo(null);
-		window.setVisible(true);
-		moveMousePointerOutOfSight();
-		titleUpdateTimer.start();
+		currentGameScene = newGameScene;
 	}
 
 	private GameScene getSceneForGameState(GameState state) {
