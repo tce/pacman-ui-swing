@@ -248,7 +248,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		else if (Keyboard.get().pressed(Keyboard.CONTROL, "S")) {
 			int fps = gameLoop.clock.getTargetFPS() + 10;
 			gameLoop.clock.setTargetFPS(fps);
-			showFlashMessage(1, "Target FPS set to %s Hz", fps);
+			showFlashMessage(2, "Target FPS set to %s Hz", fps);
 			log("Clock frequency changed to %d Hz", gameLoop.clock.getTargetFPS());
 		}
 
@@ -256,7 +256,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 			int fps = gameLoop.clock.getTargetFPS() - 10;
 			fps = Math.max(10, fps);
 			gameLoop.clock.setTargetFPS(fps);
-			showFlashMessage(1, "Target FPS set to %s Hz", fps);
+			showFlashMessage(2, "Target FPS set to %s Hz", fps);
 			log("Clock frequency changed to %d Hz", gameLoop.clock.getTargetFPS());
 		}
 

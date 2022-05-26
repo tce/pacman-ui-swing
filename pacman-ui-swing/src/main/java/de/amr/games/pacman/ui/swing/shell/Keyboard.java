@@ -41,18 +41,21 @@ public class Keyboard {
 		return theKeyboard;
 	}
 
-	public static final int ALT = 0x1;
-	public static final int CONTROL = 0x2;
-	public static final int SHIFT = 0x4;
+	public static final byte ALT = 0x1;
+	public static final byte CONTROL = 0x2;
+	public static final byte SHIFT = 0x4;
+
+	private static final String LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	private static final String DIGITS = "0123456789";
 
 	private static int code(String keySpec) {
 		if (keySpec.length() == 1) {
-			int c = keySpec.charAt(0);
-			int index = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(c);
+			int symbol = keySpec.charAt(0);
+			int index = LETTERS.indexOf(symbol);
 			if (index != -1) {
 				return KeyEvent.VK_A + index;
 			}
-			index = "0123456789".indexOf(c);
+			index = DIGITS.indexOf(symbol);
 			if (index != -1) {
 				return KeyEvent.VK_0 + index;
 			}
@@ -70,9 +73,9 @@ public class Keyboard {
 		};
 	}
 
-	private final BitSet keysDown = new BitSet(256);
-	private int modifierMask;
-	private KeyAdapter handler;
+	private final KeyAdapter handler;
+	private final BitSet downState = new BitSet(256);
+	private byte modifierMask;
 
 	public Keyboard() {
 		handler = new KeyAdapter() {
@@ -80,7 +83,7 @@ public class Keyboard {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (0 < e.getKeyCode() && e.getKeyCode() < 256) {
-					keysDown.set(e.getKeyCode());
+					downState.set(e.getKeyCode());
 				}
 				modifierMask = 0;
 				if (e.isAltDown()) {
@@ -96,7 +99,7 @@ public class Keyboard {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				keysDown.clear(e.getKeyCode());
+				downState.clear(e.getKeyCode());
 				modifierMask = 0;
 				if (e.isAltDown()) {
 					modifierMask |= ALT;
@@ -133,9 +136,9 @@ public class Keyboard {
 
 	private boolean consume(String spec) {
 		int code = code(spec);
-		boolean down = keysDown.get(code);
+		boolean down = downState.get(code);
 		if (down) {
-			keysDown.clear(code);
+			downState.clear(code); // TODO check this
 		}
 		return down;
 	}
@@ -144,7 +147,7 @@ public class Keyboard {
 	 * Clears the keyboard state.
 	 */
 	public void clear() {
-		keysDown.clear();
+		downState.clear();
 		modifierMask = 0;
 	}
 }
