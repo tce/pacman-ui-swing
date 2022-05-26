@@ -242,7 +242,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		}
 
 		else if (Keyboard.get().pressed("Q")) {
-			quitCurrentScene();
+			restartIntroScene();
 		}
 
 		else if (Keyboard.get().pressed(Keyboard.CONTROL, "S")) {
@@ -273,7 +273,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		}
 	}
 
-	private void quitCurrentScene() {
+	private void restartIntroScene() {
 		currentGameScene.end();
 		SoundManager.get().stopAll();
 		gameController.returnToIntro();
