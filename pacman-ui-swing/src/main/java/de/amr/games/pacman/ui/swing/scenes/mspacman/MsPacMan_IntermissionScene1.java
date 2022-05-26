@@ -71,7 +71,7 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 	@Override
 	public void init(GameModel game) {
 		super.init(game);
-		sceneController.reset(Intermission1Controller.State.FLAP);
+		sceneController.restartInInitialState(Intermission1Controller.State.FLAP);
 
 		flap2D = new Flap2D(context.flap, game, r2D);
 		msPacMan2D = new Player2D(context.msPac, game, r2D);

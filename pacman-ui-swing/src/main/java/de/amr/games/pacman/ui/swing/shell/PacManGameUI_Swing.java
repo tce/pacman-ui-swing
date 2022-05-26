@@ -128,12 +128,21 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 	}
 
 	@Override
+	public void onUIChange(GameEvent e) {
+		updateGameScene(gameController.state(), true);
+	}
+
+	@Override
 	public void onGameStateChange(GameStateChangeEvent e) {
-		GameScene newScene = getSceneForGameState(e.newGameState);
+		updateGameScene(e.newGameState, false);
+	}
+
+	private void updateGameScene(GameState gameState, boolean forced) {
+		GameScene newScene = getSceneForGameState(gameState);
 		if (newScene == null) {
-			throw new IllegalStateException("No scene found for game state " + e.newGameState);
+			throw new IllegalStateException("No scene found for game state " + gameState);
 		}
-		if (currentGameScene != newScene) {
+		if (currentGameScene != newScene || forced) {
 			if (currentGameScene != null) {
 				currentGameScene.end();
 			}
@@ -265,11 +274,9 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 	}
 
 	private void quitCurrentScene() {
-		if (gameController.state() != GameState.INTRO) {
-			currentGameScene.end();
-			SoundManager.get().stopAll();
-			gameController.returnToIntro();
-		}
+		currentGameScene.end();
+		SoundManager.get().stopAll();
+		gameController.returnToIntro();
 	}
 
 	private void moveMousePointerOutOfSight() {

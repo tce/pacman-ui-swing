@@ -70,7 +70,7 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 	@Override
 	public void init(GameModel game) {
 		super.init(game);
-		sceneController.reset(Intermission3Controller.State.FLAP);
+		sceneController.restartInInitialState(Intermission3Controller.State.FLAP);
 		msPacMan2D = new Player2D(context.msPacMan, game, r2D);
 		pacMan2D = new Player2D(context.pacMan, game, r2D);
 		pacMan2D.munchings = r2D.createSpouseMunchingAnimations();

@@ -71,7 +71,7 @@ public class PacMan_IntroScene extends GameScene {
 	@Override
 	public void init(GameModel game) {
 		super.init(game);
-		sceneController.reset(IntroController.State.BEGIN);
+		sceneController.restartInInitialState(IntroController.State.BEGIN);
 
 		pacMan2D = new Player2D(sceneController.context.pacMan, game, r2D);
 		pacMan2D.munchings.values().forEach(TimedSeq::restart);
