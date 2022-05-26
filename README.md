@@ -1,4 +1,4 @@
-##  A JFC/Swing UI for the Pac-Man + Ms. Pac-Man game
+##  A JFC/Swing UI for the Pac-Man + Ms. Pac-Man games
 
 ### Pac-Man
 
