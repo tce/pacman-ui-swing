@@ -143,9 +143,6 @@ public class PacMan_IntroScene extends GameScene {
 		}
 		case READY_TO_PLAY -> {
 			drawGallery(g);
-			if (gameController.credit() > 0) {
-				drawPressKeyToStart(g, 24);
-			}
 			r2D.drawCopyright(g, t(4), t(32));
 		}
 		default -> {
@@ -190,15 +187,6 @@ public class PacMan_IntroScene extends GameScene {
 	private void drawGhost(Graphics2D g, int ghostID, int x, int y) {
 		BufferedImage sprite = r2D.s(0, 4 + ghostID);
 		r2D.renderSprite(g, sprite, x, y);
-	}
-
-	private void drawPressKeyToStart(Graphics2D g, int yTile) {
-		if (sceneController.context.slowBlinking.frame()) {
-			String text = "PRESS SPACE TO PLAY";
-			g.setColor(Color.WHITE);
-			g.setFont(r2D.getArcadeFont());
-			g.drawString(text, t(14 - text.length() / 2), t(yTile));
-		}
 	}
 
 	private void drawPoints(Graphics2D g, int tileX, int tileY) {
