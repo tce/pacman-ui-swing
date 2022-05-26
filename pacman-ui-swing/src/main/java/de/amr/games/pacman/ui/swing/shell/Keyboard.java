@@ -33,7 +33,7 @@ import java.util.BitSet;
  * 
  * @author Armin Reichert
  */
-public class Keyboard extends KeyAdapter {
+public class Keyboard {
 
 	private static final Keyboard theKeyboard = new Keyboard();
 
@@ -45,7 +45,7 @@ public class Keyboard extends KeyAdapter {
 	public static final int CONTROL = 0x2;
 	public static final int SHIFT = 0x4;
 
-	private static int keyCode(String keySpec) {
+	private static int code(String keySpec) {
 		if (keySpec.length() == 1) {
 			int c = keySpec.charAt(0);
 			int index = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(c);
@@ -72,41 +72,47 @@ public class Keyboard extends KeyAdapter {
 
 	private final BitSet keysDown = new BitSet(256);
 	private int modifierMask;
+	private KeyAdapter handler;
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		if (0 < e.getKeyCode() && e.getKeyCode() < 256) {
-			keysDown.set(e.getKeyCode());
-		}
-		modifierMask = 0;
-		if (e.isAltDown()) {
-			modifierMask |= ALT;
-		}
-		if (e.isControlDown()) {
-			modifierMask |= CONTROL;
-		}
-		if (e.isShiftDown()) {
-			modifierMask |= SHIFT;
-		}
-	}
+	public Keyboard() {
+		handler = new KeyAdapter() {
 
-	@Override
-	public void keyReleased(KeyEvent e) {
-		keysDown.clear(e.getKeyCode());
-		modifierMask = 0;
-		if (e.isAltDown()) {
-			modifierMask |= ALT;
-		}
-		if (e.isControlDown()) {
-			modifierMask |= CONTROL;
-		}
-		if (e.isShiftDown()) {
-			modifierMask |= SHIFT;
-		}
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (0 < e.getKeyCode() && e.getKeyCode() < 256) {
+					keysDown.set(e.getKeyCode());
+				}
+				modifierMask = 0;
+				if (e.isAltDown()) {
+					modifierMask |= ALT;
+				}
+				if (e.isControlDown()) {
+					modifierMask |= CONTROL;
+				}
+				if (e.isShiftDown()) {
+					modifierMask |= SHIFT;
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				keysDown.clear(e.getKeyCode());
+				modifierMask = 0;
+				if (e.isAltDown()) {
+					modifierMask |= ALT;
+				}
+				if (e.isControlDown()) {
+					modifierMask |= CONTROL;
+				}
+				if (e.isShiftDown()) {
+					modifierMask |= SHIFT;
+				}
+			}
+		};
 	}
 
 	public void setSource(Component component) {
-		component.addKeyListener(this);
+		component.addKeyListener(handler);
 	}
 
 	/**
@@ -114,7 +120,7 @@ public class Keyboard extends KeyAdapter {
 	 * @return {@code true} if the specified key is pressed without any modifier key (ALT, CONTROL. SHIFT)
 	 */
 	public boolean pressed(String keySpec) {
-		return modifierMask == 0 && keyPressed(keySpec);
+		return modifierMask == 0 && consume(keySpec);
 	}
 
 	/**
@@ -122,15 +128,16 @@ public class Keyboard extends KeyAdapter {
 	 * @return {@code true} if the specified key is pressed with the specified modifier mask (ALT | CONTROL | SHIFT)
 	 */
 	public boolean pressed(int modifiers, String keySpec) {
-		return modifierMask == modifiers && keyPressed(keySpec);
+		return modifierMask == modifiers && consume(keySpec);
 	}
 
-	private boolean keyPressed(String keySpec) {
-		boolean keyPressed = keysDown.get(keyCode(keySpec));
-		if (keyPressed) {
-			keysDown.clear(keyCode(keySpec));
+	private boolean consume(String spec) {
+		int code = code(spec);
+		boolean down = keysDown.get(code);
+		if (down) {
+			keysDown.clear(code);
 		}
-		return keyPressed;
+		return down;
 	}
 
 	/**
