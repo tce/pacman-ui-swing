@@ -179,17 +179,17 @@ public abstract class Rendering2D {
 		g.drawString("SCORE", t(1), t(1));
 		g.drawString("HIGH SCORE", t(15), t(1));
 		g.translate(0, 1);
-		Color pointsColor = getMazeWallColor(game.mazeNumber - 1);
-		if (pointsColor == Color.BLACK) {
-			pointsColor = Color.YELLOW;
-		}
-		if (!showHiscoreOnly) {
-			g.setColor(pointsColor);
+		// Score
+		g.setColor(Color.WHITE);
+		if (showHiscoreOnly) {
+			g.drawString("0", t(7), t(2));
+		} else {
 			g.drawString(String.format("%7d", game.score), t(1), t(2));
-			g.setColor(Color.LIGHT_GRAY);
-			g.drawString(String.format("L%d", game.levelNumber), t(9), t(2));
 		}
-		g.setColor(pointsColor);
+		// Highscore
+		g.setColor(Color.LIGHT_GRAY);
+		g.drawString(String.format("L%d", game.levelNumber), t(9), t(2));
+		g.setColor(Color.WHITE);
 		g.drawString(String.format("%7d", game.highscorePoints), t(15), t(2));
 		g.setColor(Color.LIGHT_GRAY);
 		g.drawString(String.format("L%d", game.highscoreLevel), t(23), t(2));
