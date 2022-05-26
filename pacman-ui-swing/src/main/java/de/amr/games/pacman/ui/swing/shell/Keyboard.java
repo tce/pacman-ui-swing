@@ -41,9 +41,10 @@ public class Keyboard {
 		return theKeyboard;
 	}
 
-	public static final byte ALT = 0x1;
-	public static final byte CONTROL = 0x2;
-	public static final byte SHIFT = 0x4;
+	public static final byte MASK_NONE = 0x0;
+	public static final byte MASK_ALT = 0x1;
+	public static final byte MASK_CONTROL = 0x2;
+	public static final byte MASK_SHIFT = 0x4;
 
 	private static final String LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	private static final String DIGITS = "0123456789";
@@ -82,36 +83,32 @@ public class Keyboard {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (0 < e.getKeyCode() && e.getKeyCode() < 256) {
-					downState.set(e.getKeyCode());
-				}
-				modifierMask = 0;
-				if (e.isAltDown()) {
-					modifierMask |= ALT;
-				}
-				if (e.isControlDown()) {
-					modifierMask |= CONTROL;
-				}
-				if (e.isShiftDown()) {
-					modifierMask |= SHIFT;
+				int code = e.getKeyCode();
+				updateModifierMask(e);
+				if (0 < code && code <= 255) {
+					downState.set(code);
 				}
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
+				updateModifierMask(e);
 				downState.clear(e.getKeyCode());
-				modifierMask = 0;
-				if (e.isAltDown()) {
-					modifierMask |= ALT;
-				}
-				if (e.isControlDown()) {
-					modifierMask |= CONTROL;
-				}
-				if (e.isShiftDown()) {
-					modifierMask |= SHIFT;
-				}
 			}
 		};
+	}
+
+	private void updateModifierMask(KeyEvent e) {
+		modifierMask = MASK_NONE;
+		if (e.isAltDown()) {
+			modifierMask |= MASK_ALT;
+		}
+		if (e.isControlDown()) {
+			modifierMask |= MASK_CONTROL;
+		}
+		if (e.isShiftDown()) {
+			modifierMask |= MASK_SHIFT;
+		}
 	}
 
 	public KeyListener keyListener() {

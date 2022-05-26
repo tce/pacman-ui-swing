@@ -215,7 +215,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 			showFlashMessage(1, "Autopilot %s", gameController.isAutoMoving() ? "on" : "off");
 		}
 
-		else if (Keyboard.get().pressed(Keyboard.CONTROL, "D")) {
+		else if (Keyboard.get().pressed(Keyboard.MASK_CONTROL, "D")) {
 			Debug.on = !Debug.on;
 			log("UI debug mode is %s", Debug.on ? "on" : "off");
 		}
@@ -245,14 +245,14 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 			restartIntroScene();
 		}
 
-		else if (Keyboard.get().pressed(Keyboard.CONTROL, "S")) {
+		else if (Keyboard.get().pressed(Keyboard.MASK_CONTROL, "S")) {
 			int fps = gameLoop.clock.getTargetFPS() + 10;
 			gameLoop.clock.setTargetFPS(fps);
 			showFlashMessage(2, "Target FPS set to %s Hz", fps);
 			log("Clock frequency changed to %d Hz", gameLoop.clock.getTargetFPS());
 		}
 
-		else if (Keyboard.get().pressed(Keyboard.CONTROL | Keyboard.SHIFT, "S")) {
+		else if (Keyboard.get().pressed(Keyboard.MASK_CONTROL | Keyboard.MASK_SHIFT, "S")) {
 			int fps = gameLoop.clock.getTargetFPS() - 10;
 			fps = Math.max(10, fps);
 			gameLoop.clock.setTargetFPS(fps);
