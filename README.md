@@ -12,5 +12,7 @@
 
 ![Ms. Pac-Man Intro Screen](screenshots/mspacman-intro.png "Ms. Pac-Man Intro Screen")
 
+![Ms. Pac-Man Credit Screen](screenshots/mspacman-credit.png "Ms. Pac-Man Credit Screen")
+
 ![Ms. Pac-Man Play Screen](screenshots/mspacman-play.png "Ms. Pac-Man Play Screen")
 
