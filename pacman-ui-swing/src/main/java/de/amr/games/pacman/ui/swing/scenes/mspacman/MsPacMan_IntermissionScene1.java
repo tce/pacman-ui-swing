@@ -65,7 +65,7 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 		sceneController = new Intermission1Controller(gameController);
 		sceneController.playIntermissionSound = () -> SoundManager.get().play(GameSound.INTERMISSION_1);
 		sceneController.playFlapAnimation = () -> flap2D.animation.restart();
-		context = sceneController.getContext();
+		context = sceneController.context();
 	}
 
 	@Override

@@ -59,7 +59,7 @@ public class PacMan_IntermissionScene1 extends GameScene {
 		super(gameController, size, r2D);
 		sceneController = new Intermission1Controller(gameController);
 		sceneController.playIntermissionSound = () -> SoundManager.get().loop(GameSound.INTERMISSION_1, 1);
-		context = sceneController.getContext();
+		context = sceneController.context();
 	}
 
 	@Override

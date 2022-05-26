@@ -99,7 +99,7 @@ public class PlayScene extends GameScene {
 		}
 		case HUNTING -> {
 			if (!SoundManager.get().isAnySirenPlaying() && !game.player.powerTimer.isRunning()) {
-				int sirenIndex = gameController.getHuntingTimer().getPhase() / 2;
+				int sirenIndex = gameController.huntingTimer().phase() / 2;
 				SoundManager.get().startSiren(sirenIndex);
 			}
 		}
