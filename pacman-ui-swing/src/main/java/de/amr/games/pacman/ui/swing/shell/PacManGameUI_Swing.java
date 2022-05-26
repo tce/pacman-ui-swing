@@ -111,7 +111,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 			}
 		});
 		window.getContentPane().add(canvas);
-		Keyboard.get().setSource(window);
+		window.addKeyListener(Keyboard.get().keyListener());
 
 		titleUpdateTimer = new Timer(1000, e -> window.setTitle(String.format("%s (%d fps, JFC Swing)",
 				gameController.gameVariant() == MS_PACMAN ? "Ms. Pac-Man" : "Pac-Man", gameLoop.clock.getLastFPS())));

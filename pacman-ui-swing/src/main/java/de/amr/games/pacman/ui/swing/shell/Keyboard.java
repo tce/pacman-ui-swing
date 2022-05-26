@@ -23,9 +23,9 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.shell;
 
-import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.BitSet;
 
 /**
@@ -111,8 +111,8 @@ public class Keyboard {
 		};
 	}
 
-	public void setSource(Component component) {
-		component.addKeyListener(handler);
+	public KeyListener keyListener() {
+		return handler;
 	}
 
 	/**
