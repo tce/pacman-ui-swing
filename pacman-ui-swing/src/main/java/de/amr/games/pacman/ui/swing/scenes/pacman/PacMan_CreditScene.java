@@ -52,7 +52,7 @@ public class PacMan_CreditScene extends GameScene {
 			SoundManager.get().play(GameSound.CREDIT);
 			gameController.addCredit();
 			return;
-		} else if (Keyboard.get().pressed("Space")) {
+		} else if (Keyboard.get().pressed("Space") || Keyboard.get().pressed("1")) {
 			gameController.requestGame();
 			return;
 		}
