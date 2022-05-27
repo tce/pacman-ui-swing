@@ -74,7 +74,7 @@ public class PlayScene extends GameScene {
 		player2D = new Player2D(game.player, game, r2D);
 		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, r2D)).toArray(Ghost2D[]::new);
 		energizers2D = game.world.energizerTiles().map(Energizer2D::new).toArray(Energizer2D[]::new);
-		bonus2D = new Bonus2D(game, game.bonus().get(), r2D);
+		bonus2D = new Bonus2D(game, game.bonus(), r2D);
 		mazeFlashing = r2D.mazeFlashing(game.level.mazeNumber).repetitions(game.level.numFlashes).reset();
 		game.player.powerTimer.addEventListener(this::handleGhostsFlashing);
 	}
