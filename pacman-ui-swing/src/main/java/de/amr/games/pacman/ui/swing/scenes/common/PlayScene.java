@@ -73,7 +73,7 @@ public class PlayScene extends GameScene {
 
 		player2D = new Player2D(game.player, game, r2D);
 		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, r2D)).toArray(Ghost2D[]::new);
-		energizers2D = game.world.energizerTiles().map(Energizer2D::new).toArray(Energizer2D[]::new);
+		energizers2D = game.level.world.energizerTiles().map(Energizer2D::new).toArray(Energizer2D[]::new);
 		bonus2D = new Bonus2D(game, game.bonus(), r2D);
 		mazeFlashing = r2D.mazeFlashing(game.level.mazeNumber).repetitions(game.level.numFlashes).reset();
 		game.player.powerTimer.addEventListener(this::handleGhostsFlashing);
@@ -243,7 +243,7 @@ public class PlayScene extends GameScene {
 	public void render(Graphics2D g) {
 		r2D.drawMaze(g, game.level.mazeNumber, 0, t(3), mazeFlashing.isRunning());
 		if (!mazeFlashing.isRunning()) {
-			r2D.hideEatenFood(g, game.world.tiles(), game.world::containsEatenFood);
+			r2D.hideEatenFood(g, game.level.world.tiles(), game.level.world::containsEatenFood);
 			Stream.of(energizers2D).forEach(energizer2D -> energizer2D.render(g));
 		}
 		if (gameController.credit() == 0) {
