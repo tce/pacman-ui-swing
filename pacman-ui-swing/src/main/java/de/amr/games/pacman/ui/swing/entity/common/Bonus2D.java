@@ -29,9 +29,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.lib.TimedSeq;
+import de.amr.games.pacman.model.common.BonusState;
 import de.amr.games.pacman.model.common.GameModel;
-import de.amr.games.pacman.model.pacman.Bonus;
-import de.amr.games.pacman.model.pacman.Bonus.BonusState;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**
@@ -42,7 +41,6 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
  */
 public class Bonus2D extends GameEntity2D {
 
-	public Bonus bonus;
 	public final TimedSeq<Integer> jumpAnimation;
 
 	public Bonus2D(GameModel game, Rendering2D r2D) {
@@ -51,28 +49,20 @@ public class Bonus2D extends GameEntity2D {
 	}
 
 	public void render(Graphics2D g) {
-		BufferedImage sprite = currentSprite();
-		if (sprite == null || !bonus.visible) {
+		if (game.bonusState == BonusState.INACTIVE) {
 			return;
+		}
+		BufferedImage sprite = null;
+		if (game.bonusState == BonusState.EDIBLE) {
+			sprite = r2D.getSymbolSpritesMap().get(game.level.bonusSymbol);
+		} else if (game.bonusState == BonusState.EATEN) {
+			sprite = r2D.getBonusNumberSprites().get(game.bonusValue(game.level.bonusSymbol));
 		}
 		// Ms. Pac.Man bonus is jumping up and down while wandering the maze
 		int jump = jumpAnimation != null ? jumpAnimation.animate() : 0;
 		int dx = -(sprite.getWidth() - TS) / 2, dy = -(sprite.getHeight() - TS) / 2;
 		g.translate(0, jump);
-		g.drawImage(sprite, (int) (bonus.position.x + dx), (int) (bonus.position.y + dy), null);
+		g.drawImage(sprite, (int) (game.bonusPosition().x + dx), (int) (game.bonusPosition().y + dy), null);
 		g.translate(0, -jump);
-	}
-
-	private BufferedImage currentSprite() {
-		if (bonus == null) {
-			return null;
-		}
-		if (bonus.state == BonusState.EDIBLE) {
-			return r2D.getSymbolSpritesMap().get(bonus.symbol);
-		}
-		if (bonus.state == BonusState.EATEN) {
-			return r2D.getBonusNumberSprites().get(bonus.points);
-		}
-		return null;
 	}
 }

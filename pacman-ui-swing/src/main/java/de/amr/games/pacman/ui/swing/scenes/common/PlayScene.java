@@ -209,7 +209,6 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void onBonusActivated(GameEvent e) {
-		bonus2D.bonus = game.bonus;
 		if (bonus2D.jumpAnimation != null) {
 			bonus2D.jumpAnimation.restart();
 		}
