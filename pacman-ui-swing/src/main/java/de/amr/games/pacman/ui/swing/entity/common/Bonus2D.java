@@ -29,7 +29,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.lib.TimedSeq;
-import de.amr.games.pacman.model.common.BonusState;
+import de.amr.games.pacman.model.common.Bonus;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
@@ -49,20 +49,29 @@ public class Bonus2D extends GameEntity2D {
 	}
 
 	public void render(Graphics2D g) {
-		if (game.bonusState == BonusState.INACTIVE) {
-			return;
+		if (game.bonus().isPresent()) {
+			Bonus bonus = game.bonus().get();
+			switch (bonus.state()) {
+			case INACTIVE -> {
+			}
+			case EDIBLE -> {
+				var sprite = r2D.getSymbolSpritesMap().get(game.level.bonusSymbol);
+				// Ms. Pac.Man bonus is jumping up and down while wandering the maze
+				int jump = jumpAnimation != null ? jumpAnimation.animate() : 0;
+				g.translate(0, jump);
+				renderSprite(g, sprite, bonus.position().x, bonus.position().y);
+				g.translate(0, -jump);
+			}
+			case EATEN -> {
+				var sprite = r2D.getBonusNumberSprites().get(game.bonusValue(game.level.bonusSymbol));
+				renderSprite(g, sprite, bonus.position().x, bonus.position().y);
+			}
+			}
 		}
-		BufferedImage sprite = null;
-		if (game.bonusState == BonusState.EDIBLE) {
-			sprite = r2D.getSymbolSpritesMap().get(game.level.bonusSymbol);
-		} else if (game.bonusState == BonusState.EATEN) {
-			sprite = r2D.getBonusNumberSprites().get(game.bonusValue(game.level.bonusSymbol));
-		}
-		// Ms. Pac.Man bonus is jumping up and down while wandering the maze
-		int jump = jumpAnimation != null ? jumpAnimation.animate() : 0;
+	}
+
+	private void renderSprite(Graphics2D g, BufferedImage sprite, double x, double y) {
 		int dx = -(sprite.getWidth() - TS) / 2, dy = -(sprite.getHeight() - TS) / 2;
-		g.translate(0, jump);
-		g.drawImage(sprite, (int) (game.bonusPosition().x + dx), (int) (game.bonusPosition().y + dy), null);
-		g.translate(0, -jump);
+		g.drawImage(sprite, (int) (x + dx), (int) (y + dy), null);
 	}
 }
