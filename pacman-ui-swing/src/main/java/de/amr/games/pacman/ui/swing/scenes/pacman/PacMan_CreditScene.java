@@ -26,6 +26,7 @@ package de.amr.games.pacman.ui.swing.scenes.pacman;
 
 import static de.amr.games.pacman.model.common.world.World.t;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
@@ -72,14 +73,16 @@ public class PacMan_CreditScene extends GameScene {
 		g.drawString("1 PLAYER ONLY", t(8), t(21));
 
 		g.setFont(r2D.getArcadeFont());
-		g.setColor(r2D.getGhostColor(Ghost.ORANGE_GHOST));
+		g.setColor(new Color(255, 184, 174));
 		g.drawString("BONUS PAC-MAN FOR 10000", t(1), t(25));
 
 		g.setFont(r2D.getArcadeFont());
 		g.setFont(r2D.getArcadeFont().deriveFont(6.0f));
 		g.drawString("PTS", t(25), t(25));
 
-		r2D.drawCopyright(g, t(4), t(32));
+		r2D.drawCopyright(g, t(4), t(29));
+
 		r2D.drawCredit(g, gameController.credit());
+//		r2D.drawLevelCounter(g, game, t(24), t(34));
 	}
 }
