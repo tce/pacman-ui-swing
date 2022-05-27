@@ -41,32 +41,31 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
  */
 public class Bonus2D extends GameEntity2D {
 
+	private final Bonus bonus;
 	public final TimedSeq<Integer> jumpAnimation;
 
-	public Bonus2D(GameModel game, Rendering2D r2D) {
+	public Bonus2D(GameModel game, Bonus bonus, Rendering2D r2D) {
 		super(game, r2D);
+		this.bonus = bonus;
 		jumpAnimation = r2D.createBonusAnimation();
 	}
 
 	public void render(Graphics2D g) {
-		if (game.bonus().isPresent()) {
-			Bonus bonus = game.bonus().get();
-			switch (bonus.state()) {
-			case INACTIVE -> {
-			}
-			case EDIBLE -> {
-				var sprite = r2D.getSymbolSpritesMap().get(game.level.bonusSymbol);
-				// Ms. Pac.Man bonus is jumping up and down while wandering the maze
-				int jump = jumpAnimation != null ? jumpAnimation.animate() : 0;
-				g.translate(0, jump);
-				renderSprite(g, sprite, bonus.position().x, bonus.position().y);
-				g.translate(0, -jump);
-			}
-			case EATEN -> {
-				var sprite = r2D.getBonusNumberSprites().get(game.bonusValue(game.level.bonusSymbol));
-				renderSprite(g, sprite, bonus.position().x, bonus.position().y);
-			}
-			}
+		switch (bonus.state()) {
+		case INACTIVE -> {
+		}
+		case EDIBLE -> {
+			var sprite = r2D.getSymbolSpritesMap().get(game.level.bonusSymbol);
+			// Ms. Pac.Man bonus is jumping up and down while wandering the maze
+			int jump = jumpAnimation != null ? jumpAnimation.animate() : 0;
+			g.translate(0, jump);
+			renderSprite(g, sprite, bonus.position().x, bonus.position().y);
+			g.translate(0, -jump);
+		}
+		case EATEN -> {
+			var sprite = r2D.getBonusNumberSprites().get(bonus.value());
+			renderSprite(g, sprite, bonus.position().x, bonus.position().y);
+		}
 		}
 	}
 

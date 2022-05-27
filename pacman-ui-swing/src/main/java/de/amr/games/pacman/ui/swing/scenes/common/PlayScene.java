@@ -74,8 +74,8 @@ public class PlayScene extends GameScene {
 		player2D = new Player2D(game.player, game, r2D);
 		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, r2D)).toArray(Ghost2D[]::new);
 		energizers2D = game.world.energizerTiles().map(Energizer2D::new).toArray(Energizer2D[]::new);
-		bonus2D = new Bonus2D(game, r2D);
-		mazeFlashing = r2D.mazeFlashing(game.mazeNumber).repetitions(game.level.numFlashes).reset();
+		bonus2D = new Bonus2D(game, game.bonus().get(), r2D);
+		mazeFlashing = r2D.mazeFlashing(game.level.mazeNumber).repetitions(game.level.numFlashes).reset();
 		game.player.powerTimer.addEventListener(this::handleGhostsFlashing);
 	}
 
@@ -119,7 +119,7 @@ public class PlayScene extends GameScene {
 
 		case READY -> {
 			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(TimedSeq::reset);
-			r2D.mazeFlashing(game.mazeNumber).reset();
+			r2D.mazeFlashing(game.level.mazeNumber).reset();
 			player2D.reset();
 			Stream.of(ghosts2D).forEach(Ghost2D::reset);
 			SoundManager.get().stopAll();
@@ -153,7 +153,7 @@ public class PlayScene extends GameScene {
 
 		case LEVEL_COMPLETE -> {
 			player2D.reset();
-			mazeFlashing = r2D.mazeFlashing(game.mazeNumber);
+			mazeFlashing = r2D.mazeFlashing(game.level.mazeNumber);
 			SoundManager.get().stopAll();
 		}
 
@@ -241,7 +241,7 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		r2D.drawMaze(g, game.mazeNumber, 0, t(3), mazeFlashing.isRunning());
+		r2D.drawMaze(g, game.level.mazeNumber, 0, t(3), mazeFlashing.isRunning());
 		if (!mazeFlashing.isRunning()) {
 			r2D.hideEatenFood(g, game.world.tiles(), game.world::containsEatenFood);
 			Stream.of(energizers2D).forEach(energizer2D -> energizer2D.render(g));
