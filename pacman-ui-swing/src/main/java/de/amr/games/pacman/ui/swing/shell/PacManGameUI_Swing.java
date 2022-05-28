@@ -167,11 +167,11 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		var game = gameController.game();
 		var scenes = gameController.gameVariant() == MS_PACMAN ? scenesMsPacMan.gameScenes : scenesPacMan.gameScenes;
 		return switch (state) {
-		case INTRO -> scenes.get(0); // intro scene
+		case INTRO -> scenes.get(0);
 		case CREDIT -> scenes.get(1);
-		case INTERMISSION -> scenes.get(1 + game.intermissionNumber(game.level.number));
+		case INTERMISSION -> scenes.get(1 + game.level.intermissionNumber);
 		case INTERMISSION_TEST -> scenes.get(1 + game.intermissionTestNumber);
-		default -> scenes.get(5); // play scene
+		default -> scenes.get(5);
 		};
 	}
 
