@@ -28,14 +28,14 @@ import static de.amr.games.pacman.model.common.world.World.TS;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import de.amr.games.pacman.model.common.GameEntity;
+import de.amr.games.pacman.model.common.Entity;
 
 public class Heart2D {
 
-	private final GameEntity heart;
+	private final Entity heart;
 	private BufferedImage image;
 
-	public Heart2D(GameEntity heart) {
+	public Heart2D(Entity heart) {
 		this.heart = heart;
 	}
 

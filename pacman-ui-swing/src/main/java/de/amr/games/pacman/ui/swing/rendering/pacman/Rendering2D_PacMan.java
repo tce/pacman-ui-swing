@@ -42,7 +42,7 @@ import java.util.Map;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TimedSeq;
-import de.amr.games.pacman.model.common.GameEntity;
+import de.amr.games.pacman.model.common.Entity;
 import de.amr.games.pacman.model.common.Ghost;
 import de.amr.games.pacman.model.pacman.PacManGame;
 import de.amr.games.pacman.ui.swing.assets.Spritesheet;
@@ -267,7 +267,7 @@ public class Rendering2D_PacMan extends Rendering2D {
 		g.drawString("\u00A9 1980 MIDWAY MFG. CO.", x, y);
 	}
 
-	public void drawNail(Graphics2D g, GameEntity nail) {
+	public void drawNail(Graphics2D g, Entity nail) {
 		renderEntity(g, nail, nailSprite);
 	}
 

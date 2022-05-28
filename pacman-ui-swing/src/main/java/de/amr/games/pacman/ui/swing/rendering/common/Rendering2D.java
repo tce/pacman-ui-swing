@@ -43,7 +43,7 @@ import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
-import de.amr.games.pacman.model.common.GameEntity;
+import de.amr.games.pacman.model.common.Entity;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
 
@@ -144,7 +144,7 @@ public abstract class Rendering2D {
 
 	// drawing
 
-	public void renderEntity(Graphics2D g, GameEntity entity, BufferedImage sprite) {
+	public void renderEntity(Graphics2D g, Entity entity, BufferedImage sprite) {
 		if (entity.visible && sprite != null) {
 			renderSprite(g, sprite, (int) entity.position.x, (int) entity.position.y);
 		}
