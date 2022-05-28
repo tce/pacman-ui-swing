@@ -31,7 +31,7 @@ import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.lib.V2i;
-import de.amr.games.pacman.model.common.Ghost;
+import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.world.World;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;

@@ -28,7 +28,7 @@ import static de.amr.games.pacman.model.common.world.World.TS;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import de.amr.games.pacman.model.common.Entity;
+import de.amr.games.pacman.model.common.actors.Entity;
 
 public class Heart2D {
 

@@ -31,7 +31,7 @@ import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.model.common.GameModel;
-import de.amr.games.pacman.model.common.Pac;
+import de.amr.games.pacman.model.common.actors.Pac;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**

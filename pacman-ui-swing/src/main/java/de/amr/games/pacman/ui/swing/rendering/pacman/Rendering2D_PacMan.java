@@ -42,8 +42,8 @@ import java.util.Map;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TimedSeq;
-import de.amr.games.pacman.model.common.Entity;
-import de.amr.games.pacman.model.common.Ghost;
+import de.amr.games.pacman.model.common.actors.Entity;
+import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.pacman.PacManGame;
 import de.amr.games.pacman.ui.swing.assets.Spritesheet;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;

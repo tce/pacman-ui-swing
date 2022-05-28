@@ -26,7 +26,7 @@ package de.amr.games.pacman.ui.swing.shell;
 import java.util.function.Consumer;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.model.common.Pac;
+import de.amr.games.pacman.model.common.actors.Pac;
 
 /**
  * Controls the player using the keyboard.

@@ -29,8 +29,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.lib.TimedSeq;
-import de.amr.games.pacman.model.common.Bonus;
 import de.amr.games.pacman.model.common.GameModel;
+import de.amr.games.pacman.model.common.actors.Bonus;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**
