@@ -186,7 +186,7 @@ public abstract class Rendering2D {
 		} else {
 			g.drawString(String.format("%7d", game.score), t(1), t(2));
 			g.setColor(Color.LIGHT_GRAY);
-			g.drawString(String.format("L%d", game.levelNumber), t(9), t(2));
+			g.drawString(String.format("L%d", game.level.number), t(9), t(2));
 		}
 		// Highscore
 		g.setColor(Color.WHITE);
@@ -210,8 +210,8 @@ public abstract class Rendering2D {
 
 	public void drawLevelCounter(Graphics2D g, GameModel game, int rightX, int y) {
 		int x = rightX;
-		int firstLevel = Math.max(1, game.levelNumber - 6);
-		for (int levelNumber = firstLevel; levelNumber <= game.levelNumber; ++levelNumber) {
+		int firstLevel = Math.max(1, game.level.number - 6);
+		for (int levelNumber = firstLevel; levelNumber <= game.level.number; ++levelNumber) {
 			int symbol = game.levelCounter.get(levelNumber - 1);
 			g.drawImage(symbolSprite(symbol), x, y, null);
 			x -= t(2);
