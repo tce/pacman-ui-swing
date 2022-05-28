@@ -138,7 +138,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 	}
 
 	@Override
-	public void onUIChange(GameEvent e) {
+	public void onUIForceUpdate(GameEvent e) {
 		updateGameScene(gameController.state(), true);
 	}
 

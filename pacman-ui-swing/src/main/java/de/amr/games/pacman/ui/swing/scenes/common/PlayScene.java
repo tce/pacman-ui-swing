@@ -35,7 +35,7 @@ import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameStateChangeEvent;
-import de.amr.games.pacman.event.ScatterPhaseStartedEvent;
+import de.amr.games.pacman.event.ScatterPhaseStartsEvent;
 import de.amr.games.pacman.lib.TickTimerEvent;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
@@ -182,23 +182,23 @@ public class PlayScene extends GameScene {
 	}
 
 	@Override
-	public void onScatterPhaseStarted(ScatterPhaseStartedEvent e) {
+	public void onScatterPhaseStarts(ScatterPhaseStartsEvent e) {
 		SoundManager.get().stopSirens();
 		SoundManager.get().startSiren(e.scatterPhase);
 	}
 
 	@Override
-	public void onPlayerLostPower(GameEvent e) {
+	public void onPlayerLosesPower(GameEvent e) {
 		SoundManager.get().stop(GameSound.PACMAN_POWER);
 	}
 
 	@Override
-	public void onPlayerFoundFood(GameEvent e) {
+	public void onPlayerFindsFood(GameEvent e) {
 		SoundManager.get().play(GameSound.PACMAN_MUNCH);
 	}
 
 	@Override
-	public void onPlayerGotPower(GameEvent e) {
+	public void onPlayerGetsPower(GameEvent e) {
 		game.ghosts(GhostState.FRIGHTENED).map(ghost -> ghosts2D[ghost.id]).forEach(ghost2D -> {
 			ghost2D.animFlashing.reset();
 			ghost2D.animFrightened.restart();
@@ -208,14 +208,14 @@ public class PlayScene extends GameScene {
 	}
 
 	@Override
-	public void onBonusActivated(GameEvent e) {
+	public void onBonusGetsActivate(GameEvent e) {
 		if (bonus2D.jumpAnimation != null) {
 			bonus2D.jumpAnimation.restart();
 		}
 	}
 
 	@Override
-	public void onBonusEaten(GameEvent e) {
+	public void onBonusGetsEaten(GameEvent e) {
 		if (bonus2D.jumpAnimation != null) {
 			bonus2D.jumpAnimation.reset();
 		}
@@ -223,17 +223,17 @@ public class PlayScene extends GameScene {
 	}
 
 	@Override
-	public void onPlayerGotExtraLife(GameEvent e) {
+	public void onPlayerGetsExtraLife(GameEvent e) {
 		SoundManager.get().play(GameSound.EXTRA_LIFE);
 	}
 
 	@Override
-	public void onGhostStartedReturningHome(GameEvent e) {
+	public void onGhostStartsReturningHome(GameEvent e) {
 		SoundManager.get().play(GameSound.GHOST_RETURNING);
 	}
 
 	@Override
-	public void onGhostEnteredHouse(GameEvent e) {
+	public void onGhostEntersHouse(GameEvent e) {
 		if (game.ghosts(GhostState.DEAD).count() == 0) {
 			SoundManager.get().stop(GameSound.GHOST_RETURNING);
 		}
