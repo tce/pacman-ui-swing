@@ -44,8 +44,8 @@ import javax.swing.Timer;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.common.GameState;
-import de.amr.games.pacman.event.GameEventAdapter;
 import de.amr.games.pacman.event.GameEvent;
+import de.amr.games.pacman.event.GameEventAdapter;
 import de.amr.games.pacman.event.GameStateChangeEvent;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
@@ -116,10 +116,10 @@ public class PacManGameUI_Swing extends GameEventAdapter {
 		window.addKeyListener(Keyboard.theKeyboard.handler);
 
 		titleUpdateTimer = new Timer(1000, e -> window.setTitle(String.format("%s (%d fps, JFC Swing)",
-				gameController.gameVariant() == MS_PACMAN ? "Ms. Pac-Man" : "Pac-Man", gameLoop.clock.getLastFPS())));
+				gameController.game().variant == MS_PACMAN ? "Ms. Pac-Man" : "Pac-Man", gameLoop.clock.getLastFPS())));
 
 		// start initial game scene
-		SoundManager.get().selectGameVariant(gameController.gameVariant());
+		SoundManager.get().selectGameVariant(gameController.game().variant);
 		onGameStateChange(new GameStateChangeEvent(gameController.game(), null, controller.state()));
 	}
 
@@ -159,13 +159,13 @@ public class PacManGameUI_Swing extends GameEventAdapter {
 			newGameScene.init(gameController.game());
 			log("Current scene changed from %s to %s", currentGameScene, newGameScene);
 		}
-		SoundManager.get().selectGameVariant(gameController.gameVariant());
+		SoundManager.get().selectGameVariant(gameController.game().variant);
 		currentGameScene = newGameScene;
 	}
 
 	private GameScene getSceneForGameState(GameState state) {
 		var game = gameController.game();
-		var scenes = gameController.gameVariant() == MS_PACMAN ? scenesMsPacMan.gameScenes : scenesPacMan.gameScenes;
+		var scenes = game.variant == MS_PACMAN ? scenesMsPacMan.gameScenes : scenesPacMan.gameScenes;
 		return switch (state) {
 		case INTRO -> scenes.get(0);
 		case CREDIT -> scenes.get(1);
@@ -263,7 +263,7 @@ public class PacManGameUI_Swing extends GameEventAdapter {
 		}
 
 		else if (Keyboard.keyPressed("V")) {
-			gameController.selectGameVariant(gameController.gameVariant().succ());
+			gameController.selectGameVariant(gameController.game().variant.succ());
 		}
 
 		else if (Keyboard.keyPressed("X")) {
