@@ -44,7 +44,7 @@ import javax.swing.Timer;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.common.GameState;
-import de.amr.games.pacman.event.DefaultGameEventHandler;
+import de.amr.games.pacman.event.GameEventAdapter;
 import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameStateChangeEvent;
 import de.amr.games.pacman.lib.V2d;
@@ -64,7 +64,7 @@ import de.amr.games.pacman.ui.swing.scenes.pacman.ScenesPacMan;
  * 
  * @author Armin Reichert
  */
-public class PacManGameUI_Swing extends DefaultGameEventHandler {
+public class PacManGameUI_Swing extends GameEventAdapter {
 
 	private final GameLoop gameLoop;
 	private final GameController gameController;
@@ -267,7 +267,7 @@ public class PacManGameUI_Swing extends DefaultGameEventHandler {
 		}
 
 		else if (Keyboard.keyPressed("X")) {
-			gameController.cheatKillAllPossibleGhosts();
+			gameController.cheatKillAllEatableGhosts();
 		}
 
 		else if (Keyboard.keyPressed("Z")) {

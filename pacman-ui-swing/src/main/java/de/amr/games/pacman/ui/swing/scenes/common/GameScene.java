@@ -26,7 +26,7 @@ package de.amr.games.pacman.ui.swing.scenes.common;
 import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
-import de.amr.games.pacman.event.DefaultGameEventHandler;
+import de.amr.games.pacman.event.GameEventAdapter;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
@@ -36,7 +36,7 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
  * 
  * @author Armin Reichert
  */
-public abstract class GameScene extends DefaultGameEventHandler {
+public abstract class GameScene extends GameEventAdapter {
 
 	protected final V2i size;
 	protected final Rendering2D r2D;
