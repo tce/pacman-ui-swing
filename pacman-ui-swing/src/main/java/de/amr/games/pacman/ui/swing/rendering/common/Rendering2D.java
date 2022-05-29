@@ -198,13 +198,13 @@ public abstract class Rendering2D {
 
 	public void drawLivesCounter(Graphics2D g, GameModel game, int x, int y) {
 		int maxLivesDisplayed = 5;
-		for (int i = 0; i < Math.min(game.player.lives, maxLivesDisplayed); ++i) {
+		for (int i = 0; i < Math.min(game.lives, maxLivesDisplayed); ++i) {
 			g.drawImage(lifeSprite(), x + t(2 * i), y, null);
 		}
-		if (game.player.lives > maxLivesDisplayed) {
+		if (game.lives > maxLivesDisplayed) {
 			g.setColor(Color.YELLOW);
 			g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 6));
-			g.drawString("+" + (game.player.lives - maxLivesDisplayed), x + t(10), y + t(1) - 2);
+			g.drawString("+" + (game.lives - maxLivesDisplayed), x + t(10), y + t(1) - 2);
 		}
 	}
 
