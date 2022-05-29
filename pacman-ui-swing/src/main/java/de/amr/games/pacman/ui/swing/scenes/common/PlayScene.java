@@ -48,6 +48,7 @@ import de.amr.games.pacman.ui.swing.entity.common.Bonus2D;
 import de.amr.games.pacman.ui.swing.entity.common.Energizer2D;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Player2D;
+import de.amr.games.pacman.ui.swing.rendering.common.Debug;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**
@@ -245,6 +246,9 @@ public class PlayScene extends GameScene {
 			r2D.hideEatenFood(g, game.level.world.tiles(), game.level.world::containsEatenFood);
 			Stream.of(energizers2D).forEach(energizer2D -> energizer2D.render(g));
 		}
+		if (Debug.on) {
+			Debug.drawMazeStructure(g, game);
+		}
 		if (gameController.credit() == 0) {
 			r2D.drawGameState(g, game, GameState.GAME_OVER);
 		} else {
@@ -265,6 +269,9 @@ public class PlayScene extends GameScene {
 		}
 		if (showCredit) {
 			r2D.drawCredit(g, gameController.credit());
+		}
+		if (Debug.on) {
+			Debug.drawPlaySceneDebugInfo(g, gameController);
 		}
 	}
 

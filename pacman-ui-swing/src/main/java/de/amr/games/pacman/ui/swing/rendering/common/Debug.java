@@ -37,6 +37,7 @@ import java.awt.Stroke;
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.TickTimer;
+import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 
@@ -60,6 +61,9 @@ public class Debug {
 				Color c = GHOST_COLORS[ghost.id];
 				g.setColor(c);
 				g.fillRect(t(ghost.targetTile.x) + HTS / 2, t(ghost.targetTile.y) + HTS / 2, HTS, HTS);
+				g.setStroke(new BasicStroke(0.5f));
+				V2d targetPosition = new V2d(ghost.targetTile.scaled(TS)).plus(HTS, HTS);
+				g.drawLine((int) ghost.position.x, (int) ghost.position.y, (int) targetPosition.x, (int) targetPosition.y);
 			}
 		});
 		if (game.player.targetTile != null) {
