@@ -31,7 +31,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.Polygon;
 import java.awt.Stroke;
 
 import de.amr.games.pacman.controller.common.GameController;
@@ -73,7 +72,6 @@ public class Debug {
 	}
 
 	public static void drawMazeStructure(Graphics2D g, GameModel game) {
-		final Polygon TRIANGLE = new Polygon(new int[] { -4, 4, 0 }, new int[] { 0, 0, 4 }, 3);
 		Color dark = new Color(80, 80, 80, 200);
 		Stroke thin = new BasicStroke(0.1f);
 		g.setColor(dark);
@@ -89,10 +87,6 @@ public class Debug {
 						}
 						g.drawLine(t(x) + HTS, t(y) + HTS, t(neighbor.x) + HTS, t(neighbor.y) + HTS);
 					}
-				} else if (game.level.world.isOneWayDown(tile)) {
-					g.translate(t(x) + HTS, t(y));
-					g.fillPolygon(TRIANGLE);
-					g.translate(-t(x) - HTS, -t(y));
 				}
 			}
 		}
