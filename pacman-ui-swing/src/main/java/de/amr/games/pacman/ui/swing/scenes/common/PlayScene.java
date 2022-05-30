@@ -40,6 +40,7 @@ import de.amr.games.pacman.lib.TickTimerEvent;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
+import de.amr.games.pacman.model.common.GameVariant;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.GhostState;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
@@ -68,6 +69,19 @@ public class PlayScene extends GameScene {
 		super(gameController, size, r2D);
 	}
 
+	private int mazeNumber(GameModel game) {
+		if (game.variant == GameVariant.PACMAN) {
+			return 1;
+		}
+		return switch (game.level.number) {
+		case 1, 2 -> 1;
+		case 3, 4, 5 -> 2;
+		case 6, 7, 8, 9 -> 3;
+		case 10, 11, 12, 13 -> 4;
+		default -> (game.level.number - 14) % 8 < 4 ? 5 : 6;
+		};
+	}
+
 	@Override
 	public void init(GameModel game) {
 		super.init(game);
@@ -76,7 +90,7 @@ public class PlayScene extends GameScene {
 		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, r2D)).toArray(Ghost2D[]::new);
 		energizers2D = game.level.world.energizerTiles().map(Energizer2D::new).toArray(Energizer2D[]::new);
 		bonus2D = new Bonus2D(game, game.bonus(), r2D);
-		mazeFlashing = r2D.mazeFlashing(game.level.mazeNumber).repetitions(game.level.numFlashes).reset();
+		mazeFlashing = r2D.mazeFlashing(mazeNumber(game)).repetitions(game.level.numFlashes).reset();
 		game.player.powerTimer.addEventListener(this::handleGhostsFlashing);
 	}
 
@@ -119,7 +133,7 @@ public class PlayScene extends GameScene {
 
 		case READY -> {
 			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(TimedSeq::reset);
-			r2D.mazeFlashing(game.level.mazeNumber).reset();
+			r2D.mazeFlashing(mazeNumber(game)).reset();
 			player2D.reset();
 			Stream.of(ghosts2D).forEach(Ghost2D::reset);
 			SoundManager.get().stopAll();
@@ -153,7 +167,7 @@ public class PlayScene extends GameScene {
 
 		case LEVEL_COMPLETE -> {
 			player2D.reset();
-			mazeFlashing = r2D.mazeFlashing(game.level.mazeNumber);
+			mazeFlashing = r2D.mazeFlashing(mazeNumber(game));
 			SoundManager.get().stopAll();
 		}
 
@@ -241,7 +255,7 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		r2D.drawMaze(g, game.level.mazeNumber, 0, t(3), mazeFlashing.isRunning());
+		r2D.drawMaze(g, mazeNumber(game), 0, t(3), mazeFlashing.isRunning());
 		if (!mazeFlashing.isRunning()) {
 			r2D.hideEatenFood(g, game.level.world.tiles(), game.level.world::containsEatenFood);
 			Stream.of(energizers2D).forEach(energizer2D -> energizer2D.render(g));
