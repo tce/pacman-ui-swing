@@ -169,7 +169,7 @@ public class PacManGameUI_Swing extends GameEventAdapter {
 		return switch (state) {
 		case INTRO -> scenes.get(0);
 		case CREDIT -> scenes.get(1);
-		case INTERMISSION -> scenes.get(1 + game.level.intermissionNumber);
+		case INTERMISSION -> scenes.get(1 + game.intermissionNumber(game.level.number));
 		case INTERMISSION_TEST -> scenes.get(1 + game.intermissionTestNumber);
 		default -> scenes.get(5);
 		};
