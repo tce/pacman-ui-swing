@@ -23,6 +23,7 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.rendering.common;
 
+import static de.amr.games.pacman.lib.TickTimer.ticksToString;
 import static de.amr.games.pacman.model.common.world.World.HTS;
 import static de.amr.games.pacman.model.common.world.World.TS;
 import static de.amr.games.pacman.model.common.world.World.t;
@@ -34,8 +35,8 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 
 import de.amr.games.pacman.controller.common.GameController;
+import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.TickTimer;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
@@ -47,9 +48,21 @@ public class Debug {
 	public static void drawPlaySceneDebugInfo(Graphics2D g, GameController controller) {
 		GameModel game = controller.game();
 		final Color[] GHOST_COLORS = { Color.RED, Color.PINK, Color.CYAN, Color.ORANGE };
-		long remaining = controller.state().timer().remaining();
-		String ticksText = remaining == TickTimer.INDEFINITE ? "indefinite" : remaining + " ticks remaining";
-		String stateText = String.format("%s (%s)", controller.state(), ticksText);
+
+		String stateText = "";
+		long ticks;
+		int scatterPhase = game.huntingTimer.scatteringPhase();
+		int chasingPhase = game.huntingTimer.chasingPhase();
+		if (controller.state() == GameState.HUNTING && scatterPhase != -1) {
+			ticks = game.huntingTimer.remaining();
+			stateText = "Scattering Phase %d Remaining: %s".formatted(scatterPhase, ticksToString(ticks));
+		} else if (controller.state() == GameState.HUNTING && chasingPhase != -1) {
+			ticks = game.huntingTimer.remaining();
+			stateText = "Chasing Phase %d Remaining: %s".formatted(chasingPhase, ticksToString(ticks));
+		} else {
+			ticks = controller.state().timer().tick();
+			stateText = "State %s Running: %s".formatted(controller.state(), ticksToString(ticks));
+		}
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Arial", Font.PLAIN, 6));
 		g.drawString(stateText, t(1), t(3));
