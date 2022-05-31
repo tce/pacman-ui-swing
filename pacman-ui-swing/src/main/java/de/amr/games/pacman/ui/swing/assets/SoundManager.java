@@ -129,7 +129,7 @@ public class SoundManager {
 		}
 	}
 
-	private Clip getClip(GameSound sound) {
+	public Clip getClip(GameSound sound) {
 		return sm.get(sound);
 	}
 

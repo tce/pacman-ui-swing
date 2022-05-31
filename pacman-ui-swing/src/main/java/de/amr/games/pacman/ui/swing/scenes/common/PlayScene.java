@@ -35,7 +35,6 @@ import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameStateChangeEvent;
-import de.amr.games.pacman.event.ScatterPhaseStartsEvent;
 import de.amr.games.pacman.lib.TickTimerEvent;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
@@ -105,17 +104,34 @@ public class PlayScene extends GameScene {
 				game.ghosts().forEach(Ghost::hide);
 			} else if (gameController.state().timer().atSecond(3)) {
 				mazeFlashing.restart();
-			} else if (mazeFlashing.isRunning()) {
-				mazeFlashing.animate();
+			} else {
+				mazeFlashing.advance();
 			}
 		}
 		case LEVEL_STARTING -> {
 			gameController.state().timer().expire();
 		}
+		default -> {
+		}
+		}
+		updateSound();
+	}
+
+	private void updateSound() {
+		if (gameController.credit() == 0) {
+			return;
+		}
+		switch (gameController.state()) {
 		case HUNTING -> {
-			if (!SoundManager.get().isAnySirenPlaying() && !game.player.powerTimer.isRunning()) {
-				SoundManager.get().startSiren(0);
+			if (SoundManager.get().getClip(GameSound.PACMAN_MUNCH).isRunning() && game.player.starvingTicks > 10) {
+				SoundManager.get().stop(GameSound.PACMAN_MUNCH);
 			}
+			if (game.huntingTimer.scatteringPhase() >= 0 && game.huntingTimer.tick() == 0) {
+				SoundManager.get().stopSirens();
+				SoundManager.get().startSiren(game.huntingTimer.scatteringPhase());
+			}
+		}
+		default -> {
 		}
 		}
 	}
@@ -193,12 +209,6 @@ public class PlayScene extends GameScene {
 	public void onGameEvent(GameEvent gameEvent) {
 		SoundManager.get().setMuted(gameController.credit() == 0); // TODO check
 		super.onGameEvent(gameEvent);
-	}
-
-	@Override
-	public void onScatterPhaseStarts(ScatterPhaseStartsEvent e) {
-		SoundManager.get().stopSirens();
-		SoundManager.get().startSiren(0);
 	}
 
 	@Override
