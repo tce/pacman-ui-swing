@@ -93,7 +93,6 @@ public class PlayScene extends GameScene {
 		game.player.powerTimer.addEventListener(this::handleGhostsFlashing);
 	}
 
-	@SuppressWarnings("incomplete-switch")
 	@Override
 	public void update() {
 		switch (gameController.state()) {
@@ -126,9 +125,13 @@ public class PlayScene extends GameScene {
 			if (SoundManager.get().getClip(GameSound.PACMAN_MUNCH).isRunning() && game.player.starvingTicks > 10) {
 				SoundManager.get().stop(GameSound.PACMAN_MUNCH);
 			}
-			if (game.huntingTimer.scatteringPhase() >= 0 && game.huntingTimer.tick() == 0) {
+			boolean scatterPhaseStarts = game.huntingTimer.scatteringPhase() >= 0 && game.huntingTimer.tick() == 0;
+			if (scatterPhaseStarts) {
 				SoundManager.get().stopSirens();
 				SoundManager.get().startSiren(game.huntingTimer.scatteringPhase());
+			}
+			if (game.huntingTimer.chasingPhase() >= 0 && !SoundManager.get().isAnySirenPlaying()) {
+				SoundManager.get().startSiren(game.huntingTimer.chasingPhase());
 			}
 		}
 		default -> {
