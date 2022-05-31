@@ -83,7 +83,7 @@ public class Ghost2D extends GameEntity2D {
 			} else {
 				sprite = animFrightened.animate();
 			}
-		} else if (ghost.is(LOCKED) && game.player.powerTimer.isRunning()) {
+		} else if (ghost.is(LOCKED) && game.player.hasPower()) {
 			if (!animFrightened.isRunning()) {
 				animFrightened.restart();
 			}
