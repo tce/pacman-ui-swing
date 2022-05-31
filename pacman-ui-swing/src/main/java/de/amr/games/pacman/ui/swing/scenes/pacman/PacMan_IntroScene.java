@@ -90,7 +90,7 @@ public class PacMan_IntroScene extends GameScene {
 			SoundManager.get().play(GameSound.CREDIT);
 			gameController.addCredit();
 			return;
-		} else if (Keyboard.keyPressed("Space")) {
+		} else if (Keyboard.keyPressed("Space") || Keyboard.keyPressed("1")) {
 			gameController.requestGame();
 			return;
 		}
