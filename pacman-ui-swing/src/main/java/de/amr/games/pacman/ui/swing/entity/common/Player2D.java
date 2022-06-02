@@ -41,13 +41,13 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
  */
 public class Player2D extends GameEntity2D {
 
-	public final Pac player;
+	public final Pac pac;
 	public Map<Direction, TimedSeq<BufferedImage>> munchings;
 	public final TimedSeq<BufferedImage> dying;
 
-	public Player2D(Pac player, GameModel game, Rendering2D r2D) {
+	public Player2D(Pac pac, GameModel game, Rendering2D r2D) {
 		super(game, r2D);
-		this.player = player;
+		this.pac = pac;
 		munchings = r2D.createPlayerMunchingAnimations();
 		dying = r2D.createPlayerDyingAnimation();
 	}
@@ -59,17 +59,17 @@ public class Player2D extends GameEntity2D {
 
 	public void render(Graphics2D g) {
 		BufferedImage sprite = null;
-		if (player.killed) {
+		if (pac.killed) {
 			if (dying.hasStarted()) {
 				dying.animate();
 			}
 			sprite = dying.frame();
 		} else {
-			if (!player.velocity.equals(V2d.NULL) && !player.stuck) {
-				munchings.get(player.moveDir()).animate();
+			if (!pac.velocity.equals(V2d.NULL) && !pac.stuck) {
+				munchings.get(pac.moveDir()).animate();
 			}
-			sprite = munchings.get(player.moveDir()).frame();
+			sprite = munchings.get(pac.moveDir()).frame();
 		}
-		r2D.renderEntity(g, player, sprite);
+		r2D.renderEntity(g, pac, sprite);
 	}
 }

@@ -85,12 +85,12 @@ public class PlayScene extends GameScene {
 	public void init(GameModel game) {
 		super.init(game);
 
-		player2D = new Player2D(game.player, game, r2D);
+		player2D = new Player2D(game.pac, game, r2D);
 		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, r2D)).toArray(Ghost2D[]::new);
 		energizers2D = game.level.world.energizerTiles().map(Energizer2D::new).toArray(Energizer2D[]::new);
 		bonus2D = new Bonus2D(game, game.bonus(), r2D);
 		mazeFlashing = r2D.mazeFlashing(mazeNumber(game)).repetitions(game.level.numFlashes).reset();
-		game.player.powerTimer.addEventListener(this::handleGhostsFlashing);
+		game.pac.powerTimer.addEventListener(this::handleGhostsFlashing);
 	}
 
 	@Override
@@ -122,7 +122,7 @@ public class PlayScene extends GameScene {
 		}
 		switch (gameController.state()) {
 		case HUNTING -> {
-			if (SoundManager.get().getClip(GameSound.PACMAN_MUNCH).isRunning() && game.player.starvingTicks > 10) {
+			if (SoundManager.get().getClip(GameSound.PACMAN_MUNCH).isRunning() && game.pac.starvingTicks > 10) {
 				SoundManager.get().stop(GameSound.PACMAN_MUNCH);
 			}
 			boolean scatterPhaseStarts = game.huntingTimer.scatteringPhase() >= 0 && game.huntingTimer.tick() == 0;
@@ -141,7 +141,7 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void end() {
-		game.player.powerTimer.removeEventListener(this::handleGhostsFlashing);
+		game.pac.powerTimer.removeEventListener(this::handleGhostsFlashing);
 	}
 
 	@Override

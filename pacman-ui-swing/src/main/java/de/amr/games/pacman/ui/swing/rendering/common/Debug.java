@@ -78,9 +78,9 @@ public class Debug {
 				g.drawLine((int) ghost.position.x, (int) ghost.position.y, (int) targetPosition.x, (int) targetPosition.y);
 			}
 		});
-		if (game.player.targetTile != null) {
+		if (game.pac.targetTile != null) {
 			g.setColor(new Color(255, 255, 0, 200));
-			g.fillRect(t(game.player.targetTile.x), t(game.player.targetTile.y), TS, TS);
+			g.fillRect(t(game.pac.targetTile.x), t(game.pac.targetTile.y), TS, TS);
 		}
 	}
 
