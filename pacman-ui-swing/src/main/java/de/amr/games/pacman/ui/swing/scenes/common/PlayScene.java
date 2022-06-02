@@ -35,7 +35,6 @@ import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameStateChangeEvent;
-import de.amr.games.pacman.lib.TickTimerEvent;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
@@ -90,7 +89,7 @@ public class PlayScene extends GameScene {
 		energizers2D = game.level.world.energizerTiles().map(Energizer2D::new).toArray(Energizer2D[]::new);
 		bonus2D = new Bonus2D(game, game.bonus(), r2D);
 		mazeFlashing = r2D.mazeFlashing(mazeNumber(game)).repetitions(game.level.numFlashes).reset();
-		game.pac.powerTimer.addEventListener(this::handleGhostsFlashing);
+//		game.pac.powerTimer.addEventListener(this::handleGhostsFlashing);
 	}
 
 	@Override
@@ -141,7 +140,7 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void end() {
-		game.pac.powerTimer.removeEventListener(this::handleGhostsFlashing);
+//		game.pac.powerTimer.removeEventListener(this::handleGhostsFlashing);
 	}
 
 	@Override
@@ -169,7 +168,8 @@ public class PlayScene extends GameScene {
 		}
 
 		case PACMAN_DYING -> {
-			gameController.state().timer().setDurationSeconds(3).start();
+			gameController.state().timer().setDurationSeconds(3);
+			gameController.state().timer().start();
 			SoundManager.get().stopAll();
 			player2D.dying.delay(60).onStart(() -> {
 				game.ghosts().forEach(Ghost::hide);
@@ -301,14 +301,14 @@ public class PlayScene extends GameScene {
 			Debug.drawPlaySceneDebugInfo(g, gameController);
 		}
 	}
-
-	private void handleGhostsFlashing(TickTimerEvent e) {
-		if (e.type == TickTimerEvent.Type.HALF_EXPIRED) {
-			game.ghosts(GhostState.FRIGHTENED).forEach(ghost -> {
-				TimedSeq<?> flashing = ghosts2D[ghost.id].animFlashing;
-				long frameTime = e.ticks / (game.level.numFlashes * flashing.numFrames());
-				flashing.frameDuration(frameTime).repetitions(game.level.numFlashes).restart();
-			});
-		}
-	}
+//
+//	private void handleGhostsFlashing(TickTimerEvent e) {
+//		if (e.type == TickTimerEvent.Type.HALF_EXPIRED) {
+//			game.ghosts(GhostState.FRIGHTENED).forEach(ghost -> {
+//				TimedSeq<?> flashing = ghosts2D[ghost.id].animFlashing;
+//				long frameTime = e.ticks / (game.level.numFlashes * flashing.numFrames());
+//				flashing.frameDuration(frameTime).repetitions(game.level.numFlashes).restart();
+//			});
+//		}
+//	}
 }
