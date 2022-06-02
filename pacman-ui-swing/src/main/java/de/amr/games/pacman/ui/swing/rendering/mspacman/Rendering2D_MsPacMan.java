@@ -58,7 +58,6 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	//@formatter:off
-
 	static final Color[] FOOD_COLOR = {
 		new Color(222, 222, 255),
 		new Color(255, 255, 0),
@@ -87,7 +86,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	};
 	//@formatter:on
 
-	private static final Rendering2D_MsPacMan theThing = new Rendering2D_MsPacMan();
+	private static final Rendering2D_MsPacMan theThing = new Rendering2D_MsPacMan("/mspacman/graphics/sprites.png", 16);
 
 	public static Rendering2D_MsPacMan get() {
 		return theThing;
@@ -103,8 +102,8 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	final List<BufferedImage> mazeFullImages;
 	final List<TimedSeq<BufferedImage>> mazesFlashingAnims;
 
-	private Rendering2D_MsPacMan() {
-		sheet = new Spritesheet(image("/mspacman/graphics/sprites.png"), 16);
+	private Rendering2D_MsPacMan(String path, int rasterSize) {
+		sheet = new Spritesheet(image(path), rasterSize);
 
 		scoreFont = font("/emulogic.ttf", 8);
 

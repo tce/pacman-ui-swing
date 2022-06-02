@@ -60,7 +60,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 	/** Sprite sheet order of directions. */
 	static final List<Direction> order = Arrays.asList(RIGHT, LEFT, UP, DOWN);
 
-	private static final Rendering2D_PacMan theThing = new Rendering2D_PacMan();
+	private static final Rendering2D_PacMan theThing = new Rendering2D_PacMan("/pacman/graphics/sprites.png", 16);
 
 	public static Rendering2D_PacMan get() {
 		return theThing;
@@ -82,8 +82,8 @@ public class Rendering2D_PacMan implements Rendering2D {
 	public final TimedSeq<BufferedImage> blinkyPatched;
 	public final BufferedImage nailSprite;
 
-	private Rendering2D_PacMan() {
-		sheet = new Spritesheet(image("/pacman/graphics/sprites.png"), 16);
+	private Rendering2D_PacMan(String path, int rasterSize) {
+		sheet = new Spritesheet(image(path), rasterSize);
 
 		scoreFont = font("/emulogic.ttf", 8);
 
