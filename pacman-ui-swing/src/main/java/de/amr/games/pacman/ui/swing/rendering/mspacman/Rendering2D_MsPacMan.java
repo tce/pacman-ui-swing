@@ -58,15 +58,6 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	//@formatter:off
-	static final Color[] FOOD_COLOR = {
-		new Color(222, 222, 255),
-		new Color(255, 255, 0),
-		new Color(255, 0, 0),
-		new Color(222, 222, 255),
-		new Color(0, 255, 255),
-		new Color(222, 222, 255),
-	};
-
 	static final Color[] MAZE_WALL_COLORS = { 
 		new Color(255, 183, 174), 
 		new Color(71, 183, 255), 
@@ -84,6 +75,15 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 		new Color(255, 255, 0), 
 		new Color(255, 0, 0),
 	};
+
+	static final Color[] FOOD_COLORS = {
+		new Color(222, 222, 255),
+		new Color(255, 255, 0),
+		new Color(255, 0, 0),
+		new Color(222, 222, 255),
+		new Color(0, 255, 255),
+		new Color(222, 222, 255),
+	};
 	//@formatter:on
 
 	private static final Rendering2D_MsPacMan theThing = new Rendering2D_MsPacMan("/mspacman/graphics/sprites.png", 16);
@@ -92,32 +92,20 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 		return theThing;
 	}
 
-	final Spritesheet sheet;
-	final Font scoreFont;
-	final BufferedImage midwayLogo = image("/mspacman/graphics/midway.png");
-	final Map<Integer, BufferedImage> symbolSprites;
-	final Map<Integer, BufferedImage> bonusNumberSprites;
-	final Map<Integer, BufferedImage> bountyNumberSprites;
-	final List<BufferedImage> mazeEmptyImages;
-	final List<BufferedImage> mazeFullImages;
-	final List<TimedSeq<BufferedImage>> mazesFlashingAnims;
+	private final Spritesheet ss;
+	private final BufferedImage midwayLogo;
+	private final List<BufferedImage> mazeFullSprites;
+	private final List<BufferedImage> mazeEmptySprites;
+	private final Map<Integer, BufferedImage> symbolSprites;
+	private final Map<Integer, BufferedImage> bonusValueSprites;
+	private final Map<Integer, BufferedImage> bountyNumberSprites;
+	private final List<TimedSeq<BufferedImage>> mazesFlashingAnims;
+	private final Font font;
 
 	private Rendering2D_MsPacMan(String path, int rasterSize) {
-		sheet = new Spritesheet(image(path), rasterSize);
-
-		scoreFont = font("/emulogic.ttf", 8);
-
-		// Left part of spritesheet contains the 6 mazes, rest is on the right
-		mazeEmptyImages = new ArrayList<>(6);
-		mazeFullImages = new ArrayList<>(6);
-		mazesFlashingAnims = new ArrayList<>(6);
-		for (int i = 0; i < 6; ++i) {
-			mazeFullImages.add(sheet.image.getSubimage(0, i * 248, 226, 248));
-			mazeEmptyImages.add(sheet.image.getSubimage(226, i * 248, 226, 248));
-			BufferedImage mazeEmptyBright = sheet.createBrightEffect(mazeEmptyImages.get(i), getMazeWallBorderColor(i),
-					getMazeWallColor(i));
-			mazesFlashingAnims.add(TimedSeq.of(mazeEmptyBright, mazeEmptyImages.get(i)).frameDuration(15));
-		}
+		ss = new Spritesheet(image(path), rasterSize);
+		font = font("/emulogic.ttf", 8);
+		midwayLogo = image("/mspacman/graphics/midway.png");
 
 		//@formatter:off
 		symbolSprites = Map.of(
@@ -130,23 +118,37 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 			MsPacManGame.BANANA,     s(9,0)
 		);
 
-		bonusNumberSprites = Map.of(
-			100, s(3, 1), 
-			200, s(4, 1), 
-			500, s(5, 1), 
-			700, s(6, 1), 
+		bonusValueSprites = Map.of(
+			100,  s(3, 1), 
+			200,  s(4, 1), 
+			500,  s(5, 1), 
+			700,  s(6, 1), 
 			1000, s(7, 1), 
 			2000, s(8, 1),
 			5000, s(9, 1)
 		);
 
 		bountyNumberSprites = Map.of(
-			200, s(0, 8), 
-			400, s(1, 8), 
-			800, s(2, 8), 
+			200,  s(0, 8), 
+			400,  s(1, 8), 
+			800,  s(2, 8), 
 			1600, s(3, 8)
 		);
 		//@formatter:on
+
+		int numMazes = 6;
+		mazeEmptySprites = new ArrayList<>(numMazes);
+		mazeFullSprites = new ArrayList<>(numMazes);
+		mazesFlashingAnims = new ArrayList<>(numMazes);
+		for (int mazeIndex = 0; mazeIndex < 6; ++mazeIndex) {
+			BufferedImage mazeFullImage = ss.image.getSubimage(0, mazeIndex * 248, 226, 248);
+			mazeFullSprites.add(mazeFullImage);
+			BufferedImage mazeEmptyImage = ss.image.getSubimage(226, mazeIndex * 248, 226, 248);
+			mazeEmptySprites.add(mazeEmptyImage);
+			BufferedImage mazeFlashImage = ss.createBrightEffect(mazeEmptySprites.get(mazeIndex),
+					MAZE_WALL_BORDER_COLORS[mazeIndex], MAZE_WALL_COLORS[mazeIndex]);
+			mazesFlashingAnims.add(TimedSeq.of(mazeFlashImage, mazeEmptySprites.get(mazeIndex)).frameDuration(15));
+		}
 	}
 
 	/**
@@ -154,7 +156,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	 */
 	@Override
 	public BufferedImage s(int tileX, int tileY) {
-		return sheet.sprite(456, 0, tileX, tileY);
+		return ss.sprite(456, 0, tileX, tileY);
 	}
 
 	/**
@@ -247,27 +249,27 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 
 	public TimedSeq<BufferedImage> createFlapAnimation() {
 		return TimedSeq.of( //
-				sheet.region(456, 208, 32, 32), //
-				sheet.region(488, 208, 32, 32), //
-				sheet.region(520, 208, 32, 32), //
-				sheet.region(488, 208, 32, 32), //
-				sheet.region(456, 208, 32, 32)//
+				ss.region(456, 208, 32, 32), //
+				ss.region(488, 208, 32, 32), //
+				ss.region(520, 208, 32, 32), //
+				ss.region(488, 208, 32, 32), //
+				ss.region(456, 208, 32, 32)//
 		).repetitions(1).frameDuration(4);
 	}
 
 	public TimedSeq<BufferedImage> createStorkFlyingAnimation() {
 		return TimedSeq.of( //
-				sheet.region(489, 176, 32, 16), //
-				sheet.region(521, 176, 32, 16) //
+				ss.region(489, 176, 32, 16), //
+				ss.region(521, 176, 32, 16) //
 		).endless().frameDuration(10);
 	}
 
 	public BufferedImage getBlueBag() {
-		return sheet.region(488, 199, 8, 8);
+		return ss.region(488, 199, 8, 8);
 	}
 
 	public BufferedImage getJunior() {
-		return sheet.region(509, 200, 8, 8);
+		return ss.region(509, 200, 8, 8);
 	}
 
 	public BufferedImage getHeart() {
@@ -281,7 +283,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 
 	@Override
 	public Map<Integer, BufferedImage> getBonusNumberSprites() {
-		return bonusNumberSprites;
+		return bonusValueSprites;
 	}
 
 	@Override
@@ -291,12 +293,12 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 
 	@Override
 	public Font getArcadeFont() {
-		return scoreFont;
+		return font;
 	}
 
 	@Override
 	public Color getFoodColor(int mazeNumber) {
-		return FOOD_COLOR[mazeNumber - 1];
+		return FOOD_COLORS[mazeNumber - 1];
 	}
 
 	@Override
@@ -314,7 +316,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 		if (flashing) {
 			g.drawImage(mazeFlashing(mazeNumber).animate(), x, y, null);
 		} else {
-			g.drawImage(mazeFullImages.get(mazeNumber - 1), x, y, null);
+			g.drawImage(mazeFullSprites.get(mazeNumber - 1), x, y, null);
 		}
 	}
 
