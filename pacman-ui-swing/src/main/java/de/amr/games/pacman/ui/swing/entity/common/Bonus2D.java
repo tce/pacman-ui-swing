@@ -32,6 +32,7 @@ import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Bonus;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
+import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 
 /**
  * Bonus symbol. In Pac-Man game, it resides at a fixed position. In Ms. Pac-Man, it appears at some portal and wanders
@@ -47,7 +48,7 @@ public class Bonus2D extends GameEntity2D {
 	public Bonus2D(GameModel game, Bonus bonus, Rendering2D r2D) {
 		super(game, r2D);
 		this.bonus = bonus;
-		jumpAnimation = r2D.createBonusAnimation();
+		jumpAnimation = Rendering2D_MsPacMan.get().createBonusAnimation();
 	}
 
 	public void render(Graphics2D g) {

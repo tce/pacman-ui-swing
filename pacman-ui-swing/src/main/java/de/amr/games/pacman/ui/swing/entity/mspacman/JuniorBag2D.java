@@ -28,22 +28,23 @@ import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.model.mspacman.JuniorBag;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
+import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 
 public class JuniorBag2D {
 
 	private final JuniorBag bag;
-	private final Rendering2D rendering;
+	private final Rendering2D r2D;
 	private BufferedImage blueBag;
 	private BufferedImage junior;
 
-	public JuniorBag2D(JuniorBag bag, Rendering2D rendering) {
+	public JuniorBag2D(JuniorBag bag, Rendering2D r2D) {
 		this.bag = bag;
-		this.rendering = rendering;
-		blueBag = rendering.getBlueBag();
-		junior = rendering.getJunior();
+		this.r2D = r2D;
+		blueBag = Rendering2D_MsPacMan.get().getBlueBag();
+		junior = Rendering2D_MsPacMan.get().getJunior();
 	}
 
 	public void render(Graphics2D g) {
-		rendering.renderEntity(g, bag, bag.open ? junior : blueBag);
+		r2D.renderEntity(g, bag, bag.open ? junior : blueBag);
 	}
 }

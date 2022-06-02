@@ -38,6 +38,7 @@ import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Flap2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Heart2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
+import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
 /**
@@ -77,11 +78,11 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 		msPacMan2D = new Pac2D(context.msPac, game, r2D);
 		pacMan2D = new Pac2D(context.pacMan, game, r2D);
 		// overwrite by Pac-Man instead of Ms. Pac-Man sprites:
-		pacMan2D.munchings = r2D.createSpouseMunchingAnimations();
+		pacMan2D.munchings = Rendering2D_MsPacMan.get().createSpouseMunchingAnimations();
 		inky2D = new Ghost2D(context.inky, game, r2D);
 		pinky2D = new Ghost2D(context.pinky, game, r2D);
 		heart2D = new Heart2D(context.heart);
-		heart2D.setImage(r2D.getHeart());
+		heart2D.setImage(Rendering2D_MsPacMan.get().getHeart());
 
 		// start animations
 		msPacMan2D.munchings.values().forEach(TimedSeq::restart);

@@ -32,6 +32,7 @@ import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.mspacman.Flap;
 import de.amr.games.pacman.ui.swing.entity.common.GameEntity2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
+import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 
 /**
  * The film flap used at the beginning of the Ms. Pac-Man intermission scenes.
@@ -46,7 +47,7 @@ public class Flap2D extends GameEntity2D {
 	public Flap2D(Flap flap, GameModel game, Rendering2D r2D) {
 		super(game, r2D);
 		this.flap = flap;
-		animation = r2D.createFlapAnimation();
+		animation = Rendering2D_MsPacMan.get().createFlapAnimation();
 	}
 
 	public void render(Graphics2D g) {

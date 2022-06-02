@@ -48,7 +48,7 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
  * 
  * @author Armin Reichert
  */
-public class Rendering2D_MsPacMan extends Rendering2D {
+public class Rendering2D_MsPacMan implements Rendering2D {
 
 	/** Sprite sheet order of directions. */
 	static final List<Direction> order = List.of(Direction.RIGHT, Direction.LEFT, Direction.UP, Direction.DOWN);
@@ -85,8 +85,13 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 		new Color(255, 255, 0), 
 		new Color(255, 0, 0),
 	};
-	
 	//@formatter:on
+
+	private static final Rendering2D_MsPacMan theThing = new Rendering2D_MsPacMan();
+
+	public static Rendering2D_MsPacMan get() {
+		return theThing;
+	}
 
 	final Spritesheet sheet;
 	final Font scoreFont;
@@ -98,7 +103,7 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 	final List<BufferedImage> mazeFullImages;
 	final List<TimedSeq<BufferedImage>> mazesFlashingAnims;
 
-	public Rendering2D_MsPacMan() {
+	private Rendering2D_MsPacMan() {
 		sheet = new Spritesheet(image("/mspacman/graphics/sprites.png"), 16);
 
 		scoreFont = font("/emulogic.ttf", 8);
@@ -192,7 +197,6 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 		return munchings;
 	}
 
-	@Override
 	public Map<Direction, TimedSeq<BufferedImage>> createSpouseMunchingAnimations() {
 		Map<Direction, TimedSeq<BufferedImage>> munchings = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
@@ -238,12 +242,10 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 		return mazesFlashingAnims.get(mazeNumber - 1);
 	}
 
-	@Override
 	public TimedSeq<Integer> createBonusAnimation() {
 		return TimedSeq.of(2, -2).frameDuration(15).endless();
 	}
 
-	@Override
 	public TimedSeq<BufferedImage> createFlapAnimation() {
 		return TimedSeq.of( //
 				sheet.region(456, 208, 32, 32), //
@@ -254,7 +256,6 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 		).repetitions(1).frameDuration(4);
 	}
 
-	@Override
 	public TimedSeq<BufferedImage> createStorkFlyingAnimation() {
 		return TimedSeq.of( //
 				sheet.region(489, 176, 32, 16), //
@@ -262,17 +263,14 @@ public class Rendering2D_MsPacMan extends Rendering2D {
 		).endless().frameDuration(10);
 	}
 
-	@Override
 	public BufferedImage getBlueBag() {
 		return sheet.region(488, 199, 8, 8);
 	}
 
-	@Override
 	public BufferedImage getJunior() {
 		return sheet.region(509, 200, 8, 8);
 	}
 
-	@Override
 	public BufferedImage getHeart() {
 		return s(2, 10);
 	}

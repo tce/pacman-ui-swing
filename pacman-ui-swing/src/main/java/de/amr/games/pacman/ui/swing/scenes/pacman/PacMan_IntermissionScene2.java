@@ -72,8 +72,8 @@ public class PacMan_IntermissionScene2 extends GameScene {
 
 		pacMan2D = new Pac2D(context.pac, game, r2D);
 		blinky2D = new Ghost2D(context.blinky, game, r2D);
-		blinkyStretchedAnimation = r2D.createBlinkyStretchedAnimation();
-		blinkyDamagedAnimation = r2D.createBlinkyDamagedAnimation();
+		blinkyStretchedAnimation = Rendering2D_PacMan.get().createBlinkyStretchedAnimation();
+		blinkyDamagedAnimation = Rendering2D_PacMan.get().createBlinkyDamagedAnimation();
 	}
 
 	@Override

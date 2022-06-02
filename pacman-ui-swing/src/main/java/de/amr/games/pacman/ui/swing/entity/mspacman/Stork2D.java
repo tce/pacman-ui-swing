@@ -29,6 +29,7 @@ import java.awt.image.BufferedImage;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
+import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 
 public class Stork2D {
 
@@ -39,7 +40,7 @@ public class Stork2D {
 	public Stork2D(Entity stork, Rendering2D rendering) {
 		this.stork = stork;
 		this.rendering = rendering;
-		animation = rendering.createStorkFlyingAnimation();
+		animation = Rendering2D_MsPacMan.get().createStorkFlyingAnimation();
 	}
 
 	public void render(Graphics2D g) {

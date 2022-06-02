@@ -38,17 +38,16 @@ import de.amr.games.pacman.ui.swing.scenes.common.PlayScene;
  */
 public class ScenesMsPacMan {
 
-	public final Rendering2D_MsPacMan r2D = new Rendering2D_MsPacMan();
 	public final List<GameScene> gameScenes;
 
 	public ScenesMsPacMan(GameController gameController, V2i unscaledSize) {
 		gameScenes = List.of( //
-				new MsPacMan_IntroScene(gameController, unscaledSize, r2D), //
-				new MsPacMan_CreditScene(gameController, unscaledSize, r2D), //
-				new MsPacMan_IntermissionScene1(gameController, unscaledSize, r2D), //
-				new MsPacMan_IntermissionScene2(gameController, unscaledSize, r2D), //
-				new MsPacMan_IntermissionScene3(gameController, unscaledSize, r2D), //
-				new PlayScene(gameController, unscaledSize, r2D)//
+				new MsPacMan_IntroScene(gameController, unscaledSize, Rendering2D_MsPacMan.get()), //
+				new MsPacMan_CreditScene(gameController, unscaledSize, Rendering2D_MsPacMan.get()), //
+				new MsPacMan_IntermissionScene1(gameController, unscaledSize, Rendering2D_MsPacMan.get()), //
+				new MsPacMan_IntermissionScene2(gameController, unscaledSize, Rendering2D_MsPacMan.get()), //
+				new MsPacMan_IntermissionScene3(gameController, unscaledSize, Rendering2D_MsPacMan.get()), //
+				new PlayScene(gameController, unscaledSize, Rendering2D_MsPacMan.get())//
 		);
 	}
 }

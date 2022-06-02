@@ -23,10 +23,6 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.rendering.common;
 
-import static de.amr.games.pacman.model.common.actors.Ghost.CYAN_GHOST;
-import static de.amr.games.pacman.model.common.actors.Ghost.ORANGE_GHOST;
-import static de.amr.games.pacman.model.common.actors.Ghost.PINK_GHOST;
-import static de.amr.games.pacman.model.common.actors.Ghost.RED_GHOST;
 import static de.amr.games.pacman.model.common.world.World.HTS;
 import static de.amr.games.pacman.model.common.world.World.TS;
 import static de.amr.games.pacman.model.common.world.World.t;
@@ -45,6 +41,7 @@ import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Entity;
+import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
 
 /**
@@ -52,127 +49,87 @@ import de.amr.games.pacman.model.common.world.ArcadeWorld;
  * 
  * @author Armin Reichert
  */
-public abstract class Rendering2D {
+public interface Rendering2D {
 
-	public Color getGhostColor(int ghostID) {
+	default Color getGhostColor(int ghostID) {
 		return switch (ghostID) {
-		case RED_GHOST -> Color.RED;
-		case PINK_GHOST -> new Color(252, 181, 255);
-		case CYAN_GHOST -> Color.CYAN;
-		case ORANGE_GHOST -> new Color(253, 192, 90);
+		case Ghost.RED_GHOST -> Color.RED;
+		case Ghost.PINK_GHOST -> new Color(252, 181, 255);
+		case Ghost.CYAN_GHOST -> Color.CYAN;
+		case Ghost.ORANGE_GHOST -> new Color(253, 192, 90);
 		default -> Color.WHITE;
 		};
 	}
 
-	public abstract BufferedImage s(int tileX, int tileY);
+	BufferedImage s(int tileX, int tileY);
 
-	public abstract Map<Direction, TimedSeq<BufferedImage>> createPlayerMunchingAnimations();
+	Map<Direction, TimedSeq<BufferedImage>> createPlayerMunchingAnimations();
 
-	public abstract TimedSeq<BufferedImage> createPlayerDyingAnimation();
+	TimedSeq<BufferedImage> createPlayerDyingAnimation();
 
-	public abstract Map<Direction, TimedSeq<BufferedImage>> createGhostKickingAnimations(int ghostID);
+	Map<Direction, TimedSeq<BufferedImage>> createGhostKickingAnimations(int ghostID);
 
-	public abstract TimedSeq<BufferedImage> createGhostFrightenedAnimation();
+	TimedSeq<BufferedImage> createGhostFrightenedAnimation();
 
-	public abstract TimedSeq<BufferedImage> createGhostFlashingAnimation();
+	TimedSeq<BufferedImage> createGhostFlashingAnimation();
 
-	public abstract Map<Direction, TimedSeq<BufferedImage>> createGhostReturningHomeAnimations();
+	Map<Direction, TimedSeq<BufferedImage>> createGhostReturningHomeAnimations();
 
-	public abstract Map<Integer, BufferedImage> getSymbolSpritesMap();
+	Map<Integer, BufferedImage> getSymbolSpritesMap();
 
-	public abstract Map<Integer, BufferedImage> getBountyNumberSprites();
+	Map<Integer, BufferedImage> getBountyNumberSprites();
 
-	public abstract Map<Integer, BufferedImage> getBonusNumberSprites();
+	Map<Integer, BufferedImage> getBonusNumberSprites();
 
-	public abstract BufferedImage symbolSprite(int symbol);
+	BufferedImage symbolSprite(int symbol);
 
-	public abstract BufferedImage lifeSprite();
+	BufferedImage lifeSprite();
 
-	public abstract TimedSeq<BufferedImage> mazeFlashing(int mazeNumber);
+	TimedSeq<BufferedImage> mazeFlashing(int mazeNumber);
 
-	public abstract Color getMazeWallColor(int mazeIndex);
+	Color getMazeWallColor(int mazeIndex);
 
-	public abstract Color getMazeWallBorderColor(int mazeIndex);
+	Color getMazeWallBorderColor(int mazeIndex);
 
 	/**
 	 * @param mazeNumber the 1-based maze number
 	 * @return color of pellets in this maze
 	 */
-	public abstract Color getFoodColor(int mazeNumber);
+	Color getFoodColor(int mazeNumber);
 
-	public abstract Font getArcadeFont();
-
-	// only use in Pac-Man:
-
-	public TimedSeq<BufferedImage> createBlinkyStretchedAnimation() {
-		return null;
-	}
-
-	public TimedSeq<BufferedImage> createBlinkyDamagedAnimation() {
-		return null;
-	}
-
-	// only used in Ms. Pac-Man:
-
-	public TimedSeq<Integer> createBonusAnimation() {
-		return null;
-	}
-
-	public Map<Direction, TimedSeq<BufferedImage>> createSpouseMunchingAnimations() {
-		return null;
-	}
-
-	public TimedSeq<BufferedImage> createFlapAnimation() {
-		return null;
-	}
-
-	public TimedSeq<BufferedImage> createStorkFlyingAnimation() {
-		return null;
-	}
-
-	public BufferedImage getBlueBag() {
-		return null;
-	}
-
-	public BufferedImage getJunior() {
-		return null;
-	}
-
-	public BufferedImage getHeart() {
-		return null;
-	}
+	Font getArcadeFont();
 
 	// drawing
 
-	public void renderEntity(Graphics2D g, Entity entity, BufferedImage sprite) {
+	default void renderEntity(Graphics2D g, Entity entity, BufferedImage sprite) {
 		if (entity.visible && sprite != null) {
 			renderSprite(g, sprite, (int) entity.position.x, (int) entity.position.y);
 		}
 	}
 
-	public void renderSprite(Graphics2D g, BufferedImage sprite, int x, int y) {
+	default void renderSprite(Graphics2D g, BufferedImage sprite, int x, int y) {
 		int dx = HTS - sprite.getWidth() / 2, dy = HTS - sprite.getHeight() / 2;
 		g.drawImage(sprite, x + dx, y + dy, null);
 	}
 
-	public void hideEatenFood(Graphics2D g, Stream<V2i> tiles, Predicate<V2i> eaten) {
+	default void hideEatenFood(Graphics2D g, Stream<V2i> tiles, Predicate<V2i> eaten) {
 		g.setColor(Color.BLACK);
 		tiles.filter(eaten).forEach(tile -> {
 			g.fillRect(tile.x * TS, tile.y * TS, TS, TS);
 		});
 	}
 
-	public abstract void drawMaze(Graphics2D g, int mazeNumber, int i, int t, boolean running);
+	void drawMaze(Graphics2D g, int mazeNumber, int i, int t, boolean running);
 
-	public void drawCredit(Graphics2D g, int credit) {
+	default void drawCredit(Graphics2D g, int credit) {
 		g.setFont(getArcadeFont());
 		g.setColor(Color.WHITE);
 		g.drawString("CREDIT  %d".formatted(credit), t(2), t(ArcadeWorld.TILES_Y) - 2);
 	}
 
-	public abstract void drawCopyright(Graphics2D g, int x, int y);
+	void drawCopyright(Graphics2D g, int x, int y);
 
-	public void drawScore(Graphics2D g, GameModel game, boolean showHiscoreOnly) {
+	default void drawScore(Graphics2D g, GameModel game, boolean showHiscoreOnly) {
 		g.setFont(getArcadeFont());
 		g.translate(0, 2);
 		g.setColor(Color.WHITE);
@@ -196,7 +153,7 @@ public abstract class Rendering2D {
 		g.translate(0, -3);
 	}
 
-	public void drawLivesCounter(Graphics2D g, GameModel game, int x, int y) {
+	default void drawLivesCounter(Graphics2D g, GameModel game, int x, int y) {
 		int maxLivesDisplayed = 5;
 		for (int i = 0; i < Math.min(game.lives, maxLivesDisplayed); ++i) {
 			g.drawImage(lifeSprite(), x + t(2 * i), y, null);
@@ -208,7 +165,7 @@ public abstract class Rendering2D {
 		}
 	}
 
-	public void drawLevelCounter(Graphics2D g, GameModel game, int rightX, int y) {
+	default void drawLevelCounter(Graphics2D g, GameModel game, int rightX, int y) {
 		int x = rightX;
 		int firstLevel = Math.max(1, game.level.number - 6);
 		for (int levelNumber = firstLevel; levelNumber <= game.level.number; ++levelNumber) {
@@ -218,7 +175,7 @@ public abstract class Rendering2D {
 		}
 	}
 
-	public void drawGameState(Graphics2D g, GameModel game, GameState gameState) {
+	default void drawGameState(Graphics2D g, GameModel game, GameState gameState) {
 		if (gameState == GameState.READY) {
 			g.setFont(getArcadeFont());
 			g.setColor(Color.YELLOW);

@@ -36,6 +36,7 @@ import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Flap2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
+import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
 /**
@@ -70,7 +71,7 @@ public class MsPacMan_IntermissionScene2 extends GameScene {
 		msPacMan2D = new Pac2D(context.msPacMan, game, r2D);
 		msPacMan2D.munchings.values().forEach(TimedSeq::restart);
 		pacMan2D = new Pac2D(context.pacMan, game, r2D);
-		pacMan2D.munchings = r2D.createSpouseMunchingAnimations();
+		pacMan2D.munchings = Rendering2D_MsPacMan.get().createSpouseMunchingAnimations();
 		pacMan2D.munchings.values().forEach(TimedSeq::restart);
 	}
 

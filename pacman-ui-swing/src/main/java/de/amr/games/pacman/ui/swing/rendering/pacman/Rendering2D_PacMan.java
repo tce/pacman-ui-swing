@@ -53,12 +53,18 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
  * 
  * @author Armin Reichert
  */
-public class Rendering2D_PacMan extends Rendering2D {
+public class Rendering2D_PacMan implements Rendering2D {
 
 	private static final Color FOOD_COLOR = new Color(254, 189, 180);
 
 	/** Sprite sheet order of directions. */
 	static final List<Direction> order = Arrays.asList(RIGHT, LEFT, UP, DOWN);
+
+	private static final Rendering2D_PacMan theThing = new Rendering2D_PacMan();
+
+	public static Rendering2D_PacMan get() {
+		return theThing;
+	}
 
 	private static int index(Direction dir) {
 		return order.indexOf(dir);
@@ -76,7 +82,7 @@ public class Rendering2D_PacMan extends Rendering2D {
 	public final TimedSeq<BufferedImage> blinkyPatched;
 	public final BufferedImage nailSprite;
 
-	public Rendering2D_PacMan() {
+	private Rendering2D_PacMan() {
 		sheet = new Spritesheet(image("/pacman/graphics/sprites.png"), 16);
 
 		scoreFont = font("/emulogic.ttf", 8);
@@ -221,12 +227,10 @@ public class Rendering2D_PacMan extends Rendering2D {
 				.frameDuration(4).endless().run();
 	}
 
-	@Override
 	public TimedSeq<BufferedImage> createBlinkyStretchedAnimation() {
 		return TimedSeq.of(sheet.sprite(9, 6), sheet.sprite(10, 6), sheet.sprite(11, 6), sheet.sprite(12, 6));
 	}
 
-	@Override
 	public TimedSeq<BufferedImage> createBlinkyDamagedAnimation() {
 		return TimedSeq.of(sheet.sprite(8, 7), sheet.sprite(9, 7));
 	}
