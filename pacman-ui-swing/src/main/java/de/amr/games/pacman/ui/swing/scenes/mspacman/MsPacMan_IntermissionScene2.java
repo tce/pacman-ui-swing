@@ -33,7 +33,7 @@ import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
-import de.amr.games.pacman.ui.swing.entity.common.Player2D;
+import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Flap2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
@@ -50,8 +50,8 @@ public class MsPacMan_IntermissionScene2 extends GameScene {
 
 	private final Intermission2Controller sceneController;
 	private final Context context;
-	private Player2D msPacMan2D;
-	private Player2D pacMan2D;
+	private Pac2D msPacMan2D;
+	private Pac2D pacMan2D;
 	private Flap2D flap2D;
 
 	public MsPacMan_IntermissionScene2(GameController gameController, V2i size, Rendering2D r2D) {
@@ -67,9 +67,9 @@ public class MsPacMan_IntermissionScene2 extends GameScene {
 		super.init(game);
 		sceneController.restartInInitialState(Intermission2Controller.State.FLAP);
 		flap2D = new Flap2D(context.flap, game, r2D);
-		msPacMan2D = new Player2D(context.msPacMan, game, r2D);
+		msPacMan2D = new Pac2D(context.msPacMan, game, r2D);
 		msPacMan2D.munchings.values().forEach(TimedSeq::restart);
-		pacMan2D = new Player2D(context.pacMan, game, r2D);
+		pacMan2D = new Pac2D(context.pacMan, game, r2D);
 		pacMan2D.munchings = r2D.createSpouseMunchingAnimations();
 		pacMan2D.munchings.values().forEach(TimedSeq::restart);
 	}

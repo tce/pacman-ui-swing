@@ -31,7 +31,7 @@ import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
-import de.amr.games.pacman.ui.swing.entity.common.Player2D;
+import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Flap2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.JuniorBag2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Stork2D;
@@ -53,8 +53,8 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 	private final Intermission3Controller sceneController;
 	private final Intermission3Controller.Context context;
 
-	private Player2D msPacMan2D;
-	private Player2D pacMan2D;
+	private Pac2D msPacMan2D;
+	private Pac2D pacMan2D;
 	private Flap2D flap2D;
 	private Stork2D stork2D;
 	private JuniorBag2D bag2D;
@@ -71,8 +71,8 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 	public void init(GameModel game) {
 		super.init(game);
 		sceneController.restartInInitialState(Intermission3Controller.State.FLAP);
-		msPacMan2D = new Player2D(context.msPacMan, game, r2D);
-		pacMan2D = new Player2D(context.pacMan, game, r2D);
+		msPacMan2D = new Pac2D(context.msPacMan, game, r2D);
+		pacMan2D = new Pac2D(context.pacMan, game, r2D);
 		pacMan2D.munchings = r2D.createSpouseMunchingAnimations();
 		flap2D = new Flap2D(context.flap, game, r2D);
 		stork2D = new Stork2D(context.stork, r2D);

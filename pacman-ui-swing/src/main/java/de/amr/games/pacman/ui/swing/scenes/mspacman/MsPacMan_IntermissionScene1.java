@@ -34,7 +34,7 @@ import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
-import de.amr.games.pacman.ui.swing.entity.common.Player2D;
+import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Flap2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Heart2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
@@ -53,8 +53,8 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 
 	private final Intermission1Controller sceneController;
 	private final Intermission1Controller.Context context;
-	private Player2D msPacMan2D;
-	private Player2D pacMan2D;
+	private Pac2D msPacMan2D;
+	private Pac2D pacMan2D;
 	private Ghost2D inky2D;
 	private Ghost2D pinky2D;
 	private Flap2D flap2D;
@@ -74,8 +74,8 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 		sceneController.restartInInitialState(Intermission1Controller.State.FLAP);
 
 		flap2D = new Flap2D(context.flap, game, r2D);
-		msPacMan2D = new Player2D(context.msPac, game, r2D);
-		pacMan2D = new Player2D(context.pacMan, game, r2D);
+		msPacMan2D = new Pac2D(context.msPac, game, r2D);
+		pacMan2D = new Pac2D(context.pacMan, game, r2D);
 		// overwrite by Pac-Man instead of Ms. Pac-Man sprites:
 		pacMan2D.munchings = r2D.createSpouseMunchingAnimations();
 		inky2D = new Ghost2D(context.inky, game, r2D);

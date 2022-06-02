@@ -39,13 +39,13 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
  * 
  * @author Armin Reichert
  */
-public class Player2D extends GameEntity2D {
+public class Pac2D extends GameEntity2D {
 
 	public final Pac pac;
 	public Map<Direction, TimedSeq<BufferedImage>> munchings;
 	public final TimedSeq<BufferedImage> dying;
 
-	public Player2D(Pac pac, GameModel game, Rendering2D r2D) {
+	public Pac2D(Pac pac, GameModel game, Rendering2D r2D) {
 		super(game, r2D);
 		this.pac = pac;
 		munchings = r2D.createPlayerMunchingAnimations();

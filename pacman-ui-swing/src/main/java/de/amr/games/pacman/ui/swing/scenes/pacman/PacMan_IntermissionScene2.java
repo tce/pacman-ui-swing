@@ -38,7 +38,7 @@ import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
-import de.amr.games.pacman.ui.swing.entity.common.Player2D;
+import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
@@ -53,7 +53,7 @@ public class PacMan_IntermissionScene2 extends GameScene {
 	private final Intermission2Controller sceneController;
 	private final Intermission2Controller.Context context;
 
-	private Player2D pacMan2D;
+	private Pac2D pacMan2D;
 	private Ghost2D blinky2D;
 	private TimedSeq<BufferedImage> blinkyStretchedAnimation;
 	private TimedSeq<BufferedImage> blinkyDamagedAnimation;
@@ -70,7 +70,7 @@ public class PacMan_IntermissionScene2 extends GameScene {
 		super.init(game);
 		sceneController.init();
 
-		pacMan2D = new Player2D(context.pac, game, r2D);
+		pacMan2D = new Pac2D(context.pac, game, r2D);
 		blinky2D = new Ghost2D(context.blinky, game, r2D);
 		blinkyStretchedAnimation = r2D.createBlinkyStretchedAnimation();
 		blinkyDamagedAnimation = r2D.createBlinkyDamagedAnimation();

@@ -46,7 +46,7 @@ import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Bonus2D;
 import de.amr.games.pacman.ui.swing.entity.common.Energizer2D;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
-import de.amr.games.pacman.ui.swing.entity.common.Player2D;
+import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.rendering.common.Debug;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
@@ -57,7 +57,7 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
  */
 public class PlayScene extends GameScene {
 
-	private Player2D player2D;
+	private Pac2D player2D;
 	private Ghost2D[] ghosts2D;
 	private Energizer2D[] energizers2D;
 	private Bonus2D bonus2D;
@@ -84,7 +84,7 @@ public class PlayScene extends GameScene {
 	public void init(GameModel game) {
 		super.init(game);
 
-		player2D = new Player2D(game.pac, game, r2D);
+		player2D = new Pac2D(game.pac, game, r2D);
 		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, r2D)).toArray(Ghost2D[]::new);
 		energizers2D = game.level.world.energizerTiles().map(Energizer2D::new).toArray(Energizer2D[]::new);
 		bonus2D = new Bonus2D(game, game.bonus(), r2D);
