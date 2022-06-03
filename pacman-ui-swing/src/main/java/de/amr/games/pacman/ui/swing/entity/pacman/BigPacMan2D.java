@@ -39,12 +39,16 @@ public class BigPacMan2D {
 
 	private final Rendering2D_PacMan rendering;
 	private final Pac pacMan;
-	public final SpriteAnimation<BufferedImage> munchingAnimation;
+	private final SpriteAnimation<BufferedImage> munchingAnimation;
 
 	public BigPacMan2D(Pac pacMan, Rendering2D_PacMan rendering) {
 		this.pacMan = pacMan;
 		this.rendering = rendering;
 		munchingAnimation = rendering.createBigPacManMunchingAnimation();
+	}
+
+	public void startMunching() {
+		munchingAnimation.restart();
 	}
 
 	public void render(Graphics2D g_) {
