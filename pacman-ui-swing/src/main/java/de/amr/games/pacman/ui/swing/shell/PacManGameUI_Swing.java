@@ -33,7 +33,6 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.Robot;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -196,7 +195,6 @@ public class PacManGameUI_Swing extends GameEventAdapter {
 				g.setColor(Color.BLACK);
 				g.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 				g.scale(scaling, scaling);
-				g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 				currentGameScene.render(g);
 				flashMessageDisplay.render(g);
 				g.dispose();
