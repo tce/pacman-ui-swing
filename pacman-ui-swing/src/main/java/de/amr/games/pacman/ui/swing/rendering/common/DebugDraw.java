@@ -41,11 +41,17 @@ import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 
-public class Debug {
+/**
+ * @author Armin Reichert
+ */
+public class DebugDraw {
 
 	public static boolean on = false;
 
 	public static void drawPlaySceneDebugInfo(Graphics2D g, GameController controller) {
+		if (!on) {
+			return;
+		}
 		GameModel game = controller.game();
 		final Color[] GHOST_COLORS = { Color.RED, Color.PINK, Color.CYAN, Color.ORANGE };
 
@@ -85,6 +91,9 @@ public class Debug {
 	}
 
 	public static void drawMazeStructure(Graphics2D g, GameModel game) {
+		if (!on) {
+			return;
+		}
 		Color dark = new Color(80, 80, 80, 200);
 		Stroke thin = new BasicStroke(0.1f);
 		g.setColor(dark);

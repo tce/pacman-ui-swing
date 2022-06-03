@@ -23,6 +23,7 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.scenes.common;
 
+import static de.amr.games.pacman.lib.TickTimer.sec_to_ticks;
 import static de.amr.games.pacman.model.common.world.World.t;
 
 import java.awt.Graphics2D;
@@ -47,9 +48,10 @@ import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Bonus2D;
 import de.amr.games.pacman.ui.swing.entity.common.Energizer2D;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
+import de.amr.games.pacman.ui.swing.entity.common.Ghost2D.GhostAnimation;
 import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.entity.common.Pac2D.PacAnimation;
-import de.amr.games.pacman.ui.swing.rendering.common.Debug;
+import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
@@ -61,7 +63,7 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
  */
 public class PlayScene extends GameScene {
 
-	private Pac2D player2D;
+	private Pac2D pac2D;
 	private Ghost2D[] ghosts2D;
 	private Energizer2D[] energizers2D;
 	private Bonus2D bonus2D;
@@ -95,17 +97,23 @@ public class PlayScene extends GameScene {
 	public void init(GameModel game) {
 		super.init(game);
 
-		player2D = new Pac2D(game.pac, game, new PacAnimations(r2D));
+		pac2D = new Pac2D(game.pac, game, new PacAnimations(r2D));
 		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, new GhostAnimations(ghost.id, r2D)))
 				.toArray(Ghost2D[]::new);
 		energizers2D = game.level.world.energizerTiles().map(Energizer2D::new).toArray(Energizer2D[]::new);
 		bonus2D = new Bonus2D(game, game.bonus());
 		mazeFlashing = r2D.mazeFlashing(mazeNumber(game)).repetitions(game.level.numFlashes).reset();
-//		game.pac.powerTimer.addEventListener(this::handleGhostsFlashing);
 	}
 
 	@Override
 	public void update() {
+		updateMaze();
+		updateAnimations();
+		updateSound();
+	}
+
+	// TODO check this
+	private void updateMaze() {
 		switch (gameController.state()) {
 		case LEVEL_COMPLETE -> {
 			if (mazeFlashing.isComplete()) {
@@ -124,7 +132,20 @@ public class PlayScene extends GameScene {
 		default -> {
 		}
 		}
-		updateSound();
+	}
+
+	private void updateAnimations() {
+		long recoveringTicks = sec_to_ticks(2); // TODO not sure about recovering duration
+		boolean recoveringStarts = game.pac.powerTimer.remaining() == recoveringTicks;
+		boolean recovering = game.pac.powerTimer.remaining() <= recoveringTicks;
+		if (recoveringStarts) {
+			for (var ghost2D : ghosts2D) {
+				ghost2D.animations.startFlashing(game.level.numFlashes, recoveringTicks);
+			}
+		}
+		for (var ghost2D : ghosts2D) {
+			ghost2D.updateAnimation(game.pac.hasPower(), recovering);
+		}
 	}
 
 	private void updateSound() {
@@ -136,13 +157,9 @@ public class PlayScene extends GameScene {
 			if (SoundManager.get().getClip(GameSound.PACMAN_MUNCH).isRunning() && game.pac.starvingTicks > 10) {
 				SoundManager.get().stop(GameSound.PACMAN_MUNCH);
 			}
-			boolean scatterPhaseStarts = game.huntingTimer.scatteringPhase() >= 0 && game.huntingTimer.tick() == 0;
-			if (scatterPhaseStarts) {
+			if (game.huntingTimer.tick() == 0) {
 				SoundManager.get().stopSirens();
-				SoundManager.get().startSiren(game.huntingTimer.scatteringPhase());
-			}
-			if (game.huntingTimer.chasingPhase() >= 0 && !SoundManager.get().isAnySirenPlaying()) {
-				SoundManager.get().startSiren(game.huntingTimer.chasingPhase());
+				SoundManager.get().startSiren(game.huntingTimer.phase() / 2);
 			}
 		}
 		default -> {
@@ -151,43 +168,81 @@ public class PlayScene extends GameScene {
 	}
 
 	@Override
-	public void end() {
-//		game.pac.powerTimer.removeEventListener(this::handleGhostsFlashing);
+	public void render(Graphics2D g) {
+		boolean playing = gameController.isGameRunning();
+		boolean hasCredit = gameController.credit() > 0;
+
+		boolean showCredit = !hasCredit && !playing;
+		boolean showLivesCounter = hasCredit && playing;
+		boolean showLevelCounter = hasCredit;
+		boolean showHighScoreOnly = !playing && gameController.state() != GameState.READY
+				&& gameController.state() != GameState.GAME_OVER;
+
+		r2D.drawScore(g, game, showHighScoreOnly);
+		if (showLivesCounter) {
+			r2D.drawLivesCounter(g, game, t(2), t(34));
+		}
+		if (showCredit) {
+			r2D.drawCredit(g, gameController.credit());
+		}
+		if (showLevelCounter) {
+			r2D.drawLevelCounter(g, game, t(24), t(34));
+		}
+
+		r2D.drawMaze(g, mazeNumber(game), 0, t(3), mazeFlashing.isRunning());
+		if (!mazeFlashing.isRunning()) {
+			r2D.drawEatenFood(g, game.level.world.tiles(), game.level.world::containsEatenFood);
+			Stream.of(energizers2D).forEach(energizer2D -> energizer2D.render(g));
+		}
+		DebugDraw.drawMazeStructure(g, game);
+
+		if (!hasCredit) {
+			r2D.drawGameState(g, game, GameState.GAME_OVER);
+		} else {
+			r2D.drawGameState(g, game, gameController.state());
+		}
+
+		bonus2D.render(g, r2D);
+		pac2D.render(g, r2D);
+		Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.render(g, r2D));
+
+		DebugDraw.drawPlaySceneDebugInfo(g, gameController);
 	}
 
 	@Override
 	public void onGameStateChange(GameStateChangeEvent e) {
-		SoundManager.get().setMuted(gameController.credit() == 0); // TODO
-
+		boolean hasCredit = gameController.credit() > 0;
+		boolean playing = gameController.isGameRunning();
 		switch (e.newGameState) {
-
 		case READY -> {
+			SoundManager.get().stopAll();
 			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(TimedSeq::reset);
 			r2D.mazeFlashing(mazeNumber(game)).reset();
-			SoundManager.get().stopAll();
-			if (gameController.credit() > 0 && !gameController.isGameRunning()) {
-				SoundManager.get().setMuted(false);
+			if (!playing) {
 				SoundManager.get().play(GameSound.GAME_READY);
 			}
 		}
-
 		case HUNTING -> {
 			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(TimedSeq::restart);
+			pac2D.animations.restart();
+			Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.animations.restart(GhostAnimation.COLOR));
 		}
-
 		case PACMAN_DYING -> {
 			gameController.state().timer().setDurationSeconds(4);
 			gameController.state().timer().start();
 			SoundManager.get().stopAll();
-			player2D.animations.selectAnimation(PacAnimation.DYING);
+			pac2D.animations.selectAnimation(PacAnimation.DYING);
+			pac2D.animations.selectedAnimation().stop();
 			afterSeconds(1, () -> {
 				game.ghosts().forEach(Ghost::hide);
 			});
-			afterSeconds(2, () -> {
-				player2D.animations.selectedAnimation().run();
-				if (gameController.isGameRunning()) {
-					SoundManager.get().play(GameSound.PACMAN_DEATH);
-				}
+			afterSeconds(1.5, () -> {
+				SoundManager.get().play(GameSound.PACMAN_DEATH);
+				pac2D.animations.selectedAnimation().run();
+			});
+			afterSeconds(3.5, () -> {
+				game.pac.hide();
+				pac2D.animations.selectAnimation(PacAnimation.MUNCHING);
 			});
 		}
 
@@ -273,48 +328,4 @@ public class PlayScene extends GameScene {
 		}
 	}
 
-	@Override
-	public void render(Graphics2D g) {
-		r2D.drawMaze(g, mazeNumber(game), 0, t(3), mazeFlashing.isRunning());
-		if (!mazeFlashing.isRunning()) {
-			r2D.drawEatenFood(g, game.level.world.tiles(), game.level.world::containsEatenFood);
-			Stream.of(energizers2D).forEach(energizer2D -> energizer2D.render(g));
-		}
-		if (Debug.on) {
-			Debug.drawMazeStructure(g, game);
-		}
-		if (gameController.credit() == 0) {
-			r2D.drawGameState(g, game, GameState.GAME_OVER);
-		} else {
-			r2D.drawGameState(g, game, gameController.state());
-			r2D.drawLevelCounter(g, game, t(24), t(34));
-		}
-		bonus2D.render(g, r2D);
-		Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.render(g, r2D));
-
-		boolean showCredit = !gameController.isGameRunning() && gameController.credit() == 0;
-		boolean showHighScoreOnly = !gameController.isGameRunning() && gameController.state() != GameState.READY
-				&& gameController.state() != GameState.GAME_OVER;
-		boolean showLivesCounter = gameController.credit() > 0 && !showHighScoreOnly;
-		r2D.drawScore(g, game, showHighScoreOnly);
-		if (showLivesCounter) {
-			r2D.drawLivesCounter(g, game, t(2), t(34));
-		}
-		if (showCredit) {
-			r2D.drawCredit(g, gameController.credit());
-		}
-		if (Debug.on) {
-			Debug.drawPlaySceneDebugInfo(g, gameController);
-		}
-	}
-//
-//	private void handleGhostsFlashing(TickTimerEvent e) {
-//		if (e.type == TickTimerEvent.Type.HALF_EXPIRED) {
-//			game.ghosts(GhostState.FRIGHTENED).forEach(ghost -> {
-//				TimedSeq<?> flashing = ghosts2D[ghost.id].animFlashing;
-//				long frameTime = e.ticks / (game.level.numFlashes * flashing.numFrames());
-//				flashing.frameDuration(frameTime).repetitions(game.level.numFlashes).restart();
-//			});
-//		}
-//	}
 }

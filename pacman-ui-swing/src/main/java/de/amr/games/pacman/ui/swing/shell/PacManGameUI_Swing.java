@@ -54,7 +54,7 @@ import de.amr.games.pacman.model.common.world.World;
 import de.amr.games.pacman.ui.swing.app.GameLoop;
 import de.amr.games.pacman.ui.swing.assets.AssetLoader;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
-import de.amr.games.pacman.ui.swing.rendering.common.Debug;
+import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.scenes.mspacman.ScenesMsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.pacman.ScenesPacMan;
@@ -218,8 +218,8 @@ public class PacManGameUI_Swing extends GameEventAdapter {
 		}
 
 		else if (Keyboard.keyPressed(MOD_CTRL, "D")) {
-			Debug.on = !Debug.on;
-			log("UI debug mode is %s", Debug.on ? "on" : "off");
+			DebugDraw.on = !DebugDraw.on;
+			log("UI debug mode is %s", DebugDraw.on ? "on" : "off");
 		}
 
 		else if (Keyboard.keyPressed("E")) {
