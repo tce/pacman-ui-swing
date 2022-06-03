@@ -186,7 +186,7 @@ public class PacMan_IntroScene extends GameScene {
 
 	private void drawGhost(Graphics2D g, int ghostID, int x, int y) {
 		BufferedImage sprite = r2D.spritesheet().tile(0, 4 + ghostID);
-		r2D.renderSprite(g, sprite, x, y);
+		r2D.drawSpriteCenteredOverBBox(g, sprite, x, y);
 	}
 
 	private void drawPoints(Graphics2D g, int tileX, int tileY) {

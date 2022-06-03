@@ -72,7 +72,7 @@ public class MsPacMan_CreditScene extends GameScene {
 		g.drawString("1 PLAYER ONLY", t(8), t(18));
 		g.drawString("ADDITIONAL    AT 10000", t(2), t(25));
 		BufferedImage msPacMan = Rendering2D_MsPacMan.get().rhs(1, 0);
-		r2D.renderSprite(g, msPacMan, t(13) + World.HTS, t(24) - 2);
+		r2D.drawSpriteCenteredOverBBox(g, msPacMan, t(13) + World.HTS, t(24) - 2);
 		g.setFont(r2D.getArcadeFont());
 		g.setFont(r2D.getArcadeFont().deriveFont(6.0f));
 		g.drawString("PTS", t(25), t(25));

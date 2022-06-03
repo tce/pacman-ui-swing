@@ -276,15 +276,15 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	public void drawNail(Graphics2D g, Entity nail) {
-		renderEntity(g, nail, nailSprite);
+		drawEntity(g, nail, nailSprite);
 	}
 
 	public void drawBlinkyPatched(Graphics2D g, Ghost blinky) {
-		renderEntity(g, blinky, blinkyPatched.animate());
+		drawEntity(g, blinky, blinkyPatched.animate());
 	}
 
 	public void drawBlinkyNaked(Graphics2D g, Ghost blinky) {
-		renderEntity(g, blinky, blinkyHalfNaked.animate());
+		drawEntity(g, blinky, blinkyHalfNaked.animate());
 	}
 
 	@Override

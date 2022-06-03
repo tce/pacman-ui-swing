@@ -70,6 +70,6 @@ public class Pac2D extends GameEntity2D {
 			}
 			sprite = munchings.get(pac.moveDir()).frame();
 		}
-		r2D.renderEntity(g, pac, sprite);
+		r2D.drawEntity(g, pac, sprite);
 	}
 }

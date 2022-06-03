@@ -44,6 +44,6 @@ public class Stork2D {
 	}
 
 	public void render(Graphics2D g) {
-		rendering.renderEntity(g, stork, animation.animate());
+		rendering.drawEntity(g, stork, animation.animate());
 	}
 }

@@ -91,15 +91,15 @@ public interface Rendering2D {
 
 	// Drawing
 
-	default void renderEntity(Graphics2D g, Entity entity, BufferedImage sprite) {
+	default void drawEntity(Graphics2D g, Entity entity, BufferedImage sprite) {
 		if (entity.visible && sprite != null) {
-			renderSprite(g, sprite, (int) entity.position.x, (int) entity.position.y);
+			drawSpriteCenteredOverBBox(g, sprite, (int) entity.position.x, (int) entity.position.y);
 		}
 	}
 
-	default void renderSprite(Graphics2D g, BufferedImage sprite, int x, int y) {
+	default void drawSpriteCenteredOverBBox(Graphics2D g, BufferedImage sprite, double x, double y) {
 		int dx = HTS - sprite.getWidth() / 2, dy = HTS - sprite.getHeight() / 2;
-		g.drawImage(sprite, x + dx, y + dy, null);
+		g.drawImage(sprite, (int) (x + dx), (int) (y + dy), null);
 	}
 
 	default void hideEatenFood(Graphics2D g, Stream<V2i> tiles, Predicate<V2i> eaten) {

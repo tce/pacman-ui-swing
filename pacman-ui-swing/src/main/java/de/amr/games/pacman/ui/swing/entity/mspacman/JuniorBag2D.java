@@ -45,6 +45,6 @@ public class JuniorBag2D {
 	}
 
 	public void render(Graphics2D g) {
-		r2D.renderEntity(g, bag, bag.open ? junior : blueBag);
+		r2D.drawEntity(g, bag, bag.open ? junior : blueBag);
 	}
 }

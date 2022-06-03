@@ -53,7 +53,7 @@ public class BigPacMan2D {
 		// lift it up such that it sits on the ground instead of being vertically
 		// centered to the ground
 		g.translate(0, -sprite.getHeight() / 2 + 8);
-		rendering.renderEntity(g, pacMan, sprite);
+		rendering.drawEntity(g, pacMan, sprite);
 		g.dispose();
 	}
 }
