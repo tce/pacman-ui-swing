@@ -58,7 +58,14 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	//@formatter:off
-	static final Color[] MAZE_WALL_COLORS = { 
+	static final Color[] GHOST_COLORS = {
+		Color.RED,
+		new Color(252, 181, 255),
+		Color.CYAN,
+		new Color(253, 192, 90)
+	};
+	
+	static final Color[] MAZE_TOP_COLORS = { 
 		new Color(255, 183, 174), 
 		new Color(71, 183, 255), 
 		new Color(222, 151, 81),
@@ -67,7 +74,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 		new Color(255, 183, 174)
 	};
 
-	static final Color[] MAZE_WALL_BORDER_COLORS = { 
+	static final Color[] MAZE_SIDE_COLORS = { 
 		new Color(255, 0, 0), 
 		new Color(222, 222, 255),
 		new Color(222, 222, 255), 
@@ -109,30 +116,30 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 
 		//@formatter:off
 		symbolSprites = Map.of(
-			MsPacManGame.CHERRIES,   s(3,0),
-			MsPacManGame.STRAWBERRY, s(4,0),
-			MsPacManGame.PEACH,      s(5,0),
-			MsPacManGame.PRETZEL,    s(6,0),
-			MsPacManGame.APPLE,      s(7,0),
-			MsPacManGame.PEAR,       s(8,0),
-			MsPacManGame.BANANA,     s(9,0)
+			MsPacManGame.CHERRIES,   rhs(3,0),
+			MsPacManGame.STRAWBERRY, rhs(4,0),
+			MsPacManGame.PEACH,      rhs(5,0),
+			MsPacManGame.PRETZEL,    rhs(6,0),
+			MsPacManGame.APPLE,      rhs(7,0),
+			MsPacManGame.PEAR,       rhs(8,0),
+			MsPacManGame.BANANA,     rhs(9,0)
 		);
 
 		bonusValueSprites = Map.of(
-			100,  s(3, 1), 
-			200,  s(4, 1), 
-			500,  s(5, 1), 
-			700,  s(6, 1), 
-			1000, s(7, 1), 
-			2000, s(8, 1),
-			5000, s(9, 1)
+			100,  rhs(3, 1), 
+			200,  rhs(4, 1), 
+			500,  rhs(5, 1), 
+			700,  rhs(6, 1), 
+			1000, rhs(7, 1), 
+			2000, rhs(8, 1),
+			5000, rhs(9, 1)
 		);
 
 		bountyNumberSprites = Map.of(
-			200,  s(0, 8), 
-			400,  s(1, 8), 
-			800,  s(2, 8), 
-			1600, s(3, 8)
+			200,  rhs(0, 8), 
+			400,  rhs(1, 8), 
+			800,  rhs(2, 8), 
+			1600, rhs(3, 8)
 		);
 		//@formatter:on
 
@@ -145,8 +152,8 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 			mazeFullSprites.add(mazeFullImage);
 			BufferedImage mazeEmptyImage = ss.image.getSubimage(226, mazeIndex * 248, 226, 248);
 			mazeEmptySprites.add(mazeEmptyImage);
-			BufferedImage mazeFlashImage = ss.createBrightEffect(mazeEmptySprites.get(mazeIndex),
-					MAZE_WALL_BORDER_COLORS[mazeIndex], MAZE_WALL_COLORS[mazeIndex]);
+			BufferedImage mazeFlashImage = ss.createBrightEffect(mazeEmptySprites.get(mazeIndex), MAZE_SIDE_COLORS[mazeIndex],
+					MAZE_TOP_COLORS[mazeIndex]);
 			mazesFlashingAnims.add(TimedSeq.of(mazeFlashImage, mazeEmptySprites.get(mazeIndex)).frameDuration(15));
 		}
 	}
@@ -154,9 +161,34 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	/**
 	 * Picks sprite from the right part of the sheet, on the left are the maze images
 	 */
+	public BufferedImage rhs(int tileX, int tileY) {
+		return ss.tilesFrom(456, 0, tileX, tileY, 1, 1);
+	}
+
 	@Override
-	public BufferedImage s(int tileX, int tileY) {
-		return ss.sprite(456, 0, tileX, tileY);
+	public Spritesheet spritesheet() {
+		return ss;
+	}
+
+	@Override
+	public Font getArcadeFont() {
+		return font;
+	}
+
+	@Override
+	public Color getGhostColor(int ghostID) {
+		return GHOST_COLORS[ghostID];
+	}
+
+	@Override
+	public int mazeNumber(int levelNumber) {
+		return switch (levelNumber) {
+		case 1, 2 -> 1;
+		case 3, 4, 5 -> 2;
+		case 6, 7, 8, 9 -> 3;
+		case 10, 11, 12, 13 -> 4;
+		default -> (levelNumber - 14) % 8 < 4 ? 5 : 6;
+		};
 	}
 
 	/**
@@ -167,7 +199,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	 */
 	@Override
 	public Color getMazeWallColor(int mazeIndex) {
-		return MAZE_WALL_COLORS[mazeIndex];
+		return MAZE_TOP_COLORS[mazeIndex];
 	}
 
 	/**
@@ -178,12 +210,12 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	 */
 	@Override
 	public Color getMazeWallBorderColor(int mazeIndex) {
-		return MAZE_WALL_BORDER_COLORS[mazeIndex];
+		return MAZE_SIDE_COLORS[mazeIndex];
 	}
 
 	@Override
 	public TimedSeq<BufferedImage> createPlayerDyingAnimation() {
-		return TimedSeq.of(s(0, 3), s(0, 0), s(0, 1), s(0, 2)).frameDuration(10).repetitions(2);
+		return TimedSeq.of(rhs(0, 3), rhs(0, 0), rhs(0, 1), rhs(0, 2)).frameDuration(10).repetitions(2);
 	}
 
 	@Override
@@ -191,7 +223,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 		Map<Direction, TimedSeq<BufferedImage>> munchings = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
-			BufferedImage wide_open = s(0, d), open = s(1, d), closed = s(2, d);
+			BufferedImage wide_open = rhs(0, d), open = rhs(1, d), closed = rhs(2, d);
 			var animation = TimedSeq.of(open, closed, open, wide_open).frameDuration(2).endless().run();
 			munchings.put(dir, animation);
 		}
@@ -202,7 +234,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 		Map<Direction, TimedSeq<BufferedImage>> munchings = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
-			var munching = TimedSeq.of(s(0, 9 + d), s(1, 9 + d), s(2, 9)).frameDuration(2).endless();
+			var munching = TimedSeq.of(rhs(0, 9 + d), rhs(1, 9 + d), rhs(2, 9)).frameDuration(2).endless();
 			munchings.put(dir, munching);
 		}
 		return munchings;
@@ -213,7 +245,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 		EnumMap<Direction, TimedSeq<BufferedImage>> kickingByDir = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
-			var kicking = TimedSeq.of(s(2 * d, 4 + ghostID), s(2 * d + 1, 4 + ghostID)).frameDuration(4).endless();
+			var kicking = TimedSeq.of(rhs(2 * d, 4 + ghostID), rhs(2 * d + 1, 4 + ghostID)).frameDuration(4).endless();
 			kickingByDir.put(dir, kicking);
 		}
 		return kickingByDir;
@@ -221,19 +253,19 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 
 	@Override
 	public TimedSeq<BufferedImage> createGhostFrightenedAnimation() {
-		return TimedSeq.of(s(8, 4), s(9, 4)).frameDuration(8).endless().run();
+		return TimedSeq.of(rhs(8, 4), rhs(9, 4)).frameDuration(8).endless().run();
 	}
 
 	@Override
 	public TimedSeq<BufferedImage> createGhostFlashingAnimation() {
-		return TimedSeq.of(s(8, 4), s(9, 4), s(10, 4), s(11, 4)).frameDuration(4);
+		return TimedSeq.of(rhs(8, 4), rhs(9, 4), rhs(10, 4), rhs(11, 4)).frameDuration(4);
 	}
 
 	@Override
 	public Map<Direction, TimedSeq<BufferedImage>> createGhostReturningHomeAnimations() {
 		Map<Direction, TimedSeq<BufferedImage>> ghostEyesAnimByDir = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
-			ghostEyesAnimByDir.put(dir, TimedSeq.of(s(8 + index(dir), 5)));
+			ghostEyesAnimByDir.put(dir, TimedSeq.of(rhs(8 + index(dir), 5)));
 		}
 		return ghostEyesAnimByDir;
 	}
@@ -249,31 +281,31 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 
 	public TimedSeq<BufferedImage> createFlapAnimation() {
 		return TimedSeq.of( //
-				ss.region(456, 208, 32, 32), //
-				ss.region(488, 208, 32, 32), //
-				ss.region(520, 208, 32, 32), //
-				ss.region(488, 208, 32, 32), //
-				ss.region(456, 208, 32, 32)//
+				ss.si(456, 208, 32, 32), //
+				ss.si(488, 208, 32, 32), //
+				ss.si(520, 208, 32, 32), //
+				ss.si(488, 208, 32, 32), //
+				ss.si(456, 208, 32, 32)//
 		).repetitions(1).frameDuration(4);
 	}
 
 	public TimedSeq<BufferedImage> createStorkFlyingAnimation() {
 		return TimedSeq.of( //
-				ss.region(489, 176, 32, 16), //
-				ss.region(521, 176, 32, 16) //
+				ss.si(489, 176, 32, 16), //
+				ss.si(521, 176, 32, 16) //
 		).endless().frameDuration(10);
 	}
 
 	public BufferedImage getBlueBag() {
-		return ss.region(488, 199, 8, 8);
+		return ss.si(488, 199, 8, 8);
 	}
 
 	public BufferedImage getJunior() {
-		return ss.region(509, 200, 8, 8);
+		return ss.si(509, 200, 8, 8);
 	}
 
 	public BufferedImage getHeart() {
-		return s(2, 10);
+		return rhs(2, 10);
 	}
 
 	@Override
@@ -292,18 +324,13 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public Font getArcadeFont() {
-		return font;
-	}
-
-	@Override
 	public Color getFoodColor(int mazeNumber) {
 		return FOOD_COLORS[mazeNumber - 1];
 	}
 
 	@Override
 	public BufferedImage lifeSprite() {
-		return s(1, 0);
+		return rhs(1, 0);
 	}
 
 	@Override

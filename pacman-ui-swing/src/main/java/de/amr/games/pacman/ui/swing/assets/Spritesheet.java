@@ -43,29 +43,24 @@ public class Spritesheet {
 		raster = pixels;
 	}
 
-	public BufferedImage region(int x, int y, int width, int height) {
+	public BufferedImage si(int x, int y, int width, int height) {
 		return image.getSubimage(x, y, width, height);
 	}
 
-	public BufferedImage spriteRegion(int originX, int originY, int tileX, int tileY, int numTilesX, int numTilesY) {
-		return image.getSubimage(originX + tileX * raster, originY + tileY * raster, numTilesX * raster,
-				numTilesY * raster);
+	public BufferedImage tilesFrom(int x, int y, int tileX, int tileY, int numTilesX, int numTilesY) {
+		return si(x + tileX * raster, y + tileY * raster, numTilesX * raster, numTilesY * raster);
 	}
 
-	public BufferedImage spriteRegion(int tileX, int tileY, int numTilesX, int numTilesY) {
-		return spriteRegion(0, 0, tileX, tileY, numTilesX, numTilesY);
+	public BufferedImage tiles(int tileX, int tileY, int numTilesX, int numTilesY) {
+		return tilesFrom(0, 0, tileX, tileY, numTilesX, numTilesY);
 	}
 
-	public BufferedImage sprite(int originX, int originY, int tileX, int tileY) {
-		return spriteRegion(originX, originY, tileX, tileY, 1, 1);
+	public BufferedImage tile(int tileX, int tileY) {
+		return tiles(tileX, tileY, 1, 1);
 	}
 
-	public BufferedImage sprite(int tileX, int tileY) {
-		return sprite(0, 0, tileX, tileY);
-	}
-
-	public BufferedImage spriteAt(V2i tile) {
-		return sprite(tile.x, tile.y);
+	public BufferedImage tile(V2i tile) {
+		return tile(tile.x, tile.y);
 	}
 
 	public BufferedImage createBrightEffect(BufferedImage src, Color borderColor, Color fillColor) {

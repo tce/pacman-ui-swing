@@ -36,6 +36,7 @@ import de.amr.games.pacman.model.common.world.World;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
+import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.shell.Keyboard;
 
@@ -70,7 +71,7 @@ public class MsPacMan_CreditScene extends GameScene {
 		g.drawString("PUSH START BUTTON", t(6), t(16));
 		g.drawString("1 PLAYER ONLY", t(8), t(18));
 		g.drawString("ADDITIONAL    AT 10000", t(2), t(25));
-		BufferedImage msPacMan = r2D.s(1, 0);
+		BufferedImage msPacMan = Rendering2D_MsPacMan.get().rhs(1, 0);
 		r2D.renderSprite(g, msPacMan, t(13) + World.HTS, t(24) - 2);
 		g.setFont(r2D.getArcadeFont());
 		g.setFont(r2D.getArcadeFont().deriveFont(6.0f));

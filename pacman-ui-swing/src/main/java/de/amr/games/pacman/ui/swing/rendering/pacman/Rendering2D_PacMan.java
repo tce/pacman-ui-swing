@@ -29,7 +29,6 @@ import static de.amr.games.pacman.lib.Direction.RIGHT;
 import static de.amr.games.pacman.lib.Direction.UP;
 import static de.amr.games.pacman.ui.swing.assets.AssetLoader.font;
 import static de.amr.games.pacman.ui.swing.assets.AssetLoader.image;
-import static java.util.Map.entry;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -55,105 +54,122 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
  */
 public class Rendering2D_PacMan implements Rendering2D {
 
-	private static final Color FOOD_COLOR = new Color(254, 189, 180);
-
-	/** Sprite sheet order of directions. */
-	static final List<Direction> order = Arrays.asList(RIGHT, LEFT, UP, DOWN);
-
 	private static final Rendering2D_PacMan theThing = new Rendering2D_PacMan("/pacman/graphics/sprites.png", 16);
 
 	public static Rendering2D_PacMan get() {
 		return theThing;
 	}
 
+	// TODO
+	static final List<Direction> order = Arrays.asList(RIGHT, LEFT, UP, DOWN);
+
 	private static int index(Direction dir) {
 		return order.indexOf(dir);
 	}
 
-	public final Spritesheet sheet;
-	public final Font scoreFont;
+	//@formatter:off
+	static final Color[] GHOST_COLORS = {
+		Color.RED,
+		new Color(252, 181, 255),
+		Color.CYAN,
+		new Color(253, 192, 90)
+	};
+	//@formatter:on
 
-	public final BufferedImage mazeFullImage;
-	public final BufferedImage mazeEmptyImage;
-	public final TimedSeq<BufferedImage> mazeFlashingAnim;
-	public final Map<Integer, BufferedImage> symbolSprites;
-	public final Map<Integer, BufferedImage> numberSprites;
-	public final TimedSeq<BufferedImage> blinkyHalfNaked;
-	public final TimedSeq<BufferedImage> blinkyPatched;
-	public final BufferedImage nailSprite;
+	private static final Color MAZE_WALL_COLOR = new Color(33, 33, 255);
+	private static final Color FOOD_COLOR = new Color(254, 189, 180);
+
+	private final Spritesheet ss;
+	private final BufferedImage mazeFull, mazeEmpty;
+	private final TimedSeq<BufferedImage> mazeFlashingAnim;
+	private final Map<Integer, BufferedImage> symbolSprites;
+	private final Map<Integer, BufferedImage> bonusValueSprites;
+	private final Map<Integer, BufferedImage> bountyNumberSprites;
+	private final Font font;
+
+	// TODO
+	private final TimedSeq<BufferedImage> blinkyHalfNaked;
+	private final TimedSeq<BufferedImage> blinkyPatched;
+	private final BufferedImage nailSprite;
 
 	private Rendering2D_PacMan(String path, int rasterSize) {
-		sheet = new Spritesheet(image(path), rasterSize);
+		ss = new Spritesheet(image(path), rasterSize);
+		font = font("/emulogic.ttf", 8);
 
-		scoreFont = font("/emulogic.ttf", 8);
-
-		// Sprites and images
-
-		mazeFullImage = image("/pacman/graphics/maze_full.png");
-		mazeEmptyImage = image("/pacman/graphics/maze_empty.png");
+		mazeFull = image("/pacman/graphics/maze_full.png");
+		mazeEmpty = image("/pacman/graphics/maze_empty.png");
+		var mazeEmptyDark = image("/pacman/graphics/maze_empty.png");
+		var mazeEmptyBright = ss.createBrightEffect(mazeEmptyDark, new Color(33, 33, 255), Color.BLACK);
+		mazeFlashingAnim = TimedSeq.of(mazeEmptyBright, mazeEmptyDark).frameDuration(15);
 
 		//@formatter:off
 		symbolSprites = Map.of(
-				PacManGame.CHERRIES,   sheet.sprite(2, 3),
-				PacManGame.STRAWBERRY, sheet.sprite(3, 3),
-				PacManGame.PEACH,      sheet.sprite(4, 3),
-				PacManGame.APPLE,      sheet.sprite(5, 3),
-				PacManGame.GRAPES,     sheet.sprite(6, 3),
-				PacManGame.GALAXIAN,   sheet.sprite(7, 3),
-				PacManGame.BELL,       sheet.sprite(8, 3),
-				PacManGame.KEY,        sheet.sprite(9, 3)
+			PacManGame.CHERRIES,   ss.tile(2, 3),
+			PacManGame.STRAWBERRY, ss.tile(3, 3),
+			PacManGame.PEACH,      ss.tile(4, 3),
+			PacManGame.APPLE,      ss.tile(5, 3),
+			PacManGame.GRAPES,     ss.tile(6, 3),
+			PacManGame.GALAXIAN,   ss.tile(7, 3),
+			PacManGame.BELL,       ss.tile(8, 3),
+			PacManGame.KEY,        ss.tile(9, 3)
+		);
+		
+		bonusValueSprites = Map.of(
+			100,  ss.tile(0, 9),
+			300,  ss.tile(1, 9),
+			500,  ss.tile(2, 9),
+			700,  ss.tile(3, 9),
+			1000, ss.tiles(4, 9, 2, 1), // left-aligned
+			2000, ss.tiles(3, 10, 3, 1),
+			3000, ss.tiles(3, 11, 3, 1),
+			5000, ss.tiles(3, 12, 3, 1)
 		);
 
-		numberSprites = Map.ofEntries(
-			entry(200,  sheet.sprite(0, 8)),
-			entry(400,  sheet.sprite(1, 8)),
-			entry(800,  sheet.sprite(2, 8)),
-			entry(1600, sheet.sprite(3, 8)),
-			
-			entry(100,  sheet.sprite(0, 9)),
-			entry(300,  sheet.sprite(1, 9)),
-			entry(500,  sheet.sprite(2, 9)),
-			entry(700,  sheet.sprite(3, 9)),
-			
-			entry(1000, sheet.spriteRegion(4, 9, 2, 1)), // left-aligned
-			entry(2000, sheet.spriteRegion(3, 10, 3, 1)),
-			entry(3000, sheet.spriteRegion(3, 11, 3, 1)),
-			entry(5000, sheet.spriteRegion(3, 12, 3, 1))
+		bountyNumberSprites = Map.of(
+			200,  ss.tile(0, 8),
+			400,  ss.tile(1, 8),
+			800,  ss.tile(2, 8),
+			1600, ss.tile(3, 8)
 		);
 		//@formatter:on
 
-		// Animations
+		blinkyPatched = TimedSeq.of(ss.tile(10, 7), ss.tile(11, 7))//
+				.frameDuration(4).endless();
 
-		BufferedImage mazeEmptyDarkImage = image("/pacman/graphics/maze_empty.png");
-		BufferedImage mazeEmptyBrightImage = sheet.createBrightEffect(mazeEmptyDarkImage, new Color(33, 33, 255),
-				Color.BLACK);
-		mazeFlashingAnim = TimedSeq.of(mazeEmptyBrightImage, mazeEmptyDarkImage).frameDuration(15);
+		blinkyHalfNaked = TimedSeq.of(ss.tiles(8, 8, 2, 1), ss.tiles(10, 8, 2, 1))//
+				.frameDuration(4).endless();
 
-		blinkyPatched = TimedSeq.of(sheet.sprite(10, 7), sheet.sprite(11, 7)).restart().frameDuration(4).endless();
-		blinkyHalfNaked = TimedSeq.of(sheet.spriteRegion(8, 8, 2, 1), sheet.spriteRegion(10, 8, 2, 1)).endless()
-				.frameDuration(4).restart();
-
-		nailSprite = sheet.sprite(8, 6);
+		nailSprite = ss.tile(8, 6);
 	}
 
 	@Override
-	public BufferedImage s(int tileX, int tileY) {
-		return sheet.sprite(tileX, tileY);
+	public Spritesheet spritesheet() {
+		return ss;
 	}
 
 	@Override
 	public Font getArcadeFont() {
-		return scoreFont;
+		return font;
+	}
+
+	@Override
+	public Color getGhostColor(int ghostID) {
+		return GHOST_COLORS[ghostID];
+	}
+
+	@Override
+	public int mazeNumber(int levelNumber) {
+		return 1;
 	}
 
 	@Override
 	public Map<Integer, BufferedImage> getBonusNumberSprites() {
-		return numberSprites;
+		return bountyNumberSprites;
 	}
 
 	@Override
 	public Map<Integer, BufferedImage> getBountyNumberSprites() {
-		return numberSprites;
+		return bountyNumberSprites;
 	}
 
 	@Override
@@ -162,15 +178,15 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	public BufferedImage ghostImageByGhostByDir(int ghostID, Direction dir) {
-		return sheet.sprite(2 * index(dir), 4 + ghostID);
+		return ss.tile(2 * index(dir), 4 + ghostID);
 	}
 
 	@Override
 	public TimedSeq<BufferedImage> createPlayerDyingAnimation() {
 		return TimedSeq.of( //
-				sheet.sprite(3, 0), sheet.sprite(4, 0), sheet.sprite(5, 0), sheet.sprite(6, 0), //
-				sheet.sprite(7, 0), sheet.sprite(8, 0), sheet.sprite(9, 0), sheet.sprite(10, 0), //
-				sheet.sprite(11, 0), sheet.sprite(12, 0), sheet.sprite(13, 0)) //
+				ss.tile(3, 0), ss.tile(4, 0), ss.tile(5, 0), ss.tile(6, 0), //
+				ss.tile(7, 0), ss.tile(8, 0), ss.tile(9, 0), ss.tile(10, 0), //
+				ss.tile(11, 0), ss.tile(12, 0), ss.tile(13, 0)) //
 				.frameDuration(8);
 	}
 
@@ -179,7 +195,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 		EnumMap<Direction, TimedSeq<BufferedImage>> munching = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
-			BufferedImage wide_open = sheet.sprite(0, d), open = sheet.sprite(1, d), closed = sheet.sprite(2, 0);
+			BufferedImage wide_open = ss.tile(0, d), open = ss.tile(1, d), closed = ss.tile(2, 0);
 			var animation = TimedSeq.of(closed, open, wide_open, open).frameDuration(2).endless().run();
 			munching.put(dir, animation);
 		}
@@ -191,8 +207,8 @@ public class Rendering2D_PacMan implements Rendering2D {
 		EnumMap<Direction, TimedSeq<BufferedImage>> walkingTo = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			TimedSeq<BufferedImage> anim = TimedSeq.of( //
-					sheet.sprite(2 * index(dir), 4 + ghostID), //
-					sheet.sprite(2 * index(dir) + 1, 4 + ghostID));
+					ss.tile(2 * index(dir), 4 + ghostID), //
+					ss.tile(2 * index(dir) + 1, 4 + ghostID));
 			anim.frameDuration(8).endless();
 			walkingTo.put(dir, anim);
 		}
@@ -201,7 +217,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 
 	@Override
 	public TimedSeq<BufferedImage> createGhostFrightenedAnimation() {
-		TimedSeq<BufferedImage> animation = TimedSeq.of(sheet.sprite(8, 4), sheet.sprite(9, 4));
+		TimedSeq<BufferedImage> animation = TimedSeq.of(ss.tile(8, 4), ss.tile(9, 4));
 		animation.frameDuration(8).endless();
 		return animation;
 	}
@@ -209,7 +225,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 	@Override
 	public TimedSeq<BufferedImage> createGhostFlashingAnimation() {
 		return TimedSeq.of( //
-				sheet.sprite(8, 4), sheet.sprite(9, 4), sheet.sprite(10, 4), sheet.sprite(11, 4) //
+				ss.tile(8, 4), ss.tile(9, 4), ss.tile(10, 4), ss.tile(11, 4) //
 		).frameDuration(4);
 	}
 
@@ -217,22 +233,22 @@ public class Rendering2D_PacMan implements Rendering2D {
 	public Map<Direction, TimedSeq<BufferedImage>> createGhostReturningHomeAnimations() {
 		Map<Direction, TimedSeq<BufferedImage>> ghostEyesAnimsByDir = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
-			ghostEyesAnimsByDir.put(dir, TimedSeq.of(sheet.sprite(8 + index(dir), 5)));
+			ghostEyesAnimsByDir.put(dir, TimedSeq.of(ss.tile(8 + index(dir), 5)));
 		}
 		return ghostEyesAnimsByDir;
 	}
 
 	public TimedSeq<BufferedImage> createBigPacManMunchingAnimation() {
-		return TimedSeq.of(sheet.spriteRegion(2, 1, 2, 2), sheet.spriteRegion(4, 1, 2, 2), sheet.spriteRegion(6, 1, 2, 2))
-				.frameDuration(4).endless().run();
+		return TimedSeq.of(ss.tiles(2, 1, 2, 2), ss.tiles(4, 1, 2, 2), ss.tiles(6, 1, 2, 2)).frameDuration(4).endless()
+				.run();
 	}
 
 	public TimedSeq<BufferedImage> createBlinkyStretchedAnimation() {
-		return TimedSeq.of(sheet.sprite(9, 6), sheet.sprite(10, 6), sheet.sprite(11, 6), sheet.sprite(12, 6));
+		return TimedSeq.of(ss.tile(9, 6), ss.tile(10, 6), ss.tile(11, 6), ss.tile(12, 6));
 	}
 
 	public TimedSeq<BufferedImage> createBlinkyDamagedAnimation() {
-		return TimedSeq.of(sheet.sprite(8, 7), sheet.sprite(9, 7));
+		return TimedSeq.of(ss.tile(8, 7), ss.tile(9, 7));
 	}
 
 	@Override
@@ -260,7 +276,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 		if (flashing) {
 			g.drawImage(mazeFlashing(mazeNumber).animate(), x, y, null);
 		} else {
-			g.drawImage(mazeFullImage, x, y, null);
+			g.drawImage(mazeFull, x, y, null);
 		}
 	}
 
@@ -285,7 +301,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 
 	@Override
 	public BufferedImage lifeSprite() {
-		return sheet.sprite(8, 1);
+		return ss.tile(8, 1);
 	}
 
 	@Override

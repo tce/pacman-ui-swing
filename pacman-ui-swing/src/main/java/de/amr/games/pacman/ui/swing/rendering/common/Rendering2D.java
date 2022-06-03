@@ -41,8 +41,8 @@ import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Entity;
-import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
+import de.amr.games.pacman.ui.swing.assets.Spritesheet;
 
 /**
  * Spritesheet-based rendering for Pac-Man and Ms. Pac-Man game.
@@ -51,17 +51,25 @@ import de.amr.games.pacman.model.common.world.ArcadeWorld;
  */
 public interface Rendering2D {
 
-	default Color getGhostColor(int ghostID) {
-		return switch (ghostID) {
-		case Ghost.RED_GHOST -> Color.RED;
-		case Ghost.PINK_GHOST -> new Color(252, 181, 255);
-		case Ghost.CYAN_GHOST -> Color.CYAN;
-		case Ghost.ORANGE_GHOST -> new Color(253, 192, 90);
-		default -> Color.WHITE;
-		};
-	}
+	Spritesheet spritesheet();
 
-	BufferedImage s(int tileX, int tileY);
+	Font getArcadeFont();
+
+	Color getGhostColor(int ghostID);
+
+	// Sprites
+
+	Map<Integer, BufferedImage> getSymbolSpritesMap();
+
+	Map<Integer, BufferedImage> getBountyNumberSprites();
+
+	Map<Integer, BufferedImage> getBonusNumberSprites();
+
+	BufferedImage symbolSprite(int symbol);
+
+	BufferedImage lifeSprite();
+
+	// Animations
 
 	Map<Direction, TimedSeq<BufferedImage>> createPlayerMunchingAnimations();
 
@@ -75,15 +83,11 @@ public interface Rendering2D {
 
 	Map<Direction, TimedSeq<BufferedImage>> createGhostReturningHomeAnimations();
 
-	Map<Integer, BufferedImage> getSymbolSpritesMap();
+	// Maze
 
-	Map<Integer, BufferedImage> getBountyNumberSprites();
+	int mazeNumber(int levelNumber);
 
-	Map<Integer, BufferedImage> getBonusNumberSprites();
-
-	BufferedImage symbolSprite(int symbol);
-
-	BufferedImage lifeSprite();
+	Color getFoodColor(int mazeNumber);
 
 	TimedSeq<BufferedImage> mazeFlashing(int mazeNumber);
 
@@ -91,15 +95,7 @@ public interface Rendering2D {
 
 	Color getMazeWallBorderColor(int mazeIndex);
 
-	/**
-	 * @param mazeNumber the 1-based maze number
-	 * @return color of pellets in this maze
-	 */
-	Color getFoodColor(int mazeNumber);
-
-	Font getArcadeFont();
-
-	// drawing
+	// Drawing
 
 	default void renderEntity(Graphics2D g, Entity entity, BufferedImage sprite) {
 		if (entity.visible && sprite != null) {
