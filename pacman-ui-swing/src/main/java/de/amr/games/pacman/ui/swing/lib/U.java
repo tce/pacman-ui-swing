@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package de.amr.games.pacman.ui.swing.assets;
+package de.amr.games.pacman.ui.swing.lib;
 
 import java.awt.Font;
 import java.awt.image.BufferedImage;
@@ -29,11 +29,17 @@ import java.io.InputStream;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
+import javax.swing.Timer;
 
-public class AssetLoader {
+import de.amr.games.pacman.ui.swing.assets.AssetException;
+
+/**
+ * @author Armin Reichert
+ */
+public class U {
 
 	public static URL url(String path) {
-		return AssetLoader.class.getResource(path);
+		return U.class.getResource(path);
 	}
 
 	public static BufferedImage image(String path) {
@@ -50,6 +56,13 @@ public class AssetLoader {
 		} catch (Exception x) {
 			throw new AssetException("Could not load font with path '%s'", fontPath);
 		}
+	}
+
+	public static void afterSeconds(double seconds, Runnable action) {
+		Timer timer = new Timer(0, e -> action.run());
+		timer.setInitialDelay((int) (seconds * 1000));
+		timer.setRepeats(false);
+		timer.start();
 	}
 
 }
