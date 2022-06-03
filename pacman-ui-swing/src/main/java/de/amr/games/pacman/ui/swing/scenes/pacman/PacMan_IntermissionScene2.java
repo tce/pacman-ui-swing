@@ -35,10 +35,13 @@ import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
+import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
+import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
+import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
@@ -70,8 +73,8 @@ public class PacMan_IntermissionScene2 extends GameScene {
 		super.init(game);
 		sceneController.init();
 
-		pacMan2D = new Pac2D(context.pac, game, r2D);
-		blinky2D = new Ghost2D(context.blinky, game, r2D);
+		pacMan2D = new Pac2D(context.pac, game, new PacAnimations(r2D));
+		blinky2D = new Ghost2D(context.blinky, game, new GhostAnimations(Ghost.RED_GHOST, r2D));
 		blinkyStretchedAnimation = Rendering2D_PacMan.get().createBlinkyStretchedAnimation();
 		blinkyDamagedAnimation = Rendering2D_PacMan.get().createBlinkyDamagedAnimation();
 	}
@@ -86,9 +89,9 @@ public class PacMan_IntermissionScene2 extends GameScene {
 		Rendering2D_PacMan r = (Rendering2D_PacMan) r2D;
 		r.drawLevelCounter(g, gameController.game(), t(25), t(34));
 		r.drawNail(g, context.nail);
-		pacMan2D.render(g);
+		pacMan2D.render(g, r2D);
 		if (sceneController.nailDistance() < 0) {
-			blinky2D.render(g);
+			blinky2D.render(g, r2D);
 		} else {
 			drawBlinkyStretched(g, context.nail.position, sceneController.nailDistance() / 4);
 		}
@@ -98,7 +101,7 @@ public class PacMan_IntermissionScene2 extends GameScene {
 		BufferedImage stretchedDress = blinkyStretchedAnimation.frame(stretching);
 		g.drawImage(stretchedDress, (int) (nailPosition.x - 4), (int) (nailPosition.y - 4), null);
 		if (stretching < 3) {
-			blinky2D.render(g);
+			blinky2D.render(g, r2D);
 		} else {
 			BufferedImage blinkyDamaged = blinkyDamagedAnimation.frame(context.blinky.moveDir() == Direction.UP ? 0 : 1);
 			g.drawImage(blinkyDamaged, (int) (context.blinky.position.x - 4), (int) (context.blinky.position.y - 4), null);

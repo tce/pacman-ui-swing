@@ -23,17 +23,30 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.entity.common;
 
+import java.awt.Graphics2D;
+
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
+/**
+ * Base class of 2D entities.
+ * 
+ * @author Armin Reichert
+ */
 public abstract class GameEntity2D {
 
-	public final GameModel game;
-	public final Rendering2D r2D;
+	public GameModel game;
+	public int x;
+	public int y;
+	public boolean visible = true;
 
-	public GameEntity2D(GameModel game, Rendering2D r2D) {
-		this.game = game;
-		this.r2D = r2D;
+	protected GameEntity2D() {
+		this(null);
 	}
 
+	protected GameEntity2D(GameModel game) {
+		this.game = game;
+	}
+
+	public abstract void render(Graphics2D g, Rendering2D r2D);
 }

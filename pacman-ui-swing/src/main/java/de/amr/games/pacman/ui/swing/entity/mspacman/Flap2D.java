@@ -44,13 +44,14 @@ public class Flap2D extends GameEntity2D {
 	public final Flap flap;
 	public TimedSeq<BufferedImage> animation;
 
-	public Flap2D(Flap flap, GameModel game, Rendering2D r2D) {
-		super(game, r2D);
+	public Flap2D(Flap flap, GameModel game) {
+		super(game);
 		this.flap = flap;
 		animation = Rendering2D_MsPacMan.get().createFlapAnimation();
 	}
 
-	public void render(Graphics2D g) {
+	@Override
+	public void render(Graphics2D g, Rendering2D r2D) {
 		if (flap.visible) {
 			BufferedImage sprite = animation.animate();
 			r2D.drawEntity(g, flap, sprite);

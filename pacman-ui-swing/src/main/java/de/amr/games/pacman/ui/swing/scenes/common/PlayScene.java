@@ -48,7 +48,10 @@ import de.amr.games.pacman.ui.swing.entity.common.Bonus2D;
 import de.amr.games.pacman.ui.swing.entity.common.Energizer2D;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
+import de.amr.games.pacman.ui.swing.entity.common.Pac2D.PacAnimation;
 import de.amr.games.pacman.ui.swing.rendering.common.Debug;
+import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
+import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**
@@ -92,10 +95,11 @@ public class PlayScene extends GameScene {
 	public void init(GameModel game) {
 		super.init(game);
 
-		player2D = new Pac2D(game.pac, game, r2D);
-		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, r2D)).toArray(Ghost2D[]::new);
+		player2D = new Pac2D(game.pac, game, new PacAnimations(r2D));
+		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, new GhostAnimations(ghost.id, r2D)))
+				.toArray(Ghost2D[]::new);
 		energizers2D = game.level.world.energizerTiles().map(Energizer2D::new).toArray(Energizer2D[]::new);
-		bonus2D = new Bonus2D(game, game.bonus(), r2D);
+		bonus2D = new Bonus2D(game, game.bonus());
 		mazeFlashing = r2D.mazeFlashing(mazeNumber(game)).repetitions(game.level.numFlashes).reset();
 //		game.pac.powerTimer.addEventListener(this::handleGhostsFlashing);
 	}
@@ -160,8 +164,6 @@ public class PlayScene extends GameScene {
 		case READY -> {
 			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(TimedSeq::reset);
 			r2D.mazeFlashing(mazeNumber(game)).reset();
-			player2D.reset();
-			Stream.of(ghosts2D).forEach(Ghost2D::reset);
 			SoundManager.get().stopAll();
 			if (gameController.credit() > 0 && !gameController.isGameRunning()) {
 				SoundManager.get().setMuted(false);
@@ -171,19 +173,18 @@ public class PlayScene extends GameScene {
 
 		case HUNTING -> {
 			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(TimedSeq::restart);
-			player2D.munchings.restart();
-			Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.animColor.restart());
 		}
 
 		case PACMAN_DYING -> {
 			gameController.state().timer().setDurationSeconds(4);
 			gameController.state().timer().start();
 			SoundManager.get().stopAll();
+			player2D.animations.selectAnimation(PacAnimation.DYING);
 			afterSeconds(1, () -> {
 				game.ghosts().forEach(Ghost::hide);
 			});
 			afterSeconds(2, () -> {
-				player2D.dying.run();
+				player2D.animations.selectedAnimation().run();
 				if (gameController.isGameRunning()) {
 					SoundManager.get().play(GameSound.PACMAN_DEATH);
 				}
@@ -196,7 +197,6 @@ public class PlayScene extends GameScene {
 		}
 
 		case LEVEL_COMPLETE -> {
-			player2D.reset();
 			mazeFlashing = r2D.mazeFlashing(mazeNumber(game));
 			SoundManager.get().stopAll();
 		}
@@ -237,10 +237,6 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void onPlayerGetsPower(GameEvent e) {
-		game.ghosts(GhostState.FRIGHTENED).map(ghost -> ghosts2D[ghost.id]).forEach(ghost2D -> {
-			ghost2D.animFlashing.reset();
-			ghost2D.animBlue.restart();
-		});
 		SoundManager.get().stopSirens();
 		SoundManager.get().loop(GameSound.PACMAN_POWER, Clip.LOOP_CONTINUOUSLY);
 	}
@@ -293,9 +289,8 @@ public class PlayScene extends GameScene {
 			r2D.drawGameState(g, game, gameController.state());
 			r2D.drawLevelCounter(g, game, t(24), t(34));
 		}
-		bonus2D.render(g);
-		player2D.render(g);
-		Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.render(g));
+		bonus2D.render(g, r2D);
+		Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.render(g, r2D));
 
 		boolean showCredit = !gameController.isGameRunning() && gameController.credit() == 0;
 		boolean showHighScoreOnly = !gameController.isGameRunning() && gameController.state() != GameState.READY

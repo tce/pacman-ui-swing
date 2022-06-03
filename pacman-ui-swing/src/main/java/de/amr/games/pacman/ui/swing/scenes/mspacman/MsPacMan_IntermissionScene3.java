@@ -35,8 +35,8 @@ import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Flap2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.JuniorBag2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Stork2D;
+import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
-import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
 /**
@@ -72,10 +72,13 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 	public void init(GameModel game) {
 		super.init(game);
 		sceneController.restartInInitialState(Intermission3Controller.State.FLAP);
-		msPacMan2D = new Pac2D(context.msPacMan, game, r2D);
-		pacMan2D = new Pac2D(context.pacMan, game, r2D);
-		pacMan2D.munchings = Rendering2D_MsPacMan.get().createSpouseMunchingAnimations();
-		flap2D = new Flap2D(context.flap, game, r2D);
+		msPacMan2D = new Pac2D(context.msPacMan, game, new PacAnimations(r2D));
+
+		// TODO fixme
+		pacMan2D = new Pac2D(context.pacMan, game, new PacAnimations(r2D));
+//		pacMan2D.munchings = Rendering2D_MsPacMan.get().createSpouseMunchingAnimations();
+
+		flap2D = new Flap2D(context.flap, game);
 		stork2D = new Stork2D(context.stork, r2D);
 		stork2D.animation.restart();
 		bag2D = new JuniorBag2D(context.bag, r2D);
@@ -88,9 +91,9 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		flap2D.render(g);
-		msPacMan2D.render(g);
-		pacMan2D.render(g);
+		flap2D.render(g, r2D);
+		msPacMan2D.render(g, r2D);
+		pacMan2D.render(g, r2D);
 		stork2D.render(g);
 		bag2D.render(g);
 	}

@@ -31,11 +31,14 @@ import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.pacman.Intermission1Controller;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
+import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.entity.pacman.BigPacMan2D;
+import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
+import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
@@ -65,13 +68,9 @@ public class PacMan_IntermissionScene1 extends GameScene {
 	public void init(GameModel game) {
 		super.init(game);
 		sceneController.init();
-
-		pacMan2D = new Pac2D(context.pac, game, r2D);
-		blinky2D = new Ghost2D(context.blinky, game, r2D);
+		pacMan2D = new Pac2D(context.pac, game, new PacAnimations(r2D));
+		blinky2D = new Ghost2D(context.blinky, game, new GhostAnimations(Ghost.RED_GHOST, r2D));
 		bigPacMan2D = new BigPacMan2D(context.pac, (Rendering2D_PacMan) r2D);
-		pacMan2D.munchings.restart();
-		blinky2D.animColor.restart();
-		blinky2D.animBlue.restart();
 		bigPacMan2D.munchingAnimation.restart();
 	}
 
@@ -82,13 +81,12 @@ public class PacMan_IntermissionScene1 extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		Rendering2D_PacMan r = (Rendering2D_PacMan) r2D;
-		blinky2D.render(g);
+		blinky2D.render(g, r2D);
 		if (sceneController.state() == Intermission1Controller.State.CHASING_PACMAN) {
-			pacMan2D.render(g);
+			pacMan2D.render(g, r2D);
 		} else {
 			bigPacMan2D.render(g);
 		}
-		r.drawLevelCounter(g, game, t(25), t(34));
+		r2D.drawLevelCounter(g, game, t(25), t(34));
 	}
 }

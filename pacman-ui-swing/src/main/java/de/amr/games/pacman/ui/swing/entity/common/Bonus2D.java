@@ -30,6 +30,7 @@ import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.model.common.GameModel;
+import de.amr.games.pacman.model.common.GameVariant;
 import de.amr.games.pacman.model.common.actors.Bonus;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
@@ -45,13 +46,14 @@ public class Bonus2D extends GameEntity2D {
 	private final Bonus bonus;
 	public final TimedSeq<Integer> jumpAnimation;
 
-	public Bonus2D(GameModel game, Bonus bonus, Rendering2D r2D) {
-		super(game, r2D);
+	public Bonus2D(GameModel game, Bonus bonus) {
+		super(game);
 		this.bonus = bonus;
-		jumpAnimation = Rendering2D_MsPacMan.get().createBonusAnimation();
+		jumpAnimation = game.variant == GameVariant.MS_PACMAN ? Rendering2D_MsPacMan.get().createBonusAnimation() : null;
 	}
 
-	public void render(Graphics2D g) {
+	@Override
+	public void render(Graphics2D g, Rendering2D r2D) {
 		switch (bonus.state()) {
 		case INACTIVE -> {
 		}

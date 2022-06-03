@@ -24,14 +24,10 @@ SOFTWARE.
 package de.amr.games.pacman.ui.swing.entity.common;
 
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 
-import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.SpriteAnimation;
-import de.amr.games.pacman.lib.SpriteAnimationMap;
-import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Pac;
+import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**
@@ -41,35 +37,21 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
  */
 public class Pac2D extends GameEntity2D {
 
+	public enum PacAnimation {
+		MUNCHING, DYING;
+	}
+
 	public final Pac pac;
-	public SpriteAnimationMap<Direction, BufferedImage> munchings;
-	public final SpriteAnimation<BufferedImage> dying;
+	public final PacAnimations animations;
 
-	public Pac2D(Pac pac, GameModel game, Rendering2D r2D) {
-		super(game, r2D);
+	public Pac2D(Pac pac, GameModel game, PacAnimations animations) {
+		super(game);
 		this.pac = pac;
-		munchings = r2D.createPacMunchingAnimations();
-		dying = r2D.createPacDyingAnimation();
+		this.animations = animations;
 	}
 
-	public void reset() {
-		munchings.reset();
-		dying.reset();
-	}
-
-	public void render(Graphics2D g) {
-		BufferedImage sprite = null;
-		if (pac.killed) {
-			if (dying.isRunning()) {
-				dying.animate();
-			}
-			sprite = dying.frame();
-		} else {
-			if (!pac.velocity.equals(V2d.NULL) && !pac.stuck) {
-				munchings.get(pac.moveDir()).animate();
-			}
-			sprite = munchings.get(pac.moveDir()).frame();
-		}
-		r2D.drawEntity(g, pac, sprite);
+	@Override
+	public void render(Graphics2D g, Rendering2D r2D) {
+		r2D.drawEntity(g, pac, animations.currentSprite(pac));
 	}
 }

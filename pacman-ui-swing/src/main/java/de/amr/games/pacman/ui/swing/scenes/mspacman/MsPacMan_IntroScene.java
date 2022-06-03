@@ -38,6 +38,8 @@ import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
+import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
+import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.shell.Keyboard;
@@ -64,10 +66,9 @@ public class MsPacMan_IntroScene extends GameScene {
 	public void init(GameModel game) {
 		super.init(game);
 		sceneController.restartInInitialState(IntroController.State.BEGIN);
-		msPacMan2D = new Pac2D(context.msPacMan, game, r2D);
-		msPacMan2D.munchings.restart();
-		ghosts2D = Stream.of(context.ghosts).map(ghost -> new Ghost2D(ghost, game, r2D)).toArray(Ghost2D[]::new);
-		Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.animColor.restart());
+		msPacMan2D = new Pac2D(context.msPacMan, game, new PacAnimations(r2D));
+		ghosts2D = Stream.of(context.ghosts).map(ghost -> new Ghost2D(ghost, game, new GhostAnimations(ghost.id, r2D)))
+				.toArray(Ghost2D[]::new);
 	}
 
 	@Override
@@ -97,7 +98,8 @@ public class MsPacMan_IntroScene extends GameScene {
 		case GHOSTS -> drawGhostText(g);
 		case MSPACMAN -> drawMsPacManText(g);
 		case READY_TO_PLAY -> {
-			msPacMan2D.reset();// ensure Ms. Pac-Man is displayed with mouth half open
+			// TODO fixme
+//			msPacMan2D.reset();// ensure Ms. Pac-Man is displayed with mouth half open
 			drawMsPacManText(g);
 			if (gameController.credit() > 0) {
 				drawPressKeyToStart(g, 26);
@@ -107,8 +109,8 @@ public class MsPacMan_IntroScene extends GameScene {
 		}
 		}
 
-		Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.render(g));
-		msPacMan2D.render(g);
+		Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.render(g, r2D));
+		msPacMan2D.render(g, r2D);
 		r2D.drawCopyright(g, t(4), t(28));
 	}
 
