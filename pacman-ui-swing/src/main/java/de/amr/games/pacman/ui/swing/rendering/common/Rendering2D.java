@@ -89,10 +89,6 @@ public interface Rendering2D {
 
 	TimedSeq<BufferedImage> mazeFlashing(int mazeNumber);
 
-	Color getMazeWallColor(int mazeIndex);
-
-	Color getMazeWallBorderColor(int mazeIndex);
-
 	// Drawing
 
 	default void renderEntity(Graphics2D g, Entity entity, BufferedImage sprite) {

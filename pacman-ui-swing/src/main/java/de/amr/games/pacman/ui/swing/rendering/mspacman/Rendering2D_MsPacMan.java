@@ -191,28 +191,6 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 		};
 	}
 
-	/**
-	 * Note: maze numbers are 1-based, maze index as stored here is 0-based.
-	 * 
-	 * @param mazeIndex 0-based maze index
-	 * @return color of maze walls
-	 */
-	@Override
-	public Color getMazeWallColor(int mazeIndex) {
-		return MAZE_TOP_COLORS[mazeIndex];
-	}
-
-	/**
-	 * Note: maze numbers are 1-based, maze index as stored here is 0-based.
-	 * 
-	 * @param mazeIndex 0-based maze index
-	 * @return color of maze wall borders
-	 */
-	@Override
-	public Color getMazeWallBorderColor(int mazeIndex) {
-		return MAZE_SIDE_COLORS[mazeIndex];
-	}
-
 	@Override
 	public TimedSeq<BufferedImage> createPacDyingAnimation() {
 		return TimedSeq.of(rhs(0, 3), rhs(0, 0), rhs(0, 1), rhs(0, 2)).frameDuration(10).repetitions(2);

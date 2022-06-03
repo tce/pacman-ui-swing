@@ -76,7 +76,6 @@ public class Rendering2D_PacMan implements Rendering2D {
 	};
 	//@formatter:on
 
-	private static final Color MAZE_WALL_COLOR = new Color(33, 33, 255);
 	private static final Color FOOD_COLOR = new Color(254, 189, 180);
 
 	private final Spritesheet ss;
@@ -248,16 +247,6 @@ public class Rendering2D_PacMan implements Rendering2D {
 
 	public TimedSeq<BufferedImage> createBlinkyDamagedAnimation() {
 		return TimedSeq.of(ss.tile(8, 7), ss.tile(9, 7));
-	}
-
-	@Override
-	public Color getMazeWallBorderColor(int mazeIndex) {
-		return MAZE_WALL_COLOR;
-	}
-
-	@Override
-	public Color getMazeWallColor(int mazeIndex) {
-		return Color.BLACK;
 	}
 
 	@Override
