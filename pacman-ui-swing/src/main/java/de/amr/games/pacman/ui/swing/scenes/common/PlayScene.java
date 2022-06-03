@@ -172,7 +172,7 @@ public class PlayScene extends GameScene {
 		case HUNTING -> {
 			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(TimedSeq::restart);
 			player2D.munchings.restart();
-			Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.animKicking.values().forEach(TimedSeq::restart));
+			Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.animColor.restart());
 		}
 
 		case PACMAN_DYING -> {
@@ -239,7 +239,7 @@ public class PlayScene extends GameScene {
 	public void onPlayerGetsPower(GameEvent e) {
 		game.ghosts(GhostState.FRIGHTENED).map(ghost -> ghosts2D[ghost.id]).forEach(ghost2D -> {
 			ghost2D.animFlashing.reset();
-			ghost2D.animFrightened.restart();
+			ghost2D.animBlue.restart();
 		});
 		SoundManager.get().stopSirens();
 		SoundManager.get().loop(GameSound.PACMAN_POWER, Clip.LOOP_CONTINUOUSLY);

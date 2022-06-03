@@ -29,7 +29,6 @@ import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.pacman.Intermission1Controller;
-import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
@@ -71,8 +70,8 @@ public class PacMan_IntermissionScene1 extends GameScene {
 		blinky2D = new Ghost2D(context.blinky, game, r2D);
 		bigPacMan2D = new BigPacMan2D(context.pac, (Rendering2D_PacMan) r2D);
 		pacMan2D.munchings.restart();
-		blinky2D.animKicking.values().forEach(TimedSeq::restart);
-		blinky2D.animFrightened.restart();
+		blinky2D.animColor.restart();
+		blinky2D.animBlue.restart();
 		bigPacMan2D.munchingAnimation.restart();
 	}
 

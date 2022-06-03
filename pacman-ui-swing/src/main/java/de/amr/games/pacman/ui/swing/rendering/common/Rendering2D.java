@@ -75,7 +75,7 @@ public interface Rendering2D {
 
 	SpriteAnimation<BufferedImage> createPacDyingAnimation();
 
-	Map<Direction, TimedSeq<BufferedImage>> createGhostColorAnimation(int ghostID);
+	SpriteAnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID);
 
 	TimedSeq<BufferedImage> createGhostBlueAnimation();
 

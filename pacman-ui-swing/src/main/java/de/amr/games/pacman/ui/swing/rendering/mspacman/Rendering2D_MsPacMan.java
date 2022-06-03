@@ -221,11 +221,13 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public Map<Direction, TimedSeq<BufferedImage>> createGhostColorAnimation(int ghostID) {
-		EnumMap<Direction, TimedSeq<BufferedImage>> kickingByDir = new EnumMap<>(Direction.class);
+	public SpriteAnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID) {
+		SpriteAnimationMap<Direction, BufferedImage> kickingByDir = new SpriteAnimationMap<Direction, BufferedImage>(
+				Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
-			var kicking = TimedSeq.of(rhs(2 * d, 4 + ghostID), rhs(2 * d + 1, 4 + ghostID)).frameDuration(4).endless();
+			var kicking = new SpriteAnimation<>(rhs(2 * d, 4 + ghostID), rhs(2 * d + 1, 4 + ghostID)).frameDuration(4)
+					.endless();
 			kickingByDir.put(dir, kicking);
 		}
 		return kickingByDir;

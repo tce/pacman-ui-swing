@@ -31,7 +31,6 @@ import java.util.stream.Stream;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.IntroController;
-import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Ghost;
@@ -68,7 +67,7 @@ public class MsPacMan_IntroScene extends GameScene {
 		msPacMan2D = new Pac2D(context.msPacMan, game, r2D);
 		msPacMan2D.munchings.restart();
 		ghosts2D = Stream.of(context.ghosts).map(ghost -> new Ghost2D(ghost, game, r2D)).toArray(Ghost2D[]::new);
-		Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.animKicking.values().forEach(TimedSeq::restart));
+		Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.animColor.restart());
 	}
 
 	@Override

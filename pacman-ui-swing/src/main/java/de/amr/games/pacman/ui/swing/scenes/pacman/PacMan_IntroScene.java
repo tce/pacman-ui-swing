@@ -35,7 +35,6 @@ import java.util.stream.Stream;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.pacman.IntroController;
-import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
@@ -78,8 +77,8 @@ public class PacMan_IntroScene extends GameScene {
 
 		ghosts2D = Stream.of(sceneController.context.ghosts).map(ghost -> {
 			Ghost2D ghost2D = new Ghost2D(ghost, game, r2D);
-			ghost2D.animKicking.values().forEach(TimedSeq::restart);
-			ghost2D.animFrightened.restart();
+			ghost2D.animColor.restart();
+			ghost2D.animBlue.restart();
 			return ghost2D;
 		}).toArray(Ghost2D[]::new);
 	}
@@ -100,9 +99,9 @@ public class PacMan_IntroScene extends GameScene {
 		if (sceneController.state() == IntroController.State.CHASING_GHOSTS) {
 			for (Ghost ghost : sceneController.context.ghosts) {
 				if (ghost.velocity.equals(V2d.NULL)) {
-					ghosts2D[ghost.id].animFrightened.stop();
-				} else if (!ghosts2D[ghost.id].animFrightened.isRunning()) {
-					ghosts2D[ghost.id].animFrightened.restart();
+					ghosts2D[ghost.id].animBlue.stop();
+				} else if (!ghosts2D[ghost.id].animBlue.isRunning()) {
+					ghosts2D[ghost.id].animBlue.restart();
 				}
 			}
 		}

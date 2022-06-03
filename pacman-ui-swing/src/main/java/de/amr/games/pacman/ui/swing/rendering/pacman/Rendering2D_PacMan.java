@@ -203,10 +203,10 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public Map<Direction, TimedSeq<BufferedImage>> createGhostColorAnimation(int ghostID) {
-		EnumMap<Direction, TimedSeq<BufferedImage>> walkingTo = new EnumMap<>(Direction.class);
+	public SpriteAnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID) {
+		SpriteAnimationMap<Direction, BufferedImage> walkingTo = new SpriteAnimationMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
-			TimedSeq<BufferedImage> anim = TimedSeq.of( //
+			var anim = new SpriteAnimation<>( //
 					ss.tile(2 * index(dir), 4 + ghostID), //
 					ss.tile(2 * index(dir) + 1, 4 + ghostID));
 			anim.frameDuration(8).endless();

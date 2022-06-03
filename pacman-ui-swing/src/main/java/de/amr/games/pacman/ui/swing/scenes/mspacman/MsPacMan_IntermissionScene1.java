@@ -27,7 +27,6 @@ import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.Intermission1Controller;
-import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
@@ -87,8 +86,8 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 		// start animations
 		msPacMan2D.munchings.restart();
 		pacMan2D.munchings.restart();
-		inky2D.animKicking.values().forEach(TimedSeq::restart);
-		pinky2D.animKicking.values().forEach(TimedSeq::restart);
+		inky2D.animColor.restart();
+		pinky2D.animColor.restart();
 	}
 
 	@Override
@@ -97,8 +96,8 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 		// stop ghost animation when Pac-Man and Ms. Pac-Man are in heaven
 		if (sceneController.state() == Intermission1Controller.State.IN_HEAVEN
 				&& context.pacMan.velocity.equals(V2d.NULL)) {
-			inky2D.animKicking.values().forEach(TimedSeq::stop);
-			pinky2D.animKicking.values().forEach(TimedSeq::stop);
+			inky2D.animColor.stop();
+			pinky2D.animColor.stop();
 		}
 	}
 

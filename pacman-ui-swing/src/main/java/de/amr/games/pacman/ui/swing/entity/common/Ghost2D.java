@@ -33,6 +33,7 @@ import java.awt.image.BufferedImage;
 import java.util.Map;
 
 import de.amr.games.pacman.lib.Direction;
+import de.amr.games.pacman.lib.SpriteAnimationMap;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.model.common.GameModel;
@@ -47,27 +48,27 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 public class Ghost2D extends GameEntity2D {
 
 	public final Ghost ghost;
-	public Map<Direction, TimedSeq<BufferedImage>> animKicking;
-	public Map<Direction, TimedSeq<BufferedImage>> animReturningHome;
+	public SpriteAnimationMap<Direction, BufferedImage> animColor;
+	public Map<Direction, TimedSeq<BufferedImage>> animEyes;
 	public TimedSeq<BufferedImage> animFlashing;
-	public TimedSeq<BufferedImage> animFrightened;
+	public TimedSeq<BufferedImage> animBlue;
 
 	public Ghost2D(Ghost ghost, GameModel game, Rendering2D r2D) {
 		super(game, r2D);
 		this.ghost = ghost;
-		animKicking = r2D.createGhostColorAnimation(ghost.id);
-		animReturningHome = r2D.createGhostEyesAnimation();
-		animFrightened = r2D.createGhostBlueAnimation();
+		animColor = r2D.createGhostColorAnimation(ghost.id);
+		animEyes = r2D.createGhostEyesAnimation();
+		animBlue = r2D.createGhostBlueAnimation();
 		animFlashing = r2D.createGhostFlashingAnimation();
 	}
 
 	public void reset() {
 		for (Direction dir : Direction.values()) {
-			animKicking.get(dir).reset();
-			animReturningHome.get(dir).reset();
+			animColor.get(dir).reset();
+			animEyes.get(dir).reset();
 		}
 		animFlashing.reset();
-		animFrightened.reset();
+		animBlue.reset();
 	}
 
 	public void render(Graphics2D g) {
@@ -76,22 +77,22 @@ public class Ghost2D extends GameEntity2D {
 		if (ghost.bounty > 0) {
 			sprite = r2D.getNumberSprite(ghost.bounty);
 		} else if (ghost.is(DEAD) || ghost.is(ENTERING_HOUSE)) {
-			sprite = animReturningHome.get(dir).animate();
+			sprite = animEyes.get(dir).animate();
 		} else if (ghost.is(FRIGHTENED)) {
 			if (animFlashing.isRunning()) {
 				sprite = animFlashing.animate();
 			} else {
-				sprite = animFrightened.animate();
+				sprite = animBlue.animate();
 			}
 		} else if (ghost.is(LOCKED) && game.pac.hasPower()) {
-			if (!animFrightened.isRunning()) {
-				animFrightened.restart();
+			if (!animBlue.isRunning()) {
+				animBlue.restart();
 			}
-			sprite = animFrightened.animate();
+			sprite = animBlue.animate();
 		} else if (ghost.velocity.equals(V2d.NULL)) {
-			sprite = animKicking.get(ghost.wishDir()).frame();
+			sprite = animColor.get(ghost.wishDir()).frame();
 		} else {
-			sprite = animKicking.get(dir).animate();
+			sprite = animColor.get(dir).animate();
 		}
 		r2D.drawEntity(g, ghost, sprite);
 	}
