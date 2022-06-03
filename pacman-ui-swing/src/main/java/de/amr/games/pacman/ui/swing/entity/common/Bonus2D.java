@@ -56,7 +56,7 @@ public class Bonus2D extends GameEntity2D {
 		case INACTIVE -> {
 		}
 		case EDIBLE -> {
-			var sprite = r2D.getSymbolSpritesMap().get(game.level.bonusSymbol);
+			var sprite = r2D.getSymbolSprite(game.level.bonusSymbol);
 			// Ms. Pac.Man bonus is jumping up and down while wandering the maze
 			int jump = jumpAnimation != null ? jumpAnimation.animate() : 0;
 			g.translate(0, jump);
@@ -64,7 +64,7 @@ public class Bonus2D extends GameEntity2D {
 			g.translate(0, -jump);
 		}
 		case EATEN -> {
-			var sprite = r2D.getBonusNumberSprites().get(bonus.value());
+			var sprite = r2D.getBonusValueSprite(bonus.value());
 			renderSprite(g, sprite, bonus.position().x, bonus.position().y);
 		}
 		}

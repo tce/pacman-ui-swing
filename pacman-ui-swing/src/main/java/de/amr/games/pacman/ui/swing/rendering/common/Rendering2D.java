@@ -59,15 +59,13 @@ public interface Rendering2D {
 
 	// Sprites
 
-	Map<Integer, BufferedImage> getSymbolSpritesMap();
+	BufferedImage getSymbolSprite(int symbol);
 
-	Map<Integer, BufferedImage> getBountyNumberSprites();
+	BufferedImage getBonusValueSprite(int number);
 
-	Map<Integer, BufferedImage> getBonusNumberSprites();
+	BufferedImage getNumberSprite(int number);
 
-	BufferedImage symbolSprite(int symbol);
-
-	BufferedImage lifeSprite();
+	BufferedImage getLifeSprite();
 
 	// Animations
 
@@ -152,7 +150,7 @@ public interface Rendering2D {
 	default void drawLivesCounter(Graphics2D g, GameModel game, int x, int y) {
 		int maxLivesDisplayed = 5;
 		for (int i = 0; i < Math.min(game.lives, maxLivesDisplayed); ++i) {
-			g.drawImage(lifeSprite(), x + t(2 * i), y, null);
+			g.drawImage(getLifeSprite(), x + t(2 * i), y, null);
 		}
 		if (game.lives > maxLivesDisplayed) {
 			g.setColor(Color.YELLOW);
@@ -166,7 +164,7 @@ public interface Rendering2D {
 		int firstLevel = Math.max(1, game.level.number - 6);
 		for (int levelNumber = firstLevel; levelNumber <= game.level.number; ++levelNumber) {
 			int symbol = game.levelCounter.get(levelNumber - 1);
-			g.drawImage(symbolSprite(symbol), x, y, null);
+			g.drawImage(getSymbolSprite(symbol), x, y, null);
 			x -= t(2);
 		}
 	}

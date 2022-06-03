@@ -309,18 +309,18 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public Map<Integer, BufferedImage> getBountyNumberSprites() {
-		return bountyNumberSprites;
+	public BufferedImage getNumberSprite(int number) {
+		return bountyNumberSprites.get(number);
 	}
 
 	@Override
-	public Map<Integer, BufferedImage> getBonusNumberSprites() {
-		return bonusValueSprites;
+	public BufferedImage getBonusValueSprite(int number) {
+		return bonusValueSprites.get(number);
 	}
 
 	@Override
-	public Map<Integer, BufferedImage> getSymbolSpritesMap() {
-		return symbolSprites;
+	public BufferedImage getSymbolSprite(int symbol) {
+		return symbolSprites.get(symbol);
 	}
 
 	@Override
@@ -329,13 +329,8 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public BufferedImage lifeSprite() {
+	public BufferedImage getLifeSprite() {
 		return rhs(1, 0);
-	}
-
-	@Override
-	public BufferedImage symbolSprite(int symbol) {
-		return symbolSprites.get(symbol);
 	}
 
 	@Override

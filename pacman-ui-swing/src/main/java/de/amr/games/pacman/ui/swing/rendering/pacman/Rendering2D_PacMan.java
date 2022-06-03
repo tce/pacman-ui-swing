@@ -80,11 +80,11 @@ public class Rendering2D_PacMan implements Rendering2D {
 	private static final Color FOOD_COLOR = new Color(254, 189, 180);
 
 	private final Spritesheet ss;
-	private final BufferedImage mazeFull, mazeEmpty;
+	private final BufferedImage mazeFull;
 	private final TimedSeq<BufferedImage> mazeFlashingAnim;
 	private final Map<Integer, BufferedImage> symbolSprites;
 	private final Map<Integer, BufferedImage> bonusValueSprites;
-	private final Map<Integer, BufferedImage> bountyNumberSprites;
+	private final Map<Integer, BufferedImage> numberSprites;
 	private final Font font;
 
 	// TODO
@@ -97,7 +97,6 @@ public class Rendering2D_PacMan implements Rendering2D {
 		font = font("/emulogic.ttf", 8);
 
 		mazeFull = image("/pacman/graphics/maze_full.png");
-		mazeEmpty = image("/pacman/graphics/maze_empty.png");
 		var mazeEmptyDark = image("/pacman/graphics/maze_empty.png");
 		var mazeEmptyBright = ss.createBrightEffect(mazeEmptyDark, new Color(33, 33, 255), Color.BLACK);
 		mazeFlashingAnim = TimedSeq.of(mazeEmptyBright, mazeEmptyDark).frameDuration(15);
@@ -125,7 +124,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 			5000, ss.tiles(3, 12, 3, 1)
 		);
 
-		bountyNumberSprites = Map.of(
+		numberSprites = Map.of(
 			200,  ss.tile(0, 8),
 			400,  ss.tile(1, 8),
 			800,  ss.tile(2, 8),
@@ -163,18 +162,18 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public Map<Integer, BufferedImage> getBonusNumberSprites() {
-		return bountyNumberSprites;
+	public BufferedImage getNumberSprite(int number) {
+		return numberSprites.get(number);
 	}
 
 	@Override
-	public Map<Integer, BufferedImage> getBountyNumberSprites() {
-		return bountyNumberSprites;
+	public BufferedImage getBonusValueSprite(int number) {
+		return bonusValueSprites.get(number);
 	}
 
 	@Override
-	public Map<Integer, BufferedImage> getSymbolSpritesMap() {
-		return symbolSprites;
+	public BufferedImage getSymbolSprite(int symbol) {
+		return symbolSprites.get(symbol);
 	}
 
 	public BufferedImage ghostImageByGhostByDir(int ghostID, Direction dir) {
@@ -253,7 +252,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 
 	@Override
 	public Color getMazeWallBorderColor(int mazeIndex) {
-		return new Color(33, 33, 255);
+		return MAZE_WALL_COLOR;
 	}
 
 	@Override
@@ -300,12 +299,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public BufferedImage lifeSprite() {
+	public BufferedImage getLifeSprite() {
 		return ss.tile(8, 1);
-	}
-
-	@Override
-	public BufferedImage symbolSprite(int symbol) {
-		return symbolSprites.get(symbol);
 	}
 }

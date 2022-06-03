@@ -74,7 +74,7 @@ public class Ghost2D extends GameEntity2D {
 		BufferedImage sprite = null;
 		final Direction dir = ghost.wishDir();
 		if (ghost.bounty > 0) {
-			sprite = r2D.getBountyNumberSprites().get(ghost.bounty);
+			sprite = r2D.getNumberSprite(ghost.bounty);
 		} else if (ghost.is(DEAD) || ghost.is(ENTERING_HOUSE)) {
 			sprite = animReturningHome.get(dir).animate();
 		} else if (ghost.is(FRIGHTENED)) {
