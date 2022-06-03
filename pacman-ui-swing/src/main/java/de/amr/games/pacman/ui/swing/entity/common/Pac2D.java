@@ -48,6 +48,7 @@ public class Pac2D extends GameEntity2D {
 		super(game);
 		this.pac = pac;
 		this.animations = animations;
+		animations.selectAnimation(PacAnimation.MUNCHING);
 	}
 
 	@Override
