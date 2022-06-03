@@ -123,7 +123,9 @@ public class PlayScene extends GameScene {
 		boolean recovering = game.pac.powerTimer.remaining() <= recoveringTicks;
 		for (var ghost2D : ghosts2D) {
 			if (recoveringStarts) {
-				ghost2D.animations.startFlashing(game.level.numFlashes, recoveringTicks);
+				// TODO avoid cast
+				MyGhostAnimationSet animations = (MyGhostAnimationSet) ghost2D.animations;
+				animations.startFlashing(game.level.numFlashes, recoveringTicks);
 			}
 			ghost2D.updateAnimation(game.pac.hasPower(), recovering);
 		}

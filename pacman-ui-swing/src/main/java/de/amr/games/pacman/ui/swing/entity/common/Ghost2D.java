@@ -24,11 +24,12 @@ SOFTWARE.
 package de.amr.games.pacman.ui.swing.entity.common;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
+import de.amr.games.pacman.lib.SpriteAnimationSet;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.GhostAnimation;
-import de.amr.games.pacman.ui.swing.rendering.common.MyGhostAnimationSet;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**
@@ -39,9 +40,9 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 public class Ghost2D extends GameEntity2D {
 
 	public final Ghost ghost;
-	public final MyGhostAnimationSet animations;
+	public final SpriteAnimationSet<Ghost, GhostAnimation, BufferedImage> animations;
 
-	public Ghost2D(Ghost ghost, GameModel game, MyGhostAnimationSet animations) {
+	public Ghost2D(Ghost ghost, GameModel game, SpriteAnimationSet<Ghost, GhostAnimation, BufferedImage> animations) {
 		super(game);
 		this.ghost = ghost;
 		this.animations = animations;
