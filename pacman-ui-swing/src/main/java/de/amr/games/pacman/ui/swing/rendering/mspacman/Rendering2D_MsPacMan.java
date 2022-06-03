@@ -214,12 +214,12 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public TimedSeq<BufferedImage> createPlayerDyingAnimation() {
+	public TimedSeq<BufferedImage> createPacDyingAnimation() {
 		return TimedSeq.of(rhs(0, 3), rhs(0, 0), rhs(0, 1), rhs(0, 2)).frameDuration(10).repetitions(2);
 	}
 
 	@Override
-	public Map<Direction, TimedSeq<BufferedImage>> createPlayerMunchingAnimations() {
+	public Map<Direction, TimedSeq<BufferedImage>> createPacMunchingAnimations() {
 		Map<Direction, TimedSeq<BufferedImage>> munchings = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
@@ -241,7 +241,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public Map<Direction, TimedSeq<BufferedImage>> createGhostKickingAnimations(int ghostID) {
+	public Map<Direction, TimedSeq<BufferedImage>> createGhostColorAnimation(int ghostID) {
 		EnumMap<Direction, TimedSeq<BufferedImage>> kickingByDir = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
@@ -252,7 +252,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public TimedSeq<BufferedImage> createGhostFrightenedAnimation() {
+	public TimedSeq<BufferedImage> createGhostBlueAnimation() {
 		return TimedSeq.of(rhs(8, 4), rhs(9, 4)).frameDuration(8).endless().run();
 	}
 
@@ -262,7 +262,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public Map<Direction, TimedSeq<BufferedImage>> createGhostReturningHomeAnimations() {
+	public Map<Direction, TimedSeq<BufferedImage>> createGhostEyesAnimation() {
 		Map<Direction, TimedSeq<BufferedImage>> ghostEyesAnimByDir = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			ghostEyesAnimByDir.put(dir, TimedSeq.of(rhs(8 + index(dir), 5)));

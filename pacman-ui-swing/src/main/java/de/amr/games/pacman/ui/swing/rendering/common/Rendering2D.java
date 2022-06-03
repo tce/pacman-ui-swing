@@ -69,17 +69,17 @@ public interface Rendering2D {
 
 	// Animations
 
-	Map<Direction, TimedSeq<BufferedImage>> createPlayerMunchingAnimations();
+	Map<Direction, TimedSeq<BufferedImage>> createPacMunchingAnimations();
 
-	TimedSeq<BufferedImage> createPlayerDyingAnimation();
+	TimedSeq<BufferedImage> createPacDyingAnimation();
 
-	Map<Direction, TimedSeq<BufferedImage>> createGhostKickingAnimations(int ghostID);
+	Map<Direction, TimedSeq<BufferedImage>> createGhostColorAnimation(int ghostID);
 
-	TimedSeq<BufferedImage> createGhostFrightenedAnimation();
+	TimedSeq<BufferedImage> createGhostBlueAnimation();
 
 	TimedSeq<BufferedImage> createGhostFlashingAnimation();
 
-	Map<Direction, TimedSeq<BufferedImage>> createGhostReturningHomeAnimations();
+	Map<Direction, TimedSeq<BufferedImage>> createGhostEyesAnimation();
 
 	// Maze
 

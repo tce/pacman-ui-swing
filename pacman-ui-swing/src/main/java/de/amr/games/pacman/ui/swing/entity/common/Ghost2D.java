@@ -55,9 +55,9 @@ public class Ghost2D extends GameEntity2D {
 	public Ghost2D(Ghost ghost, GameModel game, Rendering2D r2D) {
 		super(game, r2D);
 		this.ghost = ghost;
-		animKicking = r2D.createGhostKickingAnimations(ghost.id);
-		animReturningHome = r2D.createGhostReturningHomeAnimations();
-		animFrightened = r2D.createGhostFrightenedAnimation();
+		animKicking = r2D.createGhostColorAnimation(ghost.id);
+		animReturningHome = r2D.createGhostEyesAnimation();
+		animFrightened = r2D.createGhostBlueAnimation();
 		animFlashing = r2D.createGhostFlashingAnimation();
 	}
 

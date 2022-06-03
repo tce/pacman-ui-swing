@@ -48,8 +48,8 @@ public class Pac2D extends GameEntity2D {
 	public Pac2D(Pac pac, GameModel game, Rendering2D r2D) {
 		super(game, r2D);
 		this.pac = pac;
-		munchings = r2D.createPlayerMunchingAnimations();
-		dying = r2D.createPlayerDyingAnimation();
+		munchings = r2D.createPacMunchingAnimations();
+		dying = r2D.createPacDyingAnimation();
 	}
 
 	public void reset() {

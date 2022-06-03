@@ -181,7 +181,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public TimedSeq<BufferedImage> createPlayerDyingAnimation() {
+	public TimedSeq<BufferedImage> createPacDyingAnimation() {
 		return TimedSeq.of( //
 				ss.tile(3, 0), ss.tile(4, 0), ss.tile(5, 0), ss.tile(6, 0), //
 				ss.tile(7, 0), ss.tile(8, 0), ss.tile(9, 0), ss.tile(10, 0), //
@@ -190,7 +190,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public Map<Direction, TimedSeq<BufferedImage>> createPlayerMunchingAnimations() {
+	public Map<Direction, TimedSeq<BufferedImage>> createPacMunchingAnimations() {
 		EnumMap<Direction, TimedSeq<BufferedImage>> munching = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
@@ -202,7 +202,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public Map<Direction, TimedSeq<BufferedImage>> createGhostKickingAnimations(int ghostID) {
+	public Map<Direction, TimedSeq<BufferedImage>> createGhostColorAnimation(int ghostID) {
 		EnumMap<Direction, TimedSeq<BufferedImage>> walkingTo = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			TimedSeq<BufferedImage> anim = TimedSeq.of( //
@@ -215,7 +215,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public TimedSeq<BufferedImage> createGhostFrightenedAnimation() {
+	public TimedSeq<BufferedImage> createGhostBlueAnimation() {
 		TimedSeq<BufferedImage> animation = TimedSeq.of(ss.tile(8, 4), ss.tile(9, 4));
 		animation.frameDuration(8).endless();
 		return animation;
@@ -229,7 +229,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public Map<Direction, TimedSeq<BufferedImage>> createGhostReturningHomeAnimations() {
+	public Map<Direction, TimedSeq<BufferedImage>> createGhostEyesAnimation() {
 		Map<Direction, TimedSeq<BufferedImage>> ghostEyesAnimsByDir = new EnumMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			ghostEyesAnimsByDir.put(dir, TimedSeq.of(ss.tile(8 + index(dir), 5)));
