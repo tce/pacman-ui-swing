@@ -38,8 +38,8 @@ import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.entity.pacman.BigPacMan2D;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimation;
-import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
-import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
+import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimationSet;
+import de.amr.games.pacman.ui.swing.rendering.common.PacAnimationSet;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
@@ -69,8 +69,8 @@ public class PacMan_IntermissionScene1 extends GameScene {
 	public void init(GameModel game) {
 		super.init(game);
 		sceneController.init();
-		pacMan2D = new Pac2D(context.pac, game, new PacAnimations(r2D));
-		blinky2D = new Ghost2D(context.blinky, game, new GhostAnimations(Ghost.RED_GHOST, r2D));
+		pacMan2D = new Pac2D(context.pac, game, new PacAnimationSet(r2D));
+		blinky2D = new Ghost2D(context.blinky, game, new GhostAnimationSet(Ghost.RED_GHOST, r2D));
 		bigPacMan2D = new BigPacMan2D(context.pac, (Rendering2D_PacMan) r2D);
 		bigPacMan2D.startMunching();
 	}

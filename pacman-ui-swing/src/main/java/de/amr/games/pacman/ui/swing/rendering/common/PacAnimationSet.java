@@ -37,12 +37,12 @@ import de.amr.games.pacman.model.common.actors.Pac;
 /**
  * @author Armin Reichert
  */
-public class PacAnimations extends SpriteAnimationSet<PacAnimation, BufferedImage> {
+public class PacAnimationSet extends SpriteAnimationSet<PacAnimation, BufferedImage> {
 
 	protected SpriteAnimationMap<Direction, BufferedImage> munching;
 	protected SpriteAnimation<BufferedImage> dying;
 
-	public PacAnimations(Rendering2D r2D) {
+	public PacAnimationSet(Rendering2D r2D) {
 		munching = r2D.createPacMunchingAnimations();
 		dying = r2D.createPacDyingAnimation();
 	}

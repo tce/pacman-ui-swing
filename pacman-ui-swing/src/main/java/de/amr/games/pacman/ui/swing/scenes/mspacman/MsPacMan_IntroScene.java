@@ -42,8 +42,8 @@ import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
-import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
-import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
+import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimationSet;
+import de.amr.games.pacman.ui.swing.rendering.common.PacAnimationSet;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.shell.Keyboard;
@@ -71,8 +71,8 @@ public class MsPacMan_IntroScene extends GameScene {
 	public void init(GameModel game) {
 		super.init(game);
 		sceneController.restartInInitialState(IntroController.State.BEGIN);
-		msPacMan2D = new Pac2D(context.msPacMan, game, new PacAnimations(r2D));
-		ghosts2D = Stream.of(context.ghosts).map(ghost -> new Ghost2D(ghost, game, new GhostAnimations(ghost.id, r2D)))
+		msPacMan2D = new Pac2D(context.msPacMan, game, new PacAnimationSet(r2D));
+		ghosts2D = Stream.of(context.ghosts).map(ghost -> new Ghost2D(ghost, game, new GhostAnimationSet(ghost.id, r2D)))
 				.toArray(Ghost2D[]::new);
 	}
 

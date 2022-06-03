@@ -28,7 +28,7 @@ import java.awt.Graphics2D;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimation;
-import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
+import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimationSet;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**
@@ -39,9 +39,9 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 public class Ghost2D extends GameEntity2D {
 
 	public final Ghost ghost;
-	public final GhostAnimations animations;
+	public final GhostAnimationSet animations;
 
-	public Ghost2D(Ghost ghost, GameModel game, GhostAnimations animations) {
+	public Ghost2D(Ghost ghost, GameModel game, GhostAnimationSet animations) {
 		super(game);
 		this.ghost = ghost;
 		this.animations = animations;
