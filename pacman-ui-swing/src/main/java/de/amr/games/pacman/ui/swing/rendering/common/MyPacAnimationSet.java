@@ -38,7 +38,7 @@ import de.amr.games.pacman.model.common.actors.PacAnimation;
 /**
  * @author Armin Reichert
  */
-public class MyPacAnimationSet extends SpriteAnimationSet<PacAnimation, BufferedImage> {
+public class MyPacAnimationSet extends SpriteAnimationSet<Pac, PacAnimation, BufferedImage> {
 
 	protected SpriteAnimationMap<Direction, BufferedImage> munching;
 	protected SpriteAnimation<BufferedImage> dying;
@@ -61,6 +61,7 @@ public class MyPacAnimationSet extends SpriteAnimationSet<PacAnimation, Buffered
 		return Stream.of(munching, dying);
 	}
 
+	@Override
 	public BufferedImage currentSprite(Pac pac) {
 		return switch (selectedKey()) {
 		case DYING -> dying.animate();

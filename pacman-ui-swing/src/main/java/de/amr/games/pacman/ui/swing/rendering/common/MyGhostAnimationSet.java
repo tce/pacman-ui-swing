@@ -37,7 +37,7 @@ import de.amr.games.pacman.model.common.actors.GhostAnimation;
 /**
  * @author Armin Reichert
  */
-public class MyGhostAnimationSet extends SpriteAnimationSet<GhostAnimation, BufferedImage> {
+public class MyGhostAnimationSet extends SpriteAnimationSet<Ghost, GhostAnimation, BufferedImage> {
 
 	private SpriteAnimationMap<Direction, BufferedImage> eyes;
 	private SpriteAnimation<BufferedImage> flashing;
@@ -66,6 +66,7 @@ public class MyGhostAnimationSet extends SpriteAnimationSet<GhostAnimation, Buff
 		flashing.frameDuration(frameTicks).repetitions(numFlashes).restart();
 	}
 
+	@Override
 	public BufferedImage currentSprite(Ghost ghost) {
 		return switch (selectedKey) {
 		case EYES -> eyes.get(ghost.wishDir()).frame();
