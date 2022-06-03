@@ -33,6 +33,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.Robot;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -195,12 +196,23 @@ public class PacManGameUI_Swing extends GameEventAdapter {
 				g.setColor(Color.BLACK);
 				g.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 				g.scale(scaling, scaling);
-				currentGameScene.render(g);
+				Graphics2D smooth = createSmoothGraphics(g);
+				currentGameScene.render(smooth);
+				smooth.dispose();
 				flashMessageDisplay.render(g);
 				g.dispose();
 			} while (buffers.contentsRestored());
 			buffers.show();
 		} while (buffers.contentsLost());
+	}
+
+	private Graphics2D createSmoothGraphics(Graphics2D g) {
+		Graphics2D smooth = (Graphics2D) g.create();
+		smooth.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		smooth.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		smooth.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+//		smooth.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		return smooth;
 	}
 
 	public void showFlashMessage(double seconds, String message, Object... args) {
