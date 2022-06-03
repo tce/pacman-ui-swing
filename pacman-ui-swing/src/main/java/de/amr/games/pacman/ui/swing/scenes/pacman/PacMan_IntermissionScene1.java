@@ -70,7 +70,7 @@ public class PacMan_IntermissionScene1 extends GameScene {
 		pacMan2D = new Pac2D(context.pac, game, r2D);
 		blinky2D = new Ghost2D(context.blinky, game, r2D);
 		bigPacMan2D = new BigPacMan2D(context.pac, (Rendering2D_PacMan) r2D);
-		pacMan2D.munchings.values().forEach(TimedSeq::restart);
+		pacMan2D.munchings.restart();
 		blinky2D.animKicking.values().forEach(TimedSeq::restart);
 		blinky2D.animFrightened.restart();
 		bigPacMan2D.munchingAnimation.restart();

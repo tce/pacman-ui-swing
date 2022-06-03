@@ -85,8 +85,8 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 		heart2D.setImage(Rendering2D_MsPacMan.get().getHeart());
 
 		// start animations
-		msPacMan2D.munchings.values().forEach(TimedSeq::restart);
-		pacMan2D.munchings.values().forEach(TimedSeq::restart);
+		msPacMan2D.munchings.restart();
+		pacMan2D.munchings.restart();
 		inky2D.animKicking.values().forEach(TimedSeq::restart);
 		pinky2D.animKicking.values().forEach(TimedSeq::restart);
 	}

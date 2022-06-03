@@ -38,6 +38,7 @@ import java.util.Map;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.SpriteAnimation;
+import de.amr.games.pacman.lib.SpriteAnimationMap;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.model.mspacman.MsPacManGame;
@@ -198,22 +199,22 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public Map<Direction, TimedSeq<BufferedImage>> createPacMunchingAnimations() {
-		Map<Direction, TimedSeq<BufferedImage>> munchings = new EnumMap<>(Direction.class);
+	public SpriteAnimationMap<Direction, BufferedImage> createPacMunchingAnimations() {
+		SpriteAnimationMap<Direction, BufferedImage> munchings = new SpriteAnimationMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
 			BufferedImage wide_open = rhs(0, d), open = rhs(1, d), closed = rhs(2, d);
-			var animation = TimedSeq.of(open, closed, open, wide_open).frameDuration(2).endless().run();
+			var animation = new SpriteAnimation<>(open, closed, open, wide_open).frameDuration(2).endless();
 			munchings.put(dir, animation);
 		}
 		return munchings;
 	}
 
-	public Map<Direction, TimedSeq<BufferedImage>> createSpouseMunchingAnimations() {
-		Map<Direction, TimedSeq<BufferedImage>> munchings = new EnumMap<>(Direction.class);
+	public SpriteAnimationMap<Direction, BufferedImage> createSpouseMunchingAnimations() {
+		SpriteAnimationMap<Direction, BufferedImage> munchings = new SpriteAnimationMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
-			var munching = TimedSeq.of(rhs(0, 9 + d), rhs(1, 9 + d), rhs(2, 9)).frameDuration(2).endless();
+			var munching = new SpriteAnimation<>(rhs(0, 9 + d), rhs(1, 9 + d), rhs(2, 9)).frameDuration(2).endless();
 			munchings.put(dir, munching);
 		}
 		return munchings;

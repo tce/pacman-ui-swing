@@ -171,7 +171,7 @@ public class PlayScene extends GameScene {
 
 		case HUNTING -> {
 			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(TimedSeq::restart);
-			player2D.munchings.values().forEach(TimedSeq::restart);
+			player2D.munchings.restart();
 			Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.animKicking.values().forEach(TimedSeq::restart));
 		}
 

@@ -38,6 +38,7 @@ import java.util.stream.Stream;
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.SpriteAnimation;
+import de.amr.games.pacman.lib.SpriteAnimationMap;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
@@ -70,7 +71,7 @@ public interface Rendering2D {
 
 	// Animations
 
-	Map<Direction, TimedSeq<BufferedImage>> createPacMunchingAnimations();
+	SpriteAnimationMap<Direction, BufferedImage> createPacMunchingAnimations();
 
 	SpriteAnimation<BufferedImage> createPacDyingAnimation();
 

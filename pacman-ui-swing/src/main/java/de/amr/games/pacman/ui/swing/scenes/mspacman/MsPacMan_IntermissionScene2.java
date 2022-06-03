@@ -28,7 +28,6 @@ import java.awt.Graphics2D;
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.Intermission2Controller;
 import de.amr.games.pacman.controller.mspacman.Intermission2Controller.Context;
-import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
@@ -69,10 +68,10 @@ public class MsPacMan_IntermissionScene2 extends GameScene {
 		sceneController.restartInInitialState(Intermission2Controller.State.FLAP);
 		flap2D = new Flap2D(context.flap, game, r2D);
 		msPacMan2D = new Pac2D(context.msPacMan, game, r2D);
-		msPacMan2D.munchings.values().forEach(TimedSeq::restart);
+		msPacMan2D.munchings.restart();
 		pacMan2D = new Pac2D(context.pacMan, game, r2D);
 		pacMan2D.munchings = Rendering2D_MsPacMan.get().createSpouseMunchingAnimations();
-		pacMan2D.munchings.values().forEach(TimedSeq::restart);
+		pacMan2D.munchings.restart();
 	}
 
 	@Override

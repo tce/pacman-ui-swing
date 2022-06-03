@@ -41,6 +41,7 @@ import java.util.Map;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.SpriteAnimation;
+import de.amr.games.pacman.lib.SpriteAnimationMap;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.actors.Ghost;
@@ -190,12 +191,12 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public Map<Direction, TimedSeq<BufferedImage>> createPacMunchingAnimations() {
-		EnumMap<Direction, TimedSeq<BufferedImage>> munching = new EnumMap<>(Direction.class);
+	public SpriteAnimationMap<Direction, BufferedImage> createPacMunchingAnimations() {
+		SpriteAnimationMap<Direction, BufferedImage> munching = new SpriteAnimationMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
 			BufferedImage wide_open = ss.tile(0, d), open = ss.tile(1, d), closed = ss.tile(2, 0);
-			var animation = TimedSeq.of(closed, open, wide_open, open).frameDuration(2).endless().run();
+			var animation = new SpriteAnimation<>(closed, open, wide_open, open).frameDuration(2).endless();
 			munching.put(dir, animation);
 		}
 		return munching;

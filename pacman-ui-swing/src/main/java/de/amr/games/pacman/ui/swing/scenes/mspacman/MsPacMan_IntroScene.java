@@ -66,7 +66,7 @@ public class MsPacMan_IntroScene extends GameScene {
 		super.init(game);
 		sceneController.restartInInitialState(IntroController.State.BEGIN);
 		msPacMan2D = new Pac2D(context.msPacMan, game, r2D);
-		msPacMan2D.munchings.values().forEach(TimedSeq::restart);
+		msPacMan2D.munchings.restart();
 		ghosts2D = Stream.of(context.ghosts).map(ghost -> new Ghost2D(ghost, game, r2D)).toArray(Ghost2D[]::new);
 		Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.animKicking.values().forEach(TimedSeq::restart));
 	}

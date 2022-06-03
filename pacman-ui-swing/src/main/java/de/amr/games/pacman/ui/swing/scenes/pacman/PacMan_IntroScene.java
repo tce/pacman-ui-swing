@@ -74,7 +74,7 @@ public class PacMan_IntroScene extends GameScene {
 		sceneController.restartInInitialState(IntroController.State.BEGIN);
 
 		pacMan2D = new Pac2D(sceneController.context.pacMan, game, r2D);
-		pacMan2D.munchings.values().forEach(TimedSeq::restart);
+		pacMan2D.munchings.restart();
 
 		ghosts2D = Stream.of(sceneController.context.ghosts).map(ghost -> {
 			Ghost2D ghost2D = new Ghost2D(ghost, game, r2D);
