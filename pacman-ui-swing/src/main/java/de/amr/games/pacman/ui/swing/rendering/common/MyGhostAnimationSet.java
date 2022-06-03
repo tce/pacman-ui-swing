@@ -66,15 +66,8 @@ public class MyGhostAnimationSet extends SpriteAnimationSet<GhostAnimation, Buff
 		flashing.frameDuration(frameTicks).repetitions(numFlashes).restart();
 	}
 
-	public void refresh() {
-		eyes.ensureRunning();
-		blue.ensureRunning();
-		flashing.ensureRunning();
-		color.ensureRunning();
-	}
-
 	public BufferedImage currentSprite(Ghost ghost) {
-		return switch (selectedKey()) {
+		return switch (selectedKey) {
 		case EYES -> eyes.get(ghost.wishDir()).frame();
 		case FLASHING -> flashing.animate();
 		case BLUE -> blue.animate();
@@ -95,7 +88,7 @@ public class MyGhostAnimationSet extends SpriteAnimationSet<GhostAnimation, Buff
 		case 400 -> 1;
 		case 800 -> 2;
 		case 1600 -> 3;
-		default -> throw new IllegalArgumentException();
+		default -> throw new IllegalArgumentException("Illegal number: " + number); // TODO avoid this to happen
 		};
 	}
 

@@ -61,11 +61,6 @@ public class MyPacAnimationSet extends SpriteAnimationSet<PacAnimation, Buffered
 		return Stream.of(munching, dying);
 	}
 
-	public void refresh() {
-		munching.ensureRunning();
-		dying.reset();// TODO check this
-	}
-
 	public BufferedImage currentSprite(Pac pac) {
 		return switch (selectedKey()) {
 		case DYING -> dying.animate();
