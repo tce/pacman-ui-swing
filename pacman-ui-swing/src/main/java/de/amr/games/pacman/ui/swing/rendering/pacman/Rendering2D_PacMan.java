@@ -35,7 +35,6 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
-import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -216,31 +215,31 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public TimedSeq<BufferedImage> createGhostBlueAnimation() {
-		TimedSeq<BufferedImage> animation = TimedSeq.of(ss.tile(8, 4), ss.tile(9, 4));
+	public SpriteAnimation<BufferedImage> createGhostBlueAnimation() {
+		SpriteAnimation<BufferedImage> animation = new SpriteAnimation<>(ss.tile(8, 4), ss.tile(9, 4));
 		animation.frameDuration(8).endless();
 		return animation;
 	}
 
 	@Override
-	public TimedSeq<BufferedImage> createGhostFlashingAnimation() {
-		return TimedSeq.of( //
+	public SpriteAnimation<BufferedImage> createGhostFlashingAnimation() {
+		return new SpriteAnimation<>( //
 				ss.tile(8, 4), ss.tile(9, 4), ss.tile(10, 4), ss.tile(11, 4) //
 		).frameDuration(4);
 	}
 
 	@Override
-	public Map<Direction, TimedSeq<BufferedImage>> createGhostEyesAnimation() {
-		Map<Direction, TimedSeq<BufferedImage>> ghostEyesAnimsByDir = new EnumMap<>(Direction.class);
+	public SpriteAnimationMap<Direction, BufferedImage> createGhostEyesAnimation() {
+		SpriteAnimationMap<Direction, BufferedImage> ghostEyesAnimsByDir = new SpriteAnimationMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
-			ghostEyesAnimsByDir.put(dir, TimedSeq.of(ss.tile(8 + index(dir), 5)));
+			ghostEyesAnimsByDir.put(dir, new SpriteAnimation<>(ss.tile(8 + index(dir), 5)));
 		}
 		return ghostEyesAnimsByDir;
 	}
 
-	public TimedSeq<BufferedImage> createBigPacManMunchingAnimation() {
-		return TimedSeq.of(ss.tiles(2, 1, 2, 2), ss.tiles(4, 1, 2, 2), ss.tiles(6, 1, 2, 2)).frameDuration(4).endless()
-				.run();
+	public SpriteAnimation<BufferedImage> createBigPacManMunchingAnimation() {
+		return new SpriteAnimation<>(ss.tiles(2, 1, 2, 2), ss.tiles(4, 1, 2, 2), ss.tiles(6, 1, 2, 2)).frameDuration(4)
+				.endless();
 	}
 
 	public TimedSeq<BufferedImage> createBlinkyStretchedAnimation() {

@@ -32,7 +32,6 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -234,20 +233,20 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public TimedSeq<BufferedImage> createGhostBlueAnimation() {
-		return TimedSeq.of(rhs(8, 4), rhs(9, 4)).frameDuration(8).endless().run();
+	public SpriteAnimation<BufferedImage> createGhostBlueAnimation() {
+		return new SpriteAnimation<>(rhs(8, 4), rhs(9, 4)).frameDuration(8).endless();
 	}
 
 	@Override
-	public TimedSeq<BufferedImage> createGhostFlashingAnimation() {
-		return TimedSeq.of(rhs(8, 4), rhs(9, 4), rhs(10, 4), rhs(11, 4)).frameDuration(4);
+	public SpriteAnimation<BufferedImage> createGhostFlashingAnimation() {
+		return new SpriteAnimation<>(rhs(8, 4), rhs(9, 4), rhs(10, 4), rhs(11, 4)).frameDuration(4);
 	}
 
 	@Override
-	public Map<Direction, TimedSeq<BufferedImage>> createGhostEyesAnimation() {
-		Map<Direction, TimedSeq<BufferedImage>> ghostEyesAnimByDir = new EnumMap<>(Direction.class);
+	public SpriteAnimationMap<Direction, BufferedImage> createGhostEyesAnimation() {
+		SpriteAnimationMap<Direction, BufferedImage> ghostEyesAnimByDir = new SpriteAnimationMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
-			ghostEyesAnimByDir.put(dir, TimedSeq.of(rhs(8 + index(dir), 5)));
+			ghostEyesAnimByDir.put(dir, new SpriteAnimation<>(rhs(8 + index(dir), 5)));
 		}
 		return ghostEyesAnimByDir;
 	}

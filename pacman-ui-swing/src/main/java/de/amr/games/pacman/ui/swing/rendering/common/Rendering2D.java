@@ -31,7 +31,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -77,11 +76,11 @@ public interface Rendering2D {
 
 	SpriteAnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID);
 
-	TimedSeq<BufferedImage> createGhostBlueAnimation();
+	SpriteAnimation<BufferedImage> createGhostBlueAnimation();
 
-	TimedSeq<BufferedImage> createGhostFlashingAnimation();
+	SpriteAnimation<BufferedImage> createGhostFlashingAnimation();
 
-	Map<Direction, TimedSeq<BufferedImage>> createGhostEyesAnimation();
+	SpriteAnimationMap<Direction, BufferedImage> createGhostEyesAnimation();
 
 	// Maze
 
