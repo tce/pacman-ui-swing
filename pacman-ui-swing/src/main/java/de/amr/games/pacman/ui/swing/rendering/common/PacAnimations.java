@@ -30,15 +30,14 @@ import java.util.stream.Stream;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.ISpriteAnimation;
 import de.amr.games.pacman.lib.SpriteAnimation;
-import de.amr.games.pacman.lib.SpriteAnimationContainer;
+import de.amr.games.pacman.lib.SpriteAnimationSet;
 import de.amr.games.pacman.lib.SpriteAnimationMap;
 import de.amr.games.pacman.model.common.actors.Pac;
-import de.amr.games.pacman.ui.swing.entity.common.Pac2D.PacAnimation;
 
 /**
  * @author Armin Reichert
  */
-public class PacAnimations extends SpriteAnimationContainer<PacAnimation, BufferedImage> {
+public class PacAnimations extends SpriteAnimationSet<PacAnimation, BufferedImage> {
 
 	protected SpriteAnimationMap<Direction, BufferedImage> munching;
 	protected SpriteAnimation<BufferedImage> dying;

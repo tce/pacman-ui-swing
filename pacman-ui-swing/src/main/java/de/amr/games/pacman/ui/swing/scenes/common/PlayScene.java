@@ -48,11 +48,11 @@ import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Bonus2D;
 import de.amr.games.pacman.ui.swing.entity.common.Energizer2D;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
-import de.amr.games.pacman.ui.swing.entity.common.Ghost2D.GhostAnimation;
 import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
-import de.amr.games.pacman.ui.swing.entity.common.Pac2D.PacAnimation;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
+import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimation;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
+import de.amr.games.pacman.ui.swing.rendering.common.PacAnimation;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 

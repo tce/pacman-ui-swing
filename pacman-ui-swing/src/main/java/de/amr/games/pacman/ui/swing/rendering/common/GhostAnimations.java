@@ -29,15 +29,14 @@ import java.util.stream.Stream;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.ISpriteAnimation;
 import de.amr.games.pacman.lib.SpriteAnimation;
-import de.amr.games.pacman.lib.SpriteAnimationContainer;
+import de.amr.games.pacman.lib.SpriteAnimationSet;
 import de.amr.games.pacman.lib.SpriteAnimationMap;
 import de.amr.games.pacman.model.common.actors.Ghost;
-import de.amr.games.pacman.ui.swing.entity.common.Ghost2D.GhostAnimation;
 
 /**
  * @author Armin Reichert
  */
-public class GhostAnimations extends SpriteAnimationContainer<GhostAnimation, BufferedImage> {
+public class GhostAnimations extends SpriteAnimationSet<GhostAnimation, BufferedImage> {
 
 	private SpriteAnimationMap<Direction, BufferedImage> eyes;
 	private SpriteAnimation<BufferedImage> flashing;
