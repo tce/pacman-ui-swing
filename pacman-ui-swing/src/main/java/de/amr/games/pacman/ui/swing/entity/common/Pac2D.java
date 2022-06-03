@@ -27,8 +27,8 @@ import java.awt.Graphics2D;
 
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Pac;
-import de.amr.games.pacman.ui.swing.rendering.common.PacAnimation;
-import de.amr.games.pacman.ui.swing.rendering.common.PacAnimationSet;
+import de.amr.games.pacman.model.common.actors.PacAnimation;
+import de.amr.games.pacman.ui.swing.rendering.common.MyPacAnimationSet;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**
@@ -39,9 +39,9 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 public class Pac2D extends GameEntity2D {
 
 	public final Pac pac;
-	public final PacAnimationSet animations;
+	public final MyPacAnimationSet animations;
 
-	public Pac2D(Pac pac, GameModel game, PacAnimationSet animations) {
+	public Pac2D(Pac pac, GameModel game, MyPacAnimationSet animations) {
 		super(game);
 		this.pac = pac;
 		this.animations = animations;

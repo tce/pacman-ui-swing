@@ -29,29 +29,21 @@ import java.util.stream.Stream;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.ISpriteAnimation;
 import de.amr.games.pacman.lib.SpriteAnimation;
-import de.amr.games.pacman.lib.SpriteAnimationSet;
 import de.amr.games.pacman.lib.SpriteAnimationMap;
+import de.amr.games.pacman.lib.SpriteAnimationSet;
 import de.amr.games.pacman.model.common.actors.Ghost;
+import de.amr.games.pacman.model.common.actors.GhostAnimation;
 
 /**
  * @author Armin Reichert
  */
-public class GhostAnimationSet extends SpriteAnimationSet<GhostAnimation, BufferedImage> {
+public class MyGhostAnimationSet extends SpriteAnimationSet<GhostAnimation, BufferedImage> {
 
 	private SpriteAnimationMap<Direction, BufferedImage> eyes;
 	private SpriteAnimation<BufferedImage> flashing;
 	private SpriteAnimation<BufferedImage> blue;
 	private SpriteAnimationMap<Direction, BufferedImage> color;
 	private SpriteAnimation<BufferedImage> numbers;
-
-	public GhostAnimationSet(int ghostID, Rendering2D r2D) {
-		eyes = r2D.createGhostEyesAnimation();
-		flashing = r2D.createGhostFlashingAnimation();
-		blue = r2D.createGhostBlueAnimation();
-		color = r2D.createGhostColorAnimation(ghostID);
-		numbers = new SpriteAnimation<>(r2D.getNumberSprite(200), r2D.getNumberSprite(400), r2D.getNumberSprite(800),
-				r2D.getNumberSprite(1600));
-	}
 
 	@Override
 	public ISpriteAnimation animation(GhostAnimation key) {
@@ -105,5 +97,14 @@ public class GhostAnimationSet extends SpriteAnimationSet<GhostAnimation, Buffer
 		case 1600 -> 3;
 		default -> throw new IllegalArgumentException();
 		};
+	}
+
+	public MyGhostAnimationSet(int ghostID, Rendering2D r2D) {
+		eyes = r2D.createGhostEyesAnimation();
+		flashing = r2D.createGhostFlashingAnimation();
+		blue = r2D.createGhostBlueAnimation();
+		color = r2D.createGhostColorAnimation(ghostID);
+		numbers = new SpriteAnimation<>(r2D.getNumberSprite(200), r2D.getNumberSprite(400), r2D.getNumberSprite(800),
+				r2D.getNumberSprite(1600));
 	}
 }

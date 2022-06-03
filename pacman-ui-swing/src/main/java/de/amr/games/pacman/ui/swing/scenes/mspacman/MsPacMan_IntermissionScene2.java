@@ -34,7 +34,7 @@ import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Flap2D;
-import de.amr.games.pacman.ui.swing.rendering.common.PacAnimationSet;
+import de.amr.games.pacman.ui.swing.rendering.common.MyPacAnimationSet;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.MsPacMansHusbandAnimations;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
@@ -69,7 +69,7 @@ public class MsPacMan_IntermissionScene2 extends GameScene {
 		super.init(game);
 		sceneController.restartInInitialState(Intermission2Controller.State.FLAP);
 		flap2D = new Flap2D(context.flap, game);
-		msPacMan2D = new Pac2D(context.msPacMan, game, new PacAnimationSet(r2D));
+		msPacMan2D = new Pac2D(context.msPacMan, game, new MyPacAnimationSet(r2D));
 		pacMan2D = new Pac2D(context.pacMan, game, new MsPacMansHusbandAnimations(Rendering2D_MsPacMan.get()));
 	}
 

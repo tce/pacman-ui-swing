@@ -42,7 +42,9 @@ import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.GameVariant;
 import de.amr.games.pacman.model.common.actors.Ghost;
+import de.amr.games.pacman.model.common.actors.GhostAnimation;
 import de.amr.games.pacman.model.common.actors.GhostState;
+import de.amr.games.pacman.model.common.actors.PacAnimation;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Bonus2D;
@@ -50,10 +52,8 @@ import de.amr.games.pacman.ui.swing.entity.common.Energizer2D;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
-import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimation;
-import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimationSet;
-import de.amr.games.pacman.ui.swing.rendering.common.PacAnimation;
-import de.amr.games.pacman.ui.swing.rendering.common.PacAnimationSet;
+import de.amr.games.pacman.ui.swing.rendering.common.MyGhostAnimationSet;
+import de.amr.games.pacman.ui.swing.rendering.common.MyPacAnimationSet;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**
@@ -97,8 +97,8 @@ public class PlayScene extends GameScene {
 	public void init(GameModel game) {
 		super.init(game);
 
-		pac2D = new Pac2D(game.pac, game, new PacAnimationSet(r2D));
-		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, new GhostAnimationSet(ghost.id, r2D)))
+		pac2D = new Pac2D(game.pac, game, new MyPacAnimationSet(r2D));
+		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, new MyGhostAnimationSet(ghost.id, r2D)))
 				.toArray(Ghost2D[]::new);
 		energizers2D = game.level.world.energizerTiles().map(Energizer2D::new).toArray(Energizer2D[]::new);
 		bonus2D = new Bonus2D(game, game.bonus());
