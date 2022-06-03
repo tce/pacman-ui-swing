@@ -30,6 +30,7 @@ import java.awt.image.BufferedImage;
 import java.util.stream.Stream;
 
 import javax.sound.sampled.Clip;
+import javax.swing.Timer;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.common.GameState;
@@ -78,6 +79,13 @@ public class PlayScene extends GameScene {
 		case 10, 11, 12, 13 -> 4;
 		default -> (game.level.number - 14) % 8 < 4 ? 5 : 6;
 		};
+	}
+
+	private void afterSeconds(double seconds, Runnable action) {
+		Timer timer = new Timer(0, e -> action.run());
+		timer.setInitialDelay((int) (seconds * 1000));
+		timer.setRepeats(false);
+		timer.start();
 	}
 
 	@Override
@@ -168,15 +176,18 @@ public class PlayScene extends GameScene {
 		}
 
 		case PACMAN_DYING -> {
-			gameController.state().timer().setDurationSeconds(3);
+			gameController.state().timer().setDurationSeconds(4);
 			gameController.state().timer().start();
 			SoundManager.get().stopAll();
-			player2D.dying.delay(60).onStart(() -> {
+			afterSeconds(1, () -> {
 				game.ghosts().forEach(Ghost::hide);
+			});
+			afterSeconds(2, () -> {
+				player2D.dying.run();
 				if (gameController.isGameRunning()) {
 					SoundManager.get().play(GameSound.PACMAN_DEATH);
 				}
-			}).restart();
+			});
 		}
 
 		case GHOST_DYING -> {
@@ -270,7 +281,7 @@ public class PlayScene extends GameScene {
 	public void render(Graphics2D g) {
 		r2D.drawMaze(g, mazeNumber(game), 0, t(3), mazeFlashing.isRunning());
 		if (!mazeFlashing.isRunning()) {
-			r2D.hideEatenFood(g, game.level.world.tiles(), game.level.world::containsEatenFood);
+			r2D.drawEatenFood(g, game.level.world.tiles(), game.level.world::containsEatenFood);
 			Stream.of(energizers2D).forEach(energizer2D -> energizer2D.render(g));
 		}
 		if (Debug.on) {

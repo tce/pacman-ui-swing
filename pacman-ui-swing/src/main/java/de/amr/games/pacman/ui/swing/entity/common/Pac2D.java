@@ -28,6 +28,7 @@ import java.awt.image.BufferedImage;
 import java.util.Map;
 
 import de.amr.games.pacman.lib.Direction;
+import de.amr.games.pacman.lib.SpriteAnimation;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.model.common.GameModel;
@@ -43,7 +44,7 @@ public class Pac2D extends GameEntity2D {
 
 	public final Pac pac;
 	public Map<Direction, TimedSeq<BufferedImage>> munchings;
-	public final TimedSeq<BufferedImage> dying;
+	public final SpriteAnimation<BufferedImage> dying;
 
 	public Pac2D(Pac pac, GameModel game, Rendering2D r2D) {
 		super(game, r2D);
@@ -60,7 +61,7 @@ public class Pac2D extends GameEntity2D {
 	public void render(Graphics2D g) {
 		BufferedImage sprite = null;
 		if (pac.killed) {
-			if (dying.hasStarted()) {
+			if (dying.isRunning()) {
 				dying.animate();
 			}
 			sprite = dying.frame();

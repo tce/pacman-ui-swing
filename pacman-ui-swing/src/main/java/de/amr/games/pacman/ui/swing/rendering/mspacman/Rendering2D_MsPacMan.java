@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.amr.games.pacman.lib.Direction;
+import de.amr.games.pacman.lib.SpriteAnimation;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.model.mspacman.MsPacManGame;
@@ -192,8 +193,8 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public TimedSeq<BufferedImage> createPacDyingAnimation() {
-		return TimedSeq.of(rhs(0, 3), rhs(0, 0), rhs(0, 1), rhs(0, 2)).frameDuration(10).repetitions(2);
+	public SpriteAnimation<BufferedImage> createPacDyingAnimation() {
+		return new SpriteAnimation<>(rhs(0, 3), rhs(0, 0), rhs(0, 1), rhs(0, 2)).frameDuration(10).repetitions(2);
 	}
 
 	@Override

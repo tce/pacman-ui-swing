@@ -37,6 +37,7 @@ import java.util.stream.Stream;
 
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.lib.Direction;
+import de.amr.games.pacman.lib.SpriteAnimation;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
@@ -71,7 +72,7 @@ public interface Rendering2D {
 
 	Map<Direction, TimedSeq<BufferedImage>> createPacMunchingAnimations();
 
-	TimedSeq<BufferedImage> createPacDyingAnimation();
+	SpriteAnimation<BufferedImage> createPacDyingAnimation();
 
 	Map<Direction, TimedSeq<BufferedImage>> createGhostColorAnimation(int ghostID);
 
@@ -89,6 +90,8 @@ public interface Rendering2D {
 
 	TimedSeq<BufferedImage> mazeFlashing(int mazeNumber);
 
+	void drawMaze(Graphics2D g, int mazeNumber, int i, int t, boolean running);
+
 	// Drawing
 
 	default void drawEntity(Graphics2D g, Entity entity, BufferedImage sprite) {
@@ -102,14 +105,12 @@ public interface Rendering2D {
 		g.drawImage(sprite, (int) (x + dx), (int) (y + dy), null);
 	}
 
-	default void hideEatenFood(Graphics2D g, Stream<V2i> tiles, Predicate<V2i> eaten) {
+	default void drawEatenFood(Graphics2D g, Stream<V2i> tiles, Predicate<V2i> eaten) {
 		g.setColor(Color.BLACK);
 		tiles.filter(eaten).forEach(tile -> {
 			g.fillRect(tile.x * TS, tile.y * TS, TS, TS);
 		});
 	}
-
-	void drawMaze(Graphics2D g, int mazeNumber, int i, int t, boolean running);
 
 	default void drawCredit(Graphics2D g, int credit) {
 		g.setFont(getArcadeFont());

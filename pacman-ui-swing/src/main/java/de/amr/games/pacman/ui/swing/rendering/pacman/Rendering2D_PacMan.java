@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.amr.games.pacman.lib.Direction;
+import de.amr.games.pacman.lib.SpriteAnimation;
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.actors.Ghost;
@@ -180,12 +181,12 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public TimedSeq<BufferedImage> createPacDyingAnimation() {
-		return TimedSeq.of( //
+	public SpriteAnimation<BufferedImage> createPacDyingAnimation() {
+		return new SpriteAnimation<>( //
 				ss.tile(3, 0), ss.tile(4, 0), ss.tile(5, 0), ss.tile(6, 0), //
 				ss.tile(7, 0), ss.tile(8, 0), ss.tile(9, 0), ss.tile(10, 0), //
 				ss.tile(11, 0), ss.tile(12, 0), ss.tile(13, 0)) //
-				.frameDuration(8);
+						.frameDuration(8);
 	}
 
 	@Override
