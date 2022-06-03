@@ -210,71 +210,6 @@ public class PlayScene extends GameScene {
 	}
 
 	@Override
-	public void onGameStateChange(GameStateChangeEvent e) {
-		boolean hasCredit = gameController.credit() > 0;
-		boolean playing = gameController.isGameRunning();
-		switch (e.newGameState) {
-		case READY -> {
-			SoundManager.get().stopAll();
-			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(TimedSeq::reset);
-			r2D.mazeFlashing(mazeNumber(game)).reset();
-			if (!playing) {
-				SoundManager.get().play(GameSound.GAME_READY);
-			}
-		}
-		case HUNTING -> {
-			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(TimedSeq::restart);
-			pac2D.animations.restart();
-			Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.animations.restart(GhostAnimation.COLOR));
-		}
-		case PACMAN_DYING -> {
-			gameController.state().timer().setDurationSeconds(4);
-			gameController.state().timer().start();
-			SoundManager.get().stopAll();
-			pac2D.animations.selectAnimation(PacAnimation.DYING);
-			pac2D.animations.selectedAnimation().stop();
-			afterSeconds(1, () -> {
-				game.ghosts().forEach(Ghost::hide);
-			});
-			afterSeconds(1.5, () -> {
-				SoundManager.get().play(GameSound.PACMAN_DEATH);
-				pac2D.animations.selectedAnimation().run();
-			});
-			afterSeconds(3.5, () -> {
-				game.pac.hide();
-				pac2D.animations.selectAnimation(PacAnimation.MUNCHING);
-			});
-		}
-
-		case GHOST_DYING -> {
-			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(TimedSeq::restart);
-			SoundManager.get().play(GameSound.GHOST_EATEN);
-		}
-
-		case LEVEL_COMPLETE -> {
-			mazeFlashing = r2D.mazeFlashing(mazeNumber(game));
-			SoundManager.get().stopAll();
-		}
-
-		case GAME_OVER -> {
-			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(TimedSeq::stop);
-			SoundManager.get().stopAll();
-		}
-
-		default -> {
-		}
-
-		}
-
-		// exit GHOST_DYING
-		if (e.oldGameState == GameState.GHOST_DYING) {
-			if (game.ghosts(GhostState.DEAD).count() > 0) {
-				SoundManager.get().loop(GameSound.GHOST_RETURNING, Clip.LOOP_CONTINUOUSLY);
-			}
-		}
-	}
-
-	@Override
 	public void onGameEvent(GameEvent gameEvent) {
 		SoundManager.get().setMuted(gameController.credit() == 0); // TODO check
 		super.onGameEvent(gameEvent);
@@ -283,6 +218,9 @@ public class PlayScene extends GameScene {
 	@Override
 	public void onPlayerLosesPower(GameEvent e) {
 		SoundManager.get().stop(GameSound.PACMAN_POWER);
+		if (!SoundManager.get().isAnySirenPlaying()) {
+			SoundManager.get().startSiren(game.huntingTimer.phase() / 2);
+		}
 	}
 
 	@Override
@@ -298,16 +236,12 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void onBonusGetsActive(GameEvent e) {
-		if (bonus2D.jumpAnimation != null) {
-			bonus2D.jumpAnimation.restart();
-		}
+		bonus2D.startJumping();
 	}
 
 	@Override
 	public void onBonusGetsEaten(GameEvent e) {
-		if (bonus2D.jumpAnimation != null) {
-			bonus2D.jumpAnimation.reset();
-		}
+		bonus2D.stopJumping();
 		SoundManager.get().play(GameSound.BONUS_EATEN);
 	}
 
@@ -328,4 +262,55 @@ public class PlayScene extends GameScene {
 		}
 	}
 
+	@Override
+	public void onGameStateChange(GameStateChangeEvent e) {
+		boolean playing = gameController.isGameRunning();
+		switch (e.newGameState) {
+		case READY -> {
+			SoundManager.get().stopAll();
+			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(TimedSeq::reset);
+			r2D.mazeFlashing(mazeNumber(game)).reset();
+			if (!playing) {
+				SoundManager.get().play(GameSound.GAME_READY);
+			}
+		}
+		case HUNTING -> {
+			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(TimedSeq::restart);
+			pac2D.animations.restart();
+			Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.animations.restart(GhostAnimation.COLOR));
+		}
+		case PACMAN_DYING -> {
+			gameController.state().timer().setDurationSeconds(4.5);
+			gameController.state().timer().start();
+			SoundManager.get().stopAll();
+			pac2D.animations.selectAnimation(PacAnimation.DYING);
+			pac2D.animations.selectedAnimation().stop();
+			afterSeconds(1, () -> {
+				game.ghosts().forEach(Ghost::hide);
+			});
+			afterSeconds(2, () -> {
+				SoundManager.get().play(GameSound.PACMAN_DEATH);
+				pac2D.animations.selectedAnimation().run();
+			});
+			afterSeconds(4, () -> {
+				game.pac.hide();
+				pac2D.animations.selectAnimation(PacAnimation.MUNCHING);
+			});
+		}
+		case GHOST_DYING -> {
+			game.pac.hide();
+			SoundManager.get().play(GameSound.GHOST_EATEN);
+		}
+		case LEVEL_COMPLETE -> {
+			SoundManager.get().stopAll();
+			mazeFlashing = r2D.mazeFlashing(mazeNumber(game));
+		}
+		case GAME_OVER -> {
+			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(TimedSeq::stop);
+			SoundManager.get().stopAll();
+		}
+		default -> {
+		}
+		}
+	}
 }

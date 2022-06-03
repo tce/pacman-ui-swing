@@ -23,10 +23,7 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.entity.common;
 
-import static de.amr.games.pacman.model.common.world.World.TS;
-
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.lib.TimedSeq;
 import de.amr.games.pacman.model.common.GameModel;
@@ -44,12 +41,24 @@ import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 public class Bonus2D extends GameEntity2D {
 
 	private final Bonus bonus;
-	public final TimedSeq<Integer> jumpAnimation;
+	private final TimedSeq<Integer> jumpAnimation;
 
 	public Bonus2D(GameModel game, Bonus bonus) {
 		super(game);
 		this.bonus = bonus;
 		jumpAnimation = game.variant == GameVariant.MS_PACMAN ? Rendering2D_MsPacMan.get().createBonusAnimation() : null;
+	}
+
+	public void startJumping() {
+		if (jumpAnimation != null) {
+			jumpAnimation.restart();
+		}
+	}
+
+	public void stopJumping() {
+		if (jumpAnimation != null) {
+			jumpAnimation.stop();
+		}
 	}
 
 	@Override
@@ -62,18 +71,13 @@ public class Bonus2D extends GameEntity2D {
 			// Ms. Pac.Man bonus is jumping up and down while wandering the maze
 			int jump = jumpAnimation != null ? jumpAnimation.animate() : 0;
 			g.translate(0, jump);
-			renderSprite(g, sprite, bonus.position().x, bonus.position().y);
+			r2D.drawSpriteCenteredOverBBox(g, sprite, bonus.position().x, bonus.position().y);
 			g.translate(0, -jump);
 		}
 		case EATEN -> {
 			var sprite = r2D.getBonusValueSprite(bonus.value());
-			renderSprite(g, sprite, bonus.position().x, bonus.position().y);
+			r2D.drawSpriteCenteredOverBBox(g, sprite, bonus.position().x, bonus.position().y);
 		}
 		}
-	}
-
-	private void renderSprite(Graphics2D g, BufferedImage sprite, double x, double y) {
-		int dx = -(sprite.getWidth() - TS) / 2, dy = -(sprite.getHeight() - TS) / 2;
-		g.drawImage(sprite, (int) (x + dx), (int) (y + dy), null);
 	}
 }
