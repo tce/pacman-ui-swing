@@ -333,7 +333,8 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public void drawCopyright(Graphics2D g, int x, int y) { // t(4), t(28)
+	public void drawCopyright(Graphics2D g, int x, int y) {
+		// t(6), t(28)
 		double scale = (double) ArcadeWorld.TILES_Y / midwayLogo.getHeight();
 		g.drawImage(midwayLogo, x, y + 3, (int) (scale * midwayLogo.getWidth()), (int) (scale * midwayLogo.getHeight()),
 				null);
