@@ -260,6 +260,15 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 		return TimedSeq.of(2, -2).frameDuration(15).endless();
 	}
 
+	public SpriteAnimationMap<Direction, BufferedImage> createHusbandMunchingAnimations() {
+		SpriteAnimationMap<Direction, BufferedImage> map = new SpriteAnimationMap<>(Direction.class);
+		for (var dir : Direction.values()) {
+			int d = index(dir);
+			map.put(dir, new SpriteAnimation<>(rhs(0, 9 + d), rhs(1, 9 + d), rhs(2, 9)).frameDuration(2).endless());
+		}
+		return map;
+	}
+
 	public TimedSeq<BufferedImage> createFlapAnimation() {
 		return TimedSeq.of( //
 				ss.si(456, 208, 32, 32), //

@@ -36,6 +36,8 @@ import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Flap2D;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
+import de.amr.games.pacman.ui.swing.rendering.mspacman.MsPacMansHusbandAnimations;
+import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
 /**
@@ -68,10 +70,7 @@ public class MsPacMan_IntermissionScene2 extends GameScene {
 		sceneController.restartInInitialState(Intermission2Controller.State.FLAP);
 		flap2D = new Flap2D(context.flap, game);
 		msPacMan2D = new Pac2D(context.msPacMan, game, new PacAnimations(r2D));
-
-		// TODO fixme
-		pacMan2D = new Pac2D(context.pacMan, game, new PacAnimations(r2D));
-//		pacMan2D.munchings = Rendering2D_MsPacMan.get().createSpouseMunchingAnimations();
+		pacMan2D = new Pac2D(context.pacMan, game, new MsPacMansHusbandAnimations(Rendering2D_MsPacMan.get()));
 	}
 
 	@Override

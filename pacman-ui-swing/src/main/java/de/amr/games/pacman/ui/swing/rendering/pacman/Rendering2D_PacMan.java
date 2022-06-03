@@ -87,9 +87,8 @@ public class Rendering2D_PacMan implements Rendering2D {
 	private final Map<Integer, BufferedImage> numberSprites;
 	private final Font font;
 
-	// TODO
-	private final TimedSeq<BufferedImage> blinkyHalfNaked;
-	private final TimedSeq<BufferedImage> blinkyPatched;
+	private final SpriteAnimation<BufferedImage> blinkyHalfNaked;
+	private final SpriteAnimation<BufferedImage> blinkyPatched;
 	private final BufferedImage nailSprite;
 
 	private Rendering2D_PacMan(String path, int rasterSize) {
@@ -132,10 +131,10 @@ public class Rendering2D_PacMan implements Rendering2D {
 		);
 		//@formatter:on
 
-		blinkyPatched = TimedSeq.of(ss.tile(10, 7), ss.tile(11, 7))//
+		blinkyPatched = new SpriteAnimation<>(ss.tile(10, 7), ss.tile(11, 7))//
 				.frameDuration(4).endless();
 
-		blinkyHalfNaked = TimedSeq.of(ss.tiles(8, 8, 2, 1), ss.tiles(10, 8, 2, 1))//
+		blinkyHalfNaked = new SpriteAnimation<>(ss.tiles(8, 8, 2, 1), ss.tiles(10, 8, 2, 1))//
 				.frameDuration(4).endless();
 
 		nailSprite = ss.tile(8, 6);

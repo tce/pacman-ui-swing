@@ -39,6 +39,7 @@ import de.amr.games.pacman.ui.swing.entity.mspacman.Heart2D;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
+import de.amr.games.pacman.ui.swing.rendering.mspacman.MsPacMansHusbandAnimations;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
@@ -77,11 +78,7 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 
 		flap2D = new Flap2D(context.flap, game);
 		msPacMan2D = new Pac2D(context.msPac, game, new PacAnimations(r2D));
-
-		// TODO fixme
-		pacMan2D = new Pac2D(context.pacMan, game, new PacAnimations(r2D));
-//		pacMan2D.munchings = Rendering2D_MsPacMan.get().createSpouseMunchingAnimations();
-
+		pacMan2D = new Pac2D(context.pacMan, game, new MsPacMansHusbandAnimations(Rendering2D_MsPacMan.get()));
 		inky2D = new Ghost2D(context.inky, game, new GhostAnimations(Ghost.CYAN_GHOST, r2D));
 		pinky2D = new Ghost2D(context.pinky, game, new GhostAnimations(Ghost.PINK_GHOST, r2D));
 		heart2D = new Heart2D(context.heart);

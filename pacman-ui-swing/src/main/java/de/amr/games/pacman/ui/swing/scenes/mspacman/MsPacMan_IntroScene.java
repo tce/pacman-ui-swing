@@ -27,10 +27,14 @@ import static de.amr.games.pacman.model.common.world.World.t;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.stream.Stream;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.IntroController;
+import de.amr.games.pacman.controller.mspacman.IntroController.State;
+import de.amr.games.pacman.lib.Direction;
+import de.amr.games.pacman.lib.SpriteAnimationMap;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Ghost;
@@ -59,6 +63,7 @@ public class MsPacMan_IntroScene extends GameScene {
 	public MsPacMan_IntroScene(GameController gameController, V2i size, Rendering2D r2D) {
 		super(gameController, size, r2D);
 		sceneController = new IntroController(gameController);
+		sceneController.addStateChangeListener(this::onSceneStateChanged);
 		context = sceneController.context();
 	}
 
@@ -84,34 +89,35 @@ public class MsPacMan_IntroScene extends GameScene {
 		sceneController.update();
 	}
 
+	@SuppressWarnings("unchecked")
+	private void onSceneStateChanged(State fromState, State toState) {
+		if (fromState == State.MSPACMAN && toState == State.READY_TO_PLAY) {
+			var munching = (SpriteAnimationMap<Direction, BufferedImage>) msPacMan2D.animations.selectedAnimation();
+			munching.get(msPacMan2D.pac.moveDir()).setFrameIndex(2);
+			munching.stop();
+		}
+	}
+
 	@Override
 	public void render(Graphics2D g) {
 		r2D.drawScore(g, gameController.game(), true);
-		r2D.drawCredit(g, gameController.credit());
-
-		g.setFont(r2D.getArcadeFont());
-		g.setColor(Color.ORANGE);
-		g.drawString("\"MS PAC-MAN\"", context.titlePosition.x, context.titlePosition.y);
-
-		drawAnimatedBoard(g, 32, 16);
-		switch (sceneController.state()) {
-		case GHOSTS -> drawGhostText(g);
-		case MSPACMAN -> drawMsPacManText(g);
-		case READY_TO_PLAY -> {
-			// TODO fixme
-//			msPacMan2D.reset();// ensure Ms. Pac-Man is displayed with mouth half open
+		drawTitle(g);
+		drawLights(g, 32, 16);
+		if (sceneController.state() == State.GHOSTS) {
+			drawGhostText(g);
+		} else if (sceneController.state() == State.MSPACMAN || sceneController.state() == State.READY_TO_PLAY) {
 			drawMsPacManText(g);
-			if (gameController.credit() > 0) {
-				drawPressKeyToStart(g, 26);
-			}
 		}
-		default -> {
-		}
-		}
-
 		Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.render(g, r2D));
 		msPacMan2D.render(g, r2D);
 		r2D.drawCopyright(g, t(4), t(28));
+		r2D.drawCredit(g, gameController.credit());
+	}
+
+	private void drawTitle(Graphics2D g) {
+		g.setFont(r2D.getArcadeFont());
+		g.setColor(Color.ORANGE);
+		g.drawString("\"MS PAC-MAN\"", context.titlePosition.x, context.titlePosition.y);
 	}
 
 	private void drawGhostText(Graphics2D g) {
@@ -133,7 +139,7 @@ public class MsPacMan_IntroScene extends GameScene {
 		g.drawString("MS PAC-MAN", context.titlePosition.x, context.lightsTopLeft.y + t(6));
 	}
 
-	private void drawAnimatedBoard(Graphics2D g, int numDotsX, int numDotsY) {
+	private void drawLights(Graphics2D g, int numDotsX, int numDotsY) {
 		long time = context.lightsTimer.tick();
 		int light = (int) (time / 2) % (numDotsX / 2);
 		for (int dot = 0; dot < 2 * (numDotsX + numDotsY); ++dot) {
@@ -153,14 +159,4 @@ public class MsPacMan_IntroScene extends GameScene {
 			g.fillRect(context.lightsTopLeft.x + 4 * x, context.lightsTopLeft.y + 4 * y, 2, 2);
 		}
 	}
-
-	private void drawPressKeyToStart(Graphics2D g, int tileY) {
-		if (context.blinking.frame()) {
-			String text = "PRESS SPACE TO PLAY";
-			g.setColor(Color.WHITE);
-			g.setFont(r2D.getArcadeFont());
-			g.drawString(text, t(13 - text.length() / 2), t(tileY));
-		}
-	}
-
 }
