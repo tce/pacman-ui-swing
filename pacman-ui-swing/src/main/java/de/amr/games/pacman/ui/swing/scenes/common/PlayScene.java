@@ -36,7 +36,7 @@ import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameStateChangeEvent;
-import de.amr.games.pacman.lib.TimedSeq;
+import de.amr.games.pacman.lib.GenericAnimation;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.GameVariant;
@@ -68,7 +68,7 @@ public class PlayScene extends GameScene {
 	private Ghost2D[] ghosts2D;
 	private Energizer2D[] energizers2D;
 	private Bonus2D bonus2D;
-	private TimedSeq<BufferedImage> mazeFlashing;
+	private GenericAnimation<BufferedImage> mazeFlashing;
 
 	public PlayScene(GameController gameController, V2i size, Rendering2D r2D) {
 		super(gameController, size, r2D);
@@ -251,14 +251,14 @@ public class PlayScene extends GameScene {
 		switch (e.newGameState) {
 		case READY -> {
 			SoundManager.get().stopAll();
-			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(TimedSeq::reset);
+			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(GenericAnimation::reset);
 			r2D.mazeFlashing(r2D.mazeNumber(game.level.number)).reset();
 			if (!playing) {
 				SoundManager.get().play(GameSound.GAME_READY);
 			}
 		}
 		case HUNTING -> {
-			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(TimedSeq::restart);
+			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(GenericAnimation::restart);
 			pac2D.animations.restart();
 			Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.animations.restart(GhostAnimation.COLOR));
 		}
@@ -289,7 +289,7 @@ public class PlayScene extends GameScene {
 			mazeFlashing = r2D.mazeFlashing(r2D.mazeNumber(game.level.number));
 		}
 		case GAME_OVER -> {
-			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(TimedSeq::stop);
+			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(GenericAnimation::stop);
 			SoundManager.get().stopAll();
 		}
 		default -> {

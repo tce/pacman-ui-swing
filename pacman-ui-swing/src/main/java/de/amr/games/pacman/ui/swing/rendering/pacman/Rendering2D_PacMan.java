@@ -41,7 +41,7 @@ import java.util.Map;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.SpriteAnimation;
 import de.amr.games.pacman.lib.SpriteAnimationMap;
-import de.amr.games.pacman.lib.TimedSeq;
+import de.amr.games.pacman.lib.GenericAnimation;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.pacman.PacManGame;
@@ -81,7 +81,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 
 	private final Spritesheet ss;
 	private final BufferedImage mazeFull;
-	private final TimedSeq<BufferedImage> mazeFlashingAnim;
+	private final GenericAnimation<BufferedImage> mazeFlashingAnim;
 	private final Map<Integer, BufferedImage> symbolSprites;
 	private final Map<Integer, BufferedImage> bonusValueSprites;
 	private final Map<Integer, BufferedImage> numberSprites;
@@ -98,7 +98,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 		mazeFull = image("/pacman/graphics/maze_full.png");
 		var mazeEmptyDark = image("/pacman/graphics/maze_empty.png");
 		var mazeEmptyBright = ss.createBrightEffect(mazeEmptyDark, new Color(33, 33, 255), Color.BLACK);
-		mazeFlashingAnim = TimedSeq.of(mazeEmptyBright, mazeEmptyDark).frameDuration(15);
+		mazeFlashingAnim = GenericAnimation.of(mazeEmptyBright, mazeEmptyDark).frameDuration(15);
 
 		//@formatter:off
 		symbolSprites = Map.of(
@@ -241,12 +241,12 @@ public class Rendering2D_PacMan implements Rendering2D {
 				.endless();
 	}
 
-	public TimedSeq<BufferedImage> createBlinkyStretchedAnimation() {
-		return TimedSeq.of(ss.tile(9, 6), ss.tile(10, 6), ss.tile(11, 6), ss.tile(12, 6));
+	public GenericAnimation<BufferedImage> createBlinkyStretchedAnimation() {
+		return GenericAnimation.of(ss.tile(9, 6), ss.tile(10, 6), ss.tile(11, 6), ss.tile(12, 6));
 	}
 
-	public TimedSeq<BufferedImage> createBlinkyDamagedAnimation() {
-		return TimedSeq.of(ss.tile(8, 7), ss.tile(9, 7));
+	public GenericAnimation<BufferedImage> createBlinkyDamagedAnimation() {
+		return GenericAnimation.of(ss.tile(8, 7), ss.tile(9, 7));
 	}
 
 	@Override
@@ -255,7 +255,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public TimedSeq<BufferedImage> mazeFlashing(int mazeNumber) {
+	public GenericAnimation<BufferedImage> mazeFlashing(int mazeNumber) {
 		return mazeFlashingAnim;
 	}
 

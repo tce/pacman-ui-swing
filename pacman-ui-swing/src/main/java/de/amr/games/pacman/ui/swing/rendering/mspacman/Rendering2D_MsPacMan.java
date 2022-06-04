@@ -38,7 +38,7 @@ import java.util.Map;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.SpriteAnimation;
 import de.amr.games.pacman.lib.SpriteAnimationMap;
-import de.amr.games.pacman.lib.TimedSeq;
+import de.amr.games.pacman.lib.GenericAnimation;
 import de.amr.games.pacman.model.mspacman.MsPacManGame;
 import de.amr.games.pacman.ui.swing.assets.Spritesheet;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
@@ -103,7 +103,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	private final BufferedImage midwayLogo;
 	private final BufferedImage[] mazeFull;
 	private final BufferedImage[] mazeEmpty;
-	private final List<TimedSeq<BufferedImage>> mazeFlashings;
+	private final List<GenericAnimation<BufferedImage>> mazeFlashings;
 	private final BufferedImage[] symbols;
 	private final Map<Integer, BufferedImage> bonusValues;
 	private final Map<Integer, BufferedImage> bountyNumbers;
@@ -151,7 +151,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 			mazeEmpty[mazeIndex] = ss.image.getSubimage(228, mazeIndex * 248, 226, 248);
 			var mazeEmptyBright = ss.createBrightEffect(mazeEmpty[mazeIndex], MAZE_SIDE_COLORS[mazeIndex],
 					MAZE_TOP_COLORS[mazeIndex]);
-			mazeFlashings.add(TimedSeq.of(mazeEmptyBright, mazeEmpty[mazeIndex]).frameDuration(20));
+			mazeFlashings.add(GenericAnimation.of(mazeEmptyBright, mazeEmpty[mazeIndex]).frameDuration(20));
 		}
 	}
 
@@ -249,12 +249,12 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public TimedSeq<BufferedImage> mazeFlashing(int mazeNumber) {
+	public GenericAnimation<BufferedImage> mazeFlashing(int mazeNumber) {
 		return mazeFlashings.get(mazeNumber - 1);
 	}
 
-	public TimedSeq<Integer> createBonusAnimation() {
-		return TimedSeq.of(2, -2).frameDuration(10).endless();
+	public GenericAnimation<Integer> createBonusAnimation() {
+		return GenericAnimation.of(2, -2).frameDuration(10).endless();
 	}
 
 	public SpriteAnimationMap<Direction, BufferedImage> createHusbandMunchingAnimations() {
@@ -266,8 +266,8 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 		return map;
 	}
 
-	public TimedSeq<BufferedImage> createFlapAnimation() {
-		return TimedSeq.of( //
+	public GenericAnimation<BufferedImage> createFlapAnimation() {
+		return GenericAnimation.of( //
 				ss.si(456, 208, 32, 32), //
 				ss.si(488, 208, 32, 32), //
 				ss.si(520, 208, 32, 32), //
@@ -276,8 +276,8 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 		).repetitions(1).frameDuration(4);
 	}
 
-	public TimedSeq<BufferedImage> createStorkFlyingAnimation() {
-		return TimedSeq.of( //
+	public GenericAnimation<BufferedImage> createStorkFlyingAnimation() {
+		return GenericAnimation.of( //
 				ss.si(489, 176, 32, 16), //
 				ss.si(521, 176, 32, 16) //
 		).endless().frameDuration(10);
