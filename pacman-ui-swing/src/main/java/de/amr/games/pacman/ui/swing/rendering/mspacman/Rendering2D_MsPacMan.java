@@ -39,7 +39,6 @@ import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.SpriteAnimation;
 import de.amr.games.pacman.lib.SpriteAnimationMap;
 import de.amr.games.pacman.lib.TimedSeq;
-import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.model.mspacman.MsPacManGame;
 import de.amr.games.pacman.ui.swing.assets.Spritesheet;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
@@ -102,31 +101,30 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 
 	private final Spritesheet ss;
 	private final BufferedImage midwayLogo;
-	private final List<BufferedImage> mazeFullSprites;
-	private final List<BufferedImage> mazeEmptySprites;
-	private final Map<Integer, BufferedImage> symbolSprites;
-	private final Map<Integer, BufferedImage> bonusValueSprites;
-	private final Map<Integer, BufferedImage> bountyNumberSprites;
-	private final List<TimedSeq<BufferedImage>> mazesFlashingAnims;
+	private final BufferedImage[] mazeFull;
+	private final BufferedImage[] mazeEmpty;
+	private final List<TimedSeq<BufferedImage>> mazeFlashings;
+	private final BufferedImage[] symbols;
+	private final Map<Integer, BufferedImage> bonusValues;
+	private final Map<Integer, BufferedImage> bountyNumbers;
 	private final Font font;
 
 	private Rendering2D_MsPacMan(String path, int rasterSize) {
 		ss = new Spritesheet(image(path), rasterSize);
-		font = font("/emulogic.ttf", 8);
+		font = font("/common/emulogic.ttf", 8);
 		midwayLogo = image("/mspacman/graphics/midway.png");
 
 		//@formatter:off
-		symbolSprites = Map.of(
-			MsPacManGame.CHERRIES,   rhs(3,0),
-			MsPacManGame.STRAWBERRY, rhs(4,0),
-			MsPacManGame.PEACH,      rhs(5,0),
-			MsPacManGame.PRETZEL,    rhs(6,0),
-			MsPacManGame.APPLE,      rhs(7,0),
-			MsPacManGame.PEAR,       rhs(8,0),
-			MsPacManGame.BANANA,     rhs(9,0)
-		);
+		symbols = new BufferedImage[7];
+		symbols[MsPacManGame.CHERRIES]   = rhs(3,0);
+		symbols[MsPacManGame.STRAWBERRY] = rhs(4,0);
+		symbols[MsPacManGame.PEACH]      = rhs(5,0);
+		symbols[MsPacManGame.PRETZEL]    = rhs(6,0);
+		symbols[MsPacManGame.APPLE]      = rhs(7,0);
+		symbols[MsPacManGame.PEAR]       = rhs(8,0);
+		symbols[MsPacManGame.BANANA]     = rhs(9,0);
 
-		bonusValueSprites = Map.of(
+		bonusValues = Map.of(
 			100,  rhs(3, 1), 
 			200,  rhs(4, 1), 
 			500,  rhs(5, 1), 
@@ -136,7 +134,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 			5000, rhs(9, 1)
 		);
 
-		bountyNumberSprites = Map.of(
+		bountyNumbers = Map.of(
 			200,  rhs(0, 8), 
 			400,  rhs(1, 8), 
 			800,  rhs(2, 8), 
@@ -145,17 +143,15 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 		//@formatter:on
 
 		int numMazes = 6;
-		mazeEmptySprites = new ArrayList<>(numMazes);
-		mazeFullSprites = new ArrayList<>(numMazes);
-		mazesFlashingAnims = new ArrayList<>(numMazes);
+		mazeEmpty = new BufferedImage[numMazes];
+		mazeFull = new BufferedImage[numMazes];
+		mazeFlashings = new ArrayList<>(numMazes);
 		for (int mazeIndex = 0; mazeIndex < 6; ++mazeIndex) {
-			BufferedImage mazeFullImage = ss.image.getSubimage(0, mazeIndex * 248, 226, 248);
-			mazeFullSprites.add(mazeFullImage);
-			BufferedImage mazeEmptyImage = ss.image.getSubimage(228, mazeIndex * 248, 226, 248);
-			mazeEmptySprites.add(mazeEmptyImage);
-			BufferedImage mazeFlashImage = ss.createBrightEffect(mazeEmptySprites.get(mazeIndex), MAZE_SIDE_COLORS[mazeIndex],
+			mazeFull[mazeIndex] = ss.image.getSubimage(0, mazeIndex * 248, 226, 248);
+			mazeEmpty[mazeIndex] = ss.image.getSubimage(228, mazeIndex * 248, 226, 248);
+			var mazeEmptyBright = ss.createBrightEffect(mazeEmpty[mazeIndex], MAZE_SIDE_COLORS[mazeIndex],
 					MAZE_TOP_COLORS[mazeIndex]);
-			mazesFlashingAnims.add(TimedSeq.of(mazeFlashImage, mazeEmptySprites.get(mazeIndex)).frameDuration(15));
+			mazeFlashings.add(TimedSeq.of(mazeEmptyBright, mazeEmpty[mazeIndex]).frameDuration(20));
 		}
 	}
 
@@ -199,37 +195,38 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 
 	@Override
 	public SpriteAnimationMap<Direction, BufferedImage> createPacMunchingAnimations() {
-		SpriteAnimationMap<Direction, BufferedImage> munchings = new SpriteAnimationMap<>(Direction.class);
+		SpriteAnimationMap<Direction, BufferedImage> map = new SpriteAnimationMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
-			BufferedImage wide_open = rhs(0, d), open = rhs(1, d), closed = rhs(2, d);
-			var animation = new SpriteAnimation<>(open, closed, open, wide_open).frameDuration(2).endless();
-			munchings.put(dir, animation);
+			var wide = rhs(0, d);
+			var middle = rhs(1, d);
+			var closed = rhs(2, d);
+			var animation = new SpriteAnimation<>(middle, closed, middle, wide).frameDuration(2).endless();
+			map.put(dir, animation);
 		}
-		return munchings;
+		return map;
 	}
 
 	public SpriteAnimationMap<Direction, BufferedImage> createSpouseMunchingAnimations() {
-		SpriteAnimationMap<Direction, BufferedImage> munchings = new SpriteAnimationMap<>(Direction.class);
+		SpriteAnimationMap<Direction, BufferedImage> map = new SpriteAnimationMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
 			var munching = new SpriteAnimation<>(rhs(0, 9 + d), rhs(1, 9 + d), rhs(2, 9)).frameDuration(2).endless();
-			munchings.put(dir, munching);
+			map.put(dir, munching);
 		}
-		return munchings;
+		return map;
 	}
 
 	@Override
 	public SpriteAnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID) {
-		SpriteAnimationMap<Direction, BufferedImage> kickingByDir = new SpriteAnimationMap<Direction, BufferedImage>(
-				Direction.class);
+		SpriteAnimationMap<Direction, BufferedImage> map = new SpriteAnimationMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
-			var kicking = new SpriteAnimation<>(rhs(2 * d, 4 + ghostID), rhs(2 * d + 1, 4 + ghostID)).frameDuration(4)
+			var color = new SpriteAnimation<>(rhs(2 * d, 4 + ghostID), rhs(2 * d + 1, 4 + ghostID)).frameDuration(4)
 					.endless();
-			kickingByDir.put(dir, kicking);
+			map.put(dir, color);
 		}
-		return kickingByDir;
+		return map;
 	}
 
 	@Override
@@ -244,20 +241,20 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 
 	@Override
 	public SpriteAnimationMap<Direction, BufferedImage> createGhostEyesAnimation() {
-		SpriteAnimationMap<Direction, BufferedImage> ghostEyesAnimByDir = new SpriteAnimationMap<>(Direction.class);
+		SpriteAnimationMap<Direction, BufferedImage> map = new SpriteAnimationMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
-			ghostEyesAnimByDir.put(dir, new SpriteAnimation<>(rhs(8 + index(dir), 5)));
+			map.put(dir, new SpriteAnimation<>(rhs(8 + index(dir), 5)));
 		}
-		return ghostEyesAnimByDir;
+		return map;
 	}
 
 	@Override
 	public TimedSeq<BufferedImage> mazeFlashing(int mazeNumber) {
-		return mazesFlashingAnims.get(mazeNumber - 1);
+		return mazeFlashings.get(mazeNumber - 1);
 	}
 
 	public TimedSeq<Integer> createBonusAnimation() {
-		return TimedSeq.of(2, -2).frameDuration(15).endless();
+		return TimedSeq.of(2, -2).frameDuration(10).endless();
 	}
 
 	public SpriteAnimationMap<Direction, BufferedImage> createHusbandMunchingAnimations() {
@@ -300,17 +297,17 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 
 	@Override
 	public BufferedImage getNumberSprite(int number) {
-		return bountyNumberSprites.get(number);
+		return bountyNumbers.get(number);
 	}
 
 	@Override
 	public BufferedImage getBonusValueSprite(int number) {
-		return bonusValueSprites.get(number);
+		return bonusValues.get(number);
 	}
 
 	@Override
 	public BufferedImage getSymbolSprite(int symbol) {
-		return symbolSprites.get(symbol);
+		return symbols[symbol];
 	}
 
 	@Override
@@ -326,18 +323,15 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	@Override
 	public void drawMaze(Graphics2D g, int mazeNumber, int x, int y, boolean flashing) {
 		if (flashing) {
-			g.drawImage(mazeFlashing(mazeNumber).animate(), x, y, null);
+			g.drawImage(mazeFlashings.get(mazeNumber - 1).animate(), x, y, null);
 		} else {
-			g.drawImage(mazeFullSprites.get(mazeNumber - 1), x, y, null);
+			g.drawImage(mazeFull[mazeNumber - 1], x, y, null);
 		}
 	}
 
 	@Override
 	public void drawCopyright(Graphics2D g, int x, int y) {
-		// t(6), t(28)
-		double scale = (double) ArcadeWorld.TILES_Y / midwayLogo.getHeight();
-		g.drawImage(midwayLogo, x, y + 3, (int) (scale * midwayLogo.getWidth()), (int) (scale * midwayLogo.getHeight()),
-				null);
+		g.drawImage(midwayLogo, x, y + 3, 30, 32, null);
 		g.setColor(Color.RED);
 		g.setFont(new Font("Dialog", Font.PLAIN, 11));
 		g.drawString("\u00a9", x + t(5), y + t(2) + 2); // (c) symbol

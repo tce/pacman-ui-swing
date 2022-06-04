@@ -93,7 +93,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 
 	private Rendering2D_PacMan(String path, int rasterSize) {
 		ss = new Spritesheet(image(path), rasterSize);
-		font = font("/emulogic.ttf", 8);
+		font = font("/common/emulogic.ttf", 8);
 
 		mazeFull = image("/pacman/graphics/maze_full.png");
 		var mazeEmptyDark = image("/pacman/graphics/maze_empty.png");
