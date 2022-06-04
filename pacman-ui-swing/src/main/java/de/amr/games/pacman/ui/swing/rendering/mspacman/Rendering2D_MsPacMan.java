@@ -151,7 +151,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 		for (int mazeIndex = 0; mazeIndex < 6; ++mazeIndex) {
 			BufferedImage mazeFullImage = ss.image.getSubimage(0, mazeIndex * 248, 226, 248);
 			mazeFullSprites.add(mazeFullImage);
-			BufferedImage mazeEmptyImage = ss.image.getSubimage(226, mazeIndex * 248, 226, 248);
+			BufferedImage mazeEmptyImage = ss.image.getSubimage(228, mazeIndex * 248, 226, 248);
 			mazeEmptySprites.add(mazeEmptyImage);
 			BufferedImage mazeFlashImage = ss.createBrightEffect(mazeEmptySprites.get(mazeIndex), MAZE_SIDE_COLORS[mazeIndex],
 					MAZE_TOP_COLORS[mazeIndex]);
