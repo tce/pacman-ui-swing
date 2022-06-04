@@ -43,6 +43,7 @@ import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
+import de.amr.games.pacman.model.common.world.World;
 import de.amr.games.pacman.ui.swing.assets.Spritesheet;
 
 /**
@@ -144,7 +145,8 @@ public interface Rendering2D {
 		g.translate(0, -3);
 	}
 
-	default void drawLivesCounter(Graphics2D g, GameModel game, int x, int y) {
+	default void drawLivesCounter(Graphics2D g, GameModel game) {
+		int x = t(2), y = t(34);
 		int maxLivesDisplayed = 5;
 		for (int i = 0; i < Math.min(game.lives, maxLivesDisplayed); ++i) {
 			g.drawImage(getLifeSprite(), x + t(2 * i), y, null);
@@ -156,14 +158,15 @@ public interface Rendering2D {
 		}
 	}
 
-	default void drawLevelCounter(Graphics2D g, GameModel game, int rightX, int y) {
-		int x = rightX;
-		int firstLevel = Math.max(1, game.level.number - 6);
-		for (int levelNumber = firstLevel; levelNumber <= game.level.number; ++levelNumber) {
-			int symbol = game.levelCounter.get(levelNumber - 1);
-			g.drawImage(getSymbolSprite(symbol), x, y, null);
-			x -= t(2);
-		}
+	default void drawLevelCounter(Graphics2D g, GameModel game) {
+		int rightX = t(24), y = t(34);
+		// LOL :-)
+		int[] x = new int[1];
+		x[0] = rightX;
+		game.levelCounter.symbols().forEach(symbol -> {
+			drawSpriteCenteredOverBBox(g, getSymbolSprite(symbol), x[0], y + World.HTS);
+			x[0] -= t(2);
+		});
 	}
 
 	default void drawGameState(Graphics2D g, GameModel game, GameState gameState) {

@@ -23,8 +23,6 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.scenes.pacman;
 
-import static de.amr.games.pacman.model.common.world.World.t;
-
 import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
@@ -72,7 +70,7 @@ public class PacMan_IntermissionScene3 extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		r2D.drawLevelCounter(g, gameController.game(), t(25), t(34));
+		r2D.drawLevelCounter(g, gameController.game());
 		pacMan2D.render(g, r2D);
 		if (sceneController.state() == Intermission3Controller.State.CHASING) {
 			((Rendering2D_PacMan) r2D).drawBlinkyPatched(g, context.blinky);

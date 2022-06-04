@@ -163,13 +163,13 @@ public class PlayScene extends GameScene {
 
 		r2D.drawScore(g, game, showHighScoreOnly);
 		if (showLivesCounter) {
-			r2D.drawLivesCounter(g, game, t(2), t(34));
+			r2D.drawLivesCounter(g, game);
 		}
 		if (showCredit) {
 			r2D.drawCredit(g, gameController.credit());
 		}
 		if (showLevelCounter) {
-			r2D.drawLevelCounter(g, game, t(24), t(34));
+			r2D.drawLevelCounter(g, game);
 		}
 
 		r2D.drawMaze(g, r2D.mazeNumber(game.level.number), 0, t(3), mazeFlashing.isRunning());
