@@ -263,7 +263,7 @@ public class PlayScene extends GameScene {
 			Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.animations.restart(GhostAnimation.COLOR));
 		}
 		case PACMAN_DYING -> {
-			gameController.state().timer().setDurationSeconds(4.5);
+			gameController.state().timer().setSeconds(4.5);
 			gameController.state().timer().start();
 			SoundManager.get().stopAll();
 			pac2D.animations.selectAnimation(PacAnimation.DYING);
