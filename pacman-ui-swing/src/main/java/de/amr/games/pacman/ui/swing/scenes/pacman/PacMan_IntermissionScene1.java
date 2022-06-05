@@ -28,7 +28,6 @@ import java.awt.Graphics2D;
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.pacman.Intermission1Controller;
 import de.amr.games.pacman.lib.V2i;
-import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.GhostAnimation;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
@@ -38,7 +37,6 @@ import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.entity.pacman.BigPacMan2D;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimationSet;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimationSet;
-import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
@@ -56,16 +54,15 @@ public class PacMan_IntermissionScene1 extends GameScene {
 	private Ghost2D blinky2D;
 	private BigPacMan2D bigPacMan2D;
 
-	public PacMan_IntermissionScene1(GameController gameController, V2i size, Rendering2D r2D) {
-		super(gameController, size, r2D);
+	public PacMan_IntermissionScene1(GameController gameController, V2i size) {
+		super(gameController, size);
 		sceneController = new Intermission1Controller(gameController);
 		sceneController.playIntermissionSound = () -> SoundManager.get().loop(GameSound.INTERMISSION_1, 1);
 		context = sceneController.context();
 	}
 
 	@Override
-	public void init(GameModel game) {
-		super.init(game);
+	public void init() {
 		sceneController.init();
 		pacMan2D = new Pac2D(context.pac, game, new PacAnimationSet(r2D));
 		blinky2D = new Ghost2D(context.blinky, game, new GhostAnimationSet(Ghost.RED_GHOST, r2D));

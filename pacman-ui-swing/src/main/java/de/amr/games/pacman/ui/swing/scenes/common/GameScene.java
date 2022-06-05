@@ -30,6 +30,8 @@ import de.amr.games.pacman.event.GameEventAdapter;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
+import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
+import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
 
 /**
  * Common game scene base class.
@@ -39,22 +41,28 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 public abstract class GameScene extends GameEventAdapter {
 
 	protected final V2i size;
-	protected final Rendering2D r2D;
 	protected final GameController gameController;
 	protected GameModel game;
+	protected Rendering2D r2D;
 
-	public GameScene(GameController gameController, V2i size, Rendering2D r2D) {
+	public GameScene(GameController gameController, V2i size) {
 		this.gameController = gameController;
 		this.size = size;
-		this.r2D = r2D;
 	}
 
 	public V2i size() {
 		return size;
 	}
 
-	public void init(GameModel game) {
+	public void setGame(GameModel game) {
 		this.game = game;
+		r2D = switch (game.variant) {
+		case MS_PACMAN -> Rendering2D_MsPacMan.get();
+		case PACMAN -> Rendering2D_PacMan.get();
+		};
+	}
+
+	public void init() {
 	}
 
 	public void update() {

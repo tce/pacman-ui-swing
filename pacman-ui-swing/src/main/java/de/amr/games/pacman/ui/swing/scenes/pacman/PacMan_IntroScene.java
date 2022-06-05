@@ -36,7 +36,6 @@ import de.amr.games.pacman.controller.pacman.IntroController;
 import de.amr.games.pacman.controller.pacman.IntroController.State;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.V2i;
-import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.GhostAnimation;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
@@ -44,7 +43,6 @@ import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimationSet;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimationSet;
-import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.shell.Keyboard;
 
@@ -64,18 +62,16 @@ public class PacMan_IntroScene extends GameScene {
 	private Pac2D pacMan2D;
 	private Ghost2D[] ghosts2D;
 
-	public PacMan_IntroScene(GameController gameController, V2i size, Rendering2D r2D) {
-		super(gameController, size, r2D);
+	public PacMan_IntroScene(GameController gameController, V2i size) {
+		super(gameController, size);
 		sceneController = new IntroController(gameController);
 		sceneController.addStateChangeListener(this::onSceneStateChange);
 		$ = sceneController.context;
 	}
 
 	@Override
-	public void init(GameModel game) {
-		super.init(game);
+	public void init() {
 		sceneController.restartInInitialState(IntroController.State.START);
-
 		pacMan2D = new Pac2D($.pacMan, game, new PacAnimationSet(r2D));
 		ghosts2D = Stream.of($.ghosts).map(ghost -> {
 			Ghost2D ghost2D = new Ghost2D(ghost, game, new GhostAnimationSet(ghost.id, r2D));

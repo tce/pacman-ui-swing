@@ -38,7 +38,6 @@ import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameStateChangeEvent;
 import de.amr.games.pacman.lib.GenericAnimation;
 import de.amr.games.pacman.lib.V2i;
-import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.GameVariant;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.GhostAnimation;
@@ -54,7 +53,6 @@ import de.amr.games.pacman.ui.swing.lib.U;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimationSet;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimationSet;
-import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 
 /**
@@ -70,14 +68,12 @@ public class PlayScene extends GameScene {
 	private Bonus2D bonus2D;
 	private GenericAnimation<BufferedImage> mazeFlashing;
 
-	public PlayScene(GameController gameController, V2i size, Rendering2D r2D) {
-		super(gameController, size, r2D);
+	public PlayScene(GameController gameController, V2i size) {
+		super(gameController, size);
 	}
 
 	@Override
-	public void init(GameModel game) {
-		super.init(game);
-
+	public void init() {
 		pac2D = new Pac2D(game.pac, game, new PacAnimationSet(r2D));
 		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, new GhostAnimationSet(ghost.id, r2D)))
 				.toArray(Ghost2D[]::new);

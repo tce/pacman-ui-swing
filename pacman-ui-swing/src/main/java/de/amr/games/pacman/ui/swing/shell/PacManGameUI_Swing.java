@@ -156,7 +156,8 @@ public class PacManGameUI_Swing extends GameEventAdapter {
 			if (currentGameScene != null) {
 				currentGameScene.end();
 			}
-			newGameScene.init(gameController.game());
+			newGameScene.setGame(gameController.game());
+			newGameScene.init();
 			log("Current scene changed from %s to %s", currentGameScene, newGameScene);
 		}
 		SoundManager.get().selectGameVariant(gameController.game().variant);

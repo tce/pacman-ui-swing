@@ -34,7 +34,6 @@ import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
-import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.shell.Keyboard;
 
@@ -43,8 +42,8 @@ import de.amr.games.pacman.ui.swing.shell.Keyboard;
  */
 public class PacMan_CreditScene extends GameScene {
 
-	public PacMan_CreditScene(GameController gameController, V2i size, Rendering2D r2D) {
-		super(gameController, size, r2D);
+	public PacMan_CreditScene(GameController gameController, V2i size) {
+		super(gameController, size);
 	}
 
 	@Override

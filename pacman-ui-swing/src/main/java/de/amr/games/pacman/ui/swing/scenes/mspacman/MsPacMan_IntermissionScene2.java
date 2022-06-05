@@ -29,13 +29,11 @@ import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.Intermission2Controller;
 import de.amr.games.pacman.controller.mspacman.Intermission2Controller.Context;
 import de.amr.games.pacman.lib.V2i;
-import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Flap2D;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimationSet;
-import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.MsPacMansHusbandAnimations;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
@@ -56,8 +54,8 @@ public class MsPacMan_IntermissionScene2 extends GameScene {
 	private Pac2D pacMan2D;
 	private Flap2D flap2D;
 
-	public MsPacMan_IntermissionScene2(GameController gameController, V2i size, Rendering2D r2D) {
-		super(gameController, size, r2D);
+	public MsPacMan_IntermissionScene2(GameController gameController, V2i size) {
+		super(gameController, size);
 		sceneController = new Intermission2Controller(gameController);
 		sceneController.playIntermissionSound = () -> SoundManager.get().play(GameSound.INTERMISSION_2);
 		sceneController.playFlapAnimation = () -> flap2D.animation.restart();
@@ -65,8 +63,7 @@ public class MsPacMan_IntermissionScene2 extends GameScene {
 	}
 
 	@Override
-	public void init(GameModel game) {
-		super.init(game);
+	public void init() {
 		sceneController.restartInInitialState(Intermission2Controller.State.FLAP);
 		flap2D = new Flap2D(context.flap, game);
 		msPacMan2D = new Pac2D(context.msPacMan, game, new PacAnimationSet(r2D));

@@ -28,7 +28,6 @@ import java.awt.Graphics2D;
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.Intermission1Controller;
 import de.amr.games.pacman.lib.V2i;
-import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
@@ -38,7 +37,6 @@ import de.amr.games.pacman.ui.swing.entity.mspacman.Flap2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Heart2D;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimationSet;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimationSet;
-import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.MsPacMansHusbandAnimations;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
@@ -63,8 +61,8 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 	private Flap2D flap2D;
 	private Heart2D heart2D;
 
-	public MsPacMan_IntermissionScene1(GameController gameController, V2i size, Rendering2D r2D) {
-		super(gameController, size, r2D);
+	public MsPacMan_IntermissionScene1(GameController gameController, V2i size) {
+		super(gameController, size);
 		sceneController = new Intermission1Controller(gameController);
 		sceneController.playIntermissionSound = () -> SoundManager.get().play(GameSound.INTERMISSION_1);
 		sceneController.playFlapAnimation = () -> flap2D.animation.restart();
@@ -72,8 +70,7 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 	}
 
 	@Override
-	public void init(GameModel game) {
-		super.init(game);
+	public void init() {
 		sceneController.restartInInitialState(Intermission1Controller.State.FLAP);
 
 		flap2D = new Flap2D(context.flap, game);

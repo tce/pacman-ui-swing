@@ -32,7 +32,6 @@ import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.GenericAnimation;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
-import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
@@ -40,7 +39,6 @@ import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimationSet;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimationSet;
-import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
@@ -59,18 +57,16 @@ public class PacMan_IntermissionScene2 extends GameScene {
 	private GenericAnimation<BufferedImage> blinkyStretchedAnimation;
 	private GenericAnimation<BufferedImage> blinkyDamagedAnimation;
 
-	public PacMan_IntermissionScene2(GameController gameController, V2i size, Rendering2D r2D) {
-		super(gameController, size, r2D);
+	public PacMan_IntermissionScene2(GameController gameController, V2i size) {
+		super(gameController, size);
 		sceneController = new Intermission2Controller(gameController);
 		sceneController.playIntermissionSound = () -> SoundManager.get().play(GameSound.INTERMISSION_2);
 		context = sceneController.context();
 	}
 
 	@Override
-	public void init(GameModel game) {
-		super.init(game);
+	public void init() {
 		sceneController.init();
-
 		pacMan2D = new Pac2D(context.pac, game, new PacAnimationSet(r2D));
 		blinky2D = new Ghost2D(context.blinky, game, new GhostAnimationSet(Ghost.RED_GHOST, r2D));
 		blinkyStretchedAnimation = Rendering2D_PacMan.get().createBlinkyStretchedAnimation();
