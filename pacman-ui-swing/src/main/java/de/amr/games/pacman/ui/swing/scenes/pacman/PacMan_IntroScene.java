@@ -74,7 +74,7 @@ public class PacMan_IntroScene extends GameScene {
 	@Override
 	public void init(GameModel game) {
 		super.init(game);
-		sceneController.restartInInitialState(IntroController.State.BEGIN);
+		sceneController.restartInInitialState(IntroController.State.START);
 
 		pacMan2D = new Pac2D(context.pacMan, game, new MyPacAnimationSet(r2D));
 		ghosts2D = Stream.of(context.ghosts).map(ghost -> {
@@ -129,7 +129,7 @@ public class PacMan_IntroScene extends GameScene {
 		r2D.drawCredit(g, gameController.credit());
 
 		switch (sceneController.state()) {
-		case BEGIN, PRESENTING_GHOSTS -> drawGallery(g);
+		case START, PRESENTING_GHOSTS -> drawGallery(g);
 		case SHOWING_POINTS -> {
 			drawGallery(g);
 			drawPoints(g, 11, 25);
