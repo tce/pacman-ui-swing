@@ -37,7 +37,6 @@ import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameStateChangeEvent;
 import de.amr.games.pacman.lib.GenericAnimation;
-import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameVariant;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.GhostAnimation;
@@ -68,8 +67,8 @@ public class PlayScene extends GameScene {
 	private Bonus2D bonus2D;
 	private GenericAnimation<BufferedImage> mazeFlashing;
 
-	public PlayScene(GameController gameController, V2i size) {
-		super(gameController, size);
+	public PlayScene(GameController gameController) {
+		super(gameController);
 	}
 
 	@Override

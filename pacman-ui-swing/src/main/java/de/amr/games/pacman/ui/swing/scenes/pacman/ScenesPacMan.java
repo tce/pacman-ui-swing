@@ -26,7 +26,6 @@ package de.amr.games.pacman.ui.swing.scenes.pacman;
 import java.util.List;
 
 import de.amr.games.pacman.controller.common.GameController;
-import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.scenes.common.PlayScene;
 
@@ -39,14 +38,14 @@ public class ScenesPacMan {
 
 	public final List<GameScene> gameScenes;
 
-	public ScenesPacMan(GameController gameController, V2i unscaledSize) {
+	public ScenesPacMan(GameController gameController) {
 		gameScenes = List.of( //
-				new PacMan_IntroScene(gameController, unscaledSize), //
-				new PacMan_CreditScene(gameController, unscaledSize), //
-				new PacMan_IntermissionScene1(gameController, unscaledSize), //
-				new PacMan_IntermissionScene2(gameController, unscaledSize), //
-				new PacMan_IntermissionScene3(gameController, unscaledSize), //
-				new PlayScene(gameController, unscaledSize) //
+				new PacMan_IntroScene(gameController), //
+				new PacMan_CreditScene(gameController), //
+				new PacMan_IntermissionScene1(gameController), //
+				new PacMan_IntermissionScene2(gameController), //
+				new PacMan_IntermissionScene3(gameController), //
+				new PlayScene(gameController) //
 		);
 	}
 }

@@ -23,12 +23,15 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.scenes.common;
 
+import static de.amr.games.pacman.model.common.world.World.TS;
+
 import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.event.GameEventAdapter;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
+import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
@@ -40,14 +43,16 @@ import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
  */
 public abstract class GameScene extends GameEventAdapter {
 
-	protected final V2i size;
+	public static final V2i DEFAULT_SIZE = new V2i(ArcadeWorld.TILES_X * TS, ArcadeWorld.TILES_Y * TS);
+
 	protected final GameController gameController;
+	protected V2i size;
 	protected GameModel game;
 	protected Rendering2D r2D;
 
-	public GameScene(GameController gameController, V2i size) {
+	public GameScene(GameController gameController) {
 		this.gameController = gameController;
-		this.size = size;
+		size = DEFAULT_SIZE;
 	}
 
 	public V2i size() {

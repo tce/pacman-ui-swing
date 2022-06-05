@@ -30,7 +30,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
-import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
@@ -42,8 +41,8 @@ import de.amr.games.pacman.ui.swing.shell.Keyboard;
  */
 public class PacMan_CreditScene extends GameScene {
 
-	public PacMan_CreditScene(GameController gameController, V2i size) {
-		super(gameController, size);
+	public PacMan_CreditScene(GameController gameController) {
+		super(gameController);
 	}
 
 	@Override

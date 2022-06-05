@@ -87,8 +87,8 @@ public class PacManGameUI_Swing extends GameEventAdapter {
 		this.scaling = height / unscaledSize.y;
 		this.scaledSize = new V2d(unscaledSize.x, unscaledSize.y).scaled(scaling).toV2i();
 
-		scenesMsPacMan = new ScenesMsPacMan(gameController, unscaledSize);
-		scenesPacMan = new ScenesPacMan(gameController, unscaledSize);
+		scenesMsPacMan = new ScenesMsPacMan(gameController);
+		scenesPacMan = new ScenesPacMan(gameController);
 
 		flashMessageDisplay = new FlashMessageDisplay(unscaledSize);
 
