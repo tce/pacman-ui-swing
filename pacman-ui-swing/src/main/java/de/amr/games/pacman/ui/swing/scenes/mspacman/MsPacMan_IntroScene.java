@@ -52,13 +52,14 @@ import de.amr.games.pacman.ui.swing.shell.Keyboard;
  */
 public class MsPacMan_IntroScene extends GameScene {
 
-	private final IntroController sceneController;
-	private final IntroController.Context context;
+	private IntroController sceneController;
+	private IntroController.Context context;
 	private Pac2D msPacMan2D;
 	private Ghost2D[] ghosts2D;
 
-	public MsPacMan_IntroScene(GameController gameController) {
-		super(gameController);
+	@Override
+	public void setContext(GameController gameController) {
+		super.setContext(gameController);
 		sceneController = new IntroController(gameController);
 		sceneController.addStateChangeListener(this::onSceneStateChanged);
 		context = sceneController.context();

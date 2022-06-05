@@ -32,7 +32,6 @@ import java.util.stream.Stream;
 
 import javax.sound.sampled.Clip;
 
-import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameStateChangeEvent;
@@ -66,10 +65,6 @@ public class PlayScene extends GameScene {
 	private Energizer2D[] energizers2D;
 	private Bonus2D bonus2D;
 	private GenericAnimation<BufferedImage> mazeFlashing;
-
-	public PlayScene(GameController gameController) {
-		super(gameController);
-	}
 
 	@Override
 	public void init() {

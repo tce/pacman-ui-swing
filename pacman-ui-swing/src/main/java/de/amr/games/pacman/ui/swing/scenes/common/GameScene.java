@@ -45,26 +45,22 @@ public abstract class GameScene extends GameEventAdapter {
 
 	public static final V2i DEFAULT_SIZE = new V2i(ArcadeWorld.TILES_X * TS, ArcadeWorld.TILES_Y * TS);
 
-	protected final GameController gameController;
-	protected V2i size;
+	protected GameController gameController;
+	protected V2i size = DEFAULT_SIZE;
 	protected GameModel game;
 	protected Rendering2D r2D;
 
-	public GameScene(GameController gameController) {
+	public void setContext(GameController gameController) {
 		this.gameController = gameController;
-		size = DEFAULT_SIZE;
+		this.game = gameController.game();
+		this.r2D = switch (game.variant) {
+		case MS_PACMAN -> Rendering2D_MsPacMan.get();
+		case PACMAN -> Rendering2D_PacMan.get();
+		};
 	}
 
 	public V2i size() {
 		return size;
-	}
-
-	public void setGame(GameModel game) {
-		this.game = game;
-		r2D = switch (game.variant) {
-		case MS_PACMAN -> Rendering2D_MsPacMan.get();
-		case PACMAN -> Rendering2D_PacMan.get();
-		};
 	}
 
 	public void init() {

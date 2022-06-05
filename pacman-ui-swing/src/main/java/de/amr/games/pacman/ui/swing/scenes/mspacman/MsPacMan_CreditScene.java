@@ -29,7 +29,6 @@ import static de.amr.games.pacman.model.common.world.World.t;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.world.World;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
@@ -42,10 +41,6 @@ import de.amr.games.pacman.ui.swing.shell.Keyboard;
  * @author Armin Reichert
  */
 public class MsPacMan_CreditScene extends GameScene {
-
-	public MsPacMan_CreditScene(GameController gameController) {
-		super(gameController);
-	}
 
 	@Override
 	public void update() {

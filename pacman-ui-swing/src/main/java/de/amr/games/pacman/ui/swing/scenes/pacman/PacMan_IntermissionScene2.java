@@ -48,16 +48,16 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
  */
 public class PacMan_IntermissionScene2 extends GameScene {
 
-	private final Intermission2Controller sceneController;
-	private final Intermission2Controller.Context context;
-
+	private Intermission2Controller sceneController;
+	private Intermission2Controller.Context context;
 	private Pac2D pacMan2D;
 	private Ghost2D blinky2D;
 	private GenericAnimation<BufferedImage> blinkyStretchedAnimation;
 	private GenericAnimation<BufferedImage> blinkyDamagedAnimation;
 
-	public PacMan_IntermissionScene2(GameController gameController) {
-		super(gameController);
+	@Override
+	public void setContext(GameController gameController) {
+		super.setContext(gameController);
 		sceneController = new Intermission2Controller(gameController);
 		sceneController.playIntermissionSound = () -> SoundManager.get().play(GameSound.INTERMISSION_2);
 		context = sceneController.context();

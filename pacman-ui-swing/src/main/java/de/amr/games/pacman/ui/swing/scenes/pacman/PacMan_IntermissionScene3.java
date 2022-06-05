@@ -41,13 +41,13 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
  */
 public class PacMan_IntermissionScene3 extends GameScene {
 
-	private final Intermission3Controller sceneController;
-	private final Intermission3Controller.Context context;
-
+	private Intermission3Controller sceneController;
+	private Intermission3Controller.Context context;
 	private Pac2D pacMan2D;
 
-	public PacMan_IntermissionScene3(GameController gameController) {
-		super(gameController);
+	@Override
+	public void setContext(GameController gameController) {
+		super.setContext(gameController);
 		sceneController = new Intermission3Controller(gameController);
 		sceneController.playIntermissionSound = () -> SoundManager.get().loop(GameSound.INTERMISSION_3, 1);
 		context = sceneController.context();

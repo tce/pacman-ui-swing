@@ -47,14 +47,15 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
  */
 public class MsPacMan_IntermissionScene2 extends GameScene {
 
-	private final Intermission2Controller sceneController;
-	private final Context context;
+	private Intermission2Controller sceneController;
+	private Context context;
 	private Pac2D msPacMan2D;
 	private Pac2D pacMan2D;
 	private Flap2D flap2D;
 
-	public MsPacMan_IntermissionScene2(GameController gameController) {
-		super(gameController);
+	@Override
+	public void setContext(GameController gameController) {
+		super.setContext(gameController);
 		sceneController = new Intermission2Controller(gameController);
 		sceneController.playIntermissionSound = () -> SoundManager.get().play(GameSound.INTERMISSION_2);
 		sceneController.playFlapAnimation = () -> flap2D.animation.restart();
