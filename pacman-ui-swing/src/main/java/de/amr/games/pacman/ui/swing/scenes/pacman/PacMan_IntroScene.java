@@ -42,8 +42,8 @@ import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
-import de.amr.games.pacman.ui.swing.rendering.common.MyGhostAnimationSet;
-import de.amr.games.pacman.ui.swing.rendering.common.MyPacAnimationSet;
+import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimationSet;
+import de.amr.games.pacman.ui.swing.rendering.common.PacAnimationSet;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.shell.Keyboard;
@@ -59,7 +59,7 @@ import de.amr.games.pacman.ui.swing.shell.Keyboard;
 public class PacMan_IntroScene extends GameScene {
 
 	private final IntroController sceneController;
-	private final IntroController.Context context;
+	private final IntroController.Context $;
 
 	private Pac2D pacMan2D;
 	private Ghost2D[] ghosts2D;
@@ -67,8 +67,8 @@ public class PacMan_IntroScene extends GameScene {
 	public PacMan_IntroScene(GameController gameController, V2i size, Rendering2D r2D) {
 		super(gameController, size, r2D);
 		sceneController = new IntroController(gameController);
-		context = sceneController.context;
 		sceneController.addStateChangeListener(this::onSceneStateChange);
+		$ = sceneController.context;
 	}
 
 	@Override
@@ -76,9 +76,9 @@ public class PacMan_IntroScene extends GameScene {
 		super.init(game);
 		sceneController.restartInInitialState(IntroController.State.START);
 
-		pacMan2D = new Pac2D(context.pacMan, game, new MyPacAnimationSet(r2D));
-		ghosts2D = Stream.of(context.ghosts).map(ghost -> {
-			Ghost2D ghost2D = new Ghost2D(ghost, game, new MyGhostAnimationSet(ghost.id, r2D));
+		pacMan2D = new Pac2D($.pacMan, game, new PacAnimationSet(r2D));
+		ghosts2D = Stream.of($.ghosts).map(ghost -> {
+			Ghost2D ghost2D = new Ghost2D(ghost, game, new GhostAnimationSet(ghost.id, r2D));
 			return ghost2D;
 		}).toArray(Ghost2D[]::new);
 	}
@@ -142,7 +142,7 @@ public class PacMan_IntroScene extends GameScene {
 			drawGallery(g);
 			drawPoints(g, 11, 25);
 			r2D.drawCopyright(g, t(3), t(32));
-			if (context.blinking.frame()) {
+			if ($.blinking.frame()) {
 				drawEnergizer(g);
 			}
 			int offset = sceneController.state().timer().tick() % 5 < 2 ? 0 : -1;
@@ -182,16 +182,16 @@ public class PacMan_IntroScene extends GameScene {
 		g.drawString("/", t(16), t(6));
 		g.drawString("NICKNAME", t(18), t(6));
 		for (int id = 0; id < 4; ++id) {
-			if (context.pictureVisible[id]) {
+			if ($.pictureVisible[id]) {
 				int tileY = 7 + 3 * id;
 				r2D.drawSpriteCenteredOverBox(g, r2D.getGhostSprite(id, Direction.RIGHT), t(3), t(tileY));
-				if (context.characterVisible[id]) {
+				if ($.characterVisible[id]) {
 					g.setColor(r2D.getGhostColor(id));
-					g.drawString("-" + context.characters[id], t(6), t(tileY + 1));
+					g.drawString("-" + $.characters[id], t(6), t(tileY + 1));
 				}
-				if (context.nicknameVisible[id]) {
+				if ($.nicknameVisible[id]) {
 					g.setColor(r2D.getGhostColor(id));
-					g.drawString("\"" + context.nicknames[id] + "\"", t(17), t(tileY + 1));
+					g.drawString("\"" + $.nicknames[id] + "\"", t(17), t(tileY + 1));
 				}
 			}
 		}
@@ -200,7 +200,7 @@ public class PacMan_IntroScene extends GameScene {
 	private void drawPoints(Graphics2D g, int tileX, int tileY) {
 		g.setColor(r2D.getFoodColor(1));
 		g.fillRect(t(tileX) + 6, t(tileY - 1) + 2, 2, 2);
-		if (context.blinking.frame()) {
+		if ($.blinking.frame()) {
 			g.fillOval(t(tileX), t(tileY + 1) - 2, 10, 10);
 		}
 		g.setColor(Color.WHITE);

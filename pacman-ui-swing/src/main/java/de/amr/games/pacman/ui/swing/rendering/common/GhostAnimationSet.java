@@ -37,7 +37,7 @@ import de.amr.games.pacman.model.common.actors.GhostAnimation;
 /**
  * @author Armin Reichert
  */
-public class MyGhostAnimationSet extends SpriteAnimationSet<Ghost, GhostAnimation, BufferedImage> {
+public class GhostAnimationSet extends SpriteAnimationSet<Ghost, GhostAnimation, BufferedImage> {
 
 	private SpriteAnimationMap<Direction, BufferedImage> eyes;
 	private SpriteAnimation<BufferedImage> flashing;
@@ -93,7 +93,7 @@ public class MyGhostAnimationSet extends SpriteAnimationSet<Ghost, GhostAnimatio
 		};
 	}
 
-	public MyGhostAnimationSet(int ghostID, Rendering2D r2D) {
+	public GhostAnimationSet(int ghostID, Rendering2D r2D) {
 		eyes = r2D.createGhostEyesAnimation();
 		flashing = r2D.createGhostFlashingAnimation();
 		blue = r2D.createGhostBlueAnimation();
