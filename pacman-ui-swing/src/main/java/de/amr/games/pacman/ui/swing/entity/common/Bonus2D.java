@@ -69,12 +69,12 @@ public class Bonus2D extends GameEntity2D {
 			// Ms. Pac.Man bonus is jumping up and down while wandering the maze
 			int jump = jumpAnimation != null ? jumpAnimation.animate() : 0;
 			g.translate(0, jump);
-			r2D.drawSpriteCenteredOverBBox(g, sprite, bonus.position().x, bonus.position().y);
+			r2D.drawSpriteCenteredOverBox(g, sprite, bonus.position().x, bonus.position().y);
 			g.translate(0, -jump);
 		}
 		case EATEN -> {
 			var sprite = r2D.getBonusValueSprite(bonus.value());
-			r2D.drawSpriteCenteredOverBBox(g, sprite, bonus.position().x, bonus.position().y);
+			r2D.drawSpriteCenteredOverBox(g, sprite, bonus.position().x, bonus.position().y);
 		}
 		}
 	}

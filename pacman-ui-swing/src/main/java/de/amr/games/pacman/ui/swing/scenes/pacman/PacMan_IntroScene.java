@@ -29,12 +29,12 @@ import static de.amr.games.pacman.model.common.world.World.t;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.util.stream.Stream;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.pacman.IntroController;
 import de.amr.games.pacman.controller.pacman.IntroController.State;
+import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.GhostAnimation;
@@ -184,7 +184,7 @@ public class PacMan_IntroScene extends GameScene {
 		for (int id = 0; id < 4; ++id) {
 			if (context.pictureVisible[id]) {
 				int tileY = 7 + 3 * id;
-				r2D.drawSpriteCenteredOverBBox(g, ghostLookingRight(id), t(3), t(tileY));
+				r2D.drawSpriteCenteredOverBox(g, r2D.getGhostSprite(id, Direction.RIGHT), t(3), t(tileY));
 				if (context.characterVisible[id]) {
 					g.setColor(r2D.getGhostColor(id));
 					g.drawString("-" + context.characters[id], t(6), t(tileY + 1));
@@ -195,10 +195,6 @@ public class PacMan_IntroScene extends GameScene {
 				}
 			}
 		}
-	}
-
-	private BufferedImage ghostLookingRight(int id) {
-		return r2D.spritesheet().tile(0, 4 + id);
 	}
 
 	private void drawPoints(Graphics2D g, int tileX, int tileY) {

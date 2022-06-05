@@ -36,15 +36,14 @@ import java.util.stream.Stream;
 
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.lib.Direction;
+import de.amr.games.pacman.lib.GenericAnimation;
 import de.amr.games.pacman.lib.SpriteAnimation;
 import de.amr.games.pacman.lib.SpriteAnimationMap;
-import de.amr.games.pacman.lib.GenericAnimation;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.model.common.world.World;
-import de.amr.games.pacman.ui.swing.assets.Spritesheet;
 
 /**
  * Spritesheet-based rendering for Pac-Man and Ms. Pac-Man game.
@@ -53,13 +52,17 @@ import de.amr.games.pacman.ui.swing.assets.Spritesheet;
  */
 public interface Rendering2D {
 
-	Spritesheet spritesheet();
+	public enum Mouth {
+		CLOSED, OPEN, WIDE_OPEN
+	}
 
 	Font getArcadeFont();
 
 	Color getGhostColor(int ghostID);
 
 	// Sprites
+
+	BufferedImage getGhostSprite(int ghostID, Direction dir);
 
 	BufferedImage getSymbolSprite(int symbol);
 
@@ -97,11 +100,11 @@ public interface Rendering2D {
 
 	default void drawEntity(Graphics2D g, Entity entity, BufferedImage sprite) {
 		if (entity.visible && sprite != null) {
-			drawSpriteCenteredOverBBox(g, sprite, (int) entity.position.x, (int) entity.position.y);
+			drawSpriteCenteredOverBox(g, sprite, (int) entity.position.x, (int) entity.position.y);
 		}
 	}
 
-	default void drawSpriteCenteredOverBBox(Graphics2D g, BufferedImage sprite, double x, double y) {
+	default void drawSpriteCenteredOverBox(Graphics2D g, BufferedImage sprite, double x, double y) {
 		int dx = HTS - sprite.getWidth() / 2, dy = HTS - sprite.getHeight() / 2;
 		g.drawImage(sprite, (int) (x + dx), (int) (y + dy), null);
 	}
@@ -164,7 +167,7 @@ public interface Rendering2D {
 		int[] x = new int[1];
 		x[0] = rightX;
 		game.levelCounter.symbols().forEach(symbol -> {
-			drawSpriteCenteredOverBBox(g, getSymbolSprite(symbol), x[0], y + World.HTS);
+			drawSpriteCenteredOverBox(g, getSymbolSprite(symbol), x[0], y + World.HTS);
 			x[0] -= t(2);
 		});
 	}

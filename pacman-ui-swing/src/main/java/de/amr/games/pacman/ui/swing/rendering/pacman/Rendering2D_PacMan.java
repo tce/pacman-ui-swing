@@ -39,9 +39,9 @@ import java.util.List;
 import java.util.Map;
 
 import de.amr.games.pacman.lib.Direction;
+import de.amr.games.pacman.lib.GenericAnimation;
 import de.amr.games.pacman.lib.SpriteAnimation;
 import de.amr.games.pacman.lib.SpriteAnimationMap;
-import de.amr.games.pacman.lib.GenericAnimation;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.pacman.PacManGame;
@@ -141,11 +141,6 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public Spritesheet spritesheet() {
-		return ss;
-	}
-
-	@Override
 	public Font getArcadeFont() {
 		return font;
 	}
@@ -153,6 +148,11 @@ public class Rendering2D_PacMan implements Rendering2D {
 	@Override
 	public Color getGhostColor(int ghostID) {
 		return GHOST_COLORS[ghostID];
+	}
+
+	@Override
+	public BufferedImage getGhostSprite(int ghostID, Direction dir) {
+		return ss.tile(2 * index(dir) + 1, 4 + ghostID);
 	}
 
 	@Override
