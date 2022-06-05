@@ -156,6 +156,8 @@ public class PacMan_IntroScene extends GameScene {
 		}
 		case READY_TO_PLAY -> {
 			drawGallery(g);
+			drawPoints(g, 11, 25);
+			drawGuys(g, 0);
 		}
 		default -> {
 		}
