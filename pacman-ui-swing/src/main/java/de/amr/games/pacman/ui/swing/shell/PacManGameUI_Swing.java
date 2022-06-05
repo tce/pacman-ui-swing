@@ -38,6 +38,7 @@ import java.awt.Robot;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
@@ -56,8 +57,17 @@ import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.lib.U;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
-import de.amr.games.pacman.ui.swing.scenes.mspacman.ScenesMsPacMan;
-import de.amr.games.pacman.ui.swing.scenes.pacman.ScenesPacMan;
+import de.amr.games.pacman.ui.swing.scenes.common.PlayScene;
+import de.amr.games.pacman.ui.swing.scenes.mspacman.MsPacMan_CreditScene;
+import de.amr.games.pacman.ui.swing.scenes.mspacman.MsPacMan_IntermissionScene1;
+import de.amr.games.pacman.ui.swing.scenes.mspacman.MsPacMan_IntermissionScene2;
+import de.amr.games.pacman.ui.swing.scenes.mspacman.MsPacMan_IntermissionScene3;
+import de.amr.games.pacman.ui.swing.scenes.mspacman.MsPacMan_IntroScene;
+import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_CreditScene;
+import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_IntermissionScene1;
+import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_IntermissionScene2;
+import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_IntermissionScene3;
+import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_IntroScene;
 
 /**
  * A Swing UI for the Pac-Man / Ms. Pac-Man game.
@@ -75,8 +85,24 @@ public class PacManGameUI_Swing extends GameEventAdapter {
 	private final Timer titleUpdateTimer;
 	private final Canvas canvas;
 	private final FlashMessageDisplay flashMessageDisplay;
-	private final ScenesMsPacMan scenesMsPacMan;
-	private final ScenesPacMan scenesPacMan;
+
+	private final List<GameScene> gameScenesPacMan = List.of( //
+			new PacMan_IntroScene(), //
+			new PacMan_CreditScene(), //
+			new PacMan_IntermissionScene1(), //
+			new PacMan_IntermissionScene2(), //
+			new PacMan_IntermissionScene3(), //
+			new PlayScene() //
+	);
+
+	private final List<GameScene> gameScenesMsPacMan = List.of( //
+			new MsPacMan_IntroScene(), //
+			new MsPacMan_CreditScene(), //
+			new MsPacMan_IntermissionScene1(), //
+			new MsPacMan_IntermissionScene2(), //
+			new MsPacMan_IntermissionScene3(), //
+			new PlayScene()//
+	);
 
 	private GameScene currentGameScene;
 
@@ -86,9 +112,6 @@ public class PacManGameUI_Swing extends GameEventAdapter {
 		this.unscaledSize = new V2i(ArcadeWorld.TILES_X, ArcadeWorld.TILES_Y).scaled(World.TS);
 		this.scaling = height / unscaledSize.y;
 		this.scaledSize = new V2d(unscaledSize.x, unscaledSize.y).scaled(scaling).toV2i();
-
-		scenesMsPacMan = new ScenesMsPacMan();
-		scenesPacMan = new ScenesPacMan();
 
 		flashMessageDisplay = new FlashMessageDisplay(unscaledSize);
 
@@ -166,7 +189,7 @@ public class PacManGameUI_Swing extends GameEventAdapter {
 
 	private GameScene getSceneForGameState(GameState state) {
 		var game = gameController.game();
-		var scenes = game.variant == MS_PACMAN ? scenesMsPacMan.gameScenes : scenesPacMan.gameScenes;
+		var scenes = game.variant == MS_PACMAN ? gameScenesMsPacMan : gameScenesPacMan;
 		return switch (state) {
 		case INTRO -> scenes.get(0);
 		case CREDIT -> scenes.get(1);
