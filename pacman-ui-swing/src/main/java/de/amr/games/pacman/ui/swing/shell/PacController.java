@@ -33,11 +33,11 @@ import de.amr.games.pacman.model.common.actors.Pac;
  * 
  * @author Armin Reichert
  */
-public class ManualPlayerControl implements Consumer<Pac> {
+public class PacController implements Consumer<Pac> {
 
 	private final String up, down, left, right;
 
-	public ManualPlayerControl(String up, String down, String left, String right) {
+	public PacController(String up, String down, String left, String right) {
 		this.up = up;
 		this.down = down;
 		this.left = left;
