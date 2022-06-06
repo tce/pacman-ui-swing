@@ -23,8 +23,6 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.scenes.common;
 
-import static de.amr.games.pacman.model.common.world.World.TS;
-
 import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
@@ -43,10 +41,8 @@ import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
  */
 public abstract class GameScene extends GameEventAdapter {
 
-	public static final V2i DEFAULT_SIZE = new V2i(ArcadeWorld.TILES_X * TS, ArcadeWorld.TILES_Y * TS);
-
 	protected GameController gameController;
-	protected V2i size = DEFAULT_SIZE;
+	protected V2i size = ArcadeWorld.SIZE;
 	protected GameModel game;
 	protected Rendering2D r2D;
 
