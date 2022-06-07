@@ -29,7 +29,7 @@ import java.awt.image.BufferedImage;
 import de.amr.games.pacman.lib.SpriteAnimationSet;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Ghost;
-import de.amr.games.pacman.model.common.actors.GhostAnimation;
+import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimation;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**
