@@ -81,7 +81,7 @@ public class PacMan_IntroScene extends GameScene {
 	private void onSceneStateChange(State fromState, State toState) {
 		if (fromState == State.CHASING_PAC && toState == State.CHASING_GHOSTS) {
 			for (var ghost2D : ghosts2D) {
-				ghost2D.animations.selectAnimation(GhostAnimation.BLUE);
+				ghost2D.animations.select(GhostAnimation.BLUE);
 			}
 		}
 	}
@@ -105,9 +105,9 @@ public class PacMan_IntroScene extends GameScene {
 		if (sceneController.state() == State.CHASING_GHOSTS) {
 			for (var ghost2D : ghosts2D) {
 				if (ghost2D.ghost.bounty > 0) {
-					ghost2D.animations.selectAnimation(GhostAnimation.NUMBER);
+					ghost2D.animations.select(GhostAnimation.VALUE);
 				} else {
-					ghost2D.animations.selectAnimation(GhostAnimation.BLUE);
+					ghost2D.animations.select(GhostAnimation.BLUE);
 					if (ghost2D.ghost.velocity.length() == 0) {
 						ghost2D.animations.stop(GhostAnimation.BLUE);
 					} else {

@@ -52,7 +52,7 @@ public class GhostAnimationSet extends SpriteAnimationSet<Ghost, GhostAnimation,
 		case FLASHING -> flashing;
 		case BLUE -> blue;
 		case COLOR -> color;
-		case NUMBER -> numbers;
+		case VALUE -> numbers;
 		};
 	}
 
@@ -79,7 +79,7 @@ public class GhostAnimationSet extends SpriteAnimationSet<Ghost, GhostAnimation,
 			}
 			yield sprite;
 		}
-		case NUMBER -> numbers.frame(numberFrame(ghost.bounty));
+		case VALUE -> numbers.frame(numberFrame(ghost.bounty));
 		};
 	}
 

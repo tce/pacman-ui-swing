@@ -63,7 +63,7 @@ public class PacAnimationSet extends SpriteAnimationSet<Pac, PacAnimation, Buffe
 
 	@Override
 	public BufferedImage currentSprite(Pac pac) {
-		return switch (selectedKey()) {
+		return switch (selected()) {
 		case DYING -> dying.animate();
 		case MUNCHING -> {
 			var munchingToDir = munching.get(pac.moveDir());
