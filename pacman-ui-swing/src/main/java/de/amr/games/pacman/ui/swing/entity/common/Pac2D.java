@@ -27,7 +27,6 @@ import java.awt.Graphics2D;
 
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Pac;
-import de.amr.games.pacman.ui.swing.rendering.common.PacAnimation;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
@@ -45,7 +44,7 @@ public class Pac2D extends GameEntity2D {
 		super(game);
 		this.pac = pac;
 		this.animations = animations;
-		animations.select(PacAnimation.MUNCHING);
+		animations.select(PacAnimations.Key.MUNCHING);
 	}
 
 	@Override

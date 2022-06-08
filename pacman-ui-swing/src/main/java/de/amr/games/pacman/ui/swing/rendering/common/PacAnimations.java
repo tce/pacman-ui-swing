@@ -28,18 +28,23 @@ import java.awt.image.BufferedImage;
 import java.util.stream.Stream;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.GenericAnimationAPI;
-import de.amr.games.pacman.lib.animation.GenericAnimation;
-import de.amr.games.pacman.lib.animation.GenericAnimationMap;
 import de.amr.games.pacman.lib.animation.CompositeGenericAnimation;
+import de.amr.games.pacman.lib.animation.GenericAnimation;
+import de.amr.games.pacman.lib.animation.GenericAnimationAPI;
+import de.amr.games.pacman.lib.animation.GenericAnimationMap;
 import de.amr.games.pacman.model.common.actors.Pac;
 
 /**
  * @author Armin Reichert
  */
-public class PacAnimations implements CompositeGenericAnimation<Pac, PacAnimation, BufferedImage> {
+public class PacAnimations implements
+		CompositeGenericAnimation<Pac, de.amr.games.pacman.ui.swing.rendering.common.PacAnimations.Key, BufferedImage> {
 
-	private PacAnimation selectedKey;
+	public enum Key {
+		MUNCHING, DYING;
+	}
+
+	private Key selectedKey;
 	protected GenericAnimationMap<Direction, BufferedImage> munching;
 	protected GenericAnimation<BufferedImage> dying;
 
@@ -58,18 +63,18 @@ public class PacAnimations implements CompositeGenericAnimation<Pac, PacAnimatio
 	}
 
 	@Override
-	public PacAnimation selectedKey() {
+	public Key selectedKey() {
 		return selectedKey;
 	}
 
 	@Override
-	public void select(PacAnimation key) {
+	public void select(Key key) {
 		selectedKey = key;
 		selectedAnimation().ensureRunning();
 	}
 
 	@Override
-	public GenericAnimationAPI animation(PacAnimation key) {
+	public GenericAnimationAPI animation(Key key) {
 		return switch (key) {
 		case DYING -> dying;
 		case MUNCHING -> munching;

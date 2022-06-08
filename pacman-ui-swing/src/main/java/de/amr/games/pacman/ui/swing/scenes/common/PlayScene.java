@@ -48,8 +48,8 @@ import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.lib.U;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
-import de.amr.games.pacman.ui.swing.rendering.common.PacAnimation;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
+import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations.Key;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 
 /**
@@ -257,7 +257,7 @@ public class PlayScene extends GameScene {
 			gameController.state().timer().setSeconds(4.5);
 			gameController.state().timer().start();
 			SoundManager.get().stopAll();
-			pac2D.animations.select(PacAnimation.DYING);
+			pac2D.animations.select(PacAnimations.Key.DYING);
 			pac2D.animations.selectedAnimation().stop();
 			U.afterSeconds(1, () -> {
 				game.ghosts().forEach(Ghost::hide);
@@ -268,7 +268,7 @@ public class PlayScene extends GameScene {
 			});
 			U.afterSeconds(4, () -> {
 				game.pac.hide();
-				pac2D.animations.select(PacAnimation.MUNCHING);
+				pac2D.animations.select(Key.MUNCHING);
 			});
 		}
 		case GHOST_DYING -> {
