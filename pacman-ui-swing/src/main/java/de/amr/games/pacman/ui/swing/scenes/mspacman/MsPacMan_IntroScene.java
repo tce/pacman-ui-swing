@@ -67,7 +67,7 @@ public class MsPacMan_IntroScene extends GameScene {
 
 	@Override
 	public void init() {
-		sceneController.restartInInitialState(IntroController.State.BEGIN);
+		sceneController.restartInInitialState(IntroController.State.START);
 		msPacMan2D = new Pac2D(context.msPacMan, game, new PacAnimationSet(r2D));
 		ghosts2D = Stream.of(context.ghosts).map(ghost -> new Ghost2D(ghost, game, new GhostAnimationSet(ghost.id, r2D)))
 				.toArray(Ghost2D[]::new);

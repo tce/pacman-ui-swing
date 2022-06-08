@@ -142,9 +142,9 @@ public interface Rendering2D {
 		}
 		// Highscore
 		g.setColor(Color.WHITE);
-		g.drawString(String.format("%7d", game.scores().hiscore().points), t(15), t(2));
+		g.drawString(String.format("%7d", game.scores().highScore().points), t(15), t(2));
 		g.setColor(Color.LIGHT_GRAY);
-		g.drawString(String.format("L%d", game.scores().hiscore().levelNumber), t(23), t(2));
+		g.drawString(String.format("L%d", game.scores().highScore().levelNumber), t(23), t(2));
 		g.translate(0, -3);
 	}
 
