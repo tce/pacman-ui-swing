@@ -55,8 +55,6 @@ public class GhostAnimations implements CompositeGenericAnimation<Ghost, Key, Bu
 		flashing = r2D.createGhostFlashingAnimation();
 		blue = r2D.createGhostBlueAnimation();
 		color = r2D.createGhostColorAnimation(ghostID);
-//		values = new GenericAnimation<>(r2D.getNumberSprite(200), r2D.getNumberSprite(400), r2D.getNumberSprite(800),
-//				r2D.getNumberSprite(1600));
 		values = r2D.createGhostValueAnimation();
 	}
 

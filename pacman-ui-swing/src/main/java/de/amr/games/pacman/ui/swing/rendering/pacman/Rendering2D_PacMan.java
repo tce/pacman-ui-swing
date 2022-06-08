@@ -83,7 +83,6 @@ public class Rendering2D_PacMan implements Rendering2D {
 	private final GenericAnimation<BufferedImage> mazeFlashingAnim;
 	private final Map<Integer, BufferedImage> symbolSprites;
 	private final Map<Integer, BufferedImage> bonusValueSprites;
-	private final Map<Integer, BufferedImage> numberSprites;
 	private final Font font;
 
 	private final GenericAnimation<BufferedImage> blinkyHalfNaked;
@@ -122,13 +121,6 @@ public class Rendering2D_PacMan implements Rendering2D {
 			3000, ss.tiles(3, 11, 3, 1),
 			5000, ss.tiles(3, 12, 3, 1)
 		);
-
-		numberSprites = Map.of(
-			200,  ss.tile(0, 8),
-			400,  ss.tile(1, 8),
-			800,  ss.tile(2, 8),
-			1600, ss.tile(3, 8)
-		);
 		//@formatter:on
 
 		blinkyPatched = new GenericAnimation<>(ss.tile(10, 7), ss.tile(11, 7));
@@ -165,11 +157,6 @@ public class Rendering2D_PacMan implements Rendering2D {
 	@Override
 	public int mazeNumber(int levelNumber) {
 		return 1;
-	}
-
-	@Override
-	public BufferedImage getNumberSprite(int number) {
-		return numberSprites.get(number);
 	}
 
 	@Override

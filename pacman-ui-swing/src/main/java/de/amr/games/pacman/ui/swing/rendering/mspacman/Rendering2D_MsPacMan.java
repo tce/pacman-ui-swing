@@ -105,7 +105,6 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	private final List<GenericAnimation<BufferedImage>> mazeFlashings;
 	private final BufferedImage[] symbols;
 	private final Map<Integer, BufferedImage> bonusValues;
-	private final Map<Integer, BufferedImage> bountyNumbers;
 	private final Font font;
 
 	private Rendering2D_MsPacMan(String path, int rasterSize) {
@@ -131,13 +130,6 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 			1000, rhs(7, 1), 
 			2000, rhs(8, 1),
 			5000, rhs(9, 1)
-		);
-
-		bountyNumbers = Map.of(
-			200,  rhs(0, 8), 
-			400,  rhs(1, 8), 
-			800,  rhs(2, 8), 
-			1600, rhs(3, 8)
 		);
 		//@formatter:on
 
@@ -323,11 +315,6 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 
 	public BufferedImage getHeart() {
 		return rhs(2, 10);
-	}
-
-	@Override
-	public BufferedImage getNumberSprite(int number) {
-		return bountyNumbers.get(number);
 	}
 
 	@Override

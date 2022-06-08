@@ -67,8 +67,6 @@ public interface Rendering2D {
 
 	BufferedImage getBonusValueSprite(int number);
 
-	BufferedImage getNumberSprite(int number);
-
 	BufferedImage getLifeSprite();
 
 	// Animations
