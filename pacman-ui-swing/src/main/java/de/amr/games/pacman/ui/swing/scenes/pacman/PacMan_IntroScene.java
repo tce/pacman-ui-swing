@@ -35,6 +35,7 @@ import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.pacman.IntroController;
 import de.amr.games.pacman.controller.pacman.IntroController.State;
 import de.amr.games.pacman.lib.Direction;
+import de.amr.games.pacman.model.common.actors.GhostState;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
@@ -104,14 +105,12 @@ public class PacMan_IntroScene extends GameScene {
 		// TODO this is not elegant but works
 		if (sceneController.state() == State.CHASING_GHOSTS) {
 			for (var ghost2D : ghosts2D) {
-				if (ghost2D.ghost.bounty > 0) {
-					ghost2D.animations.select(Key.ANIM_VALUE);
+				if (ghost2D.ghost.state == GhostState.DEAD && ghost2D.ghost.killIndex != -1) {
+					ghost2D.animations.select(GhostAnimations.Key.ANIM_VALUE);
 				} else {
-					ghost2D.animations.select(Key.ANIM_BLUE);
+					ghost2D.animations.select(GhostAnimations.Key.ANIM_BLUE);
 					if (ghost2D.ghost.velocity.length() == 0) {
-						ghost2D.animations.stop(Key.ANIM_BLUE);
-					} else {
-						ghost2D.animations.run(Key.ANIM_BLUE);
+						ghost2D.animations.stop(GhostAnimations.Key.ANIM_BLUE);
 					}
 				}
 			}

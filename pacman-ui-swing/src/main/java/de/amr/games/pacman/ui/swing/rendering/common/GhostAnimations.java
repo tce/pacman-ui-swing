@@ -115,17 +115,7 @@ public class GhostAnimations implements CompositeGenericAnimation<Ghost, Key, Bu
 			}
 			yield sprite;
 		}
-		case ANIM_VALUE -> values.frame(numberFrame(ghost.bounty));
-		};
-	}
-
-	private int numberFrame(int number) {
-		return switch (number) {
-		case 200 -> 0;
-		case 400 -> 1;
-		case 800 -> 2;
-		case 1600 -> 3;
-		default -> throw new IllegalArgumentException("Illegal number: " + number); // TODO avoid this to happen
+		case ANIM_VALUE -> values.frame(ghost.killIndex);
 		};
 	}
 }

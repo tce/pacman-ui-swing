@@ -51,7 +51,7 @@ public class Ghost2D extends GameEntity2D {
 
 	public void updateAnimation(boolean frightened, boolean recovering) {
 		Key key = switch (ghost.state) {
-		case DEAD -> ghost.bounty == 0 ? Key.ANIM_EYES : Key.ANIM_VALUE;
+		case DEAD -> ghost.killIndex == -1 ? Key.ANIM_EYES : Key.ANIM_VALUE;
 		case ENTERING_HOUSE -> Key.ANIM_EYES;
 		case FRIGHTENED -> recovering ? Key.ANIM_FLASHING : Key.ANIM_BLUE;
 		case HUNTING_PAC, LEAVING_HOUSE -> Key.ANIM_COLOR;
