@@ -28,7 +28,7 @@ import java.awt.image.BufferedImage;
 import java.util.stream.Stream;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.AnimationMethods;
+import de.amr.games.pacman.lib.animation.GenericAnimationAPI;
 import de.amr.games.pacman.lib.animation.GenericAnimation;
 import de.amr.games.pacman.lib.animation.GenericAnimationMap;
 import de.amr.games.pacman.lib.animation.CompositeGenericAnimation;
@@ -69,7 +69,7 @@ public class PacAnimations implements CompositeGenericAnimation<Pac, PacAnimatio
 	}
 
 	@Override
-	public AnimationMethods animation(PacAnimation key) {
+	public GenericAnimationAPI animation(PacAnimation key) {
 		return switch (key) {
 		case DYING -> dying;
 		case MUNCHING -> munching;
@@ -77,7 +77,7 @@ public class PacAnimations implements CompositeGenericAnimation<Pac, PacAnimatio
 	}
 
 	@Override
-	public Stream<AnimationMethods> animations() {
+	public Stream<GenericAnimationAPI> animations() {
 		return Stream.of(munching, dying);
 	}
 

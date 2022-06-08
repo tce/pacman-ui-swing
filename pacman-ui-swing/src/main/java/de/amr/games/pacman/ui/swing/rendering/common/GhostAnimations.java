@@ -27,7 +27,7 @@ import java.awt.image.BufferedImage;
 import java.util.stream.Stream;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.AnimationMethods;
+import de.amr.games.pacman.lib.animation.GenericAnimationAPI;
 import de.amr.games.pacman.lib.animation.GenericAnimation;
 import de.amr.games.pacman.lib.animation.GenericAnimationMap;
 import de.amr.games.pacman.lib.animation.CompositeGenericAnimation;
@@ -83,7 +83,7 @@ public class GhostAnimations implements CompositeGenericAnimation<Ghost, GhostAn
 	}
 
 	@Override
-	public AnimationMethods animation(GhostAnimation key) {
+	public GenericAnimationAPI animation(GhostAnimation key) {
 		return switch (key) {
 		case EYES -> eyes;
 		case FLASHING -> flashing;
@@ -94,7 +94,7 @@ public class GhostAnimations implements CompositeGenericAnimation<Ghost, GhostAn
 	}
 
 	@Override
-	public Stream<AnimationMethods> animations() {
+	public Stream<GenericAnimationAPI> animations() {
 		return Stream.of(eyes, flashing, blue, color, numbers);
 	}
 
