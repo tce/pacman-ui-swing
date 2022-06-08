@@ -36,13 +36,51 @@ import de.amr.games.pacman.model.common.actors.Ghost;
 /**
  * @author Armin Reichert
  */
-public class GhostAnimationSet extends GenericAnimationSet<Ghost, GhostAnimation, BufferedImage> {
+public class GhostAnimations implements GenericAnimationSet<Ghost, GhostAnimation, BufferedImage> {
 
+	private GhostAnimation selectedKey;
 	private GenericAnimationMap<Direction, BufferedImage> eyes;
 	private GenericAnimation<BufferedImage> flashing;
 	private GenericAnimation<BufferedImage> blue;
 	private GenericAnimationMap<Direction, BufferedImage> color;
 	private GenericAnimation<BufferedImage> numbers;
+
+	public GhostAnimations(int ghostID, Rendering2D r2D) {
+		eyes = r2D.createGhostEyesAnimation();
+		flashing = r2D.createGhostFlashingAnimation();
+		blue = r2D.createGhostBlueAnimation();
+		color = r2D.createGhostColorAnimation(ghostID);
+		numbers = new GenericAnimation<>(r2D.getNumberSprite(200), r2D.getNumberSprite(400), r2D.getNumberSprite(800),
+				r2D.getNumberSprite(1600));
+	}
+
+	public void startFlashing(int numFlashes, long ticksTotal) {
+		long frameTicks = ticksTotal / (numFlashes * flashing.numFrames());
+		flashing.frameDuration(frameTicks);
+		flashing.repetitions(numFlashes);
+		flashing.restart();
+	}
+
+	@Override
+	public void ensureRunning() {
+		// TODO what?
+	}
+
+	@Override
+	public void setFrameIndex(int index) {
+		// TODO what?
+	}
+
+	@Override
+	public GhostAnimation selectedKey() {
+		return selectedKey;
+	}
+
+	@Override
+	public void select(GhostAnimation key) {
+		selectedKey = key;
+		selectedAnimation().ensureRunning();
+	}
 
 	@Override
 	public AnimationMethods animation(GhostAnimation key) {
@@ -58,13 +96,6 @@ public class GhostAnimationSet extends GenericAnimationSet<Ghost, GhostAnimation
 	@Override
 	public Stream<AnimationMethods> animations() {
 		return Stream.of(eyes, flashing, blue, color, numbers);
-	}
-
-	public void startFlashing(int numFlashes, long ticksTotal) {
-		long frameTicks = ticksTotal / (numFlashes * flashing.numFrames());
-		flashing.frameDuration(frameTicks);
-		flashing.repetitions(numFlashes);
-		flashing.restart();
 	}
 
 	@Override
@@ -92,14 +123,5 @@ public class GhostAnimationSet extends GenericAnimationSet<Ghost, GhostAnimation
 		case 1600 -> 3;
 		default -> throw new IllegalArgumentException("Illegal number: " + number); // TODO avoid this to happen
 		};
-	}
-
-	public GhostAnimationSet(int ghostID, Rendering2D r2D) {
-		eyes = r2D.createGhostEyesAnimation();
-		flashing = r2D.createGhostFlashingAnimation();
-		blue = r2D.createGhostBlueAnimation();
-		color = r2D.createGhostColorAnimation(ghostID);
-		numbers = new GenericAnimation<>(r2D.getNumberSprite(200), r2D.getNumberSprite(400), r2D.getNumberSprite(800),
-				r2D.getNumberSprite(1600));
 	}
 }

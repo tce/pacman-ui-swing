@@ -40,8 +40,8 @@ import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimation;
-import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimationSet;
-import de.amr.games.pacman.ui.swing.rendering.common.PacAnimationSet;
+import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
+import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.shell.Keyboard;
 
@@ -71,9 +71,9 @@ public class PacMan_IntroScene extends GameScene {
 	@Override
 	public void init() {
 		sceneController.restartInInitialState(IntroController.State.START);
-		pacMan2D = new Pac2D($.pacMan, game, new PacAnimationSet(r2D));
+		pacMan2D = new Pac2D($.pacMan, game, new PacAnimations(r2D));
 		ghosts2D = Stream.of($.ghosts).map(ghost -> {
-			Ghost2D ghost2D = new Ghost2D(ghost, game, new GhostAnimationSet(ghost.id, r2D));
+			Ghost2D ghost2D = new Ghost2D(ghost, game, new GhostAnimations(ghost.id, r2D));
 			return ghost2D;
 		}).toArray(Ghost2D[]::new);
 	}

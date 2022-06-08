@@ -37,14 +37,35 @@ import de.amr.games.pacman.model.common.actors.Pac;
 /**
  * @author Armin Reichert
  */
-public class PacAnimationSet extends GenericAnimationSet<Pac, PacAnimation, BufferedImage> {
+public class PacAnimations implements GenericAnimationSet<Pac, PacAnimation, BufferedImage> {
 
+	private PacAnimation selectedKey;
 	protected GenericAnimationMap<Direction, BufferedImage> munching;
 	protected GenericAnimation<BufferedImage> dying;
 
-	public PacAnimationSet(Rendering2D r2D) {
+	public PacAnimations(Rendering2D r2D) {
 		munching = r2D.createPacMunchingAnimations();
 		dying = r2D.createPacDyingAnimation();
+	}
+
+	@Override
+	public void ensureRunning() {
+		munching.ensureRunning();
+	}
+
+	@Override
+	public void setFrameIndex(int index) {
+	}
+
+	@Override
+	public PacAnimation selectedKey() {
+		return selectedKey;
+	}
+
+	@Override
+	public void select(PacAnimation key) {
+		selectedKey = key;
+		selectedAnimation().ensureRunning();
 	}
 
 	@Override
@@ -62,7 +83,7 @@ public class PacAnimationSet extends GenericAnimationSet<Pac, PacAnimation, Buff
 
 	@Override
 	public BufferedImage currentSprite(Pac pac) {
-		return switch (selected()) {
+		return switch (selectedKey) {
 		case DYING -> dying.animate();
 		case MUNCHING -> {
 			var munchingToDir = munching.get(pac.moveDir());

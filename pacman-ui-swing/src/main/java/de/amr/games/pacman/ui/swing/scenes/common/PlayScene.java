@@ -48,9 +48,9 @@ import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.lib.U;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimation;
-import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimationSet;
+import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimation;
-import de.amr.games.pacman.ui.swing.rendering.common.PacAnimationSet;
+import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 
 /**
@@ -68,8 +68,8 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void init() {
-		pac2D = new Pac2D(game.pac, game, new PacAnimationSet(r2D));
-		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, new GhostAnimationSet(ghost.id, r2D)))
+		pac2D = new Pac2D(game.pac, game, new PacAnimations(r2D));
+		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, new GhostAnimations(ghost.id, r2D)))
 				.toArray(Ghost2D[]::new);
 		energizers2D = game.level.world.energizerTiles().map(Energizer2D::new).toArray(Energizer2D[]::new);
 		var jumpAnimation = game.variant == GameVariant.MS_PACMAN ? Rendering2D_MsPacMan.get().createBonusAnimation()
@@ -116,7 +116,7 @@ public class PlayScene extends GameScene {
 		for (var ghost2D : ghosts2D) {
 			if (recoveringStarts) {
 				// TODO avoid cast
-				GhostAnimationSet animations = (GhostAnimationSet) ghost2D.animations;
+				GhostAnimations animations = (GhostAnimations) ghost2D.animations;
 				animations.startFlashing(game.level.numFlashes, recoveringTicks);
 			}
 			ghost2D.updateAnimation(game.pac.hasPower(), recovering);

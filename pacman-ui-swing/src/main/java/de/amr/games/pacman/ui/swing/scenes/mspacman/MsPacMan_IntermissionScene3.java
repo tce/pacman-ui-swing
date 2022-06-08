@@ -33,7 +33,7 @@ import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Flap2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.JuniorBag2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Stork2D;
-import de.amr.games.pacman.ui.swing.rendering.common.PacAnimationSet;
+import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.MsPacMansHusbandAnimations;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
@@ -70,7 +70,7 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 	@Override
 	public void init() {
 		sceneController.restartInInitialState(Intermission3Controller.State.FLAP);
-		msPacMan2D = new Pac2D(context.msPacMan, game, new PacAnimationSet(r2D));
+		msPacMan2D = new Pac2D(context.msPacMan, game, new PacAnimations(r2D));
 		pacMan2D = new Pac2D(context.pacMan, game, new MsPacMansHusbandAnimations(Rendering2D_MsPacMan.get()));
 		flap2D = new Flap2D(context.flap, game);
 		stork2D = new Stork2D(context.stork, r2D);
