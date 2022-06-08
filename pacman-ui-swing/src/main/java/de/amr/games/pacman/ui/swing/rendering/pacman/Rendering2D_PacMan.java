@@ -158,6 +158,11 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
+	public BufferedImage getLifeSprite() {
+		return ss.tile(8, 1);
+	}
+
+	@Override
 	public int mazeNumber(int levelNumber) {
 		return 1;
 	}
@@ -242,6 +247,13 @@ public class Rendering2D_PacMan implements Rendering2D {
 		return ghostEyesAnimsByDir;
 	}
 
+	@Override
+	public GenericAnimation<BufferedImage> createGhostValueAnimation() {
+		return new GenericAnimation<>(ss.tile(0, 8), ss.tile(1, 8), ss.tile(2, 8), ss.tile(3, 8));
+	}
+
+	// Pac-Man specific
+
 	public GenericAnimation<BufferedImage> createBigPacManMunchingAnimation() {
 		var animation = new GenericAnimation<>(ss.tiles(2, 1, 2, 2), ss.tiles(4, 1, 2, 2), ss.tiles(6, 1, 2, 2));
 		animation.frameDuration(4);
@@ -257,6 +269,8 @@ public class Rendering2D_PacMan implements Rendering2D {
 		return new GenericAnimation<>(ss.tile(8, 7), ss.tile(9, 7));
 	}
 
+	// Maze
+
 	@Override
 	public Color getFoodColor(int mazeNumber) {
 		return FOOD_COLOR;
@@ -266,6 +280,8 @@ public class Rendering2D_PacMan implements Rendering2D {
 	public GenericAnimation<BufferedImage> mazeFlashing(int mazeNumber) {
 		return mazeFlashingAnim;
 	}
+
+	// Drawing
 
 	@Override
 	public void drawMaze(Graphics2D g, int mazeNumber, int x, int y, boolean flashing) {
@@ -293,10 +309,5 @@ public class Rendering2D_PacMan implements Rendering2D {
 
 	public void drawBlinkyNaked(Graphics2D g, Ghost blinky) {
 		drawEntity(g, blinky, blinkyHalfNaked.animate());
-	}
-
-	@Override
-	public BufferedImage getLifeSprite() {
-		return ss.tile(8, 1);
 	}
 }

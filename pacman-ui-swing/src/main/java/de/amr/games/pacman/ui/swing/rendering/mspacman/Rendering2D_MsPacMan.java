@@ -263,6 +263,11 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
+	public GenericAnimation<BufferedImage> createGhostValueAnimation() {
+		return new GenericAnimation<>(rhs(0, 8), rhs(1, 8), rhs(2, 8), rhs(3, 8));
+	}
+
+	@Override
 	public GenericAnimation<BufferedImage> mazeFlashing(int mazeNumber) {
 		return mazeFlashings.get(mazeNumber - 1);
 	}

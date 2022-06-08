@@ -251,7 +251,7 @@ public class PlayScene extends GameScene {
 		case HUNTING -> {
 			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(GenericAnimation::restart);
 			pac2D.animations.restart();
-			Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.animations.restart(GhostAnimations.Key.COLOR));
+			Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.animations.restart(GhostAnimations.Key.ANIM_COLOR));
 		}
 		case PACMAN_DYING -> {
 			gameController.state().timer().setSeconds(4.5);

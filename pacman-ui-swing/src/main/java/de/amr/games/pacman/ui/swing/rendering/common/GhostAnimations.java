@@ -40,7 +40,7 @@ import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations.Key;
 public class GhostAnimations implements CompositeGenericAnimation<Ghost, Key, BufferedImage> {
 
 	public enum Key {
-		COLOR, EYES, VALUE, BLUE, FLASHING;
+		ANIM_COLOR, ANIM_EYES, ANIM_VALUE, ANIM_BLUE, ANIM_FLASHING;
 	}
 
 	private Key selectedKey;
@@ -48,15 +48,16 @@ public class GhostAnimations implements CompositeGenericAnimation<Ghost, Key, Bu
 	private GenericAnimation<BufferedImage> flashing;
 	private GenericAnimation<BufferedImage> blue;
 	private GenericAnimationMap<Direction, BufferedImage> color;
-	private GenericAnimation<BufferedImage> numbers;
+	private GenericAnimation<BufferedImage> values;
 
 	public GhostAnimations(int ghostID, Rendering2D r2D) {
 		eyes = r2D.createGhostEyesAnimation();
 		flashing = r2D.createGhostFlashingAnimation();
 		blue = r2D.createGhostBlueAnimation();
 		color = r2D.createGhostColorAnimation(ghostID);
-		numbers = new GenericAnimation<>(r2D.getNumberSprite(200), r2D.getNumberSprite(400), r2D.getNumberSprite(800),
-				r2D.getNumberSprite(1600));
+//		values = new GenericAnimation<>(r2D.getNumberSprite(200), r2D.getNumberSprite(400), r2D.getNumberSprite(800),
+//				r2D.getNumberSprite(1600));
+		values = r2D.createGhostValueAnimation();
 	}
 
 	public void startFlashing(int numFlashes, long ticksTotal) {
@@ -90,33 +91,33 @@ public class GhostAnimations implements CompositeGenericAnimation<Ghost, Key, Bu
 	@Override
 	public GenericAnimationAPI animation(Key key) {
 		return switch (key) {
-		case EYES -> eyes;
-		case FLASHING -> flashing;
-		case BLUE -> blue;
-		case COLOR -> color;
-		case VALUE -> numbers;
+		case ANIM_EYES -> eyes;
+		case ANIM_FLASHING -> flashing;
+		case ANIM_BLUE -> blue;
+		case ANIM_COLOR -> color;
+		case ANIM_VALUE -> values;
 		};
 	}
 
 	@Override
 	public Stream<GenericAnimationAPI> animations() {
-		return Stream.of(eyes, flashing, blue, color, numbers);
+		return Stream.of(eyes, flashing, blue, color, values);
 	}
 
 	@Override
 	public BufferedImage currentSprite(Ghost ghost) {
 		return switch (selectedKey) {
-		case EYES -> eyes.get(ghost.wishDir()).frame();
-		case FLASHING -> flashing.animate();
-		case BLUE -> blue.animate();
-		case COLOR -> {
+		case ANIM_EYES -> eyes.get(ghost.wishDir()).frame();
+		case ANIM_FLASHING -> flashing.animate();
+		case ANIM_BLUE -> blue.animate();
+		case ANIM_COLOR -> {
 			var sprite = color.get(ghost.wishDir()).frame();
 			if (ghost.velocity.length() > 0) {
 				color.get(ghost.wishDir()).advance();
 			}
 			yield sprite;
 		}
-		case VALUE -> numbers.frame(numberFrame(ghost.bounty));
+		case ANIM_VALUE -> values.frame(numberFrame(ghost.bounty));
 		};
 	}
 

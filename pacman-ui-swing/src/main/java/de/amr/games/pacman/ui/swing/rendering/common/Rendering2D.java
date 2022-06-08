@@ -85,6 +85,8 @@ public interface Rendering2D {
 
 	GenericAnimationMap<Direction, BufferedImage> createGhostEyesAnimation();
 
+	GenericAnimation<BufferedImage> createGhostValueAnimation();
+
 	// Maze
 
 	int mazeNumber(int levelNumber);

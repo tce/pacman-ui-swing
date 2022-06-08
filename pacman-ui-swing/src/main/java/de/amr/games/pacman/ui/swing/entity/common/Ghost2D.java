@@ -46,16 +46,16 @@ public class Ghost2D extends GameEntity2D {
 		super(game);
 		this.ghost = ghost;
 		this.animations = animations;
-		animations.select(Key.COLOR);
+		animations.select(Key.ANIM_COLOR);
 	}
 
 	public void updateAnimation(boolean frightened, boolean recovering) {
 		Key key = switch (ghost.state) {
-		case DEAD -> ghost.bounty == 0 ? Key.EYES : Key.VALUE;
-		case ENTERING_HOUSE -> Key.EYES;
-		case FRIGHTENED -> recovering ? Key.FLASHING : Key.BLUE;
-		case HUNTING_PAC, LEAVING_HOUSE -> Key.COLOR;
-		case LOCKED -> recovering ? Key.FLASHING : frightened ? Key.BLUE : Key.COLOR;
+		case DEAD -> ghost.bounty == 0 ? Key.ANIM_EYES : Key.ANIM_VALUE;
+		case ENTERING_HOUSE -> Key.ANIM_EYES;
+		case FRIGHTENED -> recovering ? Key.ANIM_FLASHING : Key.ANIM_BLUE;
+		case HUNTING_PAC, LEAVING_HOUSE -> Key.ANIM_COLOR;
+		case LOCKED -> recovering ? Key.ANIM_FLASHING : frightened ? Key.ANIM_BLUE : Key.ANIM_COLOR;
 		};
 		animations.select(key);
 	}
