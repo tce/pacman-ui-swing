@@ -63,10 +63,6 @@ public interface Rendering2D {
 
 	BufferedImage getGhostSprite(int ghostID, Direction dir);
 
-	BufferedImage getSymbolSprite(int symbol);
-
-	BufferedImage getBonusValueSprite(int number);
-
 	BufferedImage getLifeSprite();
 
 	// Animations
@@ -84,6 +80,10 @@ public interface Rendering2D {
 	GenericAnimationMap<Direction, BufferedImage> createGhostEyesAnimation();
 
 	GenericAnimation<BufferedImage> createGhostValueAnimation();
+
+	GenericAnimation<BufferedImage> createBonusSymbolAnimation();
+
+	GenericAnimation<BufferedImage> createBonusValueAnimation();
 
 	// Maze
 
@@ -166,7 +166,8 @@ public interface Rendering2D {
 		int[] x = new int[1];
 		x[0] = rightX;
 		game.levelCounter.symbols().forEach(symbol -> {
-			drawSpriteCenteredOverBox(g, getSymbolSprite(symbol), x[0], y + World.HTS);
+			var sprite = createBonusSymbolAnimation().frame(symbol); // cache animation
+			drawSpriteCenteredOverBox(g, sprite, x[0], y + World.HTS);
 			x[0] -= t(2);
 		});
 	}

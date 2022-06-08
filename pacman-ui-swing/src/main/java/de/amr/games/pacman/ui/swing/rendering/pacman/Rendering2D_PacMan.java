@@ -36,14 +36,12 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.GenericAnimation;
 import de.amr.games.pacman.lib.animation.GenericAnimationMap;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.actors.Ghost;
-import de.amr.games.pacman.model.pacman.PacManGame;
 import de.amr.games.pacman.ui.swing.assets.Spritesheet;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
@@ -81,8 +79,6 @@ public class Rendering2D_PacMan implements Rendering2D {
 	private final Spritesheet ss;
 	private final BufferedImage mazeFull;
 	private final GenericAnimation<BufferedImage> mazeFlashingAnim;
-	private final Map<Integer, BufferedImage> symbolSprites;
-	private final Map<Integer, BufferedImage> bonusValueSprites;
 	private final Font font;
 
 	private final GenericAnimation<BufferedImage> blinkyHalfNaked;
@@ -98,30 +94,6 @@ public class Rendering2D_PacMan implements Rendering2D {
 		var mazeEmptyBright = ss.createBrightEffect(mazeEmptyDark, new Color(33, 33, 255), Color.BLACK);
 		mazeFlashingAnim = new GenericAnimation<>(mazeEmptyBright, mazeEmptyDark);
 		mazeFlashingAnim.frameDuration(15);
-
-		//@formatter:off
-		symbolSprites = Map.of(
-			PacManGame.CHERRIES,   ss.tile(2, 3),
-			PacManGame.STRAWBERRY, ss.tile(3, 3),
-			PacManGame.PEACH,      ss.tile(4, 3),
-			PacManGame.APPLE,      ss.tile(5, 3),
-			PacManGame.GRAPES,     ss.tile(6, 3),
-			PacManGame.GALAXIAN,   ss.tile(7, 3),
-			PacManGame.BELL,       ss.tile(8, 3),
-			PacManGame.KEY,        ss.tile(9, 3)
-		);
-		
-		bonusValueSprites = Map.of(
-			100,  ss.tile(0, 9),
-			300,  ss.tile(1, 9),
-			500,  ss.tile(2, 9),
-			700,  ss.tile(3, 9),
-			1000, ss.tiles(4, 9, 2, 1), // left-aligned
-			2000, ss.tiles(3, 10, 3, 1),
-			3000, ss.tiles(3, 11, 3, 1),
-			5000, ss.tiles(3, 12, 3, 1)
-		);
-		//@formatter:on
 
 		blinkyPatched = new GenericAnimation<>(ss.tile(10, 7), ss.tile(11, 7));
 		blinkyPatched.frameDuration(4);
@@ -157,16 +129,6 @@ public class Rendering2D_PacMan implements Rendering2D {
 	@Override
 	public int mazeNumber(int levelNumber) {
 		return 1;
-	}
-
-	@Override
-	public BufferedImage getBonusValueSprite(int number) {
-		return bonusValueSprites.get(number);
-	}
-
-	@Override
-	public BufferedImage getSymbolSprite(int symbol) {
-		return symbolSprites.get(symbol);
 	}
 
 	public BufferedImage ghostImageByGhostByDir(int ghostID, Direction dir) {
@@ -237,6 +199,18 @@ public class Rendering2D_PacMan implements Rendering2D {
 	@Override
 	public GenericAnimation<BufferedImage> createGhostValueAnimation() {
 		return new GenericAnimation<>(ss.tile(0, 8), ss.tile(1, 8), ss.tile(2, 8), ss.tile(3, 8));
+	}
+
+	@Override
+	public GenericAnimation<BufferedImage> createBonusSymbolAnimation() {
+		return new GenericAnimation<>(ss.tile(2, 3), ss.tile(3, 3), ss.tile(4, 3), ss.tile(5, 3), ss.tile(6, 3),
+				ss.tile(7, 3), ss.tile(8, 3), ss.tile(9, 3));
+	}
+
+	@Override
+	public GenericAnimation<BufferedImage> createBonusValueAnimation() {
+		return new GenericAnimation<>(ss.tile(0, 9), ss.tile(1, 9), ss.tile(2, 9), ss.tile(3, 9), ss.tiles(4, 9, 2, 1), // left-aligned
+				ss.tiles(3, 10, 3, 1), ss.tiles(3, 11, 3, 1), ss.tiles(3, 12, 3, 1));
 	}
 
 	// Pac-Man specific

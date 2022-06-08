@@ -33,7 +33,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.GenericAnimation;
@@ -104,7 +103,6 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	private final BufferedImage[] mazeEmpty;
 	private final List<GenericAnimation<BufferedImage>> mazeFlashings;
 	private final BufferedImage[] symbols;
-	private final Map<Integer, BufferedImage> bonusValues;
 	private final Font font;
 
 	private Rendering2D_MsPacMan(String path, int rasterSize) {
@@ -121,16 +119,6 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 		symbols[MsPacManGame.APPLE]      = rhs(7,0);
 		symbols[MsPacManGame.PEAR]       = rhs(8,0);
 		symbols[MsPacManGame.BANANA]     = rhs(9,0);
-
-		bonusValues = Map.of(
-			100,  rhs(3, 1), 
-			200,  rhs(4, 1), 
-			500,  rhs(5, 1), 
-			700,  rhs(6, 1), 
-			1000, rhs(7, 1), 
-			2000, rhs(8, 1),
-			5000, rhs(9, 1)
-		);
 		//@formatter:on
 
 		int numMazes = 6;
@@ -264,11 +252,14 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 		return mazeFlashings.get(mazeNumber - 1);
 	}
 
-	public GenericAnimation<Integer> createBonusAnimation() {
-		var animation = new GenericAnimation<>(2, -2);
-		animation.frameDuration(10);
-		animation.repeatForever();
-		return animation;
+	@Override
+	public GenericAnimation<BufferedImage> createBonusSymbolAnimation() {
+		return new GenericAnimation<>(rhs(3, 0), rhs(4, 0), rhs(5, 0), rhs(6, 0), rhs(7, 0), rhs(8, 0), rhs(9, 0));
+	}
+
+	@Override
+	public GenericAnimation<BufferedImage> createBonusValueAnimation() {
+		return new GenericAnimation<>(rhs(3, 1), rhs(4, 1), rhs(5, 1), rhs(6, 1), rhs(7, 1), rhs(8, 1), rhs(9, 1));
 	}
 
 	public GenericAnimationMap<Direction, BufferedImage> createHusbandMunchingAnimations() {
@@ -315,16 +306,6 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 
 	public BufferedImage getHeart() {
 		return rhs(2, 10);
-	}
-
-	@Override
-	public BufferedImage getBonusValueSprite(int number) {
-		return bonusValues.get(number);
-	}
-
-	@Override
-	public BufferedImage getSymbolSprite(int symbol) {
-		return symbols[symbol];
 	}
 
 	@Override

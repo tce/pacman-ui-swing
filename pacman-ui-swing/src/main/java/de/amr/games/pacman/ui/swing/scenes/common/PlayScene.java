@@ -50,7 +50,6 @@ import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations.Key;
-import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 
 /**
  * The play scene for Pac-Man and Ms. Pac-Man.
@@ -71,9 +70,7 @@ public class PlayScene extends GameScene {
 		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, new GhostAnimations(ghost.id, r2D)))
 				.toArray(Ghost2D[]::new);
 		energizers2D = game.level.world.energizerTiles().map(Energizer2D::new).toArray(Energizer2D[]::new);
-		var jumpAnimation = game.variant == GameVariant.MS_PACMAN ? Rendering2D_MsPacMan.get().createBonusAnimation()
-				: null;
-		bonus2D = new Bonus2D(game, game.bonus(), jumpAnimation);
+		bonus2D = new Bonus2D(game, r2D, game.variant == GameVariant.MS_PACMAN);
 		mazeFlashing = r2D.mazeFlashing(r2D.mazeNumber(game.level.number));
 		mazeFlashing.repeat(game.level.numFlashes);
 		mazeFlashing.reset();

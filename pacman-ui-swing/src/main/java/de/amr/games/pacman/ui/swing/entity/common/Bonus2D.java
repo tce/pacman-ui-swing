@@ -24,10 +24,10 @@ SOFTWARE.
 package de.amr.games.pacman.ui.swing.entity.common;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.lib.animation.GenericAnimation;
 import de.amr.games.pacman.model.common.GameModel;
-import de.amr.games.pacman.model.common.actors.Bonus;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**
@@ -38,13 +38,19 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
  */
 public class Bonus2D extends GameEntity2D {
 
-	private final Bonus bonus;
-	private final GenericAnimation<Integer> jumpAnimation;
+	private final GenericAnimation<BufferedImage> symbolAnimation;
+	private final GenericAnimation<BufferedImage> valueAnimation;
+	private GenericAnimation<Integer> jumpAnimation;
 
-	public Bonus2D(GameModel game, Bonus bonus, GenericAnimation<Integer> jumpAnimation) {
+	public Bonus2D(GameModel game, Rendering2D r2D, boolean jumping) {
 		super(game);
-		this.bonus = bonus;
-		this.jumpAnimation = jumpAnimation;
+		symbolAnimation = r2D.createBonusSymbolAnimation();
+		valueAnimation = r2D.createBonusValueAnimation();
+		if (jumping) {
+			jumpAnimation = new GenericAnimation<>(-2, 2);
+			jumpAnimation.frameDuration(10);
+			jumpAnimation.repeatForever();
+		}
 	}
 
 	public void startJumping() {
@@ -61,20 +67,26 @@ public class Bonus2D extends GameEntity2D {
 
 	@Override
 	public void render(Graphics2D g, Rendering2D r2D) {
+		var bonus = game.bonus();
+
+		// TODO use animation key...
 		switch (bonus.state()) {
-		case INACTIVE -> {
-		}
 		case EDIBLE -> {
-			var sprite = r2D.getSymbolSprite(game.level.bonusSymbol);
-			// Ms. Pac.Man bonus is jumping up and down while wandering the maze
-			int jump = jumpAnimation != null ? jumpAnimation.animate() : 0;
-			g.translate(0, jump);
-			r2D.drawSpriteCenteredOverBox(g, sprite, bonus.position().x, bonus.position().y);
-			g.translate(0, -jump);
+			var sprite = symbolAnimation.frame(bonus.symbol());
+			if (jumpAnimation != null) {
+				int jump = jumpAnimation.animate();
+				g.translate(0, jump);
+				r2D.drawSpriteCenteredOverBox(g, sprite, bonus.position().x, bonus.position().y);
+				g.translate(0, -jump);
+			} else {
+				r2D.drawSpriteCenteredOverBox(g, sprite, bonus.position().x, bonus.position().y);
+			}
 		}
 		case EATEN -> {
-			var sprite = r2D.getBonusValueSprite(bonus.value());
+			var sprite = valueAnimation.frame(bonus.symbol());
 			r2D.drawSpriteCenteredOverBox(g, sprite, bonus.position().x, bonus.position().y);
+		}
+		case INACTIVE -> {
 		}
 		}
 	}
