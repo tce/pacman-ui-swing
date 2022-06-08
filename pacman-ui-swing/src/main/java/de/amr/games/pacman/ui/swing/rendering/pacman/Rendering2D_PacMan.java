@@ -250,11 +250,11 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	public GenericAnimation<BufferedImage> createBlinkyStretchedAnimation() {
-		return GenericAnimation.of(ss.tile(9, 6), ss.tile(10, 6), ss.tile(11, 6), ss.tile(12, 6));
+		return new GenericAnimation<>(ss.tile(9, 6), ss.tile(10, 6), ss.tile(11, 6), ss.tile(12, 6));
 	}
 
 	public GenericAnimation<BufferedImage> createBlinkyDamagedAnimation() {
-		return GenericAnimation.of(ss.tile(8, 7), ss.tile(9, 7));
+		return new GenericAnimation<>(ss.tile(8, 7), ss.tile(9, 7));
 	}
 
 	@Override

@@ -268,7 +268,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	public GenericAnimation<Integer> createBonusAnimation() {
-		var animation = GenericAnimation.of(2, -2);
+		var animation = new GenericAnimation<>(2, -2);
 		animation.frameDuration(10);
 		animation.endless();
 		return animation;
@@ -287,7 +287,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	public GenericAnimation<BufferedImage> createFlapAnimation() {
-		var animation = GenericAnimation.of( //
+		var animation = new GenericAnimation<>( //
 				ss.si(456, 208, 32, 32), //
 				ss.si(488, 208, 32, 32), //
 				ss.si(520, 208, 32, 32), //
@@ -299,7 +299,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	public GenericAnimation<BufferedImage> createStorkFlyingAnimation() {
-		var animation = GenericAnimation.of( //
+		var animation = new GenericAnimation<>( //
 				ss.si(489, 176, 32, 16), //
 				ss.si(521, 176, 32, 16) //
 		);
