@@ -40,8 +40,7 @@ import java.util.Map;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.GenericAnimation;
-import de.amr.games.pacman.lib.animation.SpriteAnimation;
-import de.amr.games.pacman.lib.animation.SpriteAnimationMap;
+import de.amr.games.pacman.lib.animation.GenericAnimationMap;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.pacman.PacManGame;
@@ -87,8 +86,8 @@ public class Rendering2D_PacMan implements Rendering2D {
 	private final Map<Integer, BufferedImage> numberSprites;
 	private final Font font;
 
-	private final SpriteAnimation<BufferedImage> blinkyHalfNaked;
-	private final SpriteAnimation<BufferedImage> blinkyPatched;
+	private final GenericAnimation<BufferedImage> blinkyHalfNaked;
+	private final GenericAnimation<BufferedImage> blinkyPatched;
 	private final BufferedImage nailSprite;
 
 	private Rendering2D_PacMan(String path, int rasterSize) {
@@ -98,7 +97,8 @@ public class Rendering2D_PacMan implements Rendering2D {
 		mazeFull = image("/pacman/graphics/maze_full.png");
 		var mazeEmptyDark = image("/pacman/graphics/maze_empty.png");
 		var mazeEmptyBright = ss.createBrightEffect(mazeEmptyDark, new Color(33, 33, 255), Color.BLACK);
-		mazeFlashingAnim = GenericAnimation.of(mazeEmptyBright, mazeEmptyDark).frameDuration(15);
+		mazeFlashingAnim = new GenericAnimation<>(mazeEmptyBright, mazeEmptyDark);
+		mazeFlashingAnim.frameDuration(15);
 
 		//@formatter:off
 		symbolSprites = Map.of(
@@ -131,11 +131,13 @@ public class Rendering2D_PacMan implements Rendering2D {
 		);
 		//@formatter:on
 
-		blinkyPatched = new SpriteAnimation<>(ss.tile(10, 7), ss.tile(11, 7))//
-				.frameDuration(4).endless();
+		blinkyPatched = new GenericAnimation<>(ss.tile(10, 7), ss.tile(11, 7));
+		blinkyPatched.frameDuration(4);
+		blinkyPatched.endless();
 
-		blinkyHalfNaked = new SpriteAnimation<>(ss.tiles(8, 8, 2, 1), ss.tiles(10, 8, 2, 1))//
-				.frameDuration(4).endless();
+		blinkyHalfNaked = new GenericAnimation<>(ss.tiles(8, 8, 2, 1), ss.tiles(10, 8, 2, 1));
+		blinkyHalfNaked.frameDuration(4);
+		blinkyHalfNaked.endless();
 
 		nailSprite = ss.tile(8, 6);
 	}
@@ -152,7 +154,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 
 	@Override
 	public BufferedImage getGhostSprite(int ghostID, Direction dir) {
-		return ss.tile(2 * index(dir) + 1, 4 + ghostID);
+		return ss.tile(2 * index(dir), 4 + ghostID);
 	}
 
 	@Override
@@ -180,65 +182,71 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public SpriteAnimation<BufferedImage> createPacDyingAnimation() {
-		return new SpriteAnimation<>( //
+	public GenericAnimation<BufferedImage> createPacDyingAnimation() {
+		var animation = new GenericAnimation<>( //
 				ss.tile(3, 0), ss.tile(4, 0), ss.tile(5, 0), ss.tile(6, 0), //
 				ss.tile(7, 0), ss.tile(8, 0), ss.tile(9, 0), ss.tile(10, 0), //
-				ss.tile(11, 0), ss.tile(12, 0), ss.tile(13, 0)) //
-						.frameDuration(8);
+				ss.tile(11, 0), ss.tile(12, 0), ss.tile(13, 0));
+		animation.frameDuration(8);
+		return animation;
 	}
 
 	@Override
-	public SpriteAnimationMap<Direction, BufferedImage> createPacMunchingAnimations() {
-		SpriteAnimationMap<Direction, BufferedImage> munching = new SpriteAnimationMap<>(Direction.class);
+	public GenericAnimationMap<Direction, BufferedImage> createPacMunchingAnimations() {
+		GenericAnimationMap<Direction, BufferedImage> munching = new GenericAnimationMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
 			BufferedImage wide_open = ss.tile(0, d), open = ss.tile(1, d), closed = ss.tile(2, 0);
-			var animation = new SpriteAnimation<>(closed, open, wide_open, open).frameDuration(2).endless();
+			var animation = new GenericAnimation<>(closed, open, wide_open, open);
+			animation.frameDuration(2);
+			animation.endless();
 			munching.put(dir, animation);
 		}
 		return munching;
 	}
 
 	@Override
-	public SpriteAnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID) {
-		SpriteAnimationMap<Direction, BufferedImage> walkingTo = new SpriteAnimationMap<>(Direction.class);
+	public GenericAnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID) {
+		GenericAnimationMap<Direction, BufferedImage> map = new GenericAnimationMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
-			var anim = new SpriteAnimation<>( //
-					ss.tile(2 * index(dir), 4 + ghostID), //
+			var animation = new GenericAnimation<>(ss.tile(2 * index(dir), 4 + ghostID),
 					ss.tile(2 * index(dir) + 1, 4 + ghostID));
-			anim.frameDuration(8).endless();
-			walkingTo.put(dir, anim);
+			animation.frameDuration(8);
+			animation.endless();
+			map.put(dir, animation);
 		}
-		return walkingTo;
+		return map;
 	}
 
 	@Override
-	public SpriteAnimation<BufferedImage> createGhostBlueAnimation() {
-		SpriteAnimation<BufferedImage> animation = new SpriteAnimation<>(ss.tile(8, 4), ss.tile(9, 4));
-		animation.frameDuration(8).endless();
+	public GenericAnimation<BufferedImage> createGhostBlueAnimation() {
+		var animation = new GenericAnimation<>(ss.tile(8, 4), ss.tile(9, 4));
+		animation.frameDuration(8);
+		animation.endless();
 		return animation;
 	}
 
 	@Override
-	public SpriteAnimation<BufferedImage> createGhostFlashingAnimation() {
-		return new SpriteAnimation<>( //
-				ss.tile(8, 4), ss.tile(9, 4), ss.tile(10, 4), ss.tile(11, 4) //
-		).frameDuration(4);
+	public GenericAnimation<BufferedImage> createGhostFlashingAnimation() {
+		var animation = new GenericAnimation<>(ss.tile(8, 4), ss.tile(9, 4), ss.tile(10, 4), ss.tile(11, 4));
+		animation.frameDuration(4);
+		return animation;
 	}
 
 	@Override
-	public SpriteAnimationMap<Direction, BufferedImage> createGhostEyesAnimation() {
-		SpriteAnimationMap<Direction, BufferedImage> ghostEyesAnimsByDir = new SpriteAnimationMap<>(Direction.class);
+	public GenericAnimationMap<Direction, BufferedImage> createGhostEyesAnimation() {
+		GenericAnimationMap<Direction, BufferedImage> ghostEyesAnimsByDir = new GenericAnimationMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
-			ghostEyesAnimsByDir.put(dir, new SpriteAnimation<>(ss.tile(8 + index(dir), 5)));
+			ghostEyesAnimsByDir.put(dir, new GenericAnimation<>(ss.tile(8 + index(dir), 5)));
 		}
 		return ghostEyesAnimsByDir;
 	}
 
-	public SpriteAnimation<BufferedImage> createBigPacManMunchingAnimation() {
-		return new SpriteAnimation<>(ss.tiles(2, 1, 2, 2), ss.tiles(4, 1, 2, 2), ss.tiles(6, 1, 2, 2)).frameDuration(4)
-				.endless();
+	public GenericAnimation<BufferedImage> createBigPacManMunchingAnimation() {
+		var animation = new GenericAnimation<>(ss.tiles(2, 1, 2, 2), ss.tiles(4, 1, 2, 2), ss.tiles(6, 1, 2, 2));
+		animation.frameDuration(4);
+		animation.endless();
+		return animation;
 	}
 
 	public GenericAnimation<BufferedImage> createBlinkyStretchedAnimation() {

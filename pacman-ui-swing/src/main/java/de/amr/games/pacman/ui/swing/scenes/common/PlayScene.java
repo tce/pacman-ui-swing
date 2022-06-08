@@ -75,7 +75,9 @@ public class PlayScene extends GameScene {
 		var jumpAnimation = game.variant == GameVariant.MS_PACMAN ? Rendering2D_MsPacMan.get().createBonusAnimation()
 				: null;
 		bonus2D = new Bonus2D(game, game.bonus(), jumpAnimation);
-		mazeFlashing = r2D.mazeFlashing(r2D.mazeNumber(game.level.number)).repetitions(game.level.numFlashes).reset();
+		mazeFlashing = r2D.mazeFlashing(r2D.mazeNumber(game.level.number));
+		mazeFlashing.repetitions(game.level.numFlashes);
+		mazeFlashing.reset();
 	}
 
 	@Override

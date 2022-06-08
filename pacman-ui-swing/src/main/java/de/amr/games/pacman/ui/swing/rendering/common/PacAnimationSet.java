@@ -28,19 +28,19 @@ import java.awt.image.BufferedImage;
 import java.util.stream.Stream;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.ISpriteAnimation;
-import de.amr.games.pacman.lib.animation.SpriteAnimation;
-import de.amr.games.pacman.lib.animation.SpriteAnimationMap;
-import de.amr.games.pacman.lib.animation.SpriteAnimationSet;
+import de.amr.games.pacman.lib.animation.AnimationMethods;
+import de.amr.games.pacman.lib.animation.GenericAnimation;
+import de.amr.games.pacman.lib.animation.GenericAnimationMap;
+import de.amr.games.pacman.lib.animation.GenericAnimationSet;
 import de.amr.games.pacman.model.common.actors.Pac;
 
 /**
  * @author Armin Reichert
  */
-public class PacAnimationSet extends SpriteAnimationSet<Pac, PacAnimation, BufferedImage> {
+public class PacAnimationSet extends GenericAnimationSet<Pac, PacAnimation, BufferedImage> {
 
-	protected SpriteAnimationMap<Direction, BufferedImage> munching;
-	protected SpriteAnimation<BufferedImage> dying;
+	protected GenericAnimationMap<Direction, BufferedImage> munching;
+	protected GenericAnimation<BufferedImage> dying;
 
 	public PacAnimationSet(Rendering2D r2D) {
 		munching = r2D.createPacMunchingAnimations();
@@ -48,7 +48,7 @@ public class PacAnimationSet extends SpriteAnimationSet<Pac, PacAnimation, Buffe
 	}
 
 	@Override
-	public ISpriteAnimation animation(PacAnimation key) {
+	public AnimationMethods animation(PacAnimation key) {
 		return switch (key) {
 		case DYING -> dying;
 		case MUNCHING -> munching;
@@ -56,7 +56,7 @@ public class PacAnimationSet extends SpriteAnimationSet<Pac, PacAnimation, Buffe
 	}
 
 	@Override
-	public Stream<ISpriteAnimation> animations() {
+	public Stream<AnimationMethods> animations() {
 		return Stream.of(munching, dying);
 	}
 

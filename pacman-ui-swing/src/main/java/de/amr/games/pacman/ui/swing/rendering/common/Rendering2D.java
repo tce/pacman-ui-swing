@@ -38,8 +38,7 @@ import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.lib.animation.GenericAnimation;
-import de.amr.games.pacman.lib.animation.SpriteAnimation;
-import de.amr.games.pacman.lib.animation.SpriteAnimationMap;
+import de.amr.games.pacman.lib.animation.GenericAnimationMap;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
@@ -74,17 +73,17 @@ public interface Rendering2D {
 
 	// Animations
 
-	SpriteAnimationMap<Direction, BufferedImage> createPacMunchingAnimations();
+	GenericAnimationMap<Direction, BufferedImage> createPacMunchingAnimations();
 
-	SpriteAnimation<BufferedImage> createPacDyingAnimation();
+	GenericAnimation<BufferedImage> createPacDyingAnimation();
 
-	SpriteAnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID);
+	GenericAnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID);
 
-	SpriteAnimation<BufferedImage> createGhostBlueAnimation();
+	GenericAnimation<BufferedImage> createGhostBlueAnimation();
 
-	SpriteAnimation<BufferedImage> createGhostFlashingAnimation();
+	GenericAnimation<BufferedImage> createGhostFlashingAnimation();
 
-	SpriteAnimationMap<Direction, BufferedImage> createGhostEyesAnimation();
+	GenericAnimationMap<Direction, BufferedImage> createGhostEyesAnimation();
 
 	// Maze
 

@@ -43,7 +43,7 @@ public class Energizer2D {
 
 	public Energizer2D(V2i tile) {
 		this.tile = tile;
-		animation = GenericAnimation.pulse().frameDuration(10);
+		animation = GenericAnimation.pulse(10);
 	}
 
 	public GenericAnimation<Boolean> getAnimation() {

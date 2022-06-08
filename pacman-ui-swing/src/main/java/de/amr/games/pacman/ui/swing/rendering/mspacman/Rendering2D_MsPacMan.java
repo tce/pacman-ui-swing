@@ -37,8 +37,7 @@ import java.util.Map;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.GenericAnimation;
-import de.amr.games.pacman.lib.animation.SpriteAnimation;
-import de.amr.games.pacman.lib.animation.SpriteAnimationMap;
+import de.amr.games.pacman.lib.animation.GenericAnimationMap;
 import de.amr.games.pacman.model.mspacman.MsPacManGame;
 import de.amr.games.pacman.ui.swing.assets.Spritesheet;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
@@ -151,7 +150,9 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 			mazeEmpty[mazeIndex] = ss.image.getSubimage(228, mazeIndex * 248, 226, 248);
 			var mazeEmptyBright = ss.createBrightEffect(mazeEmpty[mazeIndex], MAZE_SIDE_COLORS[mazeIndex],
 					MAZE_TOP_COLORS[mazeIndex]);
-			mazeFlashings.add(GenericAnimation.of(mazeEmptyBright, mazeEmpty[mazeIndex]).frameDuration(20));
+			var animation = new GenericAnimation<>(mazeEmptyBright, mazeEmpty[mazeIndex]);
+			animation.frameDuration(20);
+			mazeFlashings.add(animation);
 		}
 	}
 
@@ -189,61 +190,74 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public SpriteAnimation<BufferedImage> createPacDyingAnimation() {
-		return new SpriteAnimation<>(rhs(0, 3), rhs(0, 0), rhs(0, 1), rhs(0, 2)).frameDuration(10).repetitions(2);
+	public GenericAnimation<BufferedImage> createPacDyingAnimation() {
+		var animation = new GenericAnimation<>(rhs(0, 3), rhs(0, 0), rhs(0, 1), rhs(0, 2));
+		animation.frameDuration(10);
+		animation.repetitions(2);
+		return animation;
 	}
 
 	@Override
-	public SpriteAnimationMap<Direction, BufferedImage> createPacMunchingAnimations() {
-		SpriteAnimationMap<Direction, BufferedImage> map = new SpriteAnimationMap<>(Direction.class);
+	public GenericAnimationMap<Direction, BufferedImage> createPacMunchingAnimations() {
+		GenericAnimationMap<Direction, BufferedImage> map = new GenericAnimationMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = dirIndex(dir);
 			var wide = rhs(0, d);
 			var middle = rhs(1, d);
 			var closed = rhs(2, d);
-			var animation = new SpriteAnimation<>(middle, closed, middle, wide).frameDuration(2).endless();
+			var animation = new GenericAnimation<>(middle, closed, middle, wide);
+			animation.frameDuration(2);
+			animation.endless();
 			map.put(dir, animation);
 		}
 		return map;
 	}
 
-	public SpriteAnimationMap<Direction, BufferedImage> createSpouseMunchingAnimations() {
-		SpriteAnimationMap<Direction, BufferedImage> map = new SpriteAnimationMap<>(Direction.class);
+	public GenericAnimationMap<Direction, BufferedImage> createSpouseMunchingAnimations() {
+		GenericAnimationMap<Direction, BufferedImage> map = new GenericAnimationMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = dirIndex(dir);
-			var munching = new SpriteAnimation<>(rhs(0, 9 + d), rhs(1, 9 + d), rhs(2, 9)).frameDuration(2).endless();
+			var munching = new GenericAnimation<>(rhs(0, 9 + d), rhs(1, 9 + d), rhs(2, 9));
+			munching.frameDuration(2);
+			munching.endless();
 			map.put(dir, munching);
 		}
 		return map;
 	}
 
 	@Override
-	public SpriteAnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID) {
-		SpriteAnimationMap<Direction, BufferedImage> map = new SpriteAnimationMap<>(Direction.class);
+	public GenericAnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID) {
+		GenericAnimationMap<Direction, BufferedImage> map = new GenericAnimationMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
 			int d = dirIndex(dir);
-			var color = new SpriteAnimation<>(rhs(2 * d, 4 + ghostID), rhs(2 * d + 1, 4 + ghostID)).frameDuration(4)
-					.endless();
+			var color = new GenericAnimation<>(rhs(2 * d, 4 + ghostID), rhs(2 * d + 1, 4 + ghostID));
+			color.frameDuration(4);
+			color.endless();
 			map.put(dir, color);
 		}
 		return map;
 	}
 
 	@Override
-	public SpriteAnimation<BufferedImage> createGhostBlueAnimation() {
-		return new SpriteAnimation<>(rhs(8, 4), rhs(9, 4)).frameDuration(8).endless();
+	public GenericAnimation<BufferedImage> createGhostBlueAnimation() {
+		var animation = new GenericAnimation<>(rhs(8, 4), rhs(9, 4));
+		animation.frameDuration(8);
+		animation.endless();
+		return animation;
 	}
 
 	@Override
-	public SpriteAnimation<BufferedImage> createGhostFlashingAnimation() {
-		return new SpriteAnimation<>(rhs(8, 4), rhs(9, 4), rhs(10, 4), rhs(11, 4)).frameDuration(4);
+	public GenericAnimation<BufferedImage> createGhostFlashingAnimation() {
+		var animation = new GenericAnimation<>(rhs(8, 4), rhs(9, 4), rhs(10, 4), rhs(11, 4));
+		animation.frameDuration(4);
+		return animation;
 	}
 
 	@Override
-	public SpriteAnimationMap<Direction, BufferedImage> createGhostEyesAnimation() {
-		SpriteAnimationMap<Direction, BufferedImage> map = new SpriteAnimationMap<>(Direction.class);
+	public GenericAnimationMap<Direction, BufferedImage> createGhostEyesAnimation() {
+		GenericAnimationMap<Direction, BufferedImage> map = new GenericAnimationMap<>(Direction.class);
 		for (Direction dir : Direction.values()) {
-			map.put(dir, new SpriteAnimation<>(rhs(8 + dirIndex(dir), 5)));
+			map.put(dir, new GenericAnimation<>(rhs(8 + dirIndex(dir), 5)));
 		}
 		return map;
 	}
@@ -254,33 +268,44 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	public GenericAnimation<Integer> createBonusAnimation() {
-		return GenericAnimation.of(2, -2).frameDuration(10).endless();
+		var animation = GenericAnimation.of(2, -2);
+		animation.frameDuration(10);
+		animation.endless();
+		return animation;
 	}
 
-	public SpriteAnimationMap<Direction, BufferedImage> createHusbandMunchingAnimations() {
-		SpriteAnimationMap<Direction, BufferedImage> map = new SpriteAnimationMap<>(Direction.class);
+	public GenericAnimationMap<Direction, BufferedImage> createHusbandMunchingAnimations() {
+		GenericAnimationMap<Direction, BufferedImage> map = new GenericAnimationMap<>(Direction.class);
 		for (var dir : Direction.values()) {
 			int d = dirIndex(dir);
-			map.put(dir, new SpriteAnimation<>(rhs(0, 9 + d), rhs(1, 9 + d), rhs(2, 9)).frameDuration(2).endless());
+			var animation = new GenericAnimation<>(rhs(0, 9 + d), rhs(1, 9 + d), rhs(2, 9));
+			animation.frameDuration(2);
+			animation.endless();
+			map.put(dir, animation);
 		}
 		return map;
 	}
 
 	public GenericAnimation<BufferedImage> createFlapAnimation() {
-		return GenericAnimation.of( //
+		var animation = GenericAnimation.of( //
 				ss.si(456, 208, 32, 32), //
 				ss.si(488, 208, 32, 32), //
 				ss.si(520, 208, 32, 32), //
 				ss.si(488, 208, 32, 32), //
 				ss.si(456, 208, 32, 32)//
-		).repetitions(1).frameDuration(4);
+		);
+		animation.frameDuration(4);
+		return animation;
 	}
 
 	public GenericAnimation<BufferedImage> createStorkFlyingAnimation() {
-		return GenericAnimation.of( //
+		var animation = GenericAnimation.of( //
 				ss.si(489, 176, 32, 16), //
 				ss.si(521, 176, 32, 16) //
-		).endless().frameDuration(10);
+		);
+		animation.endless();
+		animation.frameDuration(10);
+		return animation;
 	}
 
 	public BufferedImage getBlueBag() {

@@ -27,25 +27,25 @@ import java.awt.image.BufferedImage;
 import java.util.stream.Stream;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.ISpriteAnimation;
-import de.amr.games.pacman.lib.animation.SpriteAnimation;
-import de.amr.games.pacman.lib.animation.SpriteAnimationMap;
-import de.amr.games.pacman.lib.animation.SpriteAnimationSet;
+import de.amr.games.pacman.lib.animation.AnimationMethods;
+import de.amr.games.pacman.lib.animation.GenericAnimation;
+import de.amr.games.pacman.lib.animation.GenericAnimationMap;
+import de.amr.games.pacman.lib.animation.GenericAnimationSet;
 import de.amr.games.pacman.model.common.actors.Ghost;
 
 /**
  * @author Armin Reichert
  */
-public class GhostAnimationSet extends SpriteAnimationSet<Ghost, GhostAnimation, BufferedImage> {
+public class GhostAnimationSet extends GenericAnimationSet<Ghost, GhostAnimation, BufferedImage> {
 
-	private SpriteAnimationMap<Direction, BufferedImage> eyes;
-	private SpriteAnimation<BufferedImage> flashing;
-	private SpriteAnimation<BufferedImage> blue;
-	private SpriteAnimationMap<Direction, BufferedImage> color;
-	private SpriteAnimation<BufferedImage> numbers;
+	private GenericAnimationMap<Direction, BufferedImage> eyes;
+	private GenericAnimation<BufferedImage> flashing;
+	private GenericAnimation<BufferedImage> blue;
+	private GenericAnimationMap<Direction, BufferedImage> color;
+	private GenericAnimation<BufferedImage> numbers;
 
 	@Override
-	public ISpriteAnimation animation(GhostAnimation key) {
+	public AnimationMethods animation(GhostAnimation key) {
 		return switch (key) {
 		case EYES -> eyes;
 		case FLASHING -> flashing;
@@ -56,13 +56,15 @@ public class GhostAnimationSet extends SpriteAnimationSet<Ghost, GhostAnimation,
 	}
 
 	@Override
-	public Stream<ISpriteAnimation> animations() {
+	public Stream<AnimationMethods> animations() {
 		return Stream.of(eyes, flashing, blue, color, numbers);
 	}
 
 	public void startFlashing(int numFlashes, long ticksTotal) {
 		long frameTicks = ticksTotal / (numFlashes * flashing.numFrames());
-		flashing.frameDuration(frameTicks).repetitions(numFlashes).restart();
+		flashing.frameDuration(frameTicks);
+		flashing.repetitions(numFlashes);
+		flashing.restart();
 	}
 
 	@Override
@@ -97,7 +99,7 @@ public class GhostAnimationSet extends SpriteAnimationSet<Ghost, GhostAnimation,
 		flashing = r2D.createGhostFlashingAnimation();
 		blue = r2D.createGhostBlueAnimation();
 		color = r2D.createGhostColorAnimation(ghostID);
-		numbers = new SpriteAnimation<>(r2D.getNumberSprite(200), r2D.getNumberSprite(400), r2D.getNumberSprite(800),
+		numbers = new GenericAnimation<>(r2D.getNumberSprite(200), r2D.getNumberSprite(400), r2D.getNumberSprite(800),
 				r2D.getNumberSprite(1600));
 	}
 }
