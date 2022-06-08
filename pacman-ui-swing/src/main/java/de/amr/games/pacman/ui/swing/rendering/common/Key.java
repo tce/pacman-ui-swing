@@ -23,7 +23,3 @@ SOFTWARE.
 */
 
 package de.amr.games.pacman.ui.swing.rendering.common;
-
-public enum GhostAnimation {
-	COLOR, EYES, VALUE, BLUE, FLASHING;
-}

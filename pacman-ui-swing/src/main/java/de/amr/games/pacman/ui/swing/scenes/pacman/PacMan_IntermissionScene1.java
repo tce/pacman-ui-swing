@@ -33,7 +33,6 @@ import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.entity.pacman.BigPacMan2D;
-import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimation;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
@@ -73,8 +72,8 @@ public class PacMan_IntermissionScene1 extends GameScene {
 	public void update() {
 		sceneController.update();
 		blinky2D.animations.select(switch (context.blinky.state) {
-		case FRIGHTENED -> GhostAnimation.BLUE;
-		case HUNTING_PAC -> GhostAnimation.COLOR;
+		case FRIGHTENED -> GhostAnimations.Key.BLUE;
+		case HUNTING_PAC -> GhostAnimations.Key.COLOR;
 		default -> blinky2D.animations.selectedKey();
 		});
 	}

@@ -29,7 +29,7 @@ import java.awt.image.BufferedImage;
 import de.amr.games.pacman.lib.animation.CompositeGenericAnimation;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Ghost;
-import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimation;
+import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations.Key;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**
@@ -40,22 +40,22 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 public class Ghost2D extends GameEntity2D {
 
 	public final Ghost ghost;
-	public final CompositeGenericAnimation<Ghost, GhostAnimation, BufferedImage> animations;
+	public final CompositeGenericAnimation<Ghost, Key, BufferedImage> animations;
 
-	public Ghost2D(Ghost ghost, GameModel game, CompositeGenericAnimation<Ghost, GhostAnimation, BufferedImage> animations) {
+	public Ghost2D(Ghost ghost, GameModel game, CompositeGenericAnimation<Ghost, Key, BufferedImage> animations) {
 		super(game);
 		this.ghost = ghost;
 		this.animations = animations;
-		animations.select(GhostAnimation.COLOR);
+		animations.select(Key.COLOR);
 	}
 
 	public void updateAnimation(boolean frightened, boolean recovering) {
-		GhostAnimation key = switch (ghost.state) {
-		case DEAD -> ghost.bounty == 0 ? GhostAnimation.EYES : GhostAnimation.VALUE;
-		case ENTERING_HOUSE -> GhostAnimation.EYES;
-		case FRIGHTENED -> recovering ? GhostAnimation.FLASHING : GhostAnimation.BLUE;
-		case HUNTING_PAC, LEAVING_HOUSE -> GhostAnimation.COLOR;
-		case LOCKED -> recovering ? GhostAnimation.FLASHING : frightened ? GhostAnimation.BLUE : GhostAnimation.COLOR;
+		Key key = switch (ghost.state) {
+		case DEAD -> ghost.bounty == 0 ? Key.EYES : Key.VALUE;
+		case ENTERING_HOUSE -> Key.EYES;
+		case FRIGHTENED -> recovering ? Key.FLASHING : Key.BLUE;
+		case HUNTING_PAC, LEAVING_HOUSE -> Key.COLOR;
+		case LOCKED -> recovering ? Key.FLASHING : frightened ? Key.BLUE : Key.COLOR;
 		};
 		animations.select(key);
 	}

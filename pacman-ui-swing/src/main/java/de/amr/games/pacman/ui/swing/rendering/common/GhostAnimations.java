@@ -27,18 +27,23 @@ import java.awt.image.BufferedImage;
 import java.util.stream.Stream;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.GenericAnimationAPI;
-import de.amr.games.pacman.lib.animation.GenericAnimation;
-import de.amr.games.pacman.lib.animation.GenericAnimationMap;
 import de.amr.games.pacman.lib.animation.CompositeGenericAnimation;
+import de.amr.games.pacman.lib.animation.GenericAnimation;
+import de.amr.games.pacman.lib.animation.GenericAnimationAPI;
+import de.amr.games.pacman.lib.animation.GenericAnimationMap;
 import de.amr.games.pacman.model.common.actors.Ghost;
+import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations.Key;
 
 /**
  * @author Armin Reichert
  */
-public class GhostAnimations implements CompositeGenericAnimation<Ghost, GhostAnimation, BufferedImage> {
+public class GhostAnimations implements CompositeGenericAnimation<Ghost, Key, BufferedImage> {
 
-	private GhostAnimation selectedKey;
+	public enum Key {
+		COLOR, EYES, VALUE, BLUE, FLASHING;
+	}
+
+	private Key selectedKey;
 	private GenericAnimationMap<Direction, BufferedImage> eyes;
 	private GenericAnimation<BufferedImage> flashing;
 	private GenericAnimation<BufferedImage> blue;
@@ -72,18 +77,18 @@ public class GhostAnimations implements CompositeGenericAnimation<Ghost, GhostAn
 	}
 
 	@Override
-	public GhostAnimation selectedKey() {
+	public Key selectedKey() {
 		return selectedKey;
 	}
 
 	@Override
-	public void select(GhostAnimation key) {
+	public void select(Key key) {
 		selectedKey = key;
 		selectedAnimation().ensureRunning();
 	}
 
 	@Override
-	public GenericAnimationAPI animation(GhostAnimation key) {
+	public GenericAnimationAPI animation(Key key) {
 		return switch (key) {
 		case EYES -> eyes;
 		case FLASHING -> flashing;

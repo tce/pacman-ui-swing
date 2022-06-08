@@ -39,8 +39,8 @@ import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
-import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimation;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
+import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations.Key;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.shell.Keyboard;
@@ -81,7 +81,7 @@ public class PacMan_IntroScene extends GameScene {
 	private void onSceneStateChange(State fromState, State toState) {
 		if (fromState == State.CHASING_PAC && toState == State.CHASING_GHOSTS) {
 			for (var ghost2D : ghosts2D) {
-				ghost2D.animations.select(GhostAnimation.BLUE);
+				ghost2D.animations.select(Key.BLUE);
 			}
 		}
 	}
@@ -105,13 +105,13 @@ public class PacMan_IntroScene extends GameScene {
 		if (sceneController.state() == State.CHASING_GHOSTS) {
 			for (var ghost2D : ghosts2D) {
 				if (ghost2D.ghost.bounty > 0) {
-					ghost2D.animations.select(GhostAnimation.VALUE);
+					ghost2D.animations.select(Key.VALUE);
 				} else {
-					ghost2D.animations.select(GhostAnimation.BLUE);
+					ghost2D.animations.select(Key.BLUE);
 					if (ghost2D.ghost.velocity.length() == 0) {
-						ghost2D.animations.stop(GhostAnimation.BLUE);
+						ghost2D.animations.stop(Key.BLUE);
 					} else {
-						ghost2D.animations.run(GhostAnimation.BLUE);
+						ghost2D.animations.run(Key.BLUE);
 					}
 				}
 			}
