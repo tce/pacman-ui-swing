@@ -30,13 +30,13 @@ import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.AnimationMethods;
 import de.amr.games.pacman.lib.animation.GenericAnimation;
 import de.amr.games.pacman.lib.animation.GenericAnimationMap;
-import de.amr.games.pacman.lib.animation.GenericAnimationCollection;
+import de.amr.games.pacman.lib.animation.CompositeGenericAnimation;
 import de.amr.games.pacman.model.common.actors.Ghost;
 
 /**
  * @author Armin Reichert
  */
-public class GhostAnimations implements GenericAnimationCollection<Ghost, GhostAnimation, BufferedImage> {
+public class GhostAnimations implements CompositeGenericAnimation<Ghost, GhostAnimation, BufferedImage> {
 
 	private GhostAnimation selectedKey;
 	private GenericAnimationMap<Direction, BufferedImage> eyes;

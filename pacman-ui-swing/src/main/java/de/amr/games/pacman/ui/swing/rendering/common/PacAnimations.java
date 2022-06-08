@@ -31,13 +31,13 @@ import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.AnimationMethods;
 import de.amr.games.pacman.lib.animation.GenericAnimation;
 import de.amr.games.pacman.lib.animation.GenericAnimationMap;
-import de.amr.games.pacman.lib.animation.GenericAnimationCollection;
+import de.amr.games.pacman.lib.animation.CompositeGenericAnimation;
 import de.amr.games.pacman.model.common.actors.Pac;
 
 /**
  * @author Armin Reichert
  */
-public class PacAnimations implements GenericAnimationCollection<Pac, PacAnimation, BufferedImage> {
+public class PacAnimations implements CompositeGenericAnimation<Pac, PacAnimation, BufferedImage> {
 
 	private PacAnimation selectedKey;
 	protected GenericAnimationMap<Direction, BufferedImage> munching;

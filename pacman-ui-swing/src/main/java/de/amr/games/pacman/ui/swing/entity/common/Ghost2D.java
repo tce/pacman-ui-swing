@@ -26,7 +26,7 @@ package de.amr.games.pacman.ui.swing.entity.common;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import de.amr.games.pacman.lib.animation.GenericAnimationCollection;
+import de.amr.games.pacman.lib.animation.CompositeGenericAnimation;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimation;
@@ -40,9 +40,9 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 public class Ghost2D extends GameEntity2D {
 
 	public final Ghost ghost;
-	public final GenericAnimationCollection<Ghost, GhostAnimation, BufferedImage> animations;
+	public final CompositeGenericAnimation<Ghost, GhostAnimation, BufferedImage> animations;
 
-	public Ghost2D(Ghost ghost, GameModel game, GenericAnimationCollection<Ghost, GhostAnimation, BufferedImage> animations) {
+	public Ghost2D(Ghost ghost, GameModel game, CompositeGenericAnimation<Ghost, GhostAnimation, BufferedImage> animations) {
 		super(game);
 		this.ghost = ghost;
 		this.animations = animations;
