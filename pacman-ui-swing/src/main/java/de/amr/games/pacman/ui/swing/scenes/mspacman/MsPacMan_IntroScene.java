@@ -34,7 +34,7 @@ import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.IntroController;
 import de.amr.games.pacman.controller.mspacman.IntroController.State;
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.SpriteAnimationMap;
+import de.amr.games.pacman.lib.animation.SpriteAnimationMap;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;

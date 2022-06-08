@@ -26,7 +26,7 @@ package de.amr.games.pacman.ui.swing.entity.common;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import de.amr.games.pacman.lib.SpriteAnimationSet;
+import de.amr.games.pacman.lib.animation.SpriteAnimationSet;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimation;

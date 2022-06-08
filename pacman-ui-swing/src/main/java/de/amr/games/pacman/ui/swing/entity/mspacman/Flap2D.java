@@ -27,7 +27,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import de.amr.games.pacman.lib.GenericAnimation;
+import de.amr.games.pacman.lib.animation.GenericAnimation;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.mspacman.Flap;
 import de.amr.games.pacman.ui.swing.entity.common.GameEntity2D;

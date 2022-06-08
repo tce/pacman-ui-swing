@@ -25,7 +25,7 @@ package de.amr.games.pacman.ui.swing.entity.common;
 
 import java.awt.Graphics2D;
 
-import de.amr.games.pacman.lib.GenericAnimation;
+import de.amr.games.pacman.lib.animation.GenericAnimation;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Bonus;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;

@@ -36,10 +36,10 @@ import java.util.stream.Stream;
 
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.GenericAnimation;
-import de.amr.games.pacman.lib.SpriteAnimation;
-import de.amr.games.pacman.lib.SpriteAnimationMap;
 import de.amr.games.pacman.lib.V2i;
+import de.amr.games.pacman.lib.animation.GenericAnimation;
+import de.amr.games.pacman.lib.animation.SpriteAnimation;
+import de.amr.games.pacman.lib.animation.SpriteAnimationMap;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;

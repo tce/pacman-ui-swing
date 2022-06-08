@@ -28,8 +28,8 @@ import static de.amr.games.pacman.model.common.world.World.TS;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import de.amr.games.pacman.lib.GenericAnimation;
 import de.amr.games.pacman.lib.V2i;
+import de.amr.games.pacman.lib.animation.GenericAnimation;
 
 /**
  * Blinking energizer pellet.

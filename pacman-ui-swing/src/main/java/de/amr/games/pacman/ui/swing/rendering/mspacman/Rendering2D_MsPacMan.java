@@ -36,9 +36,9 @@ import java.util.List;
 import java.util.Map;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.GenericAnimation;
-import de.amr.games.pacman.lib.SpriteAnimation;
-import de.amr.games.pacman.lib.SpriteAnimationMap;
+import de.amr.games.pacman.lib.animation.GenericAnimation;
+import de.amr.games.pacman.lib.animation.SpriteAnimation;
+import de.amr.games.pacman.lib.animation.SpriteAnimationMap;
 import de.amr.games.pacman.model.mspacman.MsPacManGame;
 import de.amr.games.pacman.ui.swing.assets.Spritesheet;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
