@@ -70,10 +70,10 @@ public class PlayScene extends GameScene {
 		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, new GhostAnimations(ghost.id, r2D)))
 				.toArray(Ghost2D[]::new);
 		energizers2D = game.level.world.energizerTiles().map(Energizer2D::new).toArray(Energizer2D[]::new);
-		bonus2D = new Bonus2D(game, new BonusAnimations(r2D), game.variant == GameVariant.MS_PACMAN);
 		mazeFlashing = r2D.mazeFlashing(r2D.mazeNumber(game.level.number));
 		mazeFlashing.repeat(game.level.numFlashes);
 		mazeFlashing.reset();
+		bonus2D = new Bonus2D(game, new BonusAnimations(r2D), game.variant == GameVariant.MS_PACMAN);
 		bonus2D.animations.select(null); // INACTIVE
 	}
 
