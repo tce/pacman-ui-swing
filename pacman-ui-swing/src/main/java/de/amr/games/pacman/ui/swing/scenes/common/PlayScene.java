@@ -46,10 +46,10 @@ import de.amr.games.pacman.ui.swing.entity.common.Energizer2D;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.lib.U;
+import de.amr.games.pacman.ui.swing.rendering.common.BonusAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
-import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations.Key;
 
 /**
  * The play scene for Pac-Man and Ms. Pac-Man.
@@ -70,10 +70,11 @@ public class PlayScene extends GameScene {
 		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, new GhostAnimations(ghost.id, r2D)))
 				.toArray(Ghost2D[]::new);
 		energizers2D = game.level.world.energizerTiles().map(Energizer2D::new).toArray(Energizer2D[]::new);
-		bonus2D = new Bonus2D(game, r2D, game.variant == GameVariant.MS_PACMAN);
+		bonus2D = new Bonus2D(game, new BonusAnimations(r2D), game.variant == GameVariant.MS_PACMAN);
 		mazeFlashing = r2D.mazeFlashing(r2D.mazeNumber(game.level.number));
 		mazeFlashing.repeat(game.level.numFlashes);
 		mazeFlashing.reset();
+		bonus2D.animations.select(null); // INACTIVE
 	}
 
 	@Override
@@ -207,13 +208,21 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void onBonusGetsActive(GameEvent e) {
+		bonus2D.animations.select(BonusAnimations.Key.ANIM_SYMBOL);
 		bonus2D.startJumping();
 	}
 
 	@Override
 	public void onBonusGetsEaten(GameEvent e) {
+		bonus2D.animations.select(BonusAnimations.Key.ANIM_VALUE);
 		bonus2D.stopJumping();
 		SoundManager.get().play(GameSound.BONUS_EATEN);
+	}
+
+	@Override
+	public void onBonusExpires(GameEvent e) {
+		bonus2D.animations.select(null); // TODO good idea?
+		bonus2D.stopJumping();
 	}
 
 	@Override
@@ -265,7 +274,7 @@ public class PlayScene extends GameScene {
 			});
 			U.afterSeconds(4, () -> {
 				game.pac.hide();
-				pac2D.animations.select(Key.MUNCHING);
+				pac2D.animations.select(PacAnimations.Key.MUNCHING);
 			});
 		}
 		case GHOST_DYING -> {

@@ -53,6 +53,7 @@ public class BonusAnimations implements CompositeGenericAnimation<Bonus, Key, Bu
 		jumpAnimation = new GenericAnimation<>(2, -2);
 		jumpAnimation.frameDuration(10);
 		jumpAnimation.repeatForever();
+		selectedKey = null;
 	}
 
 	@Override
@@ -71,7 +72,10 @@ public class BonusAnimations implements CompositeGenericAnimation<Bonus, Key, Bu
 	@Override
 	public void select(Key key) {
 		selectedKey = key;
-		selectedAnimation().ensureRunning();
+		if (key != null) {
+			// key == null is allowed an used for inactive bonus. TODO: good idea?
+			selectedAnimation().ensureRunning();
+		}
 	}
 
 	@Override
@@ -89,6 +93,9 @@ public class BonusAnimations implements CompositeGenericAnimation<Bonus, Key, Bu
 
 	@Override
 	public BufferedImage currentSprite(Bonus bonus) {
+		if (selectedKey == null) {
+			return null;
+		}
 		return switch (selectedKey) {
 		case ANIM_SYMBOL -> symbolAnimation.frame(bonus.symbol());
 		case ANIM_VALUE -> valueAnimation.frame(bonus.symbol());

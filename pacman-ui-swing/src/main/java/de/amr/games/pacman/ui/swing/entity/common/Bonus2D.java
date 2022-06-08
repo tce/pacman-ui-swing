@@ -24,10 +24,10 @@ SOFTWARE.
 package de.amr.games.pacman.ui.swing.entity.common;
 
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.lib.animation.GenericAnimation;
 import de.amr.games.pacman.model.common.GameModel;
+import de.amr.games.pacman.ui.swing.rendering.common.BonusAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**
@@ -38,14 +38,12 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
  */
 public class Bonus2D extends GameEntity2D {
 
-	private final GenericAnimation<BufferedImage> symbolAnimation;
-	private final GenericAnimation<BufferedImage> valueAnimation;
+	public final BonusAnimations animations;
 	private GenericAnimation<Integer> jumpAnimation;
 
-	public Bonus2D(GameModel game, Rendering2D r2D, boolean jumping) {
+	public Bonus2D(GameModel game, BonusAnimations animations, boolean jumping) {
 		super(game);
-		symbolAnimation = r2D.createBonusSymbolAnimation();
-		valueAnimation = r2D.createBonusValueAnimation();
+		this.animations = animations;
 		if (jumping) {
 			jumpAnimation = new GenericAnimation<>(-2, 2);
 			jumpAnimation.frameDuration(10);
@@ -68,26 +66,12 @@ public class Bonus2D extends GameEntity2D {
 	@Override
 	public void render(Graphics2D g, Rendering2D r2D) {
 		var bonus = game.bonus();
-
-		// TODO use animation key...
-		switch (bonus.state()) {
-		case EDIBLE -> {
-			var sprite = symbolAnimation.frame(bonus.symbol());
-			if (jumpAnimation != null) {
-				int jump = jumpAnimation.animate();
-				g.translate(0, jump);
-				r2D.drawSpriteCenteredOverBox(g, sprite, bonus.position().x, bonus.position().y);
-				g.translate(0, -jump);
-			} else {
-				r2D.drawSpriteCenteredOverBox(g, sprite, bonus.position().x, bonus.position().y);
-			}
-		}
-		case EATEN -> {
-			var sprite = valueAnimation.frame(bonus.symbol());
+		var sprite = animations.currentSprite(bonus);
+		if (sprite != null) {
+			int dy = jumpAnimation != null && jumpAnimation.isRunning() ? jumpAnimation.animate() : 0;
+			g.translate(0, dy);
 			r2D.drawSpriteCenteredOverBox(g, sprite, bonus.position().x, bonus.position().y);
-		}
-		case INACTIVE -> {
-		}
+			g.translate(0, -dy);
 		}
 	}
 }
