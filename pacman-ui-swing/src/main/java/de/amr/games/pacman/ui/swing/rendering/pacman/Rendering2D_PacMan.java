@@ -133,11 +133,11 @@ public class Rendering2D_PacMan implements Rendering2D {
 
 		blinkyPatched = new GenericAnimation<>(ss.tile(10, 7), ss.tile(11, 7));
 		blinkyPatched.frameDuration(4);
-		blinkyPatched.endless();
+		blinkyPatched.repeatForever();
 
 		blinkyHalfNaked = new GenericAnimation<>(ss.tiles(8, 8, 2, 1), ss.tiles(10, 8, 2, 1));
 		blinkyHalfNaked.frameDuration(4);
-		blinkyHalfNaked.endless();
+		blinkyHalfNaked.repeatForever();
 
 		nailSprite = ss.tile(8, 6);
 	}
@@ -199,7 +199,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 			BufferedImage wide_open = ss.tile(0, d), open = ss.tile(1, d), closed = ss.tile(2, 0);
 			var animation = new GenericAnimation<>(closed, open, wide_open, open);
 			animation.frameDuration(2);
-			animation.endless();
+			animation.repeatForever();
 			munching.put(dir, animation);
 		}
 		return munching;
@@ -212,7 +212,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 			var animation = new GenericAnimation<>(ss.tile(2 * index(dir), 4 + ghostID),
 					ss.tile(2 * index(dir) + 1, 4 + ghostID));
 			animation.frameDuration(8);
-			animation.endless();
+			animation.repeatForever();
 			map.put(dir, animation);
 		}
 		return map;
@@ -222,7 +222,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 	public GenericAnimation<BufferedImage> createGhostBlueAnimation() {
 		var animation = new GenericAnimation<>(ss.tile(8, 4), ss.tile(9, 4));
 		animation.frameDuration(8);
-		animation.endless();
+		animation.repeatForever();
 		return animation;
 	}
 
@@ -245,7 +245,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 	public GenericAnimation<BufferedImage> createBigPacManMunchingAnimation() {
 		var animation = new GenericAnimation<>(ss.tiles(2, 1, 2, 2), ss.tiles(4, 1, 2, 2), ss.tiles(6, 1, 2, 2));
 		animation.frameDuration(4);
-		animation.endless();
+		animation.repeatForever();
 		return animation;
 	}
 

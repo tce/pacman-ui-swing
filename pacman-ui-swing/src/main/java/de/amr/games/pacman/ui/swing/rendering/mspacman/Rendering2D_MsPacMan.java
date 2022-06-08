@@ -193,7 +193,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	public GenericAnimation<BufferedImage> createPacDyingAnimation() {
 		var animation = new GenericAnimation<>(rhs(0, 3), rhs(0, 0), rhs(0, 1), rhs(0, 2));
 		animation.frameDuration(10);
-		animation.repetitions(2);
+		animation.repeat(2);
 		return animation;
 	}
 
@@ -207,7 +207,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 			var closed = rhs(2, d);
 			var animation = new GenericAnimation<>(middle, closed, middle, wide);
 			animation.frameDuration(2);
-			animation.endless();
+			animation.repeatForever();
 			map.put(dir, animation);
 		}
 		return map;
@@ -219,7 +219,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 			int d = dirIndex(dir);
 			var munching = new GenericAnimation<>(rhs(0, 9 + d), rhs(1, 9 + d), rhs(2, 9));
 			munching.frameDuration(2);
-			munching.endless();
+			munching.repeatForever();
 			map.put(dir, munching);
 		}
 		return map;
@@ -232,7 +232,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 			int d = dirIndex(dir);
 			var color = new GenericAnimation<>(rhs(2 * d, 4 + ghostID), rhs(2 * d + 1, 4 + ghostID));
 			color.frameDuration(4);
-			color.endless();
+			color.repeatForever();
 			map.put(dir, color);
 		}
 		return map;
@@ -242,7 +242,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	public GenericAnimation<BufferedImage> createGhostBlueAnimation() {
 		var animation = new GenericAnimation<>(rhs(8, 4), rhs(9, 4));
 		animation.frameDuration(8);
-		animation.endless();
+		animation.repeatForever();
 		return animation;
 	}
 
@@ -270,7 +270,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	public GenericAnimation<Integer> createBonusAnimation() {
 		var animation = new GenericAnimation<>(2, -2);
 		animation.frameDuration(10);
-		animation.endless();
+		animation.repeatForever();
 		return animation;
 	}
 
@@ -280,7 +280,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 			int d = dirIndex(dir);
 			var animation = new GenericAnimation<>(rhs(0, 9 + d), rhs(1, 9 + d), rhs(2, 9));
 			animation.frameDuration(2);
-			animation.endless();
+			animation.repeatForever();
 			map.put(dir, animation);
 		}
 		return map;
@@ -303,7 +303,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 				ss.si(489, 176, 32, 16), //
 				ss.si(521, 176, 32, 16) //
 		);
-		animation.endless();
+		animation.repeatForever();
 		animation.frameDuration(10);
 		return animation;
 	}

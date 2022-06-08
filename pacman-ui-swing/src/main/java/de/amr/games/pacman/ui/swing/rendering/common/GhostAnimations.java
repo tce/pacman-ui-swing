@@ -57,7 +57,7 @@ public class GhostAnimations implements CompositeGenericAnimation<Ghost, GhostAn
 	public void startFlashing(int numFlashes, long ticksTotal) {
 		long frameTicks = ticksTotal / (numFlashes * flashing.numFrames());
 		flashing.frameDuration(frameTicks);
-		flashing.repetitions(numFlashes);
+		flashing.repeat(numFlashes);
 		flashing.restart();
 	}
 

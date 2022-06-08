@@ -76,7 +76,7 @@ public class PlayScene extends GameScene {
 				: null;
 		bonus2D = new Bonus2D(game, game.bonus(), jumpAnimation);
 		mazeFlashing = r2D.mazeFlashing(r2D.mazeNumber(game.level.number));
-		mazeFlashing.repetitions(game.level.numFlashes);
+		mazeFlashing.repeat(game.level.numFlashes);
 		mazeFlashing.reset();
 	}
 
