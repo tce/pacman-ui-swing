@@ -28,10 +28,10 @@ import java.awt.image.BufferedImage;
 import java.util.stream.Stream;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.GenericAnimationCollection;
-import de.amr.games.pacman.lib.animation.SingleGenericAnimation;
 import de.amr.games.pacman.lib.animation.GenericAnimation;
+import de.amr.games.pacman.lib.animation.GenericAnimationCollection;
 import de.amr.games.pacman.lib.animation.GenericAnimationMap;
+import de.amr.games.pacman.lib.animation.SingleGenericAnimation;
 import de.amr.games.pacman.model.common.actors.Pac;
 
 /**
@@ -74,7 +74,7 @@ public class PacAnimations implements
 	}
 
 	@Override
-	public GenericAnimation animation(Key key) {
+	public GenericAnimation getByKey(Key key) {
 		return switch (key) {
 		case DYING -> dying;
 		case MUNCHING -> munching;

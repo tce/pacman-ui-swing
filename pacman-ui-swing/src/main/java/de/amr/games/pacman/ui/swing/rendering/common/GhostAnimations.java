@@ -27,10 +27,10 @@ import java.awt.image.BufferedImage;
 import java.util.stream.Stream;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.GenericAnimationCollection;
-import de.amr.games.pacman.lib.animation.SingleGenericAnimation;
 import de.amr.games.pacman.lib.animation.GenericAnimation;
+import de.amr.games.pacman.lib.animation.GenericAnimationCollection;
 import de.amr.games.pacman.lib.animation.GenericAnimationMap;
+import de.amr.games.pacman.lib.animation.SingleGenericAnimation;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations.Key;
 
@@ -87,7 +87,7 @@ public class GhostAnimations implements GenericAnimationCollection<Ghost, Key, B
 	}
 
 	@Override
-	public GenericAnimation animation(Key key) {
+	public GenericAnimation getByKey(Key key) {
 		return switch (key) {
 		case ANIM_EYES -> eyes;
 		case ANIM_FLASHING -> flashing;

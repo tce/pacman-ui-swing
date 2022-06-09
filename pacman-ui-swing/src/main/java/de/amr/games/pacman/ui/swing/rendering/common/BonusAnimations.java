@@ -27,9 +27,9 @@ package de.amr.games.pacman.ui.swing.rendering.common;
 import java.awt.image.BufferedImage;
 import java.util.stream.Stream;
 
+import de.amr.games.pacman.lib.animation.GenericAnimation;
 import de.amr.games.pacman.lib.animation.GenericAnimationCollection;
 import de.amr.games.pacman.lib.animation.SingleGenericAnimation;
-import de.amr.games.pacman.lib.animation.GenericAnimation;
 import de.amr.games.pacman.model.common.actors.Bonus;
 import de.amr.games.pacman.ui.swing.rendering.common.BonusAnimations.Key;
 
@@ -79,7 +79,7 @@ public class BonusAnimations implements GenericAnimationCollection<Bonus, Key, B
 	}
 
 	@Override
-	public GenericAnimation animation(Key key) {
+	public GenericAnimation getByKey(Key key) {
 		return switch (key) {
 		case ANIM_SYMBOL -> symbolAnimation;
 		case ANIM_VALUE -> valueAnimation;
