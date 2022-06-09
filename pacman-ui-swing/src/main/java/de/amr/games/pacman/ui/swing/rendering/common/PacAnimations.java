@@ -82,7 +82,7 @@ public class PacAnimations implements
 	}
 
 	@Override
-	public Stream<GenericAnimation> animations() {
+	public Stream<GenericAnimation> all() {
 		return Stream.of(munching, dying);
 	}
 

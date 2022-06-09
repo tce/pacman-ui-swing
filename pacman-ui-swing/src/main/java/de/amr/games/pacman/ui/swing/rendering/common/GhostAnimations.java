@@ -98,7 +98,7 @@ public class GhostAnimations implements GenericAnimationCollection<Ghost, Key, B
 	}
 
 	@Override
-	public Stream<GenericAnimation> animations() {
+	public Stream<GenericAnimation> all() {
 		return Stream.of(eyes, flashing, blue, color, values);
 	}
 

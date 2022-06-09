@@ -87,7 +87,7 @@ public class BonusAnimations implements GenericAnimationCollection<Bonus, Key, B
 	}
 
 	@Override
-	public Stream<GenericAnimation> animations() {
+	public Stream<GenericAnimation> all() {
 		return Stream.of(symbolAnimation, valueAnimation);
 	}
 
