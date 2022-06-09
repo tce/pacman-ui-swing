@@ -27,9 +27,9 @@ import java.awt.image.BufferedImage;
 import java.util.stream.Stream;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.CompositeGenericAnimation;
+import de.amr.games.pacman.lib.animation.GenericAnimationCollection;
+import de.amr.games.pacman.lib.animation.SingleGenericAnimation;
 import de.amr.games.pacman.lib.animation.GenericAnimation;
-import de.amr.games.pacman.lib.animation.GenericAnimationAPI;
 import de.amr.games.pacman.lib.animation.GenericAnimationMap;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations.Key;
@@ -37,7 +37,7 @@ import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations.Key;
 /**
  * @author Armin Reichert
  */
-public class GhostAnimations implements CompositeGenericAnimation<Ghost, Key, BufferedImage> {
+public class GhostAnimations implements GenericAnimationCollection<Ghost, Key, BufferedImage> {
 
 	public enum Key {
 		ANIM_COLOR, ANIM_EYES, ANIM_VALUE, ANIM_BLUE, ANIM_FLASHING;
@@ -45,10 +45,10 @@ public class GhostAnimations implements CompositeGenericAnimation<Ghost, Key, Bu
 
 	private Key selectedKey;
 	private GenericAnimationMap<Direction, BufferedImage> eyes;
-	private GenericAnimation<BufferedImage> flashing;
-	private GenericAnimation<BufferedImage> blue;
+	private SingleGenericAnimation<BufferedImage> flashing;
+	private SingleGenericAnimation<BufferedImage> blue;
 	private GenericAnimationMap<Direction, BufferedImage> color;
-	private GenericAnimation<BufferedImage> values;
+	private SingleGenericAnimation<BufferedImage> values;
 
 	public GhostAnimations(int ghostID, Rendering2D r2D) {
 		eyes = r2D.createGhostEyesAnimation();
@@ -87,7 +87,7 @@ public class GhostAnimations implements CompositeGenericAnimation<Ghost, Key, Bu
 	}
 
 	@Override
-	public GenericAnimationAPI animation(Key key) {
+	public GenericAnimation animation(Key key) {
 		return switch (key) {
 		case ANIM_EYES -> eyes;
 		case ANIM_FLASHING -> flashing;
@@ -98,7 +98,7 @@ public class GhostAnimations implements CompositeGenericAnimation<Ghost, Key, Bu
 	}
 
 	@Override
-	public Stream<GenericAnimationAPI> animations() {
+	public Stream<GenericAnimation> animations() {
 		return Stream.of(eyes, flashing, blue, color, values);
 	}
 

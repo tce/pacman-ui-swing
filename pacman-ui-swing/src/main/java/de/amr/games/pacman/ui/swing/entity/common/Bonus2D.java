@@ -25,7 +25,7 @@ package de.amr.games.pacman.ui.swing.entity.common;
 
 import java.awt.Graphics2D;
 
-import de.amr.games.pacman.lib.animation.GenericAnimation;
+import de.amr.games.pacman.lib.animation.SingleGenericAnimation;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.ui.swing.rendering.common.BonusAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
@@ -39,13 +39,13 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 public class Bonus2D extends GameEntity2D {
 
 	public final BonusAnimations animations;
-	private GenericAnimation<Integer> jumpAnimation;
+	private SingleGenericAnimation<Integer> jumpAnimation;
 
 	public Bonus2D(GameModel game, BonusAnimations animations, boolean jumping) {
 		super(game);
 		this.animations = animations;
 		if (jumping) {
-			jumpAnimation = new GenericAnimation<>(-2, 2);
+			jumpAnimation = new SingleGenericAnimation<>(-2, 2);
 			jumpAnimation.frameDuration(10);
 			jumpAnimation.repeatForever();
 		}

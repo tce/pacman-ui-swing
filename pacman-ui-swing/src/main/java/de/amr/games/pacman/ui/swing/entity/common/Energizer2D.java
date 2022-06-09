@@ -29,7 +29,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import de.amr.games.pacman.lib.V2i;
-import de.amr.games.pacman.lib.animation.GenericAnimation;
+import de.amr.games.pacman.lib.animation.SingleGenericAnimation;
 
 /**
  * Blinking energizer pellet.
@@ -39,14 +39,14 @@ import de.amr.games.pacman.lib.animation.GenericAnimation;
 public class Energizer2D {
 
 	private V2i tile;
-	private GenericAnimation<Boolean> animation;
+	private SingleGenericAnimation<Boolean> animation;
 
 	public Energizer2D(V2i tile) {
 		this.tile = tile;
-		animation = GenericAnimation.pulse(10);
+		animation = SingleGenericAnimation.pulse(10);
 	}
 
-	public GenericAnimation<Boolean> getAnimation() {
+	public SingleGenericAnimation<Boolean> getAnimation() {
 		return animation;
 	}
 

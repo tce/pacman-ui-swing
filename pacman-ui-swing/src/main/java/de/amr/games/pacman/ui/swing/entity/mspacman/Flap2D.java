@@ -27,7 +27,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import de.amr.games.pacman.lib.animation.GenericAnimation;
+import de.amr.games.pacman.lib.animation.SingleGenericAnimation;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.mspacman.Flap;
 import de.amr.games.pacman.ui.swing.entity.common.GameEntity2D;
@@ -42,7 +42,7 @@ import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 public class Flap2D extends GameEntity2D {
 
 	public final Flap flap;
-	public GenericAnimation<BufferedImage> animation;
+	public SingleGenericAnimation<BufferedImage> animation;
 
 	public Flap2D(Flap flap, GameModel game) {
 		super(game);

@@ -28,9 +28,9 @@ import java.awt.image.BufferedImage;
 import java.util.stream.Stream;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.CompositeGenericAnimation;
+import de.amr.games.pacman.lib.animation.GenericAnimationCollection;
+import de.amr.games.pacman.lib.animation.SingleGenericAnimation;
 import de.amr.games.pacman.lib.animation.GenericAnimation;
-import de.amr.games.pacman.lib.animation.GenericAnimationAPI;
 import de.amr.games.pacman.lib.animation.GenericAnimationMap;
 import de.amr.games.pacman.model.common.actors.Pac;
 
@@ -38,7 +38,7 @@ import de.amr.games.pacman.model.common.actors.Pac;
  * @author Armin Reichert
  */
 public class PacAnimations implements
-		CompositeGenericAnimation<Pac, de.amr.games.pacman.ui.swing.rendering.common.PacAnimations.Key, BufferedImage> {
+		GenericAnimationCollection<Pac, de.amr.games.pacman.ui.swing.rendering.common.PacAnimations.Key, BufferedImage> {
 
 	public enum Key {
 		MUNCHING, DYING;
@@ -46,7 +46,7 @@ public class PacAnimations implements
 
 	private Key selectedKey;
 	protected GenericAnimationMap<Direction, BufferedImage> munching;
-	protected GenericAnimation<BufferedImage> dying;
+	protected SingleGenericAnimation<BufferedImage> dying;
 
 	public PacAnimations(Rendering2D r2D) {
 		munching = r2D.createPacMunchingAnimations();
@@ -74,7 +74,7 @@ public class PacAnimations implements
 	}
 
 	@Override
-	public GenericAnimationAPI animation(Key key) {
+	public GenericAnimation animation(Key key) {
 		return switch (key) {
 		case DYING -> dying;
 		case MUNCHING -> munching;
@@ -82,7 +82,7 @@ public class PacAnimations implements
 	}
 
 	@Override
-	public Stream<GenericAnimationAPI> animations() {
+	public Stream<GenericAnimation> animations() {
 		return Stream.of(munching, dying);
 	}
 

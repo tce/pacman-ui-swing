@@ -27,30 +27,30 @@ package de.amr.games.pacman.ui.swing.rendering.common;
 import java.awt.image.BufferedImage;
 import java.util.stream.Stream;
 
-import de.amr.games.pacman.lib.animation.CompositeGenericAnimation;
+import de.amr.games.pacman.lib.animation.GenericAnimationCollection;
+import de.amr.games.pacman.lib.animation.SingleGenericAnimation;
 import de.amr.games.pacman.lib.animation.GenericAnimation;
-import de.amr.games.pacman.lib.animation.GenericAnimationAPI;
 import de.amr.games.pacman.model.common.actors.Bonus;
 import de.amr.games.pacman.ui.swing.rendering.common.BonusAnimations.Key;
 
 /**
  * @author Armin Reichert
  */
-public class BonusAnimations implements CompositeGenericAnimation<Bonus, Key, BufferedImage> {
+public class BonusAnimations implements GenericAnimationCollection<Bonus, Key, BufferedImage> {
 
 	public enum Key {
 		ANIM_SYMBOL, ANIM_VALUE;
 	}
 
 	private Key selectedKey;
-	public final GenericAnimation<BufferedImage> symbolAnimation;
-	public final GenericAnimation<BufferedImage> valueAnimation;
-	public final GenericAnimation<Integer> jumpAnimation;
+	public final SingleGenericAnimation<BufferedImage> symbolAnimation;
+	public final SingleGenericAnimation<BufferedImage> valueAnimation;
+	public final SingleGenericAnimation<Integer> jumpAnimation;
 
 	public BonusAnimations(Rendering2D r2D) {
 		symbolAnimation = r2D.createBonusSymbolAnimation();
 		valueAnimation = r2D.createBonusValueAnimation();
-		jumpAnimation = new GenericAnimation<>(2, -2);
+		jumpAnimation = new SingleGenericAnimation<>(2, -2);
 		jumpAnimation.frameDuration(10);
 		jumpAnimation.repeatForever();
 		selectedKey = null;
@@ -79,7 +79,7 @@ public class BonusAnimations implements CompositeGenericAnimation<Bonus, Key, Bu
 	}
 
 	@Override
-	public GenericAnimationAPI animation(Key key) {
+	public GenericAnimation animation(Key key) {
 		return switch (key) {
 		case ANIM_SYMBOL -> symbolAnimation;
 		case ANIM_VALUE -> valueAnimation;
@@ -87,7 +87,7 @@ public class BonusAnimations implements CompositeGenericAnimation<Bonus, Key, Bu
 	}
 
 	@Override
-	public Stream<GenericAnimationAPI> animations() {
+	public Stream<GenericAnimation> animations() {
 		return Stream.of(symbolAnimation, valueAnimation);
 	}
 

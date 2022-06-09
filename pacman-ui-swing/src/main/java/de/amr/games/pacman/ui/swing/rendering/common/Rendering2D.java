@@ -37,7 +37,7 @@ import java.util.stream.Stream;
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.V2i;
-import de.amr.games.pacman.lib.animation.GenericAnimation;
+import de.amr.games.pacman.lib.animation.SingleGenericAnimation;
 import de.amr.games.pacman.lib.animation.GenericAnimationMap;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Entity;
@@ -69,21 +69,21 @@ public interface Rendering2D {
 
 	GenericAnimationMap<Direction, BufferedImage> createPacMunchingAnimations();
 
-	GenericAnimation<BufferedImage> createPacDyingAnimation();
+	SingleGenericAnimation<BufferedImage> createPacDyingAnimation();
 
 	GenericAnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID);
 
-	GenericAnimation<BufferedImage> createGhostBlueAnimation();
+	SingleGenericAnimation<BufferedImage> createGhostBlueAnimation();
 
-	GenericAnimation<BufferedImage> createGhostFlashingAnimation();
+	SingleGenericAnimation<BufferedImage> createGhostFlashingAnimation();
 
 	GenericAnimationMap<Direction, BufferedImage> createGhostEyesAnimation();
 
-	GenericAnimation<BufferedImage> createGhostValueAnimation();
+	SingleGenericAnimation<BufferedImage> createGhostValueAnimation();
 
-	GenericAnimation<BufferedImage> createBonusSymbolAnimation();
+	SingleGenericAnimation<BufferedImage> createBonusSymbolAnimation();
 
-	GenericAnimation<BufferedImage> createBonusValueAnimation();
+	SingleGenericAnimation<BufferedImage> createBonusValueAnimation();
 
 	// Maze
 
@@ -91,7 +91,7 @@ public interface Rendering2D {
 
 	Color getFoodColor(int mazeNumber);
 
-	GenericAnimation<BufferedImage> mazeFlashing(int mazeNumber);
+	SingleGenericAnimation<BufferedImage> mazeFlashing(int mazeNumber);
 
 	void drawMaze(Graphics2D g, int mazeNumber, int i, int t, boolean running);
 
