@@ -38,8 +38,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.SingleGenericAnimation;
 import de.amr.games.pacman.lib.animation.GenericAnimationMap;
+import de.amr.games.pacman.lib.animation.SingleGenericAnimation;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.assets.Spritesheet;
@@ -147,7 +147,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 
 	@Override
 	public GenericAnimationMap<Direction, BufferedImage> createPacMunchingAnimations() {
-		GenericAnimationMap<Direction, BufferedImage> munching = new GenericAnimationMap<>(Direction.class);
+		GenericAnimationMap<Direction, BufferedImage> munching = new GenericAnimationMap<>(4);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
 			BufferedImage wide_open = ss.tile(0, d), open = ss.tile(1, d), closed = ss.tile(2, 0);
@@ -161,7 +161,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 
 	@Override
 	public GenericAnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID) {
-		GenericAnimationMap<Direction, BufferedImage> map = new GenericAnimationMap<>(Direction.class);
+		GenericAnimationMap<Direction, BufferedImage> map = new GenericAnimationMap<>(4);
 		for (Direction dir : Direction.values()) {
 			var animation = new SingleGenericAnimation<>(ss.tile(2 * index(dir), 4 + ghostID),
 					ss.tile(2 * index(dir) + 1, 4 + ghostID));
@@ -189,7 +189,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 
 	@Override
 	public GenericAnimationMap<Direction, BufferedImage> createGhostEyesAnimation() {
-		GenericAnimationMap<Direction, BufferedImage> ghostEyesAnimsByDir = new GenericAnimationMap<>(Direction.class);
+		GenericAnimationMap<Direction, BufferedImage> ghostEyesAnimsByDir = new GenericAnimationMap<>(4);
 		for (Direction dir : Direction.values()) {
 			ghostEyesAnimsByDir.put(dir, new SingleGenericAnimation<>(ss.tile(8 + index(dir), 5)));
 		}
@@ -209,7 +209,8 @@ public class Rendering2D_PacMan implements Rendering2D {
 
 	@Override
 	public SingleGenericAnimation<BufferedImage> createBonusValueAnimation() {
-		return new SingleGenericAnimation<>(ss.tile(0, 9), ss.tile(1, 9), ss.tile(2, 9), ss.tile(3, 9), ss.tiles(4, 9, 2, 1), // left-aligned
+		return new SingleGenericAnimation<>(ss.tile(0, 9), ss.tile(1, 9), ss.tile(2, 9), ss.tile(3, 9),
+				ss.tiles(4, 9, 2, 1), // left-aligned
 				ss.tiles(3, 10, 3, 1), ss.tiles(3, 11, 3, 1), ss.tiles(3, 12, 3, 1));
 	}
 

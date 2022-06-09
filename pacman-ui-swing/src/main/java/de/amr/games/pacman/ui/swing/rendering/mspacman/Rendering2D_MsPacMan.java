@@ -35,8 +35,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.SingleGenericAnimation;
 import de.amr.games.pacman.lib.animation.GenericAnimationMap;
+import de.amr.games.pacman.lib.animation.SingleGenericAnimation;
 import de.amr.games.pacman.model.mspacman.MsPacManGame;
 import de.amr.games.pacman.ui.swing.assets.Spritesheet;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
@@ -179,7 +179,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 
 	@Override
 	public GenericAnimationMap<Direction, BufferedImage> createPacMunchingAnimations() {
-		GenericAnimationMap<Direction, BufferedImage> map = new GenericAnimationMap<>(Direction.class);
+		GenericAnimationMap<Direction, BufferedImage> map = new GenericAnimationMap<>(4);
 		for (Direction dir : Direction.values()) {
 			int d = dirIndex(dir);
 			var wide = rhs(0, d);
@@ -194,7 +194,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	public GenericAnimationMap<Direction, BufferedImage> createSpouseMunchingAnimations() {
-		GenericAnimationMap<Direction, BufferedImage> map = new GenericAnimationMap<>(Direction.class);
+		GenericAnimationMap<Direction, BufferedImage> map = new GenericAnimationMap<>(4);
 		for (Direction dir : Direction.values()) {
 			int d = dirIndex(dir);
 			var munching = new SingleGenericAnimation<>(rhs(0, 9 + d), rhs(1, 9 + d), rhs(2, 9));
@@ -207,7 +207,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 
 	@Override
 	public GenericAnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID) {
-		GenericAnimationMap<Direction, BufferedImage> map = new GenericAnimationMap<>(Direction.class);
+		GenericAnimationMap<Direction, BufferedImage> map = new GenericAnimationMap<>(4);
 		for (Direction dir : Direction.values()) {
 			int d = dirIndex(dir);
 			var color = new SingleGenericAnimation<>(rhs(2 * d, 4 + ghostID), rhs(2 * d + 1, 4 + ghostID));
@@ -235,7 +235,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 
 	@Override
 	public GenericAnimationMap<Direction, BufferedImage> createGhostEyesAnimation() {
-		GenericAnimationMap<Direction, BufferedImage> map = new GenericAnimationMap<>(Direction.class);
+		GenericAnimationMap<Direction, BufferedImage> map = new GenericAnimationMap<>(4);
 		for (Direction dir : Direction.values()) {
 			map.put(dir, new SingleGenericAnimation<>(rhs(8 + dirIndex(dir), 5)));
 		}
@@ -263,7 +263,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	public GenericAnimationMap<Direction, BufferedImage> createHusbandMunchingAnimations() {
-		GenericAnimationMap<Direction, BufferedImage> map = new GenericAnimationMap<>(Direction.class);
+		GenericAnimationMap<Direction, BufferedImage> map = new GenericAnimationMap<>(4);
 		for (var dir : Direction.values()) {
 			int d = dirIndex(dir);
 			var animation = new SingleGenericAnimation<>(rhs(0, 9 + d), rhs(1, 9 + d), rhs(2, 9));
