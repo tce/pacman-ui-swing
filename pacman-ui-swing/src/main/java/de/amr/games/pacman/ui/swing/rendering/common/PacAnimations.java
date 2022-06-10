@@ -37,8 +37,7 @@ import de.amr.games.pacman.model.common.actors.Pac;
 /**
  * @author Armin Reichert
  */
-public class PacAnimations implements
-		GenericAnimationCollection<Pac, de.amr.games.pacman.ui.swing.rendering.common.PacAnimations.Key, BufferedImage> {
+public class PacAnimations extends GenericAnimationCollection<Pac, PacAnimations.Key, BufferedImage> {
 
 	public enum Key {
 		MUNCHING, DYING;
@@ -54,24 +53,8 @@ public class PacAnimations implements
 	}
 
 	@Override
-	public BufferedImage frame(int i) {
-		return null;
-	}
-
-	@Override
 	public void ensureRunning() {
 		munching.ensureRunning();
-	}
-
-	@Override
-	public Key selectedKey() {
-		return selectedKey;
-	}
-
-	@Override
-	public void select(Key key) {
-		selectedKey = key;
-		selectedAnimation().ensureRunning();
 	}
 
 	@Override

@@ -37,13 +37,12 @@ import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations.Key;
 /**
  * @author Armin Reichert
  */
-public class GhostAnimations implements GenericAnimationCollection<Ghost, Key, BufferedImage> {
+public class GhostAnimations extends GenericAnimationCollection<Ghost, Key, BufferedImage> {
 
 	public enum Key {
 		ANIM_COLOR, ANIM_EYES, ANIM_VALUE, ANIM_BLUE, ANIM_FLASHING;
 	}
 
-	private Key selectedKey;
 	private GenericAnimationMap<Direction, BufferedImage> eyes;
 	private SingleGenericAnimation<BufferedImage> flashing;
 	private SingleGenericAnimation<BufferedImage> blue;
@@ -63,27 +62,6 @@ public class GhostAnimations implements GenericAnimationCollection<Ghost, Key, B
 		flashing.frameDuration(frameTicks);
 		flashing.repeat(numFlashes);
 		flashing.restart();
-	}
-
-	@Override
-	public BufferedImage frame(int i) {
-		return null;
-	}
-
-	@Override
-	public void ensureRunning() {
-		// TODO what?
-	}
-
-	@Override
-	public Key selectedKey() {
-		return selectedKey;
-	}
-
-	@Override
-	public void select(Key key) {
-		selectedKey = key;
-		selectedAnimation().ensureRunning();
 	}
 
 	@Override

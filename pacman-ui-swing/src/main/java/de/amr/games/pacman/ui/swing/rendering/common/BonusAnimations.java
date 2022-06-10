@@ -36,13 +36,12 @@ import de.amr.games.pacman.ui.swing.rendering.common.BonusAnimations.Key;
 /**
  * @author Armin Reichert
  */
-public class BonusAnimations implements GenericAnimationCollection<Bonus, Key, BufferedImage> {
+public class BonusAnimations extends GenericAnimationCollection<Bonus, Key, BufferedImage> {
 
 	public enum Key {
 		ANIM_SYMBOL, ANIM_VALUE;
 	}
 
-	private Key selectedKey;
 	public final SingleGenericAnimation<BufferedImage> symbolAnimation;
 	public final SingleGenericAnimation<BufferedImage> valueAnimation;
 	public final SingleGenericAnimation<Integer> jumpAnimation;
@@ -54,29 +53,6 @@ public class BonusAnimations implements GenericAnimationCollection<Bonus, Key, B
 		jumpAnimation.frameDuration(10);
 		jumpAnimation.repeatForever();
 		selectedKey = null;
-	}
-
-	@Override
-	public BufferedImage frame(int i) {
-		return null;
-	}
-
-	@Override
-	public void ensureRunning() {
-	}
-
-	@Override
-	public Key selectedKey() {
-		return selectedKey;
-	}
-
-	@Override
-	public void select(Key key) {
-		selectedKey = key;
-		if (key != null) {
-			// key == null is allowed an used for inactive bonus. TODO: good idea?
-			selectedAnimation().ensureRunning();
-		}
 	}
 
 	@Override
