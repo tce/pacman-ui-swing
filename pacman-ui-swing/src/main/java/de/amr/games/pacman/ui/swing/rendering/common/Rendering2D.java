@@ -37,8 +37,8 @@ import java.util.stream.Stream;
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.V2i;
-import de.amr.games.pacman.lib.animation.SingleGenericAnimation;
 import de.amr.games.pacman.lib.animation.GenericAnimationMap;
+import de.amr.games.pacman.lib.animation.SingleGenericAnimation;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
@@ -135,15 +135,15 @@ public interface Rendering2D {
 		if (showHiscoreOnly) {
 			g.drawString("00", t(6), t(2));
 		} else {
-			g.drawString(String.format("%7d", game.scores().gameScore().points), t(1), t(2));
+			g.drawString(String.format("%7d", game.scores.gameScore().points), t(1), t(2));
 			g.setColor(Color.LIGHT_GRAY);
 			g.drawString(String.format("L%d", game.level.number), t(9), t(2));
 		}
 		// Highscore
 		g.setColor(Color.WHITE);
-		g.drawString(String.format("%7d", game.scores().highScore().points), t(15), t(2));
+		g.drawString(String.format("%7d", game.scores.highScore().points), t(15), t(2));
 		g.setColor(Color.LIGHT_GRAY);
-		g.drawString(String.format("L%d", game.scores().highScore().levelNumber), t(23), t(2));
+		g.drawString(String.format("L%d", game.scores.highScore().levelNumber), t(23), t(2));
 		g.translate(0, -3);
 	}
 
