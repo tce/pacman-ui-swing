@@ -61,10 +61,6 @@ public class BonusAnimations implements GenericAnimationCollection<Bonus, Key, B
 	}
 
 	@Override
-	public void setFrameIndex(int index) {
-	}
-
-	@Override
 	public Key selectedKey() {
 		return selectedKey;
 	}

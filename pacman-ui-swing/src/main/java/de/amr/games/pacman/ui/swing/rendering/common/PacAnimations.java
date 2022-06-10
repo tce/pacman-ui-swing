@@ -59,10 +59,6 @@ public class PacAnimations implements
 	}
 
 	@Override
-	public void setFrameIndex(int index) {
-	}
-
-	@Override
 	public Key selectedKey() {
 		return selectedKey;
 	}

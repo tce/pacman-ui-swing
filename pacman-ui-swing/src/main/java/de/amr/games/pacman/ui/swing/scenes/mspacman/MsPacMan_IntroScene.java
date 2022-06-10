@@ -27,14 +27,11 @@ import static de.amr.games.pacman.model.common.world.World.t;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.util.stream.Stream;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.IntroController;
 import de.amr.games.pacman.controller.mspacman.IntroController.State;
-import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.GenericAnimationMap;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
@@ -61,7 +58,6 @@ public class MsPacMan_IntroScene extends GameScene {
 	public void setContext(GameController gameController) {
 		super.setContext(gameController);
 		sceneController = new IntroController(gameController);
-		sceneController.addStateChangeListener(this::onSceneStateChanged);
 		context = sceneController.context();
 	}
 
@@ -84,15 +80,6 @@ public class MsPacMan_IntroScene extends GameScene {
 			return;
 		}
 		sceneController.update();
-	}
-
-	@SuppressWarnings("unchecked")
-	private void onSceneStateChanged(State fromState, State toState) {
-		if (fromState == State.MSPACMAN && toState == State.READY_TO_PLAY) {
-			var munching = (GenericAnimationMap<Direction, BufferedImage>) msPacMan2D.animations.selectedAnimation();
-			munching.get(msPacMan2D.pac.moveDir()).setFrameIndex(2);
-			munching.stop();
-		}
 	}
 
 	@Override

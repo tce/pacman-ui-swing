@@ -71,11 +71,6 @@ public class GhostAnimations implements GenericAnimationCollection<Ghost, Key, B
 	}
 
 	@Override
-	public void setFrameIndex(int index) {
-		// TODO what?
-	}
-
-	@Override
 	public Key selectedKey() {
 		return selectedKey;
 	}
