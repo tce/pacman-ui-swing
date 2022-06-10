@@ -54,6 +54,11 @@ public class PacAnimations implements
 	}
 
 	@Override
+	public BufferedImage frame(int i) {
+		return null;
+	}
+
+	@Override
 	public void ensureRunning() {
 		munching.ensureRunning();
 	}
@@ -70,7 +75,7 @@ public class PacAnimations implements
 	}
 
 	@Override
-	public GenericAnimation getByKey(Key key) {
+	public GenericAnimation<BufferedImage> getByKey(Key key) {
 		return switch (key) {
 		case DYING -> dying;
 		case MUNCHING -> munching;
@@ -78,7 +83,7 @@ public class PacAnimations implements
 	}
 
 	@Override
-	public Stream<GenericAnimation> all() {
+	public Stream<GenericAnimation<BufferedImage>> all() {
 		return Stream.of(munching, dying);
 	}
 

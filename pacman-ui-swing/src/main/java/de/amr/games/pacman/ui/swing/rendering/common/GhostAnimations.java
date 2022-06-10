@@ -66,6 +66,11 @@ public class GhostAnimations implements GenericAnimationCollection<Ghost, Key, B
 	}
 
 	@Override
+	public BufferedImage frame(int i) {
+		return null;
+	}
+
+	@Override
 	public void ensureRunning() {
 		// TODO what?
 	}
@@ -82,7 +87,7 @@ public class GhostAnimations implements GenericAnimationCollection<Ghost, Key, B
 	}
 
 	@Override
-	public GenericAnimation getByKey(Key key) {
+	public GenericAnimation<BufferedImage> getByKey(Key key) {
 		return switch (key) {
 		case ANIM_EYES -> eyes;
 		case ANIM_FLASHING -> flashing;
@@ -93,7 +98,7 @@ public class GhostAnimations implements GenericAnimationCollection<Ghost, Key, B
 	}
 
 	@Override
-	public Stream<GenericAnimation> all() {
+	public Stream<GenericAnimation<BufferedImage>> all() {
 		return Stream.of(eyes, flashing, blue, color, values);
 	}
 

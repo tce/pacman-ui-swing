@@ -57,6 +57,11 @@ public class BonusAnimations implements GenericAnimationCollection<Bonus, Key, B
 	}
 
 	@Override
+	public BufferedImage frame(int i) {
+		return null;
+	}
+
+	@Override
 	public void ensureRunning() {
 	}
 
@@ -75,7 +80,7 @@ public class BonusAnimations implements GenericAnimationCollection<Bonus, Key, B
 	}
 
 	@Override
-	public GenericAnimation getByKey(Key key) {
+	public GenericAnimation<BufferedImage> getByKey(Key key) {
 		return switch (key) {
 		case ANIM_SYMBOL -> symbolAnimation;
 		case ANIM_VALUE -> valueAnimation;
@@ -83,7 +88,7 @@ public class BonusAnimations implements GenericAnimationCollection<Bonus, Key, B
 	}
 
 	@Override
-	public Stream<GenericAnimation> all() {
+	public Stream<GenericAnimation<BufferedImage>> all() {
 		return Stream.of(symbolAnimation, valueAnimation);
 	}
 
