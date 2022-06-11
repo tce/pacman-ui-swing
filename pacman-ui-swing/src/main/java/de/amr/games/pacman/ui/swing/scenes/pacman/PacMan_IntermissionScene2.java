@@ -34,7 +34,6 @@ import de.amr.games.pacman.lib.animation.ThingList;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
-import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
@@ -49,7 +48,6 @@ public class PacMan_IntermissionScene2 extends GameScene {
 
 	private Intermission2Controller sceneController;
 	private Intermission2Controller.Context $;
-	private Ghost2D blinky2D;
 	private ThingList<BufferedImage> blinkyStretchedAnimation;
 	private ThingList<BufferedImage> blinkyDamagedAnimation;
 
@@ -66,7 +64,7 @@ public class PacMan_IntermissionScene2 extends GameScene {
 		sceneController.init();
 		$.pac.setAnimations(new PacAnimations(r2D));
 		$.pac.animations().get().ensureRunning();
-		blinky2D = new Ghost2D($.blinky, game, new GhostAnimations(Ghost.RED_GHOST, r2D));
+		$.blinky.setAnimations(new GhostAnimations(Ghost.RED_GHOST, r2D));
 		blinkyStretchedAnimation = Rendering2D_PacMan.get().createBlinkyStretchedAnimation();
 		blinkyDamagedAnimation = Rendering2D_PacMan.get().createBlinkyDamagedAnimation();
 	}
@@ -83,7 +81,7 @@ public class PacMan_IntermissionScene2 extends GameScene {
 		rpm.drawNail(g, $.nail);
 		r2D.drawPac(g, $.pac);
 		if (sceneController.nailDistance() < 0) {
-			blinky2D.render(g, r2D);
+			r2D.drawGhost(g, $.blinky);
 		} else {
 			drawBlinkyStretched(g, $.nail.position, sceneController.nailDistance() / 4);
 		}
@@ -93,7 +91,7 @@ public class PacMan_IntermissionScene2 extends GameScene {
 		BufferedImage stretchedDress = blinkyStretchedAnimation.frame(stretching);
 		g.drawImage(stretchedDress, (int) (nailPosition.x - 4), (int) (nailPosition.y - 4), null);
 		if (stretching < 3) {
-			blinky2D.render(g, r2D);
+			r2D.drawGhost(g, $.blinky);
 		} else {
 			BufferedImage blinkyDamaged = blinkyDamagedAnimation.frame($.blinky.moveDir() == Direction.UP ? 0 : 1);
 			g.drawImage(blinkyDamaged, (int) ($.blinky.position.x - 4), (int) ($.blinky.position.y - 4), null);

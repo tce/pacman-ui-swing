@@ -23,7 +23,6 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.scenes.common;
 
-import static de.amr.games.pacman.lib.TickTimer.sec_to_ticks;
 import static de.amr.games.pacman.model.common.world.World.t;
 
 import java.awt.Graphics2D;
@@ -45,7 +44,6 @@ import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Bonus2D;
 import de.amr.games.pacman.ui.swing.entity.common.Energizer2D;
-import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.lib.U;
 import de.amr.games.pacman.ui.swing.rendering.common.BonusAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
@@ -59,7 +57,6 @@ import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
  */
 public class PlayScene extends GameScene {
 
-	private Ghost2D[] ghosts2D;
 	private Energizer2D[] energizers2D;
 	private Bonus2D bonus2D;
 	private ThingList<BufferedImage> mazeFlashing;
@@ -68,8 +65,10 @@ public class PlayScene extends GameScene {
 	public void init() {
 		game.pac.setAnimations(new PacAnimations(r2D));
 		game.pac.animations().ifPresent(ThingAnimation::ensureRunning);
-		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, new GhostAnimations(ghost.id, r2D)))
-				.toArray(Ghost2D[]::new);
+		game.ghosts().forEach(ghost -> {
+			ghost.setAnimations(new GhostAnimations(ghost.id, r2D));
+			ghost.animations().get().ensureRunning();
+		});
 		energizers2D = game.level.world.energizerTiles().map(Energizer2D::new).toArray(Energizer2D[]::new);
 		mazeFlashing = r2D.mazeFlashing(r2D.mazeNumber(game.level.number));
 		mazeFlashing.repeat(game.level.numFlashes);
@@ -81,7 +80,6 @@ public class PlayScene extends GameScene {
 	@Override
 	public void update() {
 		updateMaze();
-		updateAnimations();
 		updateSound();
 	}
 
@@ -104,20 +102,6 @@ public class PlayScene extends GameScene {
 		}
 		default -> {
 		}
-		}
-	}
-
-	private void updateAnimations() {
-		long recoveringTicks = sec_to_ticks(2); // TODO not sure about recovering duration
-		boolean recoveringStarts = game.pac.powerTimer.remaining() == recoveringTicks;
-		boolean recovering = game.pac.powerTimer.remaining() <= recoveringTicks;
-		for (var ghost2D : ghosts2D) {
-			if (recoveringStarts) {
-				// TODO avoid cast
-				GhostAnimations animations = (GhostAnimations) ghost2D.animations;
-				animations.startFlashing(game.level.numFlashes, recoveringTicks);
-			}
-			ghost2D.updateAnimation(game.pac.hasPower(), recovering);
 		}
 	}
 
@@ -177,7 +161,7 @@ public class PlayScene extends GameScene {
 
 		bonus2D.render(g, r2D);
 		r2D.drawPac(g, game.pac);
-		Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.render(g, r2D));
+		game.ghosts().forEach(ghost -> r2D.drawGhost(g, ghost));
 
 		DebugDraw.drawPlaySceneDebugInfo(g, gameController);
 	}
@@ -258,7 +242,7 @@ public class PlayScene extends GameScene {
 		case HUNTING -> {
 			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(ThingList::restart);
 			game.pac.animations().get().restart();
-			Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.animations.restart(GhostAnimations.Key.ANIM_COLOR));
+//			Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.animations.restart(GhostAnimations.Key.ANIM_COLOR));
 		}
 		case PACMAN_DYING -> {
 			gameController.state().timer().setSeconds(4.5);

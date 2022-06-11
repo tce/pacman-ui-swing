@@ -32,16 +32,12 @@ import de.amr.games.pacman.lib.animation.ThingAnimationCollection;
 import de.amr.games.pacman.lib.animation.ThingAnimationMap;
 import de.amr.games.pacman.lib.animation.ThingList;
 import de.amr.games.pacman.model.common.actors.Ghost;
-import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations.Key;
+import de.amr.games.pacman.model.common.actors.GhostAnimationKey;
 
 /**
  * @author Armin Reichert
  */
-public class GhostAnimations extends ThingAnimationCollection<Ghost, Key, BufferedImage> {
-
-	public enum Key {
-		ANIM_COLOR, ANIM_EYES, ANIM_VALUE, ANIM_BLUE, ANIM_FLASHING;
-	}
+public class GhostAnimations extends ThingAnimationCollection<Ghost, GhostAnimationKey, BufferedImage> {
 
 	private ThingAnimationMap<Direction, BufferedImage> eyes;
 	private ThingList<BufferedImage> flashing;
@@ -55,6 +51,7 @@ public class GhostAnimations extends ThingAnimationCollection<Ghost, Key, Buffer
 		blue = r2D.createGhostBlueAnimation();
 		color = r2D.createGhostColorAnimation(ghostID);
 		values = r2D.createGhostValueAnimation();
+		select(GhostAnimationKey.ANIM_COLOR);
 	}
 
 	public void startFlashing(int numFlashes, long ticksTotal) {
@@ -65,7 +62,7 @@ public class GhostAnimations extends ThingAnimationCollection<Ghost, Key, Buffer
 	}
 
 	@Override
-	public ThingAnimation<BufferedImage> byKey(Key key) {
+	public ThingAnimation<BufferedImage> byKey(GhostAnimationKey key) {
 		return switch (key) {
 		case ANIM_EYES -> eyes;
 		case ANIM_FLASHING -> flashing;

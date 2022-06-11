@@ -31,7 +31,6 @@ import de.amr.games.pacman.lib.animation.ThingAnimation;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
-import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Flap2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Heart2D;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
@@ -53,8 +52,6 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 
 	private Intermission1Controller sceneController;
 	private Intermission1Controller.Context context;
-	private Ghost2D inky2D;
-	private Ghost2D pinky2D;
 	private Flap2D flap2D;
 	private Heart2D heart2D;
 
@@ -75,8 +72,8 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 		context.msPac.animations().ifPresent(ThingAnimation::ensureRunning);
 		context.pacMan.setAnimations(new MsPacMansHusbandAnimations());
 		context.pacMan.animations().ifPresent(ThingAnimation::ensureRunning);
-		inky2D = new Ghost2D(context.inky, game, new GhostAnimations(Ghost.CYAN_GHOST, r2D));
-		pinky2D = new Ghost2D(context.pinky, game, new GhostAnimations(Ghost.PINK_GHOST, r2D));
+		context.inky.setAnimations(new GhostAnimations(Ghost.CYAN_GHOST, r2D));
+		context.pinky.setAnimations(new GhostAnimations(Ghost.PINK_GHOST, r2D));
 		heart2D = new Heart2D(context.heart);
 		heart2D.setImage(Rendering2D_MsPacMan.get().getHeart());
 	}
@@ -91,8 +88,8 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 		flap2D.render(g, r2D);
 		r2D.drawPac(g, context.msPac);
 		r2D.drawPac(g, context.pacMan);
-		inky2D.render(g, r2D);
-		pinky2D.render(g, r2D);
+		r2D.drawGhost(g, context.inky);
+		r2D.drawGhost(g, context.pinky);
 		heart2D.render(g);
 	}
 }

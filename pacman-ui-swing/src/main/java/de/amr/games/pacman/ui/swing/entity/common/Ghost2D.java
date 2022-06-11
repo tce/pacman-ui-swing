@@ -24,12 +24,9 @@ SOFTWARE.
 package de.amr.games.pacman.ui.swing.entity.common;
 
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 
-import de.amr.games.pacman.lib.animation.ThingAnimationCollection;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Ghost;
-import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations.Key;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**
@@ -40,28 +37,25 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 public class Ghost2D extends GameEntity2D {
 
 	public final Ghost ghost;
-	public final ThingAnimationCollection<Ghost, Key, BufferedImage> animations;
 
-	public Ghost2D(Ghost ghost, GameModel game, ThingAnimationCollection<Ghost, Key, BufferedImage> animations) {
+	public Ghost2D(Ghost ghost, GameModel game) {
 		super(game);
 		this.ghost = ghost;
-		this.animations = animations;
-		animations.select(Key.ANIM_COLOR);
 	}
 
-	public void updateAnimation(boolean frightened, boolean recovering) {
-		Key key = switch (ghost.state) {
-		case DEAD -> ghost.killIndex == -1 ? Key.ANIM_EYES : Key.ANIM_VALUE;
-		case ENTERING_HOUSE -> Key.ANIM_EYES;
-		case FRIGHTENED -> recovering ? Key.ANIM_FLASHING : Key.ANIM_BLUE;
-		case HUNTING_PAC, LEAVING_HOUSE -> Key.ANIM_COLOR;
-		case LOCKED -> recovering ? Key.ANIM_FLASHING : frightened ? Key.ANIM_BLUE : Key.ANIM_COLOR;
-		};
-		animations.select(key);
-	}
+//	public void updateAnimation(boolean frightened, boolean recovering) {
+//		Key key = switch (ghost.state) {
+//		case DEAD -> ghost.killIndex == -1 ? Key.ANIM_EYES : Key.ANIM_VALUE;
+//		case ENTERING_HOUSE -> Key.ANIM_EYES;
+//		case FRIGHTENED -> recovering ? Key.ANIM_FLASHING : Key.ANIM_BLUE;
+//		case HUNTING_PAC, LEAVING_HOUSE -> Key.ANIM_COLOR;
+//		case LOCKED -> recovering ? Key.ANIM_FLASHING : frightened ? Key.ANIM_BLUE : Key.ANIM_COLOR;
+//		};
+//		animations.select(key);
+//	}
 
 	@Override
 	public void render(Graphics2D g, Rendering2D r2D) {
-		r2D.drawEntity(g, ghost, animations.current(ghost));
+		r2D.drawGhost(g, ghost);
 	}
 }

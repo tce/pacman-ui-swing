@@ -36,8 +36,6 @@ import de.amr.games.pacman.lib.animation.ThingAnimation;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
-import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
-import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.shell.Keyboard;
@@ -51,7 +49,6 @@ public class MsPacMan_IntroScene extends GameScene {
 
 	private IntroController sceneController;
 	private IntroController.Context $;
-	private Ghost2D[] ghosts2D;
 
 	@Override
 	public void setContext(GameController gameController) {
@@ -65,8 +62,6 @@ public class MsPacMan_IntroScene extends GameScene {
 		sceneController.restartInInitialState(IntroController.State.START);
 		$.msPacMan.setAnimations(new PacAnimations(r2D));
 		$.msPacMan.animations().ifPresent(ThingAnimation::ensureRunning);
-		ghosts2D = Stream.of($.ghosts).map(ghost -> new Ghost2D(ghost, game, new GhostAnimations(ghost.id, r2D)))
-				.toArray(Ghost2D[]::new);
 	}
 
 	@Override
@@ -92,7 +87,7 @@ public class MsPacMan_IntroScene extends GameScene {
 		} else if (sceneController.state() == State.MSPACMAN || sceneController.state() == State.READY_TO_PLAY) {
 			drawMsPacManText(g);
 		}
-		Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.render(g, r2D));
+		Stream.of($.ghosts).forEach(ghost -> r2D.drawGhost(g, ghost));
 		r2D.drawPac(g, $.msPacMan);
 		r2D.drawCopyright(g, t(6), t(28));
 		r2D.drawCredit(g, gameController.credit());

@@ -29,9 +29,9 @@ import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.pacman.Intermission1Controller;
 import de.amr.games.pacman.lib.animation.ThingAnimation;
 import de.amr.games.pacman.model.common.actors.Ghost;
+import de.amr.games.pacman.model.common.actors.GhostAnimationKey;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
-import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.entity.pacman.BigPacMan2D;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
@@ -47,7 +47,6 @@ public class PacMan_IntermissionScene1 extends GameScene {
 
 	private Intermission1Controller sceneController;
 	private Intermission1Controller.Context $;
-	private Ghost2D blinky2D;
 	private BigPacMan2D bigPacMan2D;
 
 	@Override
@@ -63,7 +62,7 @@ public class PacMan_IntermissionScene1 extends GameScene {
 		sceneController.init();
 		$.pac.setAnimations(new PacAnimations(r2D));
 		$.pac.animations().ifPresent(ThingAnimation::ensureRunning);
-		blinky2D = new Ghost2D($.blinky, game, new GhostAnimations(Ghost.RED_GHOST, r2D));
+		$.blinky.setAnimations(new GhostAnimations(Ghost.RED_GHOST, r2D));
 		bigPacMan2D = new BigPacMan2D($.pac, (Rendering2D_PacMan) r2D);
 		bigPacMan2D.startMunching();
 	}
@@ -71,16 +70,16 @@ public class PacMan_IntermissionScene1 extends GameScene {
 	@Override
 	public void update() {
 		sceneController.update();
-		blinky2D.animations.select(switch ($.blinky.state) {
-		case FRIGHTENED -> GhostAnimations.Key.ANIM_BLUE;
-		case HUNTING_PAC -> GhostAnimations.Key.ANIM_COLOR;
-		default -> blinky2D.animations.selectedKey();
+		$.blinky.animations().get().select(switch ($.blinky.state) {
+		case FRIGHTENED -> GhostAnimationKey.ANIM_BLUE;
+		case HUNTING_PAC -> GhostAnimationKey.ANIM_COLOR;
+		default -> $.blinky.animations().get().selectedKey();
 		});
 	}
 
 	@Override
 	public void render(Graphics2D g) {
-		blinky2D.render(g, r2D);
+		r2D.drawGhost(g, $.blinky);
 		if (sceneController.state() == Intermission1Controller.State.CHASING_PACMAN) {
 			r2D.drawPac(g, $.pac);
 		} else {

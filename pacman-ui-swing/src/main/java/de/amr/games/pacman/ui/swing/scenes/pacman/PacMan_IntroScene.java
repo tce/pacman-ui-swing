@@ -35,12 +35,11 @@ import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.pacman.IntroController;
 import de.amr.games.pacman.controller.pacman.IntroController.State;
 import de.amr.games.pacman.lib.Direction;
+import de.amr.games.pacman.model.common.actors.GhostAnimationKey;
 import de.amr.games.pacman.model.common.actors.GhostState;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
-import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
-import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations.Key;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.shell.Keyboard;
@@ -57,7 +56,6 @@ public class PacMan_IntroScene extends GameScene {
 
 	private IntroController sceneController;
 	private IntroController.Context $;
-	private Ghost2D[] ghosts2D;
 
 	@Override
 	public void setContext(GameController gameController) {
@@ -72,16 +70,15 @@ public class PacMan_IntroScene extends GameScene {
 		sceneController.restartInInitialState(IntroController.State.START);
 		$.pacMan.setAnimations(new PacAnimations(r2D));
 		$.pacMan.animations().get().ensureRunning();
-		ghosts2D = Stream.of($.ghosts).map(ghost -> {
-			Ghost2D ghost2D = new Ghost2D(ghost, game, new GhostAnimations(ghost.id, r2D));
-			return ghost2D;
-		}).toArray(Ghost2D[]::new);
+		Stream.of($.ghosts).forEach(ghost -> {
+			ghost.setAnimations(new GhostAnimations(ghost.id, r2D));
+		});
 	}
 
 	private void onSceneStateChange(State fromState, State toState) {
 		if (fromState == State.CHASING_PAC && toState == State.CHASING_GHOSTS) {
-			for (var ghost2D : ghosts2D) {
-				ghost2D.animations.select(Key.ANIM_BLUE);
+			for (var ghost : $.ghosts) {
+				ghost.animations().get().select(GhostAnimationKey.ANIM_BLUE);
 			}
 		}
 	}
@@ -103,15 +100,15 @@ public class PacMan_IntroScene extends GameScene {
 	private void updateAnimations() {
 		// TODO this is not elegant but works
 		if (sceneController.state() == State.CHASING_GHOSTS) {
-			for (var ghost2D : ghosts2D) {
-				if (ghost2D.ghost.state == GhostState.DEAD && ghost2D.ghost.killIndex != -1) {
-					ghost2D.animations.select(GhostAnimations.Key.ANIM_VALUE);
-					ghost2D.animations.selectedAnimation().ensureRunning();
+			for (var ghost : $.ghosts) {
+				if (ghost.state == GhostState.DEAD && ghost.killIndex != -1) {
+					ghost.animations().get().select(GhostAnimationKey.ANIM_VALUE);
+					ghost.animations().get().selectedAnimation().ensureRunning();
 				} else {
-					ghost2D.animations.select(GhostAnimations.Key.ANIM_BLUE);
-					ghost2D.animations.selectedAnimation().ensureRunning();
-					if (ghost2D.ghost.velocity.length() == 0) {
-						ghost2D.animations.stop(GhostAnimations.Key.ANIM_BLUE);
+					ghost.animations().get().select(GhostAnimationKey.ANIM_BLUE);
+					ghost.animations().get().selectedAnimation().ensureRunning();
+					if (ghost.velocity.length() == 0) {
+						ghost.animations().get().stop(GhostAnimationKey.ANIM_BLUE);
 					}
 				}
 			}
@@ -162,12 +159,12 @@ public class PacMan_IntroScene extends GameScene {
 	private void drawGuys(Graphics2D g, int offset) {
 		Graphics2D gg = (Graphics2D) g.create();
 		gg.translate(offset, 0);
-		ghosts2D[1].render(gg, r2D);
-		ghosts2D[2].render(gg, r2D);
-		ghosts2D[0].render(g, r2D);
-		ghosts2D[3].render(g, r2D);
-		r2D.drawPac(g, $.pacMan);
+		r2D.drawGhost(gg, $.ghosts[1]);
+		r2D.drawGhost(gg, $.ghosts[2]);
 		gg.dispose();
+		r2D.drawGhost(g, $.ghosts[0]);
+		r2D.drawGhost(g, $.ghosts[3]);
+		r2D.drawPac(g, $.pacMan);
 	}
 
 	private void drawGallery(Graphics2D g) {

@@ -41,6 +41,7 @@ import de.amr.games.pacman.lib.animation.ThingAnimationMap;
 import de.amr.games.pacman.lib.animation.ThingList;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Entity;
+import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.Pac;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.model.common.world.World;
@@ -106,6 +107,10 @@ public interface Rendering2D {
 
 	default void drawPac(Graphics2D g, Pac pac) {
 		drawEntity(g, pac, (BufferedImage) pac.animations().get().current(pac));
+	}
+
+	default void drawGhost(Graphics2D g, Ghost ghost) {
+		drawEntity(g, ghost, (BufferedImage) ghost.animations().get().current(ghost));
 	}
 
 	default void drawSpriteCenteredOverBox(Graphics2D g, BufferedImage sprite, double x, double y) {
