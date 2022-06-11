@@ -27,7 +27,6 @@ import static de.amr.games.pacman.model.common.world.World.t;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.stream.Stream;
 
 import javax.sound.sampled.Clip;
 
@@ -44,7 +43,6 @@ import de.amr.games.pacman.model.common.actors.PacAnimationKey;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Bonus2D;
-import de.amr.games.pacman.ui.swing.entity.common.Energizer2D;
 import de.amr.games.pacman.ui.swing.lib.U;
 import de.amr.games.pacman.ui.swing.rendering.common.BonusAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
@@ -58,7 +56,6 @@ import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
  */
 public class PlayScene extends GameScene {
 
-	private Energizer2D[] energizers2D;
 	private Bonus2D bonus2D;
 	private ThingList<BufferedImage> mazeFlashing;
 
@@ -70,7 +67,6 @@ public class PlayScene extends GameScene {
 			ghost.setAnimations(new GhostAnimations(ghost.id, r2D));
 			ghost.animations().get().ensureRunning();
 		});
-		energizers2D = game.level.world.energizerTiles().map(Energizer2D::new).toArray(Energizer2D[]::new);
 		mazeFlashing = r2D.mazeFlashing(r2D.mazeNumber(game.level.number));
 		mazeFlashing.repeat(game.level.numFlashes);
 		mazeFlashing.reset();
@@ -137,20 +133,11 @@ public class PlayScene extends GameScene {
 				&& gameController.state() != GameState.GAME_OVER;
 
 		r2D.drawScore(g, game, showHighScoreOnly);
-		if (showLivesCounter) {
-			r2D.drawLivesCounter(g, game);
-		}
-		if (showCredit) {
-			r2D.drawCredit(g, gameController.credit());
-		}
-		if (showLevelCounter) {
-			r2D.drawLevelCounter(g, game);
-		}
 
 		r2D.drawMaze(g, r2D.mazeNumber(game.level.number), 0, t(3), mazeFlashing.isRunning());
 		if (!mazeFlashing.isRunning()) {
-			r2D.drawEatenFood(g, game.level.world.tiles(), game.level.world::containsEatenFood);
-			Stream.of(energizers2D).forEach(energizer2D -> energizer2D.render(g));
+			r2D.drawDarkTiles(g, game.level.world.tiles(), tile -> game.level.world.containsEatenFood(tile)
+					|| game.level.world.isEnergizerTile(tile) && !game.energizerPulse.frame());
 		}
 		DebugDraw.drawMazeStructure(g, game);
 
@@ -165,6 +152,16 @@ public class PlayScene extends GameScene {
 		game.ghosts().forEach(ghost -> r2D.drawGhost(g, ghost));
 
 		DebugDraw.drawPlaySceneDebugInfo(g, gameController);
+
+		if (showLivesCounter) {
+			r2D.drawLivesCounter(g, game);
+		}
+		if (showLevelCounter) {
+			r2D.drawLevelCounter(g, game);
+		}
+		if (showCredit) {
+			r2D.drawCredit(g, gameController.credit());
+		}
 	}
 
 	@Override
@@ -234,16 +231,13 @@ public class PlayScene extends GameScene {
 		switch (e.newGameState) {
 		case READY -> {
 			SoundManager.get().stopAll();
-			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(ThingList::reset);
 			r2D.mazeFlashing(r2D.mazeNumber(game.level.number)).reset();
 			if (!playing) {
 				SoundManager.get().play(GameSound.GAME_READY);
 			}
 		}
 		case HUNTING -> {
-			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(ThingList::restart);
 			game.pac.animations().get().restart();
-//			Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.animations.restart(GhostAnimations.Key.ANIM_COLOR));
 		}
 		case PACMAN_DYING -> {
 			gameController.state().timer().setSeconds(4.5);
@@ -272,7 +266,6 @@ public class PlayScene extends GameScene {
 			mazeFlashing = r2D.mazeFlashing(r2D.mazeNumber(game.level.number));
 		}
 		case GAME_OVER -> {
-			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(ThingList::stop);
 			SoundManager.get().stopAll();
 		}
 		default -> {

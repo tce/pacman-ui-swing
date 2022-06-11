@@ -130,9 +130,9 @@ public interface Rendering2D {
 		drawEntity(g, bonus, (BufferedImage) bonus.animations().get().current(bonus));
 	}
 
-	default void drawEatenFood(Graphics2D g, Stream<V2i> tiles, Predicate<V2i> eaten) {
+	default void drawDarkTiles(Graphics2D g, Stream<V2i> tiles, Predicate<V2i> fnDark) {
 		g.setColor(Color.BLACK);
-		tiles.filter(eaten).forEach(tile -> {
+		tiles.filter(fnDark).forEach(tile -> {
 			g.fillRect(tile.x * TS, tile.y * TS, TS, TS);
 		});
 	}
