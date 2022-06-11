@@ -26,16 +26,13 @@ package de.amr.games.pacman.ui.swing.scenes.common;
 import static de.amr.games.pacman.model.common.world.World.t;
 
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 
 import javax.sound.sampled.Clip;
 
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameStateChangeEvent;
-import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
 import de.amr.games.pacman.lib.animation.ThingAnimation;
-import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.GhostState;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
@@ -51,8 +48,6 @@ import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
  */
 public class PlayScene extends GameScene {
 
-	private SimpleThingAnimation<BufferedImage> mazeFlashing;
-
 	@Override
 	public void init() {
 		game.pac.setAnimations(new PacAnimations(r2D));
@@ -61,39 +56,14 @@ public class PlayScene extends GameScene {
 			ghost.setAnimations(new GhostAnimations(ghost.id, r2D));
 			ghost.animations().get().ensureRunning();
 		});
-		mazeFlashing = r2D.mazeFlashing(r2D.mazeNumber(game.level.number));
-		mazeFlashing.repeat(game.level.numFlashes);
-		mazeFlashing.reset();
+		game.mazeFlashingAnimation = r2D.mazeFlashing(r2D.mazeNumber(game.level.number));
 		game.bonus().setAnimations(new BonusAnimations(r2D));
 		game.bonus().setInactive();
 	}
 
 	@Override
 	public void update() {
-		updateMaze();
 		updateSound();
-	}
-
-	// TODO check this
-	private void updateMaze() {
-		switch (gameController.state()) {
-		case LEVEL_COMPLETE -> {
-			if (mazeFlashing.isComplete()) {
-				gameController.state().timer().expire();
-			} else if (gameController.state().timer().atSecond(2)) {
-				game.ghosts().forEach(Ghost::hide);
-			} else if (gameController.state().timer().atSecond(3)) {
-				mazeFlashing.restart();
-			} else {
-				mazeFlashing.advance();
-			}
-		}
-		case LEVEL_STARTING -> {
-			gameController.state().timer().expire();
-		}
-		default -> {
-		}
-		}
 	}
 
 	private void updateSound() {
@@ -133,8 +103,10 @@ public class PlayScene extends GameScene {
 
 		r2D.drawScore(g, game, showHighScoreOnly);
 
-		r2D.drawMaze(g, r2D.mazeNumber(game.level.number), 0, t(3), mazeFlashing.isRunning());
-		if (!mazeFlashing.isRunning()) {
+		if (game.mazeFlashingAnimation.isRunning()) {
+			r2D.drawMaze(g, r2D.mazeNumber(game.level.number), 0, t(3), true);
+		} else {
+			r2D.drawMaze(g, r2D.mazeNumber(game.level.number), 0, t(3), false);
 			r2D.drawDarkTiles(g, game.level.world.tiles(), tile -> game.level.world.containsEatenFood(tile)
 					|| game.level.world.isEnergizerTile(tile) && !game.energizerPulse.frame());
 		}
@@ -227,9 +199,11 @@ public class PlayScene extends GameScene {
 		case GHOST_DYING -> {
 			SoundManager.get().play(GameSound.GHOST_EATEN);
 		}
+		case LEVEL_STARTING -> {
+			gameController.state().timer().expire();
+		}
 		case LEVEL_COMPLETE -> {
 			SoundManager.get().stopAll();
-			mazeFlashing = r2D.mazeFlashing(r2D.mazeNumber(game.level.number));
 		}
 		case GAME_OVER -> {
 			SoundManager.get().stopAll();

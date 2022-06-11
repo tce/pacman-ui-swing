@@ -98,7 +98,7 @@ public interface Rendering2D {
 
 	SimpleThingAnimation<BufferedImage> mazeFlashing(int mazeNumber);
 
-	void drawMaze(Graphics2D g, int mazeNumber, int i, int t, boolean running);
+	void drawMaze(Graphics2D g, int mazeNumber, int i, int t, boolean flashing);
 
 	// Drawing
 
