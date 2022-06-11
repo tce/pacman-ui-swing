@@ -49,6 +49,6 @@ public class Pac2D extends GameEntity2D {
 
 	@Override
 	public void render(Graphics2D g, Rendering2D r2D) {
-		r2D.drawEntity(g, pac, animations.currentSprite(pac));
+		r2D.drawEntity(g, pac, animations.current(pac));
 	}
 }

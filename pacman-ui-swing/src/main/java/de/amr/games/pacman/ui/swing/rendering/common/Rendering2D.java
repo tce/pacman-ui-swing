@@ -37,8 +37,8 @@ import java.util.stream.Stream;
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.V2i;
-import de.amr.games.pacman.lib.animation.GenericAnimationMap;
-import de.amr.games.pacman.lib.animation.SingleGenericAnimation;
+import de.amr.games.pacman.lib.animation.ThingAnimationMap;
+import de.amr.games.pacman.lib.animation.ThingList;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
@@ -67,23 +67,23 @@ public interface Rendering2D {
 
 	// Animations
 
-	GenericAnimationMap<Direction, BufferedImage> createPacMunchingAnimations();
+	ThingAnimationMap<Direction, BufferedImage> createPacMunchingAnimations();
 
-	SingleGenericAnimation<BufferedImage> createPacDyingAnimation();
+	ThingList<BufferedImage> createPacDyingAnimation();
 
-	GenericAnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID);
+	ThingAnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID);
 
-	SingleGenericAnimation<BufferedImage> createGhostBlueAnimation();
+	ThingList<BufferedImage> createGhostBlueAnimation();
 
-	SingleGenericAnimation<BufferedImage> createGhostFlashingAnimation();
+	ThingList<BufferedImage> createGhostFlashingAnimation();
 
-	GenericAnimationMap<Direction, BufferedImage> createGhostEyesAnimation();
+	ThingAnimationMap<Direction, BufferedImage> createGhostEyesAnimation();
 
-	SingleGenericAnimation<BufferedImage> createGhostValueAnimation();
+	ThingList<BufferedImage> createGhostValueAnimation();
 
-	SingleGenericAnimation<BufferedImage> createBonusSymbolAnimation();
+	ThingList<BufferedImage> createBonusSymbolAnimation();
 
-	SingleGenericAnimation<BufferedImage> createBonusValueAnimation();
+	ThingList<BufferedImage> createBonusValueAnimation();
 
 	// Maze
 
@@ -91,7 +91,7 @@ public interface Rendering2D {
 
 	Color getFoodColor(int mazeNumber);
 
-	SingleGenericAnimation<BufferedImage> mazeFlashing(int mazeNumber);
+	ThingList<BufferedImage> mazeFlashing(int mazeNumber);
 
 	void drawMaze(Graphics2D g, int mazeNumber, int i, int t, boolean running);
 

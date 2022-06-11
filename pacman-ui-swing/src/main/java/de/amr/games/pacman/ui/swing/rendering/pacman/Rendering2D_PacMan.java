@@ -38,8 +38,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.GenericAnimationMap;
-import de.amr.games.pacman.lib.animation.SingleGenericAnimation;
+import de.amr.games.pacman.lib.animation.ThingAnimationMap;
+import de.amr.games.pacman.lib.animation.ThingList;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.assets.Spritesheet;
@@ -78,11 +78,11 @@ public class Rendering2D_PacMan implements Rendering2D {
 
 	private final Spritesheet ss;
 	private final BufferedImage mazeFull;
-	private final SingleGenericAnimation<BufferedImage> mazeFlashingAnim;
+	private final ThingList<BufferedImage> mazeFlashingAnim;
 	private final Font font;
 
-	private final SingleGenericAnimation<BufferedImage> blinkyHalfNaked;
-	private final SingleGenericAnimation<BufferedImage> blinkyPatched;
+	private final ThingList<BufferedImage> blinkyHalfNaked;
+	private final ThingList<BufferedImage> blinkyPatched;
 	private final BufferedImage nailSprite;
 
 	private Rendering2D_PacMan(String path, int rasterSize) {
@@ -92,14 +92,14 @@ public class Rendering2D_PacMan implements Rendering2D {
 		mazeFull = image("/pacman/graphics/maze_full.png");
 		var mazeEmptyDark = image("/pacman/graphics/maze_empty.png");
 		var mazeEmptyBright = ss.createBrightEffect(mazeEmptyDark, new Color(33, 33, 255), Color.BLACK);
-		mazeFlashingAnim = new SingleGenericAnimation<>(mazeEmptyBright, mazeEmptyDark);
+		mazeFlashingAnim = new ThingList<>(mazeEmptyBright, mazeEmptyDark);
 		mazeFlashingAnim.frameDuration(15);
 
-		blinkyPatched = new SingleGenericAnimation<>(ss.tile(10, 7), ss.tile(11, 7));
+		blinkyPatched = new ThingList<>(ss.tile(10, 7), ss.tile(11, 7));
 		blinkyPatched.frameDuration(4);
 		blinkyPatched.repeatForever();
 
-		blinkyHalfNaked = new SingleGenericAnimation<>(ss.tiles(8, 8, 2, 1), ss.tiles(10, 8, 2, 1));
+		blinkyHalfNaked = new ThingList<>(ss.tiles(8, 8, 2, 1), ss.tiles(10, 8, 2, 1));
 		blinkyHalfNaked.frameDuration(4);
 		blinkyHalfNaked.repeatForever();
 
@@ -136,8 +136,8 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public SingleGenericAnimation<BufferedImage> createPacDyingAnimation() {
-		var animation = new SingleGenericAnimation<>( //
+	public ThingList<BufferedImage> createPacDyingAnimation() {
+		var animation = new ThingList<>( //
 				ss.tile(3, 0), ss.tile(4, 0), ss.tile(5, 0), ss.tile(6, 0), //
 				ss.tile(7, 0), ss.tile(8, 0), ss.tile(9, 0), ss.tile(10, 0), //
 				ss.tile(11, 0), ss.tile(12, 0), ss.tile(13, 0));
@@ -146,12 +146,12 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public GenericAnimationMap<Direction, BufferedImage> createPacMunchingAnimations() {
-		GenericAnimationMap<Direction, BufferedImage> munching = new GenericAnimationMap<>(4);
+	public ThingAnimationMap<Direction, BufferedImage> createPacMunchingAnimations() {
+		ThingAnimationMap<Direction, BufferedImage> munching = new ThingAnimationMap<>(4);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
 			BufferedImage wide_open = ss.tile(0, d), open = ss.tile(1, d), closed = ss.tile(2, 0);
-			var animation = new SingleGenericAnimation<>(closed, open, wide_open, open);
+			var animation = new ThingList<>(closed, open, wide_open, open);
 			animation.frameDuration(2);
 			animation.repeatForever();
 			munching.put(dir, animation);
@@ -160,10 +160,10 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public GenericAnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID) {
-		GenericAnimationMap<Direction, BufferedImage> map = new GenericAnimationMap<>(4);
+	public ThingAnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID) {
+		ThingAnimationMap<Direction, BufferedImage> map = new ThingAnimationMap<>(4);
 		for (Direction dir : Direction.values()) {
-			var animation = new SingleGenericAnimation<>(ss.tile(2 * index(dir), 4 + ghostID),
+			var animation = new ThingList<>(ss.tile(2 * index(dir), 4 + ghostID),
 					ss.tile(2 * index(dir) + 1, 4 + ghostID));
 			animation.frameDuration(8);
 			animation.repeatForever();
@@ -173,62 +173,62 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public SingleGenericAnimation<BufferedImage> createGhostBlueAnimation() {
-		var animation = new SingleGenericAnimation<>(ss.tile(8, 4), ss.tile(9, 4));
+	public ThingList<BufferedImage> createGhostBlueAnimation() {
+		var animation = new ThingList<>(ss.tile(8, 4), ss.tile(9, 4));
 		animation.frameDuration(8);
 		animation.repeatForever();
 		return animation;
 	}
 
 	@Override
-	public SingleGenericAnimation<BufferedImage> createGhostFlashingAnimation() {
-		var animation = new SingleGenericAnimation<>(ss.tile(8, 4), ss.tile(9, 4), ss.tile(10, 4), ss.tile(11, 4));
+	public ThingList<BufferedImage> createGhostFlashingAnimation() {
+		var animation = new ThingList<>(ss.tile(8, 4), ss.tile(9, 4), ss.tile(10, 4), ss.tile(11, 4));
 		animation.frameDuration(4);
 		return animation;
 	}
 
 	@Override
-	public GenericAnimationMap<Direction, BufferedImage> createGhostEyesAnimation() {
-		GenericAnimationMap<Direction, BufferedImage> ghostEyesAnimsByDir = new GenericAnimationMap<>(4);
+	public ThingAnimationMap<Direction, BufferedImage> createGhostEyesAnimation() {
+		ThingAnimationMap<Direction, BufferedImage> ghostEyesAnimsByDir = new ThingAnimationMap<>(4);
 		for (Direction dir : Direction.values()) {
-			ghostEyesAnimsByDir.put(dir, new SingleGenericAnimation<>(ss.tile(8 + index(dir), 5)));
+			ghostEyesAnimsByDir.put(dir, new ThingList<>(ss.tile(8 + index(dir), 5)));
 		}
 		return ghostEyesAnimsByDir;
 	}
 
 	@Override
-	public SingleGenericAnimation<BufferedImage> createGhostValueAnimation() {
-		return new SingleGenericAnimation<>(ss.tile(0, 8), ss.tile(1, 8), ss.tile(2, 8), ss.tile(3, 8));
+	public ThingList<BufferedImage> createGhostValueAnimation() {
+		return new ThingList<>(ss.tile(0, 8), ss.tile(1, 8), ss.tile(2, 8), ss.tile(3, 8));
 	}
 
 	@Override
-	public SingleGenericAnimation<BufferedImage> createBonusSymbolAnimation() {
-		return new SingleGenericAnimation<>(ss.tile(2, 3), ss.tile(3, 3), ss.tile(4, 3), ss.tile(5, 3), ss.tile(6, 3),
+	public ThingList<BufferedImage> createBonusSymbolAnimation() {
+		return new ThingList<>(ss.tile(2, 3), ss.tile(3, 3), ss.tile(4, 3), ss.tile(5, 3), ss.tile(6, 3),
 				ss.tile(7, 3), ss.tile(8, 3), ss.tile(9, 3));
 	}
 
 	@Override
-	public SingleGenericAnimation<BufferedImage> createBonusValueAnimation() {
-		return new SingleGenericAnimation<>(ss.tile(0, 9), ss.tile(1, 9), ss.tile(2, 9), ss.tile(3, 9),
+	public ThingList<BufferedImage> createBonusValueAnimation() {
+		return new ThingList<>(ss.tile(0, 9), ss.tile(1, 9), ss.tile(2, 9), ss.tile(3, 9),
 				ss.tiles(4, 9, 2, 1), // left-aligned
 				ss.tiles(3, 10, 3, 1), ss.tiles(3, 11, 3, 1), ss.tiles(3, 12, 3, 1));
 	}
 
 	// Pac-Man specific
 
-	public SingleGenericAnimation<BufferedImage> createBigPacManMunchingAnimation() {
-		var animation = new SingleGenericAnimation<>(ss.tiles(2, 1, 2, 2), ss.tiles(4, 1, 2, 2), ss.tiles(6, 1, 2, 2));
+	public ThingList<BufferedImage> createBigPacManMunchingAnimation() {
+		var animation = new ThingList<>(ss.tiles(2, 1, 2, 2), ss.tiles(4, 1, 2, 2), ss.tiles(6, 1, 2, 2));
 		animation.frameDuration(4);
 		animation.repeatForever();
 		return animation;
 	}
 
-	public SingleGenericAnimation<BufferedImage> createBlinkyStretchedAnimation() {
-		return new SingleGenericAnimation<>(ss.tile(9, 6), ss.tile(10, 6), ss.tile(11, 6), ss.tile(12, 6));
+	public ThingList<BufferedImage> createBlinkyStretchedAnimation() {
+		return new ThingList<>(ss.tile(9, 6), ss.tile(10, 6), ss.tile(11, 6), ss.tile(12, 6));
 	}
 
-	public SingleGenericAnimation<BufferedImage> createBlinkyDamagedAnimation() {
-		return new SingleGenericAnimation<>(ss.tile(8, 7), ss.tile(9, 7));
+	public ThingList<BufferedImage> createBlinkyDamagedAnimation() {
+		return new ThingList<>(ss.tile(8, 7), ss.tile(9, 7));
 	}
 
 	// Maze
@@ -239,7 +239,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public SingleGenericAnimation<BufferedImage> mazeFlashing(int mazeNumber) {
+	public ThingList<BufferedImage> mazeFlashing(int mazeNumber) {
 		return mazeFlashingAnim;
 	}
 

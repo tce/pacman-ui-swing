@@ -27,36 +27,36 @@ package de.amr.games.pacman.ui.swing.rendering.common;
 import java.awt.image.BufferedImage;
 import java.util.stream.Stream;
 
-import de.amr.games.pacman.lib.animation.GenericAnimation;
-import de.amr.games.pacman.lib.animation.GenericAnimationCollection;
-import de.amr.games.pacman.lib.animation.SingleGenericAnimation;
+import de.amr.games.pacman.lib.animation.ThingAnimation;
+import de.amr.games.pacman.lib.animation.ThingAnimationCollection;
+import de.amr.games.pacman.lib.animation.ThingList;
 import de.amr.games.pacman.model.common.actors.Bonus;
 import de.amr.games.pacman.ui.swing.rendering.common.BonusAnimations.Key;
 
 /**
  * @author Armin Reichert
  */
-public class BonusAnimations extends GenericAnimationCollection<Bonus, Key, BufferedImage> {
+public class BonusAnimations extends ThingAnimationCollection<Bonus, Key, BufferedImage> {
 
 	public enum Key {
 		ANIM_SYMBOL, ANIM_VALUE;
 	}
 
-	public final SingleGenericAnimation<BufferedImage> symbolAnimation;
-	public final SingleGenericAnimation<BufferedImage> valueAnimation;
-	public final SingleGenericAnimation<Integer> jumpAnimation;
+	public final ThingList<BufferedImage> symbolAnimation;
+	public final ThingList<BufferedImage> valueAnimation;
+	public final ThingList<Integer> jumpAnimation;
 
 	public BonusAnimations(Rendering2D r2D) {
 		symbolAnimation = r2D.createBonusSymbolAnimation();
 		valueAnimation = r2D.createBonusValueAnimation();
-		jumpAnimation = new SingleGenericAnimation<>(2, -2);
+		jumpAnimation = new ThingList<>(2, -2);
 		jumpAnimation.frameDuration(10);
 		jumpAnimation.repeatForever();
 		selectedKey = null;
 	}
 
 	@Override
-	public GenericAnimation<BufferedImage> getByKey(Key key) {
+	public ThingAnimation<BufferedImage> byKey(Key key) {
 		return switch (key) {
 		case ANIM_SYMBOL -> symbolAnimation;
 		case ANIM_VALUE -> valueAnimation;
@@ -64,12 +64,12 @@ public class BonusAnimations extends GenericAnimationCollection<Bonus, Key, Buff
 	}
 
 	@Override
-	public Stream<GenericAnimation<BufferedImage>> all() {
+	public Stream<ThingAnimation<BufferedImage>> all() {
 		return Stream.of(symbolAnimation, valueAnimation);
 	}
 
 	@Override
-	public BufferedImage currentSprite(Bonus bonus) {
+	public BufferedImage current(Bonus bonus) {
 		if (selectedKey == null) {
 			return null;
 		}

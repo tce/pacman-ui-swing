@@ -28,24 +28,24 @@ import java.awt.image.BufferedImage;
 import java.util.stream.Stream;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.GenericAnimation;
-import de.amr.games.pacman.lib.animation.GenericAnimationCollection;
-import de.amr.games.pacman.lib.animation.GenericAnimationMap;
-import de.amr.games.pacman.lib.animation.SingleGenericAnimation;
+import de.amr.games.pacman.lib.animation.ThingAnimation;
+import de.amr.games.pacman.lib.animation.ThingAnimationCollection;
+import de.amr.games.pacman.lib.animation.ThingAnimationMap;
+import de.amr.games.pacman.lib.animation.ThingList;
 import de.amr.games.pacman.model.common.actors.Pac;
 
 /**
  * @author Armin Reichert
  */
-public class PacAnimations extends GenericAnimationCollection<Pac, PacAnimations.Key, BufferedImage> {
+public class PacAnimations extends ThingAnimationCollection<Pac, PacAnimations.Key, BufferedImage> {
 
 	public enum Key {
 		MUNCHING, DYING;
 	}
 
 	private Key selectedKey;
-	protected GenericAnimationMap<Direction, BufferedImage> munching;
-	protected SingleGenericAnimation<BufferedImage> dying;
+	protected ThingAnimationMap<Direction, BufferedImage> munching;
+	protected ThingList<BufferedImage> dying;
 
 	public PacAnimations(Rendering2D r2D) {
 		munching = r2D.createPacMunchingAnimations();
@@ -58,7 +58,7 @@ public class PacAnimations extends GenericAnimationCollection<Pac, PacAnimations
 	}
 
 	@Override
-	public GenericAnimation<BufferedImage> getByKey(Key key) {
+	public ThingAnimation<BufferedImage> byKey(Key key) {
 		return switch (key) {
 		case DYING -> dying;
 		case MUNCHING -> munching;
@@ -66,12 +66,12 @@ public class PacAnimations extends GenericAnimationCollection<Pac, PacAnimations
 	}
 
 	@Override
-	public Stream<GenericAnimation<BufferedImage>> all() {
+	public Stream<ThingAnimation<BufferedImage>> all() {
 		return Stream.of(munching, dying);
 	}
 
 	@Override
-	public BufferedImage currentSprite(Pac pac) {
+	public BufferedImage current(Pac pac) {
 		return switch (selectedKey) {
 		case DYING -> dying.animate();
 		case MUNCHING -> {

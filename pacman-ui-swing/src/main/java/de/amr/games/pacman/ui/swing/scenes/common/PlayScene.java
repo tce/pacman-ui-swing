@@ -35,7 +35,7 @@ import javax.sound.sampled.Clip;
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameStateChangeEvent;
-import de.amr.games.pacman.lib.animation.SingleGenericAnimation;
+import de.amr.games.pacman.lib.animation.ThingList;
 import de.amr.games.pacman.model.common.GameVariant;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.GhostState;
@@ -62,7 +62,7 @@ public class PlayScene extends GameScene {
 	private Ghost2D[] ghosts2D;
 	private Energizer2D[] energizers2D;
 	private Bonus2D bonus2D;
-	private SingleGenericAnimation<BufferedImage> mazeFlashing;
+	private ThingList<BufferedImage> mazeFlashing;
 
 	@Override
 	public void init() {
@@ -248,14 +248,14 @@ public class PlayScene extends GameScene {
 		switch (e.newGameState) {
 		case READY -> {
 			SoundManager.get().stopAll();
-			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(SingleGenericAnimation::reset);
+			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(ThingList::reset);
 			r2D.mazeFlashing(r2D.mazeNumber(game.level.number)).reset();
 			if (!playing) {
 				SoundManager.get().play(GameSound.GAME_READY);
 			}
 		}
 		case HUNTING -> {
-			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(SingleGenericAnimation::restart);
+			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(ThingList::restart);
 			pac2D.animations.restart();
 			Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.animations.restart(GhostAnimations.Key.ANIM_COLOR));
 		}
@@ -286,7 +286,7 @@ public class PlayScene extends GameScene {
 			mazeFlashing = r2D.mazeFlashing(r2D.mazeNumber(game.level.number));
 		}
 		case GAME_OVER -> {
-			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(SingleGenericAnimation::stop);
+			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(ThingList::stop);
 			SoundManager.get().stopAll();
 		}
 		default -> {

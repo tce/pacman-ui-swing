@@ -27,27 +27,27 @@ import java.awt.image.BufferedImage;
 import java.util.stream.Stream;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.GenericAnimation;
-import de.amr.games.pacman.lib.animation.GenericAnimationCollection;
-import de.amr.games.pacman.lib.animation.GenericAnimationMap;
-import de.amr.games.pacman.lib.animation.SingleGenericAnimation;
+import de.amr.games.pacman.lib.animation.ThingAnimation;
+import de.amr.games.pacman.lib.animation.ThingAnimationCollection;
+import de.amr.games.pacman.lib.animation.ThingAnimationMap;
+import de.amr.games.pacman.lib.animation.ThingList;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations.Key;
 
 /**
  * @author Armin Reichert
  */
-public class GhostAnimations extends GenericAnimationCollection<Ghost, Key, BufferedImage> {
+public class GhostAnimations extends ThingAnimationCollection<Ghost, Key, BufferedImage> {
 
 	public enum Key {
 		ANIM_COLOR, ANIM_EYES, ANIM_VALUE, ANIM_BLUE, ANIM_FLASHING;
 	}
 
-	private GenericAnimationMap<Direction, BufferedImage> eyes;
-	private SingleGenericAnimation<BufferedImage> flashing;
-	private SingleGenericAnimation<BufferedImage> blue;
-	private GenericAnimationMap<Direction, BufferedImage> color;
-	private SingleGenericAnimation<BufferedImage> values;
+	private ThingAnimationMap<Direction, BufferedImage> eyes;
+	private ThingList<BufferedImage> flashing;
+	private ThingList<BufferedImage> blue;
+	private ThingAnimationMap<Direction, BufferedImage> color;
+	private ThingList<BufferedImage> values;
 
 	public GhostAnimations(int ghostID, Rendering2D r2D) {
 		eyes = r2D.createGhostEyesAnimation();
@@ -65,7 +65,7 @@ public class GhostAnimations extends GenericAnimationCollection<Ghost, Key, Buff
 	}
 
 	@Override
-	public GenericAnimation<BufferedImage> getByKey(Key key) {
+	public ThingAnimation<BufferedImage> byKey(Key key) {
 		return switch (key) {
 		case ANIM_EYES -> eyes;
 		case ANIM_FLASHING -> flashing;
@@ -76,12 +76,12 @@ public class GhostAnimations extends GenericAnimationCollection<Ghost, Key, Buff
 	}
 
 	@Override
-	public Stream<GenericAnimation<BufferedImage>> all() {
+	public Stream<ThingAnimation<BufferedImage>> all() {
 		return Stream.of(eyes, flashing, blue, color, values);
 	}
 
 	@Override
-	public BufferedImage currentSprite(Ghost ghost) {
+	public BufferedImage current(Ghost ghost) {
 		return switch (selectedKey) {
 		case ANIM_EYES -> eyes.get(ghost.wishDir()).frame();
 		case ANIM_FLASHING -> flashing.animate();
