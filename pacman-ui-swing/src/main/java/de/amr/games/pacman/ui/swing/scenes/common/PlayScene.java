@@ -37,10 +37,8 @@ import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
 import de.amr.games.pacman.lib.animation.ThingAnimation;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.GhostState;
-import de.amr.games.pacman.model.common.actors.PacAnimationKey;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
-import de.amr.games.pacman.ui.swing.lib.U;
 import de.amr.games.pacman.ui.swing.rendering.common.BonusAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
@@ -110,6 +108,11 @@ public class PlayScene extends GameScene {
 			if (game.huntingTimer.tick() == 0) {
 				SoundManager.get().stopSirens();
 				SoundManager.get().startSiren(game.huntingTimer.phase() / 2);
+			}
+		}
+		case PACMAN_DYING -> {
+			if (gameController.state().timer().atSecond(2)) {
+				SoundManager.get().play(GameSound.PACMAN_DEATH);
 			}
 		}
 		default -> {
@@ -218,29 +221,10 @@ public class PlayScene extends GameScene {
 				SoundManager.get().play(GameSound.GAME_READY);
 			}
 		}
-		case HUNTING -> {
-			game.pac.animations().get().restart();
-		}
 		case PACMAN_DYING -> {
-			gameController.state().timer().setSeconds(4.5);
-			gameController.state().timer().start();
 			SoundManager.get().stopAll();
-			game.pac.animations().get().select(PacAnimationKey.ANIM_DYING);
-			game.pac.animations().get().selectedAnimation().stop();
-			U.afterSeconds(1, () -> {
-				game.ghosts().forEach(Ghost::hide);
-			});
-			U.afterSeconds(2, () -> {
-				SoundManager.get().play(GameSound.PACMAN_DEATH);
-				game.pac.animations().get().selectedAnimation().run();
-			});
-			U.afterSeconds(4, () -> {
-				game.pac.hide();
-				game.pac.animations().get().select(PacAnimationKey.ANIM_MUNCHING);
-			});
 		}
 		case GHOST_DYING -> {
-			game.pac.hide();
 			SoundManager.get().play(GameSound.GHOST_EATEN);
 		}
 		case LEVEL_COMPLETE -> {
