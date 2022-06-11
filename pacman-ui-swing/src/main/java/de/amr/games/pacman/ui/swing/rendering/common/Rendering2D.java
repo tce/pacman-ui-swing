@@ -120,15 +120,25 @@ public interface Rendering2D {
 	}
 
 	default void drawGhost(Graphics2D g, Ghost ghost) {
-		drawEntity(g, ghost, (BufferedImage) ghost.animations().get().current(ghost));
+		ghost.animations().ifPresent(anim -> {
+			drawEntity(g, ghost, (BufferedImage) anim.current(ghost));
+		});
 	}
 
-	default void drawStaticBonus(Graphics2D g, StaticBonus bonus) {
-		drawEntity(g, bonus, (BufferedImage) bonus.animations().get().current(bonus));
-	}
-
-	default void drawMovingBonus(Graphics2D g, MovingBonus bonus) {
-		drawEntity(g, bonus, (BufferedImage) bonus.animations().get().current(bonus));
+	default void drawBonus(Graphics2D g, Entity bonusEntity) {
+		if (bonusEntity instanceof StaticBonus) {
+			StaticBonus bonus = (StaticBonus) bonusEntity;
+			drawEntity(g, bonus, (BufferedImage) bonus.animations().get().current(bonus));
+		} else if (bonusEntity instanceof MovingBonus) {
+			MovingBonus movingBonus = (MovingBonus) bonusEntity;
+			movingBonus.animations().ifPresent(anim -> {
+				int dy = movingBonus.dy();
+				Graphics2D g2d = (Graphics2D) g.create();
+				g2d.translate(0, dy);
+				drawEntity(g2d, movingBonus, (BufferedImage) anim.current(movingBonus));
+				g2d.dispose();
+			});
+		}
 	}
 
 	default void drawDarkTiles(Graphics2D g, Stream<V2i> tiles, Predicate<V2i> fnDark) {

@@ -36,6 +36,7 @@ import de.amr.games.pacman.lib.animation.ThingAnimation;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
+import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.shell.Keyboard;
@@ -62,6 +63,10 @@ public class MsPacMan_IntroScene extends GameScene {
 		sceneController.restartInInitialState(IntroController.State.START);
 		$.msPacMan.setAnimations(new PacAnimations(r2D));
 		$.msPacMan.animations().ifPresent(ThingAnimation::ensureRunning);
+		for (var ghost : $.ghosts) {
+			ghost.setAnimations(new GhostAnimations(ghost.id, r2D));
+			ghost.animations().get().ensureRunning();
+		}
 	}
 
 	@Override
