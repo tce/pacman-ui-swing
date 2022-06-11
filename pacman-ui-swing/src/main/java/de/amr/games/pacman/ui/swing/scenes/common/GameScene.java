@@ -39,7 +39,7 @@ import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
  * 
  * @author Armin Reichert
  */
-public abstract class GameScene extends GameEventAdapter {
+public abstract class GameScene implements GameEventAdapter {
 
 	protected GameController gameController;
 	protected V2i size = ArcadeWorld.SIZE;

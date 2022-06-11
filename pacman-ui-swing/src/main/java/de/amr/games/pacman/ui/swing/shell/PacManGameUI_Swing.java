@@ -73,7 +73,7 @@ import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_IntroScene;
  * 
  * @author Armin Reichert
  */
-public class PacManGameUI_Swing extends GameEventAdapter {
+public class PacManGameUI_Swing implements GameEventAdapter {
 
 	private final GameLoop gameLoop;
 	private final GameController gameController;
@@ -155,7 +155,7 @@ public class PacManGameUI_Swing extends GameEventAdapter {
 
 	@Override
 	public void onGameEvent(GameEvent event) {
-		super.onGameEvent(event);
+		GameEventAdapter.super.onGameEvent(event);
 		currentGameScene.onGameEvent(event);
 	}
 
