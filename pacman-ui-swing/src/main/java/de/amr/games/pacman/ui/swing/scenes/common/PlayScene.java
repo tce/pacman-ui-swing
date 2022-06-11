@@ -33,16 +33,13 @@ import javax.sound.sampled.Clip;
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameStateChangeEvent;
-import de.amr.games.pacman.lib.animation.ThingAnimation;
 import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
-import de.amr.games.pacman.model.common.GameVariant;
-import de.amr.games.pacman.model.common.actors.BonusAnimationKey;
+import de.amr.games.pacman.lib.animation.ThingAnimation;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.GhostState;
 import de.amr.games.pacman.model.common.actors.PacAnimationKey;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
-import de.amr.games.pacman.ui.swing.entity.common.Bonus2D;
 import de.amr.games.pacman.ui.swing.lib.U;
 import de.amr.games.pacman.ui.swing.rendering.common.BonusAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
@@ -56,7 +53,6 @@ import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
  */
 public class PlayScene extends GameScene {
 
-	private Bonus2D bonus2D;
 	private SimpleThingAnimation<BufferedImage> mazeFlashing;
 
 	@Override
@@ -70,8 +66,8 @@ public class PlayScene extends GameScene {
 		mazeFlashing = r2D.mazeFlashing(r2D.mazeNumber(game.level.number));
 		mazeFlashing.repeat(game.level.numFlashes);
 		mazeFlashing.reset();
-		bonus2D = new Bonus2D(game, new BonusAnimations(r2D), game.variant == GameVariant.MS_PACMAN);
-		bonus2D.animations.select(BonusAnimationKey.ANIM_NONE);
+		game.bonus().setAnimations(new BonusAnimations(r2D));
+		game.bonus().setInactive();
 	}
 
 	@Override
@@ -147,7 +143,7 @@ public class PlayScene extends GameScene {
 			r2D.drawGameState(g, game, gameController.state());
 		}
 
-		bonus2D.render(g, r2D);
+		r2D.drawBonus(g, game.bonus().entity());
 		r2D.drawPac(g, game.pac);
 		game.ghosts().forEach(ghost -> r2D.drawGhost(g, ghost));
 
@@ -190,22 +186,8 @@ public class PlayScene extends GameScene {
 	}
 
 	@Override
-	public void onBonusGetsActive(GameEvent e) {
-		bonus2D.animations.select(BonusAnimationKey.ANIM_SYMBOL);
-		bonus2D.startJumping();
-	}
-
-	@Override
 	public void onBonusGetsEaten(GameEvent e) {
-		bonus2D.animations.select(BonusAnimationKey.ANIM_VALUE);
-		bonus2D.stopJumping();
 		SoundManager.get().play(GameSound.BONUS_EATEN);
-	}
-
-	@Override
-	public void onBonusExpires(GameEvent e) {
-		bonus2D.animations.select(BonusAnimationKey.ANIM_NONE);
-		bonus2D.stopJumping();
 	}
 
 	@Override
