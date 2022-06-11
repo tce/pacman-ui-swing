@@ -29,7 +29,6 @@ import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.pacman.Intermission3Controller;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
-import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
@@ -42,22 +41,21 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 public class PacMan_IntermissionScene3 extends GameScene {
 
 	private Intermission3Controller sceneController;
-	private Intermission3Controller.Context context;
-	private Pac2D pacMan2D;
+	private Intermission3Controller.Context $;
 
 	@Override
 	public void setContext(GameController gameController) {
 		super.setContext(gameController);
 		sceneController = new Intermission3Controller(gameController);
 		sceneController.playIntermissionSound = () -> SoundManager.get().loop(GameSound.INTERMISSION_3, 1);
-		context = sceneController.context();
+		$ = sceneController.context();
 	}
 
 	@Override
 	public void init() {
 		sceneController.init();
-		context.pac.setAnimations(new PacAnimations(r2D));
-		pacMan2D = new Pac2D(context.pac, game);
+		$.pac.setAnimations(new PacAnimations(r2D));
+		$.pac.animations().get().ensureRunning();
 	}
 
 	@Override
@@ -68,11 +66,11 @@ public class PacMan_IntermissionScene3 extends GameScene {
 	@Override
 	public void render(Graphics2D g) {
 		r2D.drawLevelCounter(g, gameController.game());
-		pacMan2D.render(g, r2D);
+		r2D.drawPac(g, $.pac);
 		if (sceneController.state() == Intermission3Controller.State.CHASING) {
-			((Rendering2D_PacMan) r2D).drawBlinkyPatched(g, context.blinky);
+			((Rendering2D_PacMan) r2D).drawBlinkyPatched(g, $.blinky);
 		} else {
-			((Rendering2D_PacMan) r2D).drawBlinkyNaked(g, context.blinky);
+			((Rendering2D_PacMan) r2D).drawBlinkyNaked(g, $.blinky);
 		}
 	}
 }

@@ -28,12 +28,12 @@ import java.awt.Graphics2D;
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.Intermission2Controller;
 import de.amr.games.pacman.controller.mspacman.Intermission2Controller.Context;
+import de.amr.games.pacman.lib.animation.ThingAnimation;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
-import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Flap2D;
+import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.MsPacMansHusbandAnimations;
-import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
 /**
@@ -48,8 +48,6 @@ public class MsPacMan_IntermissionScene2 extends GameScene {
 
 	private Intermission2Controller sceneController;
 	private Context context;
-	private Pac2D msPacMan2D;
-	private Pac2D pacMan2D;
 	private Flap2D flap2D;
 
 	@Override
@@ -64,9 +62,10 @@ public class MsPacMan_IntermissionScene2 extends GameScene {
 	public void init() {
 		sceneController.restartInInitialState(Intermission2Controller.State.FLAP);
 		flap2D = new Flap2D(context.flap, game);
-		msPacMan2D = new Pac2D(context.msPacMan, game);
-		context.pacMan.setAnimations(new MsPacMansHusbandAnimations(Rendering2D_MsPacMan.get()));
-		pacMan2D = new Pac2D(context.pacMan, game);
+		context.msPacMan.setAnimations(new PacAnimations(r2D));
+		context.msPacMan.animations().ifPresent(ThingAnimation::ensureRunning);
+		context.pacMan.setAnimations(new MsPacMansHusbandAnimations());
+		context.pacMan.animations().ifPresent(ThingAnimation::ensureRunning);
 	}
 
 	@Override
@@ -77,7 +76,7 @@ public class MsPacMan_IntermissionScene2 extends GameScene {
 	@Override
 	public void render(Graphics2D g) {
 		flap2D.render(g, r2D);
-		msPacMan2D.render(g, r2D);
-		pacMan2D.render(g, r2D);
+		r2D.drawPac(g, context.msPacMan);
+		r2D.drawPac(g, context.pacMan);
 	}
 }

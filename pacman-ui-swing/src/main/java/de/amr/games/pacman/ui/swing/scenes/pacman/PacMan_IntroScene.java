@@ -39,7 +39,6 @@ import de.amr.games.pacman.model.common.actors.GhostState;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
-import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations.Key;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
@@ -58,7 +57,6 @@ public class PacMan_IntroScene extends GameScene {
 
 	private IntroController sceneController;
 	private IntroController.Context $;
-	private Pac2D pacMan2D;
 	private Ghost2D[] ghosts2D;
 
 	@Override
@@ -73,7 +71,7 @@ public class PacMan_IntroScene extends GameScene {
 	public void init() {
 		sceneController.restartInInitialState(IntroController.State.START);
 		$.pacMan.setAnimations(new PacAnimations(r2D));
-		pacMan2D = new Pac2D($.pacMan, game);
+		$.pacMan.animations().get().ensureRunning();
 		ghosts2D = Stream.of($.ghosts).map(ghost -> {
 			Ghost2D ghost2D = new Ghost2D(ghost, game, new GhostAnimations(ghost.id, r2D));
 			return ghost2D;
@@ -108,8 +106,10 @@ public class PacMan_IntroScene extends GameScene {
 			for (var ghost2D : ghosts2D) {
 				if (ghost2D.ghost.state == GhostState.DEAD && ghost2D.ghost.killIndex != -1) {
 					ghost2D.animations.select(GhostAnimations.Key.ANIM_VALUE);
+					ghost2D.animations.selectedAnimation().ensureRunning();
 				} else {
 					ghost2D.animations.select(GhostAnimations.Key.ANIM_BLUE);
+					ghost2D.animations.selectedAnimation().ensureRunning();
 					if (ghost2D.ghost.velocity.length() == 0) {
 						ghost2D.animations.stop(GhostAnimations.Key.ANIM_BLUE);
 					}
@@ -164,10 +164,10 @@ public class PacMan_IntroScene extends GameScene {
 		gg.translate(offset, 0);
 		ghosts2D[1].render(gg, r2D);
 		ghosts2D[2].render(gg, r2D);
-		gg.dispose();
 		ghosts2D[0].render(g, r2D);
 		ghosts2D[3].render(g, r2D);
-		pacMan2D.render(g, r2D);
+		r2D.drawPac(g, $.pacMan);
+		gg.dispose();
 	}
 
 	private void drawGallery(Graphics2D g) {

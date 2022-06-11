@@ -27,11 +27,11 @@ import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.pacman.Intermission1Controller;
+import de.amr.games.pacman.lib.animation.ThingAnimation;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
-import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.entity.pacman.BigPacMan2D;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
@@ -46,8 +46,7 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 public class PacMan_IntermissionScene1 extends GameScene {
 
 	private Intermission1Controller sceneController;
-	private Intermission1Controller.Context context;
-	private Pac2D pacMan2D;
+	private Intermission1Controller.Context $;
 	private Ghost2D blinky2D;
 	private BigPacMan2D bigPacMan2D;
 
@@ -56,23 +55,23 @@ public class PacMan_IntermissionScene1 extends GameScene {
 		super.setContext(gameController);
 		sceneController = new Intermission1Controller(gameController);
 		sceneController.playIntermissionSound = () -> SoundManager.get().loop(GameSound.INTERMISSION_1, 1);
-		context = sceneController.context();
+		$ = sceneController.context();
 	}
 
 	@Override
 	public void init() {
 		sceneController.init();
-		context.pac.setAnimations(new PacAnimations(r2D));
-		pacMan2D = new Pac2D(context.pac, game);
-		blinky2D = new Ghost2D(context.blinky, game, new GhostAnimations(Ghost.RED_GHOST, r2D));
-		bigPacMan2D = new BigPacMan2D(context.pac, (Rendering2D_PacMan) r2D);
+		$.pac.setAnimations(new PacAnimations(r2D));
+		$.pac.animations().ifPresent(ThingAnimation::ensureRunning);
+		blinky2D = new Ghost2D($.blinky, game, new GhostAnimations(Ghost.RED_GHOST, r2D));
+		bigPacMan2D = new BigPacMan2D($.pac, (Rendering2D_PacMan) r2D);
 		bigPacMan2D.startMunching();
 	}
 
 	@Override
 	public void update() {
 		sceneController.update();
-		blinky2D.animations.select(switch (context.blinky.state) {
+		blinky2D.animations.select(switch ($.blinky.state) {
 		case FRIGHTENED -> GhostAnimations.Key.ANIM_BLUE;
 		case HUNTING_PAC -> GhostAnimations.Key.ANIM_COLOR;
 		default -> blinky2D.animations.selectedKey();
@@ -83,7 +82,7 @@ public class PacMan_IntermissionScene1 extends GameScene {
 	public void render(Graphics2D g) {
 		blinky2D.render(g, r2D);
 		if (sceneController.state() == Intermission1Controller.State.CHASING_PACMAN) {
-			pacMan2D.render(g, r2D);
+			r2D.drawPac(g, $.pac);
 		} else {
 			bigPacMan2D.render(g);
 		}

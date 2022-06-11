@@ -27,15 +27,14 @@ import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.Intermission3Controller;
+import de.amr.games.pacman.lib.animation.ThingAnimation;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
-import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Flap2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.JuniorBag2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Stork2D;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.MsPacMansHusbandAnimations;
-import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
 /**
@@ -51,9 +50,7 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 public class MsPacMan_IntermissionScene3 extends GameScene {
 
 	private Intermission3Controller sceneController;
-	private Intermission3Controller.Context context;
-	private Pac2D msPacMan2D;
-	private Pac2D pacMan2D;
+	private Intermission3Controller.Context $;
 	private Flap2D flap2D;
 	private Stork2D stork2D;
 	private JuniorBag2D bag2D;
@@ -63,20 +60,20 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 		super.setContext(gameController);
 		sceneController = new Intermission3Controller(gameController);
 		sceneController.playIntermissionSound = () -> SoundManager.get().play(GameSound.INTERMISSION_3);
-		context = sceneController.context();
+		$ = sceneController.context();
 	}
 
 	@Override
 	public void init() {
 		sceneController.restartInInitialState(Intermission3Controller.State.FLAP);
-		context.msPacMan.setAnimations(new PacAnimations(r2D));
-		msPacMan2D = new Pac2D(context.msPacMan, game);
-		context.pacMan.setAnimations(new MsPacMansHusbandAnimations(Rendering2D_MsPacMan.get()));
-		pacMan2D = new Pac2D(context.pacMan, game);
-		flap2D = new Flap2D(context.flap, game);
-		stork2D = new Stork2D(context.stork, r2D);
+		$.msPacMan.setAnimations(new PacAnimations(r2D));
+		$.msPacMan.animations().ifPresent(ThingAnimation::ensureRunning);
+		$.pacMan.setAnimations(new MsPacMansHusbandAnimations());
+		$.pacMan.animations().ifPresent(ThingAnimation::ensureRunning);
+		flap2D = new Flap2D($.flap, game);
+		stork2D = new Stork2D($.stork, r2D);
 		stork2D.animation.restart();
-		bag2D = new JuniorBag2D(context.bag, r2D);
+		bag2D = new JuniorBag2D($.bag, r2D);
 	}
 
 	@Override
@@ -87,8 +84,8 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 	@Override
 	public void render(Graphics2D g) {
 		flap2D.render(g, r2D);
-		msPacMan2D.render(g, r2D);
-		pacMan2D.render(g, r2D);
+		r2D.drawPac(g, $.msPacMan);
+		r2D.drawPac(g, $.pacMan);
 		stork2D.render(g);
 		bag2D.render(g);
 	}

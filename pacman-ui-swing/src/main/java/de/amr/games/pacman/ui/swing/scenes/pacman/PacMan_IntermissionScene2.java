@@ -35,7 +35,6 @@ import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
-import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
@@ -49,8 +48,7 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 public class PacMan_IntermissionScene2 extends GameScene {
 
 	private Intermission2Controller sceneController;
-	private Intermission2Controller.Context context;
-	private Pac2D pacMan2D;
+	private Intermission2Controller.Context $;
 	private Ghost2D blinky2D;
 	private ThingList<BufferedImage> blinkyStretchedAnimation;
 	private ThingList<BufferedImage> blinkyDamagedAnimation;
@@ -60,15 +58,15 @@ public class PacMan_IntermissionScene2 extends GameScene {
 		super.setContext(gameController);
 		sceneController = new Intermission2Controller(gameController);
 		sceneController.playIntermissionSound = () -> SoundManager.get().play(GameSound.INTERMISSION_2);
-		context = sceneController.context();
+		$ = sceneController.context();
 	}
 
 	@Override
 	public void init() {
 		sceneController.init();
-		context.pac.setAnimations(new PacAnimations(r2D));
-		pacMan2D = new Pac2D(context.pac, game);
-		blinky2D = new Ghost2D(context.blinky, game, new GhostAnimations(Ghost.RED_GHOST, r2D));
+		$.pac.setAnimations(new PacAnimations(r2D));
+		$.pac.animations().get().ensureRunning();
+		blinky2D = new Ghost2D($.blinky, game, new GhostAnimations(Ghost.RED_GHOST, r2D));
 		blinkyStretchedAnimation = Rendering2D_PacMan.get().createBlinkyStretchedAnimation();
 		blinkyDamagedAnimation = Rendering2D_PacMan.get().createBlinkyDamagedAnimation();
 	}
@@ -80,14 +78,14 @@ public class PacMan_IntermissionScene2 extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		Rendering2D_PacMan r = (Rendering2D_PacMan) r2D;
-		r.drawLevelCounter(g, gameController.game());
-		r.drawNail(g, context.nail);
-		pacMan2D.render(g, r2D);
+		Rendering2D_PacMan rpm = (Rendering2D_PacMan) r2D;
+		rpm.drawLevelCounter(g, gameController.game());
+		rpm.drawNail(g, $.nail);
+		r2D.drawPac(g, $.pac);
 		if (sceneController.nailDistance() < 0) {
 			blinky2D.render(g, r2D);
 		} else {
-			drawBlinkyStretched(g, context.nail.position, sceneController.nailDistance() / 4);
+			drawBlinkyStretched(g, $.nail.position, sceneController.nailDistance() / 4);
 		}
 	}
 
@@ -97,8 +95,8 @@ public class PacMan_IntermissionScene2 extends GameScene {
 		if (stretching < 3) {
 			blinky2D.render(g, r2D);
 		} else {
-			BufferedImage blinkyDamaged = blinkyDamagedAnimation.frame(context.blinky.moveDir() == Direction.UP ? 0 : 1);
-			g.drawImage(blinkyDamaged, (int) (context.blinky.position.x - 4), (int) (context.blinky.position.y - 4), null);
+			BufferedImage blinkyDamaged = blinkyDamagedAnimation.frame($.blinky.moveDir() == Direction.UP ? 0 : 1);
+			g.drawImage(blinkyDamaged, (int) ($.blinky.position.x - 4), (int) ($.blinky.position.y - 4), null);
 		}
 	}
 }

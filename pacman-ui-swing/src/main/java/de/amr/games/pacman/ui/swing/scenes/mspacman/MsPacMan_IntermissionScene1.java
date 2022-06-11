@@ -27,11 +27,11 @@ import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.Intermission1Controller;
+import de.amr.games.pacman.lib.animation.ThingAnimation;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
-import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Flap2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Heart2D;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
@@ -53,8 +53,6 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 
 	private Intermission1Controller sceneController;
 	private Intermission1Controller.Context context;
-	private Pac2D msPacMan2D;
-	private Pac2D pacMan2D;
 	private Ghost2D inky2D;
 	private Ghost2D pinky2D;
 	private Flap2D flap2D;
@@ -73,10 +71,10 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 		sceneController.restartInInitialState(Intermission1Controller.State.FLAP);
 
 		flap2D = new Flap2D(context.flap, game);
-		msPacMan2D = new Pac2D(context.msPac, game);
 		context.msPac.setAnimations(new PacAnimations(r2D));
-		context.pacMan.setAnimations(new MsPacMansHusbandAnimations(Rendering2D_MsPacMan.get()));
-		pacMan2D = new Pac2D(context.pacMan, game);
+		context.msPac.animations().ifPresent(ThingAnimation::ensureRunning);
+		context.pacMan.setAnimations(new MsPacMansHusbandAnimations());
+		context.pacMan.animations().ifPresent(ThingAnimation::ensureRunning);
 		inky2D = new Ghost2D(context.inky, game, new GhostAnimations(Ghost.CYAN_GHOST, r2D));
 		pinky2D = new Ghost2D(context.pinky, game, new GhostAnimations(Ghost.PINK_GHOST, r2D));
 		heart2D = new Heart2D(context.heart);
@@ -91,8 +89,8 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 	@Override
 	public void render(Graphics2D g) {
 		flap2D.render(g, r2D);
-		msPacMan2D.render(g, r2D);
-		pacMan2D.render(g, r2D);
+		r2D.drawPac(g, context.msPac);
+		r2D.drawPac(g, context.pacMan);
 		inky2D.render(g, r2D);
 		pinky2D.render(g, r2D);
 		heart2D.render(g);

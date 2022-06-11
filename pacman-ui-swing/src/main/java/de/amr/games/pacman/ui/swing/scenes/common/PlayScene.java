@@ -35,6 +35,7 @@ import javax.sound.sampled.Clip;
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameStateChangeEvent;
+import de.amr.games.pacman.lib.animation.ThingAnimation;
 import de.amr.games.pacman.lib.animation.ThingList;
 import de.amr.games.pacman.model.common.GameVariant;
 import de.amr.games.pacman.model.common.actors.Ghost;
@@ -45,7 +46,6 @@ import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Bonus2D;
 import de.amr.games.pacman.ui.swing.entity.common.Energizer2D;
 import de.amr.games.pacman.ui.swing.entity.common.Ghost2D;
-import de.amr.games.pacman.ui.swing.entity.common.Pac2D;
 import de.amr.games.pacman.ui.swing.lib.U;
 import de.amr.games.pacman.ui.swing.rendering.common.BonusAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
@@ -59,7 +59,6 @@ import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
  */
 public class PlayScene extends GameScene {
 
-	private Pac2D pac2D;
 	private Ghost2D[] ghosts2D;
 	private Energizer2D[] energizers2D;
 	private Bonus2D bonus2D;
@@ -67,8 +66,8 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void init() {
-		pac2D = new Pac2D(game.pac, game);
 		game.pac.setAnimations(new PacAnimations(r2D));
+		game.pac.animations().ifPresent(ThingAnimation::ensureRunning);
 		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, new GhostAnimations(ghost.id, r2D)))
 				.toArray(Ghost2D[]::new);
 		energizers2D = game.level.world.energizerTiles().map(Energizer2D::new).toArray(Energizer2D[]::new);
@@ -177,7 +176,7 @@ public class PlayScene extends GameScene {
 		}
 
 		bonus2D.render(g, r2D);
-		pac2D.render(g, r2D);
+		r2D.drawPac(g, game.pac);
 		Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.render(g, r2D));
 
 		DebugDraw.drawPlaySceneDebugInfo(g, gameController);

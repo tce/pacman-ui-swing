@@ -93,7 +93,7 @@ public class GhostAnimations extends ThingAnimationCollection<Ghost, Key, Buffer
 			}
 			yield sprite;
 		}
-		case ANIM_VALUE -> values.frame(ghost.killIndex);
+		case ANIM_VALUE -> ghost.killIndex >= 0 ? values.frame(ghost.killIndex) : null;
 		};
 	}
 }
