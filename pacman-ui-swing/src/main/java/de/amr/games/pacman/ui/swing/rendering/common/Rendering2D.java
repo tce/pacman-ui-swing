@@ -38,7 +38,7 @@ import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.lib.animation.ThingAnimationMap;
-import de.amr.games.pacman.lib.animation.ThingList;
+import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.actors.Ghost;
@@ -73,21 +73,21 @@ public interface Rendering2D {
 
 	ThingAnimationMap<Direction, BufferedImage> createPacMunchingAnimations();
 
-	ThingList<BufferedImage> createPacDyingAnimation();
+	SimpleThingAnimation<BufferedImage> createPacDyingAnimation();
 
 	ThingAnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID);
 
-	ThingList<BufferedImage> createGhostBlueAnimation();
+	SimpleThingAnimation<BufferedImage> createGhostBlueAnimation();
 
-	ThingList<BufferedImage> createGhostFlashingAnimation();
+	SimpleThingAnimation<BufferedImage> createGhostFlashingAnimation();
 
 	ThingAnimationMap<Direction, BufferedImage> createGhostEyesAnimation();
 
-	ThingList<BufferedImage> createGhostValueAnimation();
+	SimpleThingAnimation<BufferedImage> createGhostValueAnimation();
 
-	ThingList<BufferedImage> createBonusSymbolAnimation();
+	SimpleThingAnimation<BufferedImage> createBonusSymbolAnimation();
 
-	ThingList<BufferedImage> createBonusValueAnimation();
+	SimpleThingAnimation<BufferedImage> createBonusValueAnimation();
 
 	// Maze
 
@@ -95,7 +95,7 @@ public interface Rendering2D {
 
 	Color getFoodColor(int mazeNumber);
 
-	ThingList<BufferedImage> mazeFlashing(int mazeNumber);
+	SimpleThingAnimation<BufferedImage> mazeFlashing(int mazeNumber);
 
 	void drawMaze(Graphics2D g, int mazeNumber, int i, int t, boolean running);
 

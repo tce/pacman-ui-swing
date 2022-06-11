@@ -30,7 +30,7 @@ import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.ThingAnimation;
 import de.amr.games.pacman.lib.animation.ThingAnimationCollection;
 import de.amr.games.pacman.lib.animation.ThingAnimationMap;
-import de.amr.games.pacman.lib.animation.ThingList;
+import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.GhostAnimationKey;
 
@@ -40,10 +40,10 @@ import de.amr.games.pacman.model.common.actors.GhostAnimationKey;
 public class GhostAnimations extends ThingAnimationCollection<Ghost, GhostAnimationKey, BufferedImage> {
 
 	private ThingAnimationMap<Direction, BufferedImage> eyes;
-	private ThingList<BufferedImage> flashing;
-	private ThingList<BufferedImage> blue;
+	private SimpleThingAnimation<BufferedImage> flashing;
+	private SimpleThingAnimation<BufferedImage> blue;
 	private ThingAnimationMap<Direction, BufferedImage> color;
-	private ThingList<BufferedImage> values;
+	private SimpleThingAnimation<BufferedImage> values;
 
 	public GhostAnimations(int ghostID, Rendering2D r2D) {
 		eyes = r2D.createGhostEyesAnimation();

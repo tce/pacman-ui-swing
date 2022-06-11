@@ -29,7 +29,7 @@ import java.util.stream.Stream;
 
 import de.amr.games.pacman.lib.animation.ThingAnimation;
 import de.amr.games.pacman.lib.animation.ThingAnimationCollection;
-import de.amr.games.pacman.lib.animation.ThingList;
+import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
 import de.amr.games.pacman.model.common.actors.Bonus;
 import de.amr.games.pacman.model.common.actors.BonusAnimationKey;
 
@@ -38,14 +38,14 @@ import de.amr.games.pacman.model.common.actors.BonusAnimationKey;
  */
 public class BonusAnimations extends ThingAnimationCollection<Bonus, BonusAnimationKey, BufferedImage> {
 
-	public final ThingList<BufferedImage> symbolAnimation;
-	public final ThingList<BufferedImage> valueAnimation;
-	public final ThingList<Integer> jumpAnimation;
+	public final SimpleThingAnimation<BufferedImage> symbolAnimation;
+	public final SimpleThingAnimation<BufferedImage> valueAnimation;
+	public final SimpleThingAnimation<Integer> jumpAnimation;
 
 	public BonusAnimations(Rendering2D r2D) {
 		symbolAnimation = r2D.createBonusSymbolAnimation();
 		valueAnimation = r2D.createBonusValueAnimation();
-		jumpAnimation = new ThingList<>(2, -2);
+		jumpAnimation = new SimpleThingAnimation<>(2, -2);
 		jumpAnimation.frameDuration(10);
 		jumpAnimation.repeatForever();
 		select(BonusAnimationKey.ANIM_NONE);

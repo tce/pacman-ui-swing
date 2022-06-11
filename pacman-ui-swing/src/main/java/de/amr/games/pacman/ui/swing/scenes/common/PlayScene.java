@@ -34,7 +34,7 @@ import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameStateChangeEvent;
 import de.amr.games.pacman.lib.animation.ThingAnimation;
-import de.amr.games.pacman.lib.animation.ThingList;
+import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
 import de.amr.games.pacman.model.common.GameVariant;
 import de.amr.games.pacman.model.common.actors.BonusAnimationKey;
 import de.amr.games.pacman.model.common.actors.Ghost;
@@ -57,7 +57,7 @@ import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 public class PlayScene extends GameScene {
 
 	private Bonus2D bonus2D;
-	private ThingList<BufferedImage> mazeFlashing;
+	private SimpleThingAnimation<BufferedImage> mazeFlashing;
 
 	@Override
 	public void init() {
