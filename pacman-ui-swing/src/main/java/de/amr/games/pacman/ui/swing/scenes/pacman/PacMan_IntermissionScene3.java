@@ -56,7 +56,8 @@ public class PacMan_IntermissionScene3 extends GameScene {
 	@Override
 	public void init() {
 		sceneController.init();
-		pacMan2D = new Pac2D(context.pac, game, new PacAnimations(r2D));
+		context.pac.setAnimations(new PacAnimations(r2D));
+		pacMan2D = new Pac2D(context.pac, game);
 	}
 
 	@Override

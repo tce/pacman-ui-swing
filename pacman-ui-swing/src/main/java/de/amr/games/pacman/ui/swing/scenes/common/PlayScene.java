@@ -39,6 +39,7 @@ import de.amr.games.pacman.lib.animation.ThingList;
 import de.amr.games.pacman.model.common.GameVariant;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.GhostState;
+import de.amr.games.pacman.model.common.actors.PacAnimationKey;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.common.Bonus2D;
@@ -66,7 +67,8 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void init() {
-		pac2D = new Pac2D(game.pac, game, new PacAnimations(r2D));
+		pac2D = new Pac2D(game.pac, game);
+		game.pac.setAnimations(new PacAnimations(r2D));
 		ghosts2D = game.ghosts().map(ghost -> new Ghost2D(ghost, game, new GhostAnimations(ghost.id, r2D)))
 				.toArray(Ghost2D[]::new);
 		energizers2D = game.level.world.energizerTiles().map(Energizer2D::new).toArray(Energizer2D[]::new);
@@ -256,25 +258,25 @@ public class PlayScene extends GameScene {
 		}
 		case HUNTING -> {
 			Stream.of(energizers2D).map(Energizer2D::getAnimation).forEach(ThingList::restart);
-			pac2D.animations.restart();
+			game.pac.animations().get().restart();
 			Stream.of(ghosts2D).forEach(ghost2D -> ghost2D.animations.restart(GhostAnimations.Key.ANIM_COLOR));
 		}
 		case PACMAN_DYING -> {
 			gameController.state().timer().setSeconds(4.5);
 			gameController.state().timer().start();
 			SoundManager.get().stopAll();
-			pac2D.animations.select(PacAnimations.Key.DYING);
-			pac2D.animations.selectedAnimation().stop();
+			game.pac.animations().get().select(PacAnimationKey.ANIM_DYING);
+			game.pac.animations().get().selectedAnimation().stop();
 			U.afterSeconds(1, () -> {
 				game.ghosts().forEach(Ghost::hide);
 			});
 			U.afterSeconds(2, () -> {
 				SoundManager.get().play(GameSound.PACMAN_DEATH);
-				pac2D.animations.selectedAnimation().run();
+				game.pac.animations().get().selectedAnimation().run();
 			});
 			U.afterSeconds(4, () -> {
 				game.pac.hide();
-				pac2D.animations.select(PacAnimations.Key.MUNCHING);
+				game.pac.animations().get().select(PacAnimationKey.ANIM_MUNCHING);
 			});
 		}
 		case GHOST_DYING -> {

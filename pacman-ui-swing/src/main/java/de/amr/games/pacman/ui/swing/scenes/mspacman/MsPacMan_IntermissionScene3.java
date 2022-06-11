@@ -69,8 +69,10 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 	@Override
 	public void init() {
 		sceneController.restartInInitialState(Intermission3Controller.State.FLAP);
-		msPacMan2D = new Pac2D(context.msPacMan, game, new PacAnimations(r2D));
-		pacMan2D = new Pac2D(context.pacMan, game, new MsPacMansHusbandAnimations(Rendering2D_MsPacMan.get()));
+		context.msPacMan.setAnimations(new PacAnimations(r2D));
+		msPacMan2D = new Pac2D(context.msPacMan, game);
+		context.pacMan.setAnimations(new MsPacMansHusbandAnimations(Rendering2D_MsPacMan.get()));
+		pacMan2D = new Pac2D(context.pacMan, game);
 		flap2D = new Flap2D(context.flap, game);
 		stork2D = new Stork2D(context.stork, r2D);
 		stork2D.animation.restart();

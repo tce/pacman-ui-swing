@@ -72,7 +72,8 @@ public class PacMan_IntroScene extends GameScene {
 	@Override
 	public void init() {
 		sceneController.restartInInitialState(IntroController.State.START);
-		pacMan2D = new Pac2D($.pacMan, game, new PacAnimations(r2D));
+		$.pacMan.setAnimations(new PacAnimations(r2D));
+		pacMan2D = new Pac2D($.pacMan, game);
 		ghosts2D = Stream.of($.ghosts).map(ghost -> {
 			Ghost2D ghost2D = new Ghost2D(ghost, game, new GhostAnimations(ghost.id, r2D));
 			return ghost2D;

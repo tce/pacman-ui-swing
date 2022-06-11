@@ -73,8 +73,10 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 		sceneController.restartInInitialState(Intermission1Controller.State.FLAP);
 
 		flap2D = new Flap2D(context.flap, game);
-		msPacMan2D = new Pac2D(context.msPac, game, new PacAnimations(r2D));
-		pacMan2D = new Pac2D(context.pacMan, game, new MsPacMansHusbandAnimations(Rendering2D_MsPacMan.get()));
+		msPacMan2D = new Pac2D(context.msPac, game);
+		context.msPac.setAnimations(new PacAnimations(r2D));
+		context.pacMan.setAnimations(new MsPacMansHusbandAnimations(Rendering2D_MsPacMan.get()));
+		pacMan2D = new Pac2D(context.pacMan, game);
 		inky2D = new Ghost2D(context.inky, game, new GhostAnimations(Ghost.CYAN_GHOST, r2D));
 		pinky2D = new Ghost2D(context.pinky, game, new GhostAnimations(Ghost.PINK_GHOST, r2D));
 		heart2D = new Heart2D(context.heart);

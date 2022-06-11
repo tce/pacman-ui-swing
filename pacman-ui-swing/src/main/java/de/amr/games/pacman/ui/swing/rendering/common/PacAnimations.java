@@ -33,23 +33,20 @@ import de.amr.games.pacman.lib.animation.ThingAnimationCollection;
 import de.amr.games.pacman.lib.animation.ThingAnimationMap;
 import de.amr.games.pacman.lib.animation.ThingList;
 import de.amr.games.pacman.model.common.actors.Pac;
+import de.amr.games.pacman.model.common.actors.PacAnimationKey;
 
 /**
  * @author Armin Reichert
  */
-public class PacAnimations extends ThingAnimationCollection<Pac, PacAnimations.Key, BufferedImage> {
+public class PacAnimations extends ThingAnimationCollection<Pac, PacAnimationKey, BufferedImage> {
 
-	public enum Key {
-		MUNCHING, DYING;
-	}
-
-	private Key selectedKey;
 	protected ThingAnimationMap<Direction, BufferedImage> munching;
 	protected ThingList<BufferedImage> dying;
 
 	public PacAnimations(Rendering2D r2D) {
 		munching = r2D.createPacMunchingAnimations();
 		dying = r2D.createPacDyingAnimation();
+		select(PacAnimationKey.ANIM_MUNCHING);
 	}
 
 	@Override
@@ -58,10 +55,10 @@ public class PacAnimations extends ThingAnimationCollection<Pac, PacAnimations.K
 	}
 
 	@Override
-	public ThingAnimation<BufferedImage> byKey(Key key) {
+	public ThingAnimation<BufferedImage> byKey(PacAnimationKey key) {
 		return switch (key) {
-		case DYING -> dying;
-		case MUNCHING -> munching;
+		case ANIM_DYING -> dying;
+		case ANIM_MUNCHING -> munching;
 		};
 	}
 
@@ -73,14 +70,8 @@ public class PacAnimations extends ThingAnimationCollection<Pac, PacAnimations.K
 	@Override
 	public BufferedImage current(Pac pac) {
 		return switch (selectedKey) {
-		case DYING -> dying.animate();
-		case MUNCHING -> {
-			var munchingToDir = munching.get(pac.moveDir());
-			if (!pac.stuck && pac.velocity.length() > 0) {
-				munchingToDir.advance();
-			}
-			yield munchingToDir.frame();
-		}
+		case ANIM_DYING -> dying.animate();
+		case ANIM_MUNCHING -> munching.get(pac.moveDir()).animate();
 		};
 	}
 }

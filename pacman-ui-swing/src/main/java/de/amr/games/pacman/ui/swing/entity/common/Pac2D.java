@@ -24,10 +24,10 @@ SOFTWARE.
 package de.amr.games.pacman.ui.swing.entity.common;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Pac;
-import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**
@@ -38,17 +38,14 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 public class Pac2D extends GameEntity2D {
 
 	public final Pac pac;
-	public final PacAnimations animations;
 
-	public Pac2D(Pac pac, GameModel game, PacAnimations animations) {
+	public Pac2D(Pac pac, GameModel game) {
 		super(game);
 		this.pac = pac;
-		this.animations = animations;
-		animations.select(PacAnimations.Key.MUNCHING);
 	}
 
 	@Override
 	public void render(Graphics2D g, Rendering2D r2D) {
-		r2D.drawEntity(g, pac, animations.current(pac));
+		r2D.drawEntity(g, pac, (BufferedImage) pac.animations().get().current(pac));
 	}
 }
