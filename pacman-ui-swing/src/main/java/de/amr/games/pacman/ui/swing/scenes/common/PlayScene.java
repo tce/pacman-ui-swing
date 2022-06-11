@@ -32,8 +32,8 @@ import javax.sound.sampled.Clip;
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameStateChangeEvent;
-import de.amr.games.pacman.lib.animation.ThingAnimation;
 import de.amr.games.pacman.model.common.actors.GhostState;
+import de.amr.games.pacman.model.common.actors.PacAnimationKey;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.rendering.common.BonusAnimations;
@@ -51,7 +51,8 @@ public class PlayScene extends GameScene {
 	@Override
 	public void init() {
 		game.pac.setAnimations(new PacAnimations(r2D));
-		game.pac.animations().ifPresent(ThingAnimation::ensureRunning);
+		game.pac.animations().get().ensureRunning();
+		game.pac.animation(PacAnimationKey.ANIM_MUNCHING).get().stop();
 		game.ghosts().forEach(ghost -> {
 			ghost.setAnimations(new GhostAnimations(ghost.id, r2D));
 			ghost.animations().get().ensureRunning();
@@ -94,10 +95,6 @@ public class PlayScene extends GameScene {
 	public void render(Graphics2D g) {
 		boolean playing = gameController.isGameRunning();
 		boolean hasCredit = gameController.credit() > 0;
-
-		boolean showCredit = !hasCredit && !playing;
-		boolean showLivesCounter = hasCredit && playing;
-		boolean showLevelCounter = hasCredit;
 		boolean showHighScoreOnly = !playing && gameController.state() != GameState.READY
 				&& gameController.state() != GameState.GAME_OVER;
 
@@ -112,33 +109,23 @@ public class PlayScene extends GameScene {
 		}
 		DebugDraw.drawMazeStructure(g, game);
 
-		if (!hasCredit) {
-			r2D.drawGameState(g, game, GameState.GAME_OVER);
-		} else {
-			r2D.drawGameState(g, game, gameController.state());
-		}
-
+		r2D.drawGameState(g, game, hasCredit ? gameController.state() : GameState.GAME_OVER);
 		r2D.drawBonus(g, game.bonus().entity());
 		r2D.drawPac(g, game.pac);
 		game.ghosts().forEach(ghost -> r2D.drawGhost(g, ghost));
 
 		DebugDraw.drawPlaySceneDebugInfo(g, gameController);
 
-		if (showLivesCounter) {
+		if (hasCredit && playing) {
 			r2D.drawLivesCounter(g, game);
 		}
-		if (showLevelCounter) {
+		if (hasCredit) {
 			r2D.drawLevelCounter(g, game);
 		}
-		if (showCredit) {
+		if (!hasCredit && !playing) {
 			r2D.drawCredit(g, gameController.credit());
 		}
-	}
-
-	@Override
-	public void onGameEvent(GameEvent gameEvent) {
 		SoundManager.get().setMuted(gameController.credit() == 0); // TODO check
-		super.onGameEvent(gameEvent);
 	}
 
 	@Override
@@ -184,12 +171,11 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void onGameStateChange(GameStateChangeEvent e) {
-		boolean playing = gameController.isGameRunning();
 		switch (e.newGameState) {
 		case READY -> {
 			SoundManager.get().stopAll();
 			r2D.mazeFlashing(r2D.mazeNumber(game.level.number)).reset();
-			if (!playing) {
+			if (gameController.credit() > 0 && !gameController.isGameRunning()) {
 				SoundManager.get().play(GameSound.GAME_READY);
 			}
 		}
