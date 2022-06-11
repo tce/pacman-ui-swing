@@ -31,7 +31,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.List;
 
 import de.amr.games.pacman.lib.Direction;
@@ -102,7 +101,6 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	private final BufferedImage midwayLogo;
 	private final BufferedImage[] mazeFull;
 	private final BufferedImage[] mazeEmpty;
-	private final List<SimpleThingAnimation<BufferedImage>> mazeFlashings;
 	private final BufferedImage[] symbols;
 	private final Font font;
 
@@ -125,15 +123,9 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 		int numMazes = 6;
 		mazeEmpty = new BufferedImage[numMazes];
 		mazeFull = new BufferedImage[numMazes];
-		mazeFlashings = new ArrayList<>(numMazes);
 		for (int mazeIndex = 0; mazeIndex < 6; ++mazeIndex) {
 			mazeFull[mazeIndex] = ss.image.getSubimage(0, mazeIndex * 248, 226, 248);
 			mazeEmpty[mazeIndex] = ss.image.getSubimage(228, mazeIndex * 248, 226, 248);
-			var mazeEmptyBright = ss.createBrightEffect(mazeEmpty[mazeIndex], MAZE_SIDE_COLORS[mazeIndex],
-					MAZE_TOP_COLORS[mazeIndex]);
-			var animation = new SimpleThingAnimation<>(mazeEmptyBright, mazeEmpty[mazeIndex]);
-			animation.frameDuration(20);
-			mazeFlashings.add(animation);
 		}
 	}
 
@@ -249,8 +241,13 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public SimpleThingAnimation<BufferedImage> mazeFlashing(int mazeNumber) {
-		return mazeFlashings.get(mazeNumber - 1);
+	public SimpleThingAnimation<BufferedImage> createMazeFlashingAnimation(int mazeNumber) {
+		int mazeIndex = mazeNumber - 1;
+		var mazeEmptyBright = ss.createBrightEffect(mazeEmpty[mazeIndex], MAZE_SIDE_COLORS[mazeIndex],
+				MAZE_TOP_COLORS[mazeIndex]);
+		var animation = new SimpleThingAnimation<>(mazeEmptyBright, mazeEmpty[mazeIndex]);
+		animation.frameDuration(15);
+		return animation;
 	}
 
 	@Override
@@ -320,12 +317,8 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public void drawMaze(Graphics2D g, int mazeNumber, int x, int y, boolean flashing) {
-		if (flashing) {
-			g.drawImage(mazeFlashings.get(mazeNumber - 1).animate(), x, y, null);
-		} else {
-			g.drawImage(mazeFull[mazeNumber - 1], x, y, null);
-		}
+	public void drawFullMaze(Graphics2D g, int mazeNumber, int x, int y) {
+		g.drawImage(mazeFull[mazeNumber - 1], x, y, null);
 	}
 
 	@Override

@@ -96,9 +96,9 @@ public interface Rendering2D {
 
 	Color getFoodColor(int mazeNumber);
 
-	SimpleThingAnimation<BufferedImage> mazeFlashing(int mazeNumber);
+	SimpleThingAnimation<BufferedImage> createMazeFlashingAnimation(int mazeNumber);
 
-	void drawMaze(Graphics2D g, int mazeNumber, int i, int t, boolean flashing);
+	void drawFullMaze(Graphics2D g, int mazeNumber, int x, int y);
 
 	// Drawing
 

@@ -239,19 +239,15 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public SimpleThingAnimation<BufferedImage> mazeFlashing(int mazeNumber) {
+	public SimpleThingAnimation<BufferedImage> createMazeFlashingAnimation(int mazeNumber) {
 		return mazeFlashingAnim;
 	}
 
 	// Drawing
 
 	@Override
-	public void drawMaze(Graphics2D g, int mazeNumber, int x, int y, boolean flashing) {
-		if (flashing) {
-			g.drawImage(mazeFlashing(mazeNumber).animate(), x, y, null);
-		} else {
-			g.drawImage(mazeFull, x, y, null);
-		}
+	public void drawFullMaze(Graphics2D g, int mazeNumber, int x, int y) {
+		g.drawImage(mazeFull, x, y, null);
 	}
 
 	@Override

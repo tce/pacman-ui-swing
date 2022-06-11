@@ -26,6 +26,7 @@ package de.amr.games.pacman.ui.swing.scenes.common;
 import static de.amr.games.pacman.model.common.world.World.t;
 
 import java.awt.Graphics2D;
+import java.awt.Image;
 
 import javax.sound.sampled.Clip;
 
@@ -57,7 +58,7 @@ public class PlayScene extends GameScene {
 			ghost.setAnimations(new GhostAnimations(ghost.id, r2D));
 			ghost.animations().get().ensureRunning();
 		});
-		game.mazeFlashingAnimation = r2D.mazeFlashing(r2D.mazeNumber(game.level.number));
+		game.mazeFlashingAnimation = r2D.createMazeFlashingAnimation(r2D.mazeNumber(game.level.number));
 		game.bonus().setAnimations(new BonusAnimations(r2D));
 		game.bonus().setInactive();
 	}
@@ -119,9 +120,9 @@ public class PlayScene extends GameScene {
 
 	private void drawMaze(Graphics2D g) {
 		if (game.mazeFlashingAnimation.isRunning()) {
-			r2D.drawMaze(g, r2D.mazeNumber(game.level.number), 0, t(3), true);
+			g.drawImage((Image) game.mazeFlashingAnimation.frame(), 0, t(3), null);
 		} else {
-			r2D.drawMaze(g, r2D.mazeNumber(game.level.number), 0, t(3), false);
+			r2D.drawFullMaze(g, r2D.mazeNumber(game.level.number), 0, t(3));
 			r2D.drawDarkTiles(g, game.level.world.tiles(), tile -> game.level.world.containsEatenFood(tile)
 					|| game.level.world.isEnergizerTile(tile) && !game.energizerPulse.frame());
 		}
@@ -175,7 +176,6 @@ public class PlayScene extends GameScene {
 		switch (e.newGameState) {
 		case READY -> {
 			SoundManager.get().stopAll();
-			r2D.mazeFlashing(r2D.mazeNumber(game.level.number)).reset();
 			if (gameController.credit() > 0 && !gameController.isGameRunning()) {
 				SoundManager.get().play(GameSound.GAME_READY);
 			}
