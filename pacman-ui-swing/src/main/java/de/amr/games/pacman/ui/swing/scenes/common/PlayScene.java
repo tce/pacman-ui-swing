@@ -37,6 +37,7 @@ import de.amr.games.pacman.event.GameStateChangeEvent;
 import de.amr.games.pacman.lib.animation.ThingAnimation;
 import de.amr.games.pacman.lib.animation.ThingList;
 import de.amr.games.pacman.model.common.GameVariant;
+import de.amr.games.pacman.model.common.actors.BonusAnimationKey;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.GhostState;
 import de.amr.games.pacman.model.common.actors.PacAnimationKey;
@@ -74,7 +75,7 @@ public class PlayScene extends GameScene {
 		mazeFlashing.repeat(game.level.numFlashes);
 		mazeFlashing.reset();
 		bonus2D = new Bonus2D(game, new BonusAnimations(r2D), game.variant == GameVariant.MS_PACMAN);
-		bonus2D.animations.select(null); // INACTIVE
+		bonus2D.animations.select(BonusAnimationKey.ANIM_NONE);
 	}
 
 	@Override
@@ -193,20 +194,20 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void onBonusGetsActive(GameEvent e) {
-		bonus2D.animations.select(BonusAnimations.Key.ANIM_SYMBOL);
+		bonus2D.animations.select(BonusAnimationKey.ANIM_SYMBOL);
 		bonus2D.startJumping();
 	}
 
 	@Override
 	public void onBonusGetsEaten(GameEvent e) {
-		bonus2D.animations.select(BonusAnimations.Key.ANIM_VALUE);
+		bonus2D.animations.select(BonusAnimationKey.ANIM_VALUE);
 		bonus2D.stopJumping();
 		SoundManager.get().play(GameSound.BONUS_EATEN);
 	}
 
 	@Override
 	public void onBonusExpires(GameEvent e) {
-		bonus2D.animations.select(null); // TODO good idea?
+		bonus2D.animations.select(BonusAnimationKey.ANIM_NONE);
 		bonus2D.stopJumping();
 	}
 

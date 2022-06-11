@@ -31,16 +31,12 @@ import de.amr.games.pacman.lib.animation.ThingAnimation;
 import de.amr.games.pacman.lib.animation.ThingAnimationCollection;
 import de.amr.games.pacman.lib.animation.ThingList;
 import de.amr.games.pacman.model.common.actors.Bonus;
-import de.amr.games.pacman.ui.swing.rendering.common.BonusAnimations.Key;
+import de.amr.games.pacman.model.common.actors.BonusAnimationKey;
 
 /**
  * @author Armin Reichert
  */
-public class BonusAnimations extends ThingAnimationCollection<Bonus, Key, BufferedImage> {
-
-	public enum Key {
-		ANIM_SYMBOL, ANIM_VALUE;
-	}
+public class BonusAnimations extends ThingAnimationCollection<Bonus, BonusAnimationKey, BufferedImage> {
 
 	public final ThingList<BufferedImage> symbolAnimation;
 	public final ThingList<BufferedImage> valueAnimation;
@@ -52,12 +48,13 @@ public class BonusAnimations extends ThingAnimationCollection<Bonus, Key, Buffer
 		jumpAnimation = new ThingList<>(2, -2);
 		jumpAnimation.frameDuration(10);
 		jumpAnimation.repeatForever();
-		selectedKey = null;
+		select(BonusAnimationKey.ANIM_NONE);
 	}
 
 	@Override
-	public ThingAnimation<BufferedImage> byKey(Key key) {
+	public ThingAnimation<BufferedImage> byKey(BonusAnimationKey key) {
 		return switch (key) {
+		case ANIM_NONE -> null;
 		case ANIM_SYMBOL -> symbolAnimation;
 		case ANIM_VALUE -> valueAnimation;
 		};
@@ -70,10 +67,8 @@ public class BonusAnimations extends ThingAnimationCollection<Bonus, Key, Buffer
 
 	@Override
 	public BufferedImage current(Bonus bonus) {
-		if (selectedKey == null) {
-			return null;
-		}
 		return switch (selectedKey) {
+		case ANIM_NONE -> null;
 		case ANIM_SYMBOL -> symbolAnimation.frame(bonus.symbol());
 		case ANIM_VALUE -> valueAnimation.frame(bonus.symbol());
 		};

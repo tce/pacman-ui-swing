@@ -45,6 +45,8 @@ import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.Pac;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.model.common.world.World;
+import de.amr.games.pacman.model.mspacman.MovingBonus;
+import de.amr.games.pacman.model.pacman.StaticBonus;
 
 /**
  * Spritesheet-based rendering for Pac-Man and Ms. Pac-Man game.
@@ -99,6 +101,13 @@ public interface Rendering2D {
 
 	// Drawing
 
+	default void drawSpriteCenteredOverBox(Graphics2D g, BufferedImage sprite, double x, double y) {
+		if (sprite != null) {
+			int dx = HTS - sprite.getWidth() / 2, dy = HTS - sprite.getHeight() / 2;
+			g.drawImage(sprite, (int) (x + dx), (int) (y + dy), null);
+		}
+	}
+
 	default void drawEntity(Graphics2D g, Entity entity, BufferedImage sprite) {
 		if (entity.visible && sprite != null) {
 			drawSpriteCenteredOverBox(g, sprite, (int) entity.position.x, (int) entity.position.y);
@@ -113,9 +122,12 @@ public interface Rendering2D {
 		drawEntity(g, ghost, (BufferedImage) ghost.animations().get().current(ghost));
 	}
 
-	default void drawSpriteCenteredOverBox(Graphics2D g, BufferedImage sprite, double x, double y) {
-		int dx = HTS - sprite.getWidth() / 2, dy = HTS - sprite.getHeight() / 2;
-		g.drawImage(sprite, (int) (x + dx), (int) (y + dy), null);
+	default void drawStaticBonus(Graphics2D g, StaticBonus bonus) {
+		drawEntity(g, bonus, (BufferedImage) bonus.animations().get().current(bonus));
+	}
+
+	default void drawMovingBonus(Graphics2D g, MovingBonus bonus) {
+		drawEntity(g, bonus, (BufferedImage) bonus.animations().get().current(bonus));
 	}
 
 	default void drawEatenFood(Graphics2D g, Stream<V2i> tiles, Predicate<V2i> eaten) {

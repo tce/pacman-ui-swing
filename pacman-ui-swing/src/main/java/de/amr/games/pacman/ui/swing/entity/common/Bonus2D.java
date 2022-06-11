@@ -27,7 +27,6 @@ import java.awt.Graphics2D;
 
 import de.amr.games.pacman.lib.animation.ThingList;
 import de.amr.games.pacman.model.common.GameModel;
-import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.ui.swing.rendering.common.BonusAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
@@ -67,13 +66,10 @@ public class Bonus2D extends GameEntity2D {
 	@Override
 	public void render(Graphics2D g, Rendering2D r2D) {
 		var bonus = game.bonus();
-		var entity = (Entity) bonus;
 		var sprite = animations.current(bonus);
-		if (sprite != null) {
-			int dy = jumpAnimation != null && jumpAnimation.isRunning() ? jumpAnimation.animate() : 0;
-			g.translate(0, dy);
-			r2D.drawSpriteCenteredOverBox(g, sprite, entity.position.x, entity.position.y);
-			g.translate(0, -dy);
-		}
+		int dy = jumpAnimation != null && jumpAnimation.isRunning() ? jumpAnimation.animate() : 0;
+		g.translate(0, dy);
+		r2D.drawSpriteCenteredOverBox(g, sprite, bonus.entity().position.x, bonus.entity().position.y);
+		g.translate(0, -dy);
 	}
 }
