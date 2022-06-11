@@ -84,7 +84,7 @@ public class MsPacMan_IntroScene extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		r2D.drawScore(g, gameController.game(), true);
+		r2D.drawScores(g, gameController.game(), true);
 		drawTitle(g);
 		drawLights(g, 32, 16);
 		if (sceneController.state() == State.GHOSTS) {

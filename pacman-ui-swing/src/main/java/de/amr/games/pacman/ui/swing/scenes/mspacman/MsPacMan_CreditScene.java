@@ -57,7 +57,7 @@ public class MsPacMan_CreditScene extends GameScene {
 	@Override
 	public void render(Graphics2D g) {
 
-		r2D.drawScore(g, game, true);
+		r2D.drawScores(g, game, true);
 
 		g.setFont(r2D.getArcadeFont());
 		g.setColor(r2D.getGhostColor(Ghost.ORANGE_GHOST));

@@ -117,7 +117,7 @@ public class PacMan_IntroScene extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		r2D.drawScore(g, game, true);
+		r2D.drawScores(g, game, true);
 		r2D.drawCredit(g, gameController.credit());
 
 		switch (sceneController.state()) {

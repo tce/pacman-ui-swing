@@ -68,7 +68,7 @@ public class PlayScene extends GameScene {
 	}
 
 	private void updateSound() {
-		if (gameController.credit() == 0) {
+		if (!hasCredit()) {
 			return;
 		}
 		switch (gameController.state()) {
@@ -94,12 +94,30 @@ public class PlayScene extends GameScene {
 	@Override
 	public void render(Graphics2D g) {
 		boolean playing = gameController.isGameRunning();
-		boolean hasCredit = gameController.credit() > 0;
 		boolean showHighScoreOnly = !playing && gameController.state() != GameState.READY
 				&& gameController.state() != GameState.GAME_OVER;
 
-		r2D.drawScore(g, game, showHighScoreOnly);
+		r2D.drawScores(g, game, showHighScoreOnly);
+		drawMaze(g);
+		r2D.drawBonus(g, game.bonus().entity());
+		r2D.drawPac(g, game.pac);
+		game.ghosts().forEach(ghost -> r2D.drawGhost(g, ghost));
 
+		DebugDraw.drawPlaySceneDebugInfo(g, gameController);
+
+		if (hasCredit() && playing) {
+			r2D.drawLivesCounter(g, game);
+		}
+		if (hasCredit()) {
+			r2D.drawLevelCounter(g, game);
+		}
+		if (!hasCredit() && !playing) {
+			r2D.drawCredit(g, gameController.credit());
+		}
+		SoundManager.get().setMuted(gameController.credit() == 0); // TODO check
+	}
+
+	private void drawMaze(Graphics2D g) {
 		if (game.mazeFlashingAnimation.isRunning()) {
 			r2D.drawMaze(g, r2D.mazeNumber(game.level.number), 0, t(3), true);
 		} else {
@@ -108,24 +126,7 @@ public class PlayScene extends GameScene {
 					|| game.level.world.isEnergizerTile(tile) && !game.energizerPulse.frame());
 		}
 		DebugDraw.drawMazeStructure(g, game);
-
-		r2D.drawGameState(g, game, hasCredit ? gameController.state() : GameState.GAME_OVER);
-		r2D.drawBonus(g, game.bonus().entity());
-		r2D.drawPac(g, game.pac);
-		game.ghosts().forEach(ghost -> r2D.drawGhost(g, ghost));
-
-		DebugDraw.drawPlaySceneDebugInfo(g, gameController);
-
-		if (hasCredit && playing) {
-			r2D.drawLivesCounter(g, game);
-		}
-		if (hasCredit) {
-			r2D.drawLevelCounter(g, game);
-		}
-		if (!hasCredit && !playing) {
-			r2D.drawCredit(g, gameController.credit());
-		}
-		SoundManager.get().setMuted(gameController.credit() == 0); // TODO check
+		r2D.drawGameState(g, game, hasCredit() ? gameController.state() : GameState.GAME_OVER);
 	}
 
 	@Override

@@ -156,7 +156,7 @@ public interface Rendering2D {
 
 	void drawCopyright(Graphics2D g, int x, int y);
 
-	default void drawScore(Graphics2D g, GameModel game, boolean showHiscoreOnly) {
+	default void drawScores(Graphics2D g, GameModel game, boolean showHiscoreOnly) {
 		g.setFont(getArcadeFont());
 		g.translate(0, 2);
 		g.setColor(Color.WHITE);
