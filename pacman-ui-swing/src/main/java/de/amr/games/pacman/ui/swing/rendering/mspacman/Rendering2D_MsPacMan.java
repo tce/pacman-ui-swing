@@ -35,8 +35,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.ThingAnimationMap;
 import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
+import de.amr.games.pacman.lib.animation.ThingAnimationMap;
+import de.amr.games.pacman.lib.animation.ThingList;
 import de.amr.games.pacman.model.mspacman.MsPacManGame;
 import de.amr.games.pacman.ui.swing.assets.Spritesheet;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
@@ -243,8 +244,8 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public SimpleThingAnimation<BufferedImage> createGhostValueAnimation() {
-		return new SimpleThingAnimation<>(rhs(0, 8), rhs(1, 8), rhs(2, 8), rhs(3, 8));
+	public ThingList<BufferedImage> createGhostValueList() {
+		return new ThingList<>(rhs(0, 8), rhs(1, 8), rhs(2, 8), rhs(3, 8));
 	}
 
 	@Override
@@ -253,13 +254,13 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public SimpleThingAnimation<BufferedImage> createBonusSymbolAnimation() {
-		return new SimpleThingAnimation<>(rhs(3, 0), rhs(4, 0), rhs(5, 0), rhs(6, 0), rhs(7, 0), rhs(8, 0), rhs(9, 0));
+	public ThingList<BufferedImage> createBonusSymbolList() {
+		return new ThingList<>(rhs(3, 0), rhs(4, 0), rhs(5, 0), rhs(6, 0), rhs(7, 0), rhs(8, 0), rhs(9, 0));
 	}
 
 	@Override
-	public SimpleThingAnimation<BufferedImage> createBonusValueAnimation() {
-		return new SimpleThingAnimation<>(rhs(3, 1), rhs(4, 1), rhs(5, 1), rhs(6, 1), rhs(7, 1), rhs(8, 1), rhs(9, 1));
+	public ThingList<BufferedImage> createBonusValueList() {
+		return new ThingList<>(rhs(3, 1), rhs(4, 1), rhs(5, 1), rhs(6, 1), rhs(7, 1), rhs(8, 1), rhs(9, 1));
 	}
 
 	public ThingAnimationMap<Direction, BufferedImage> createHusbandMunchingAnimations() {

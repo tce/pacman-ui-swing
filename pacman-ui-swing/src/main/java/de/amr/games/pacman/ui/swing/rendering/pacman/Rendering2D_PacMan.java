@@ -38,8 +38,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.ThingAnimationMap;
 import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
+import de.amr.games.pacman.lib.animation.ThingAnimationMap;
+import de.amr.games.pacman.lib.animation.ThingList;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.assets.Spritesheet;
@@ -197,20 +198,19 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public SimpleThingAnimation<BufferedImage> createGhostValueAnimation() {
-		return new SimpleThingAnimation<>(ss.tile(0, 8), ss.tile(1, 8), ss.tile(2, 8), ss.tile(3, 8));
+	public ThingList<BufferedImage> createGhostValueList() {
+		return new ThingList<>(ss.tile(0, 8), ss.tile(1, 8), ss.tile(2, 8), ss.tile(3, 8));
 	}
 
 	@Override
-	public SimpleThingAnimation<BufferedImage> createBonusSymbolAnimation() {
-		return new SimpleThingAnimation<>(ss.tile(2, 3), ss.tile(3, 3), ss.tile(4, 3), ss.tile(5, 3), ss.tile(6, 3),
-				ss.tile(7, 3), ss.tile(8, 3), ss.tile(9, 3));
+	public ThingList<BufferedImage> createBonusSymbolList() {
+		return new ThingList<>(ss.tile(2, 3), ss.tile(3, 3), ss.tile(4, 3), ss.tile(5, 3), ss.tile(6, 3), ss.tile(7, 3),
+				ss.tile(8, 3), ss.tile(9, 3));
 	}
 
 	@Override
-	public SimpleThingAnimation<BufferedImage> createBonusValueAnimation() {
-		return new SimpleThingAnimation<>(ss.tile(0, 9), ss.tile(1, 9), ss.tile(2, 9), ss.tile(3, 9),
-				ss.tiles(4, 9, 2, 1), // left-aligned
+	public ThingList<BufferedImage> createBonusValueList() {
+		return new ThingList<>(ss.tile(0, 9), ss.tile(1, 9), ss.tile(2, 9), ss.tile(3, 9), ss.tiles(4, 9, 2, 1), // left-aligned
 				ss.tiles(3, 10, 3, 1), ss.tiles(3, 11, 3, 1), ss.tiles(3, 12, 3, 1));
 	}
 

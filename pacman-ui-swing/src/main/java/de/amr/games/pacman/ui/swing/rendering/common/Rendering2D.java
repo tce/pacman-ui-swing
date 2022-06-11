@@ -37,8 +37,9 @@ import java.util.stream.Stream;
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.V2i;
-import de.amr.games.pacman.lib.animation.ThingAnimationMap;
 import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
+import de.amr.games.pacman.lib.animation.ThingAnimationMap;
+import de.amr.games.pacman.lib.animation.ThingList;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.actors.Ghost;
@@ -83,11 +84,11 @@ public interface Rendering2D {
 
 	ThingAnimationMap<Direction, BufferedImage> createGhostEyesAnimation();
 
-	SimpleThingAnimation<BufferedImage> createGhostValueAnimation();
+	ThingList<BufferedImage> createGhostValueList();
 
-	SimpleThingAnimation<BufferedImage> createBonusSymbolAnimation();
+	ThingList<BufferedImage> createBonusSymbolList();
 
-	SimpleThingAnimation<BufferedImage> createBonusValueAnimation();
+	ThingList<BufferedImage> createBonusValueList();
 
 	// Maze
 
@@ -188,7 +189,7 @@ public interface Rendering2D {
 		int[] x = new int[1];
 		x[0] = rightX;
 		game.levelCounter.symbols().forEach(symbol -> {
-			var sprite = createBonusSymbolAnimation().frame(symbol); // cache animation
+			var sprite = createBonusSymbolList().frame(symbol); // cache animation
 			drawSpriteCenteredOverBox(g, sprite, x[0], y + World.HTS);
 			x[0] -= t(2);
 		});
