@@ -31,7 +31,6 @@ import de.amr.games.pacman.lib.animation.ThingAnimation;
 import de.amr.games.pacman.lib.animation.ThingAnimationCollection;
 import de.amr.games.pacman.lib.animation.ThingList;
 import de.amr.games.pacman.model.common.actors.Bonus;
-import de.amr.games.pacman.model.common.actors.BonusAnimationKey;
 
 /**
  * @author Armin Reichert
