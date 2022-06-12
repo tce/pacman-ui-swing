@@ -29,8 +29,6 @@ import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.Intermission2Controller;
 import de.amr.games.pacman.controller.mspacman.Intermission2Controller.Context;
 import de.amr.games.pacman.lib.animation.ThingAnimationCollection;
-import de.amr.games.pacman.ui.swing.assets.GameSound;
-import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Flap2D;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.MsPacMansHusbandAnimations;
@@ -54,7 +52,6 @@ public class MsPacMan_IntermissionScene2 extends GameScene {
 	public void setContext(GameController gameController) {
 		super.setContext(gameController);
 		sceneController = new Intermission2Controller(gameController);
-		sceneController.playIntermissionSound = () -> SoundManager.get().play(GameSound.INTERMISSION_2);
 		context = sceneController.context();
 	}
 

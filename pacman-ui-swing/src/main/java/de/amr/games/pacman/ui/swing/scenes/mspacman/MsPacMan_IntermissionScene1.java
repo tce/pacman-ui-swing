@@ -29,8 +29,6 @@ import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.Intermission1Controller;
 import de.amr.games.pacman.lib.animation.ThingAnimationCollection;
 import de.amr.games.pacman.model.common.actors.Ghost;
-import de.amr.games.pacman.ui.swing.assets.GameSound;
-import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Flap2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Heart2D;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
@@ -59,7 +57,6 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 	public void setContext(GameController gameController) {
 		super.setContext(gameController);
 		sceneController = new Intermission1Controller(gameController);
-		sceneController.playIntermissionSound = () -> SoundManager.get().play(GameSound.INTERMISSION_1);
 		context = sceneController.context();
 	}
 
