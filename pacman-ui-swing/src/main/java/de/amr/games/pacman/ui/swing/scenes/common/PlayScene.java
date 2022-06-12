@@ -50,7 +50,7 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void init() {
-		game.mazeFlashingAnimation = r2D.createMazeFlashingAnimation(r2D.mazeNumber(game.level.number));
+		game.setMazeFlashingAnimation(r2D.createMazeFlashingAnimation(r2D.mazeNumber(game.level.number)));
 		game.pac.setAnimations(new PacAnimations(r2D));
 		game.ghosts().forEach(ghost -> {
 			ghost.setAnimations(new GhostAnimations(ghost.id, r2D));
@@ -115,8 +115,8 @@ public class PlayScene extends GameScene {
 	}
 
 	private void drawMaze(Graphics2D g) {
-		if (game.mazeFlashingAnimation.isRunning()) {
-			g.drawImage((Image) game.mazeFlashingAnimation.frame(), 0, t(3), null);
+		if (game.mazeFlashingAnimation().isPresent() && game.mazeFlashingAnimation().get().isRunning()) {
+			g.drawImage((Image) game.mazeFlashingAnimation().get().frame(), 0, t(3), null);
 		} else {
 			r2D.drawFullMaze(g, r2D.mazeNumber(game.level.number), 0, t(3));
 			r2D.drawDarkTiles(g, game.level.world.tiles(), tile -> game.level.world.containsEatenFood(tile)
