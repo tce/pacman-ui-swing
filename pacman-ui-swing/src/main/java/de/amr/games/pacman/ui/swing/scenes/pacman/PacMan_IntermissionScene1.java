@@ -63,6 +63,7 @@ public class PacMan_IntermissionScene1 extends GameScene {
 		$.pac.setAnimations(new PacAnimations(r2D));
 		$.pac.animations().ifPresent(ThingAnimationCollection::ensureRunning);
 		$.blinky.setAnimations(new GhostAnimations(Ghost.RED_GHOST, r2D));
+		$.blinky.animations().ifPresent(ThingAnimationCollection::restart);
 		bigPacMan2D = new BigPacMan2D($.pac, (Rendering2D_PacMan) r2D);
 		bigPacMan2D.startMunching();
 	}

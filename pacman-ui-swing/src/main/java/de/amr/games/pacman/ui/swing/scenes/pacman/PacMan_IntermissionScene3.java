@@ -24,9 +24,11 @@ SOFTWARE.
 package de.amr.games.pacman.ui.swing.scenes.pacman;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.pacman.Intermission3Controller;
+import de.amr.games.pacman.lib.animation.ThingAnimation;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
@@ -42,6 +44,8 @@ public class PacMan_IntermissionScene3 extends GameScene {
 
 	private Intermission3Controller sceneController;
 	private Intermission3Controller.Context $;
+	private ThingAnimation<BufferedImage> blinkyPatchedAnimation;
+	private ThingAnimation<BufferedImage> blinkyNakedAnimation;
 
 	@Override
 	public void setContext(GameController gameController) {
@@ -56,6 +60,10 @@ public class PacMan_IntermissionScene3 extends GameScene {
 		sceneController.init();
 		$.pac.setAnimations(new PacAnimations(r2D));
 		$.pac.animations().get().ensureRunning();
+		blinkyPatchedAnimation = Rendering2D_PacMan.get().createBlinkyPatchedAnimation();
+		blinkyPatchedAnimation.restart();
+		blinkyNakedAnimation = Rendering2D_PacMan.get().createBlinkyNakedAnimation();
+		blinkyNakedAnimation.restart();
 	}
 
 	@Override
@@ -68,9 +76,11 @@ public class PacMan_IntermissionScene3 extends GameScene {
 		r2D.drawLevelCounter(g, gameController.game());
 		r2D.drawPac(g, $.pac);
 		if (sceneController.state() == Intermission3Controller.State.CHASING) {
-			((Rendering2D_PacMan) r2D).drawBlinkyPatched(g, $.blinky);
+			r2D.drawEntity(g, $.blinky, blinkyPatchedAnimation.frame());
+			blinkyPatchedAnimation.advance();
 		} else {
-			((Rendering2D_PacMan) r2D).drawBlinkyNaked(g, $.blinky);
+			r2D.drawEntity(g, $.blinky, blinkyNakedAnimation.frame());
+			blinkyNakedAnimation.advance();
 		}
 	}
 }

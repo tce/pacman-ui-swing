@@ -31,6 +31,7 @@ import de.amr.games.pacman.controller.pacman.Intermission2Controller;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
+import de.amr.games.pacman.lib.animation.ThingAnimationCollection;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
@@ -65,8 +66,11 @@ public class PacMan_IntermissionScene2 extends GameScene {
 		$.pac.setAnimations(new PacAnimations(r2D));
 		$.pac.animations().get().ensureRunning();
 		$.blinky.setAnimations(new GhostAnimations(Ghost.RED_GHOST, r2D));
+		$.blinky.animations().ifPresent(ThingAnimationCollection::restart);
 		blinkyStretchedAnimation = Rendering2D_PacMan.get().createBlinkyStretchedAnimation();
+		blinkyStretchedAnimation.restart();
 		blinkyDamagedAnimation = Rendering2D_PacMan.get().createBlinkyDamagedAnimation();
+		blinkyDamagedAnimation.restart();
 	}
 
 	@Override

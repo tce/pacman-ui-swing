@@ -79,12 +79,9 @@ public class Rendering2D_PacMan implements Rendering2D {
 
 	private final Spritesheet ss;
 	private final BufferedImage mazeFull;
+	private final BufferedImage nailSprite;
 	private final SimpleThingAnimation<BufferedImage> mazeFlashingAnim;
 	private final Font font;
-
-	private final SimpleThingAnimation<BufferedImage> blinkyHalfNaked;
-	private final SimpleThingAnimation<BufferedImage> blinkyPatched;
-	private final BufferedImage nailSprite;
 
 	private Rendering2D_PacMan(String path, int rasterSize) {
 		ss = new Spritesheet(image(path), rasterSize);
@@ -95,15 +92,6 @@ public class Rendering2D_PacMan implements Rendering2D {
 		var mazeEmptyBright = ss.createBrightEffect(mazeEmptyDark, new Color(33, 33, 255), Color.BLACK);
 		mazeFlashingAnim = new SimpleThingAnimation<>(mazeEmptyBright, mazeEmptyDark);
 		mazeFlashingAnim.frameDuration(15);
-
-		blinkyPatched = new SimpleThingAnimation<>(ss.tile(10, 7), ss.tile(11, 7));
-		blinkyPatched.frameDuration(4);
-		blinkyPatched.repeatForever();
-
-		blinkyHalfNaked = new SimpleThingAnimation<>(ss.tiles(8, 8, 2, 1), ss.tiles(10, 8, 2, 1));
-		blinkyHalfNaked.frameDuration(4);
-		blinkyHalfNaked.repeatForever();
-
 		nailSprite = ss.tile(8, 6);
 	}
 
@@ -231,6 +219,20 @@ public class Rendering2D_PacMan implements Rendering2D {
 		return new SimpleThingAnimation<>(ss.tile(8, 7), ss.tile(9, 7));
 	}
 
+	public SimpleThingAnimation<BufferedImage> createBlinkyPatchedAnimation() {
+		var blinkyPatched = new SimpleThingAnimation<>(ss.tile(10, 7), ss.tile(11, 7));
+		blinkyPatched.frameDuration(4);
+		blinkyPatched.repeatForever();
+		return blinkyPatched;
+	}
+
+	public SimpleThingAnimation<BufferedImage> createBlinkyNakedAnimation() {
+		var blinkyNaked = new SimpleThingAnimation<>(ss.tiles(8, 8, 2, 1), ss.tiles(10, 8, 2, 1));
+		blinkyNaked.frameDuration(4);
+		blinkyNaked.repeatForever();
+		return blinkyNaked;
+	}
+
 	// Maze
 
 	@Override
@@ -259,13 +261,5 @@ public class Rendering2D_PacMan implements Rendering2D {
 
 	public void drawNail(Graphics2D g, Entity nail) {
 		drawEntity(g, nail, nailSprite);
-	}
-
-	public void drawBlinkyPatched(Graphics2D g, Ghost blinky) {
-		drawEntity(g, blinky, blinkyPatched.animate());
-	}
-
-	public void drawBlinkyNaked(Graphics2D g, Ghost blinky) {
-		drawEntity(g, blinky, blinkyHalfNaked.animate());
 	}
 }
