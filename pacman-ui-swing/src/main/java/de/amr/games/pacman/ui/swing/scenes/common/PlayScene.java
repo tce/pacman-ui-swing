@@ -34,7 +34,6 @@ import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameStateChangeEvent;
 import de.amr.games.pacman.model.common.actors.GhostState;
-import de.amr.games.pacman.model.common.actors.PacAnimationKey;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.rendering.common.BonusAnimations;
@@ -51,14 +50,11 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void init() {
+		game.mazeFlashingAnimation = r2D.createMazeFlashingAnimation(r2D.mazeNumber(game.level.number));
 		game.pac.setAnimations(new PacAnimations(r2D));
-		game.pac.animations().get().ensureRunning();
-		game.pac.animation(PacAnimationKey.ANIM_MUNCHING).get().stop();
 		game.ghosts().forEach(ghost -> {
 			ghost.setAnimations(new GhostAnimations(ghost.id, r2D));
-			ghost.animations().get().ensureRunning();
 		});
-		game.mazeFlashingAnimation = r2D.createMazeFlashingAnimation(r2D.mazeNumber(game.level.number));
 		game.bonus().setAnimations(new BonusAnimations(r2D));
 		game.bonus().setInactive();
 	}
