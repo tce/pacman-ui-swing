@@ -191,14 +191,14 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public ThingList<BufferedImage> createBonusSymbolList() {
-		return new ThingList<>(ss.tile(2, 3), ss.tile(3, 3), ss.tile(4, 3), ss.tile(5, 3), ss.tile(6, 3), ss.tile(7, 3),
+	public List<BufferedImage> createBonusSymbolList() {
+		return List.of(ss.tile(2, 3), ss.tile(3, 3), ss.tile(4, 3), ss.tile(5, 3), ss.tile(6, 3), ss.tile(7, 3),
 				ss.tile(8, 3), ss.tile(9, 3));
 	}
 
 	@Override
-	public ThingList<BufferedImage> createBonusValueList() {
-		return new ThingList<>(ss.tile(0, 9), ss.tile(1, 9), ss.tile(2, 9), ss.tile(3, 9), ss.tiles(4, 9, 2, 1), // left-aligned
+	public List<BufferedImage> createBonusValueList() {
+		return List.of(ss.tile(0, 9), ss.tile(1, 9), ss.tile(2, 9), ss.tile(3, 9), ss.tiles(4, 9, 2, 1), // left-aligned
 				ss.tiles(3, 10, 3, 1), ss.tiles(3, 11, 3, 1), ss.tiles(3, 12, 3, 1));
 	}
 

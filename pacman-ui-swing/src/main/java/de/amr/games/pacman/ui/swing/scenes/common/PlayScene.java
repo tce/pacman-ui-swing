@@ -36,7 +36,6 @@ import de.amr.games.pacman.event.GameStateChangeEvent;
 import de.amr.games.pacman.model.common.actors.GhostState;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
-import de.amr.games.pacman.ui.swing.rendering.common.BonusAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
@@ -55,7 +54,8 @@ public class PlayScene extends GameScene {
 		game.ghosts().forEach(ghost -> {
 			ghost.setAnimations(new GhostAnimations(ghost.id, r2D));
 		});
-		game.bonus().setAnimations(new BonusAnimations(r2D));
+		game.bonus().setSymbolList(r2D.createBonusSymbolList());
+		game.bonus().setValueList(r2D.createBonusValueList());
 		game.bonus().setInactive();
 	}
 

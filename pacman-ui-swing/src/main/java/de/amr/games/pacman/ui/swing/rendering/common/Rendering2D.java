@@ -31,6 +31,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -86,9 +87,9 @@ public interface Rendering2D {
 
 	ThingList<BufferedImage> createGhostValueList();
 
-	ThingList<BufferedImage> createBonusSymbolList();
+	List<BufferedImage> createBonusSymbolList();
 
-	ThingList<BufferedImage> createBonusValueList();
+	List<BufferedImage> createBonusValueList();
 
 	// Maze
 
@@ -128,16 +129,14 @@ public interface Rendering2D {
 	default void drawBonus(Graphics2D g, Entity bonusEntity) {
 		if (bonusEntity instanceof StaticBonus) {
 			StaticBonus bonus = (StaticBonus) bonusEntity;
-			drawEntity(g, bonus, (BufferedImage) bonus.animations().get().current(bonus));
+			drawEntity(g, bonus, (BufferedImage) bonus.getSprite());
 		} else if (bonusEntity instanceof MovingBonus) {
 			MovingBonus movingBonus = (MovingBonus) bonusEntity;
-			movingBonus.animations().ifPresent(anim -> {
-				int dy = movingBonus.dy();
-				Graphics2D g2d = (Graphics2D) g.create();
-				g2d.translate(0, dy);
-				drawEntity(g2d, movingBonus, (BufferedImage) anim.current(movingBonus));
-				g2d.dispose();
-			});
+			int dy = movingBonus.dy();
+			Graphics2D g2d = (Graphics2D) g.create();
+			g2d.translate(0, dy);
+			drawEntity(g2d, movingBonus, (BufferedImage) movingBonus.getSprite());
+			g2d.dispose();
 		}
 	}
 
@@ -199,7 +198,7 @@ public interface Rendering2D {
 		int[] x = new int[1];
 		x[0] = rightX;
 		game.levelCounter.symbols().forEach(symbol -> {
-			var sprite = createBonusSymbolList().frame(symbol); // cache animation
+			var sprite = createBonusSymbolList().get(symbol); // cache animation
 			drawSpriteCenteredOverBox(g, sprite, x[0], y + World.HTS);
 			x[0] -= t(2);
 		});
