@@ -28,7 +28,7 @@ import java.awt.Graphics2D;
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.Intermission2Controller;
 import de.amr.games.pacman.controller.mspacman.Intermission2Controller.Context;
-import de.amr.games.pacman.lib.animation.ThingAnimation;
+import de.amr.games.pacman.lib.animation.ThingAnimationCollection;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Flap2D;
@@ -63,9 +63,9 @@ public class MsPacMan_IntermissionScene2 extends GameScene {
 		sceneController.restartInInitialState(Intermission2Controller.State.FLAP);
 		flap2D = new Flap2D(context.flap, game);
 		context.msPacMan.setAnimations(new PacAnimations(r2D));
-		context.msPacMan.animations().ifPresent(ThingAnimation::ensureRunning);
+		context.msPacMan.animations().ifPresent(ThingAnimationCollection::ensureRunning);
 		context.pacMan.setAnimations(new MsPacMansHusbandAnimations());
-		context.pacMan.animations().ifPresent(ThingAnimation::ensureRunning);
+		context.pacMan.animations().ifPresent(ThingAnimationCollection::ensureRunning);
 	}
 
 	@Override

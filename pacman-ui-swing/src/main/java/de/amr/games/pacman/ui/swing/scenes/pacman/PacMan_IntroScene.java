@@ -108,7 +108,7 @@ public class PacMan_IntroScene extends GameScene {
 					ghost.animations().get().select(GhostAnimationKey.ANIM_BLUE);
 					ghost.animations().get().selectedAnimation().ensureRunning();
 					if (ghost.velocity.length() == 0) {
-						ghost.animations().get().stop(GhostAnimationKey.ANIM_BLUE);
+						ghost.animations().get().byKey(GhostAnimationKey.ANIM_BLUE).stop();
 					}
 				}
 			}

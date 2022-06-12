@@ -27,7 +27,7 @@ import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.pacman.Intermission1Controller;
-import de.amr.games.pacman.lib.animation.ThingAnimation;
+import de.amr.games.pacman.lib.animation.ThingAnimationCollection;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.GhostAnimationKey;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
@@ -61,7 +61,7 @@ public class PacMan_IntermissionScene1 extends GameScene {
 	public void init() {
 		sceneController.init();
 		$.pac.setAnimations(new PacAnimations(r2D));
-		$.pac.animations().ifPresent(ThingAnimation::ensureRunning);
+		$.pac.animations().ifPresent(ThingAnimationCollection::ensureRunning);
 		$.blinky.setAnimations(new GhostAnimations(Ghost.RED_GHOST, r2D));
 		bigPacMan2D = new BigPacMan2D($.pac, (Rendering2D_PacMan) r2D);
 		bigPacMan2D.startMunching();

@@ -27,7 +27,7 @@ import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.Intermission1Controller;
-import de.amr.games.pacman.lib.animation.ThingAnimation;
+import de.amr.games.pacman.lib.animation.ThingAnimationCollection;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.assets.GameSound;
 import de.amr.games.pacman.ui.swing.assets.SoundManager;
@@ -69,9 +69,9 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 
 		flap2D = new Flap2D(context.flap, game);
 		context.msPac.setAnimations(new PacAnimations(r2D));
-		context.msPac.animations().ifPresent(ThingAnimation::ensureRunning);
+		context.msPac.animations().ifPresent(ThingAnimationCollection::ensureRunning);
 		context.pacMan.setAnimations(new MsPacMansHusbandAnimations());
-		context.pacMan.animations().ifPresent(ThingAnimation::ensureRunning);
+		context.pacMan.animations().ifPresent(ThingAnimationCollection::ensureRunning);
 		context.inky.setAnimations(new GhostAnimations(Ghost.CYAN_GHOST, r2D));
 		context.pinky.setAnimations(new GhostAnimations(Ghost.PINK_GHOST, r2D));
 		heart2D = new Heart2D(context.heart);
