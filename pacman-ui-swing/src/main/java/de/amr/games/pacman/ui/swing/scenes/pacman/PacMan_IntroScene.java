@@ -84,9 +84,7 @@ public class PacMan_IntroScene extends GameScene {
 	@Override
 	public void update() {
 		if (Keyboard.keyPressed("1")) {
-			if (game.credit() > 0) { // TODO let state handle this
-				gameController.requestGame();
-			}
+			gameController.state().requestGame(game);
 		} else if (Keyboard.keyPressed("5")) {
 			gameController.state().addCredit(game);
 		} else {
