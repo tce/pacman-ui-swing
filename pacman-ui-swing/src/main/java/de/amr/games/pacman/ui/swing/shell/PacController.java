@@ -26,14 +26,14 @@ package de.amr.games.pacman.ui.swing.shell;
 import java.util.function.Consumer;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.model.common.actors.Pac;
+import de.amr.games.pacman.model.common.actors.Creature;
 
 /**
  * Controls the player using the keyboard.
  * 
  * @author Armin Reichert
  */
-public class PacController implements Consumer<Pac> {
+public class PacController implements Consumer<Creature> {
 
 	private final String up, down, left, right;
 
@@ -45,7 +45,7 @@ public class PacController implements Consumer<Pac> {
 	}
 
 	@Override
-	public void accept(Pac pac) {
+	public void accept(Creature pac) {
 		if (Keyboard.keyPressed(up)) {
 			pac.setWishDir(Direction.UP);
 		} else if (Keyboard.keyPressed(down)) {
