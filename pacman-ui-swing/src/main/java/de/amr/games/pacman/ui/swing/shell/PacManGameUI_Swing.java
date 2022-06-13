@@ -260,8 +260,8 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 		}
 
 		else if (Keyboard.keyPressed("I")) {
-			gameController.togglePlayerImmune();
-			showFlashMessage(1, "Player is %s", game.playerImmune ? "immune" : "vulnerable");
+			gameController.toggleIsPacImmune();
+			showFlashMessage(1, "Player is %s", game.isPacImmune ? "immune" : "vulnerable");
 		}
 
 		else if (Keyboard.keyPressed("L")) {
