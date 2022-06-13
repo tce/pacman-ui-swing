@@ -246,8 +246,8 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 		var game = gameController.game();
 
 		if (Keyboard.keyPressed("A")) {
-			gameController.toggleAutoMoving();
-			showFlashMessage(1, "Autopilot %s", gameController.isAutoMoving() ? "on" : "off");
+			game.autoControlled = !game.autoControlled;
+			showFlashMessage(1, "Autopilot %s", game.autoControlled ? "on" : "off");
 		}
 
 		else if (Keyboard.keyPressed(MOD_CTRL, "D")) {
