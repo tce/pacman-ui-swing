@@ -300,7 +300,7 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 		}
 
 		else if (Keyboard.keyPressed("X")) {
-			gameController.cheatKillAllEatableGhosts();
+			gameController.state().cheatKillAllEatableGhosts(gameController.game());
 		}
 
 		else if (Keyboard.keyPressed("Z")) {
