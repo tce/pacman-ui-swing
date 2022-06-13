@@ -105,9 +105,9 @@ public class PlayScene extends GameScene {
 			r2D.drawLevelCounter(g, game);
 		}
 		if (!hasCredit() && !game.playing) {
-			r2D.drawCredit(g, gameController.credit());
+			r2D.drawCredit(g, game.credit());
 		}
-		SoundManager.get().setMuted(gameController.credit() == 0); // TODO check
+		SoundManager.get().setMuted(game.credit() == 0); // TODO check
 	}
 
 	private void drawMaze(Graphics2D g) {
@@ -168,7 +168,7 @@ public class PlayScene extends GameScene {
 		switch (e.newGameState) {
 		case READY -> {
 			SoundManager.get().stopAll();
-			if (gameController.credit() > 0 && !game.playing) {
+			if (game.credit() > 0 && !game.playing) {
 				SoundManager.get().play(GameSound.GAME_READY);
 			}
 		}

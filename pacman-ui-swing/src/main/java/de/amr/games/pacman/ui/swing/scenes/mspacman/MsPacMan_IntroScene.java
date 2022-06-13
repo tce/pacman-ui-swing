@@ -70,7 +70,7 @@ public class MsPacMan_IntroScene extends GameScene {
 	@Override
 	public void update() {
 		if (Keyboard.keyPressed("1")) {
-			if (gameController.credit() > 0) { // TODO game state should handle this
+			if (game.credit() > 0) { // TODO game state should handle this
 				gameController.requestGame();
 			}
 		} else if (Keyboard.keyPressed("5")) {
@@ -93,7 +93,7 @@ public class MsPacMan_IntroScene extends GameScene {
 		Stream.of($.ghosts).forEach(ghost -> r2D.drawGhost(g, ghost));
 		r2D.drawPac(g, $.msPacMan);
 		r2D.drawCopyright(g, t(6), t(28));
-		r2D.drawCredit(g, gameController.credit());
+		r2D.drawCredit(g, game.credit());
 	}
 
 	private void drawTitle(Graphics2D g) {

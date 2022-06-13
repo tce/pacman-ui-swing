@@ -70,7 +70,7 @@ public class PacMan_CreditScene extends GameScene {
 
 		r2D.drawCopyright(g, t(4), t(29));
 
-		r2D.drawCredit(g, gameController.credit());
+		r2D.drawCredit(g, game.credit());
 //		r2D.drawLevelCounter(g, game, t(24), t(34));
 	}
 }

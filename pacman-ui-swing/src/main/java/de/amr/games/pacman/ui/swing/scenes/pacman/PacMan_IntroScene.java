@@ -84,7 +84,7 @@ public class PacMan_IntroScene extends GameScene {
 	@Override
 	public void update() {
 		if (Keyboard.keyPressed("1")) {
-			if (gameController.credit() > 0) { // TODO let state handle this
+			if (game.credit() > 0) { // TODO let state handle this
 				gameController.requestGame();
 			}
 		} else if (Keyboard.keyPressed("5")) {
@@ -116,7 +116,7 @@ public class PacMan_IntroScene extends GameScene {
 	@Override
 	public void render(Graphics2D g) {
 		r2D.drawScores(g, game, true);
-		r2D.drawCredit(g, gameController.credit());
+		r2D.drawCredit(g, game.credit());
 
 		switch (sceneController.state()) {
 		case START, PRESENTING_GHOSTS -> drawGallery(g);
