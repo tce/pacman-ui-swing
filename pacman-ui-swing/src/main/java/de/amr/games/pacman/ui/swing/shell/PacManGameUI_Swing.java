@@ -296,7 +296,7 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 		}
 
 		else if (Keyboard.keyPressed("V")) {
-			gameController.selectGameVariant(gameController.game().variant.prev());
+			gameController.state().selectGameVariant(gameController.game().variant.next());
 		}
 
 		else if (Keyboard.keyPressed("X")) {
