@@ -265,13 +265,13 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 		}
 
 		else if (Keyboard.keyPressed("L")) {
-			if (gameController.isGameRunning()) {
+			if (game.playing) {
 				game.lives += 3;
 			}
 		}
 
 		else if (Keyboard.keyPressed("N")) {
-			if (gameController.isGameRunning()) {
+			if (game.playing) {
 				gameController.changeState(GameState.LEVEL_COMPLETE);
 			}
 		}

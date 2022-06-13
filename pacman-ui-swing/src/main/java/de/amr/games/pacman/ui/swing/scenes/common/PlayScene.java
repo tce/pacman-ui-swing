@@ -87,8 +87,7 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		boolean playing = gameController.isGameRunning();
-		boolean showHighScoreOnly = !playing && gameController.state() != GameState.READY
+		boolean showHighScoreOnly = !game.playing && gameController.state() != GameState.READY
 				&& gameController.state() != GameState.GAME_OVER;
 
 		r2D.drawScores(g, game, showHighScoreOnly);
@@ -99,13 +98,13 @@ public class PlayScene extends GameScene {
 
 		DebugDraw.drawPlaySceneDebugInfo(g, gameController);
 
-		if (hasCredit() && playing) {
+		if (hasCredit() && game.playing) {
 			r2D.drawLivesCounter(g, game);
 		}
 		if (hasCredit()) {
 			r2D.drawLevelCounter(g, game);
 		}
-		if (!hasCredit() && !playing) {
+		if (!hasCredit() && !game.playing) {
 			r2D.drawCredit(g, gameController.credit());
 		}
 		SoundManager.get().setMuted(gameController.credit() == 0); // TODO check
@@ -169,7 +168,7 @@ public class PlayScene extends GameScene {
 		switch (e.newGameState) {
 		case READY -> {
 			SoundManager.get().stopAll();
-			if (gameController.credit() > 0 && !gameController.isGameRunning()) {
+			if (gameController.credit() > 0 && !game.playing) {
 				SoundManager.get().play(GameSound.GAME_READY);
 			}
 		}
