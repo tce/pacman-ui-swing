@@ -304,7 +304,7 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 		}
 
 		else if (Keyboard.keyPressed("Z")) {
-			gameController.startIntermissionTest();
+			gameController.state().startIntermissionTest(game);
 		}
 	}
 

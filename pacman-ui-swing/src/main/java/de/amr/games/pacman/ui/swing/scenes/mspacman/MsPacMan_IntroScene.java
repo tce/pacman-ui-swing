@@ -34,8 +34,6 @@ import de.amr.games.pacman.controller.mspacman.IntroController;
 import de.amr.games.pacman.controller.mspacman.IntroController.State;
 import de.amr.games.pacman.lib.animation.ThingAnimationCollection;
 import de.amr.games.pacman.model.common.actors.Ghost;
-import de.amr.games.pacman.ui.swing.assets.GameSound;
-import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
@@ -71,15 +69,15 @@ public class MsPacMan_IntroScene extends GameScene {
 
 	@Override
 	public void update() {
-		if (gameController.credit() > 0 && Keyboard.keyPressed("1")) {
-			gameController.requestGame();
-			return;
+		if (Keyboard.keyPressed("1")) {
+			if (gameController.credit() > 0) { // TODO game state should handle this
+				gameController.requestGame();
+			}
 		} else if (Keyboard.keyPressed("5")) {
-			SoundManager.get().play(GameSound.CREDIT);
-			gameController.addCredit();
-			return;
+			gameController.state().addCredit(game);
+		} else {
+			sceneController.update();
 		}
-		sceneController.update();
 	}
 
 	@Override

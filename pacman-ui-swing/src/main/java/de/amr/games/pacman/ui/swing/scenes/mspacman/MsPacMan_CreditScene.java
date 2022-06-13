@@ -31,8 +31,6 @@ import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.world.World;
-import de.amr.games.pacman.ui.swing.assets.GameSound;
-import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.shell.Keyboard;
@@ -45,12 +43,9 @@ public class MsPacMan_CreditScene extends GameScene {
 	@Override
 	public void update() {
 		if (Keyboard.keyPressed("5")) {
-			SoundManager.get().play(GameSound.CREDIT);
-			gameController.addCredit();
-			return;
-		} else if (Keyboard.keyPressed("Space") || Keyboard.keyPressed("1")) {
+			gameController.state().addCredit(game);
+		} else if (Keyboard.keyPressed("1")) {
 			gameController.requestGame();
-			return;
 		}
 	}
 
