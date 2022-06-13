@@ -277,7 +277,7 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 		}
 
 		else if (Keyboard.keyPressed("Q")) {
-			restartIntroScene();
+			restartIntro();
 		}
 
 		else if (Keyboard.keyPressed(MOD_CTRL, "S")) {
@@ -308,7 +308,7 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 		}
 	}
 
-	private void restartIntroScene() {
+	private void restartIntro() {
 		currentGameScene.end();
 		SoundManager.get().stopAll();
 		gameController.restartIntro();
