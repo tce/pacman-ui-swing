@@ -311,7 +311,7 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 	private void restartIntroScene() {
 		currentGameScene.end();
 		SoundManager.get().stopAll();
-		gameController.returnToIntro();
+		gameController.restartIntro();
 	}
 
 	private void moveMousePointerOutOfSight() {
