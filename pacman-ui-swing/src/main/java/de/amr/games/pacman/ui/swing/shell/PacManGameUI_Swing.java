@@ -256,7 +256,7 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 		}
 
 		else if (Keyboard.keyPressed("E")) {
-			gameController.cheatEatAllPellets();
+			gameController.state().cheatEatAllPellets(game);
 		}
 
 		else if (Keyboard.keyPressed("I")) {
