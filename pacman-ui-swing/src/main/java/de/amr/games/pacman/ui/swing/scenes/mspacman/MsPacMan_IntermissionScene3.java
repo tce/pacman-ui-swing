@@ -29,10 +29,10 @@ import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.Intermission3Controller;
 import de.amr.games.pacman.lib.animation.ThingAnimationCollection;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Flap2D;
-import de.amr.games.pacman.ui.swing.entity.mspacman.JuniorBag2D;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Stork2D;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.MsPacMansHusbandAnimations;
+import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
 /**
@@ -51,7 +51,6 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 	private Intermission3Controller.Context $;
 	private Flap2D flap2D;
 	private Stork2D stork2D;
-	private JuniorBag2D bag2D;
 
 	@Override
 	public void setContext(GameController gameController) {
@@ -70,7 +69,6 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 		flap2D = new Flap2D($.flap, game);
 		stork2D = new Stork2D($.stork, r2D);
 		stork2D.animation.restart();
-		bag2D = new JuniorBag2D($.bag, r2D);
 	}
 
 	@Override
@@ -84,6 +82,7 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 		r2D.drawPac(g, $.msPacMan);
 		r2D.drawPac(g, $.pacMan);
 		stork2D.render(g);
-		bag2D.render(g);
+		var sprite = $.bagOpen ? Rendering2D_MsPacMan.get().getJunior() : Rendering2D_MsPacMan.get().getBlueBag();
+		r2D.drawEntity(g, $.bag, sprite);
 	}
 }

@@ -27,7 +27,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.mspacman.Flap;
 import de.amr.games.pacman.ui.swing.entity.common.GameEntity2D;
@@ -42,18 +41,17 @@ import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 public class Flap2D extends GameEntity2D {
 
 	public final Flap flap;
-	public SimpleThingAnimation<BufferedImage> animation;
 
 	public Flap2D(Flap flap, GameModel game) {
 		super(game);
 		this.flap = flap;
-		animation = Rendering2D_MsPacMan.get().createFlapAnimation();
+		flap.animation = Rendering2D_MsPacMan.get().createFlapAnimation();
 	}
 
 	@Override
 	public void render(Graphics2D g, Rendering2D r2D) {
 		if (flap.visible) {
-			BufferedImage sprite = animation.animate();
+			BufferedImage sprite = (BufferedImage) flap.animation.animate();
 			r2D.drawEntity(g, flap, sprite);
 			g.setFont(r2D.getArcadeFont());
 			g.setColor(new Color(222, 222, 255));
