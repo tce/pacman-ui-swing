@@ -39,7 +39,7 @@ import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
 import de.amr.games.pacman.lib.animation.ThingAnimationMap;
-import de.amr.games.pacman.lib.animation.ThingList;
+import de.amr.games.pacman.lib.animation.ThingArray;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.actors.Ghost;
@@ -88,7 +88,7 @@ public interface Rendering2D {
 
 	ThingAnimationMap<Direction, BufferedImage> createGhostEyesAnimation();
 
-	ThingList<BufferedImage> createGhostValueList();
+	ThingArray<BufferedImage> createGhostValueList();
 
 	// Maze
 

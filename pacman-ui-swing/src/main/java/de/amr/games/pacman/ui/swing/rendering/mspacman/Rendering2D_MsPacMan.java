@@ -36,7 +36,7 @@ import java.util.List;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
 import de.amr.games.pacman.lib.animation.ThingAnimationMap;
-import de.amr.games.pacman.lib.animation.ThingList;
+import de.amr.games.pacman.lib.animation.ThingArray;
 import de.amr.games.pacman.model.mspacman.Flap;
 import de.amr.games.pacman.model.mspacman.MsPacManGame;
 import de.amr.games.pacman.ui.swing.lib.Spritesheet;
@@ -247,8 +247,8 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public ThingList<BufferedImage> createGhostValueList() {
-		return new ThingList<>(rhs(0, 8), rhs(1, 8), rhs(2, 8), rhs(3, 8));
+	public ThingArray<BufferedImage> createGhostValueList() {
+		return new ThingArray<>(rhs(0, 8), rhs(1, 8), rhs(2, 8), rhs(3, 8));
 	}
 
 	@Override
