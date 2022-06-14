@@ -31,8 +31,6 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
 
-import de.amr.games.pacman.ui.swing.assets.AssetException;
-
 /**
  * @author Armin Reichert
  */

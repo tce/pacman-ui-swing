@@ -50,9 +50,10 @@ import de.amr.games.pacman.event.GameEventAdapter;
 import de.amr.games.pacman.event.GameStateChangeEvent;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
+import de.amr.games.pacman.model.common.GameSounds;
+import de.amr.games.pacman.model.common.GameVariant;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.ui.swing.app.GameLoop;
-import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.lib.U;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
@@ -67,6 +68,8 @@ import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_IntermissionScene1;
 import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_IntermissionScene2;
 import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_IntermissionScene3;
 import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_IntroScene;
+import de.amr.games.pacman.ui.swing.sound.MsPacManGameSounds;
+import de.amr.games.pacman.ui.swing.sound.PacManGameSounds;
 
 /**
  * A Swing UI for the Pac-Man / Ms. Pac-Man game.
@@ -112,6 +115,9 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 		this.scaling = height / unscaledSize.y;
 		this.scaledSize = new V2d(unscaledSize.x, unscaledSize.y).scaled(scaling).toV2i();
 
+		gameController.game(GameVariant.MS_PACMAN).setSounds(new MsPacManGameSounds());
+		gameController.game(GameVariant.PACMAN).setSounds(new PacManGameSounds());
+
 		flashMessageDisplay = new FlashMessageDisplay(unscaledSize);
 
 		canvas = new Canvas();
@@ -140,8 +146,6 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 		titleUpdateTimer = new Timer(1000, e -> window.setTitle(String.format("%s (%d fps, JFC Swing)",
 				gameController.game().variant == MS_PACMAN ? "Ms. Pac-Man" : "Pac-Man", gameLoop.clock.getLastFPS())));
 
-		// start initial game scene
-		SoundManager.get().selectGameVariant(gameController.game().variant);
 		onGameStateChange(new GameStateChangeEvent(gameController.game(), null, controller.state()));
 	}
 
@@ -182,7 +186,6 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 			newGameScene.init();
 			log("Current scene changed from %s to %s", currentGameScene, newGameScene);
 		}
-		SoundManager.get().selectGameVariant(gameController.game().variant);
 		currentGameScene = newGameScene;
 	}
 
@@ -310,7 +313,7 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 
 	private void restartIntro() {
 		currentGameScene.end();
-		SoundManager.get().stopAll();
+		gameController.game().sounds().ifPresent(GameSounds::stopAll);
 		gameController.restartIntro();
 	}
 

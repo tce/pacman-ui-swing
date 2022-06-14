@@ -43,7 +43,7 @@ import de.amr.games.pacman.lib.animation.ThingAnimationMap;
 import de.amr.games.pacman.lib.animation.ThingList;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.actors.Ghost;
-import de.amr.games.pacman.ui.swing.assets.Spritesheet;
+import de.amr.games.pacman.ui.swing.lib.Spritesheet;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**

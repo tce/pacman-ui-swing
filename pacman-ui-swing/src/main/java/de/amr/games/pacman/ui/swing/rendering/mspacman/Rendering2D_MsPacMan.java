@@ -39,7 +39,7 @@ import de.amr.games.pacman.lib.animation.ThingAnimationMap;
 import de.amr.games.pacman.lib.animation.ThingList;
 import de.amr.games.pacman.model.mspacman.Flap;
 import de.amr.games.pacman.model.mspacman.MsPacManGame;
-import de.amr.games.pacman.ui.swing.assets.Spritesheet;
+import de.amr.games.pacman.ui.swing.lib.Spritesheet;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**

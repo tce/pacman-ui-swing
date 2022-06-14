@@ -28,14 +28,8 @@ import static de.amr.games.pacman.model.common.world.World.t;
 import java.awt.Graphics2D;
 import java.awt.Image;
 
-import javax.sound.sampled.Clip;
-
 import de.amr.games.pacman.controller.common.GameState;
-import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameStateChangeEvent;
-import de.amr.games.pacman.model.common.actors.GhostState;
-import de.amr.games.pacman.ui.swing.assets.GameSound;
-import de.amr.games.pacman.ui.swing.assets.SoundManager;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
@@ -52,35 +46,6 @@ public class PlayScene extends GameScene {
 		game.setMazeFlashingAnimation(r2D.createMazeFlashingAnimation(r2D.mazeNumber(game.level.number)));
 		game.pac.setAnimations(new PacAnimations(r2D));
 		game.ghosts().forEach(ghost -> ghost.setAnimations(new GhostAnimations(ghost.id, r2D)));
-	}
-
-	@Override
-	public void update() {
-		updateSound();
-	}
-
-	private void updateSound() {
-		if (!hasCredit()) {
-			return;
-		}
-		switch (gameController.state()) {
-		case HUNTING -> {
-			if (SoundManager.get().getClip(GameSound.PACMAN_MUNCH).isRunning() && game.pac.starvingTicks > 10) {
-				SoundManager.get().stop(GameSound.PACMAN_MUNCH);
-			}
-			if (game.huntingTimer.tick() == 0) {
-				SoundManager.get().stopSirens();
-				SoundManager.get().startSiren(game.huntingTimer.phase() / 2);
-			}
-		}
-		case PACMAN_DYING -> {
-			if (gameController.state().timer().atSecond(2)) {
-				SoundManager.get().play(GameSound.PACMAN_DEATH);
-			}
-		}
-		default -> {
-		}
-		}
 	}
 
 	@Override
@@ -105,7 +70,6 @@ public class PlayScene extends GameScene {
 		if (!hasCredit() && !game.playing) {
 			r2D.drawCredit(g, game.credit());
 		}
-		SoundManager.get().setMuted(game.credit() == 0); // TODO check
 	}
 
 	private void drawMaze(Graphics2D g) {
@@ -121,69 +85,10 @@ public class PlayScene extends GameScene {
 	}
 
 	@Override
-	public void onPlayerLosesPower(GameEvent e) {
-		SoundManager.get().stop(GameSound.PACMAN_POWER);
-		if (!SoundManager.get().isAnySirenPlaying()) {
-			SoundManager.get().startSiren(game.huntingTimer.phase() / 2);
-		}
-	}
-
-	@Override
-	public void onPlayerFindsFood(GameEvent e) {
-		SoundManager.get().play(GameSound.PACMAN_MUNCH);
-	}
-
-	@Override
-	public void onPlayerGetsPower(GameEvent e) {
-		SoundManager.get().stopSirens();
-		SoundManager.get().loop(GameSound.PACMAN_POWER, Clip.LOOP_CONTINUOUSLY);
-	}
-
-	@Override
-	public void onBonusGetsEaten(GameEvent e) {
-		SoundManager.get().play(GameSound.BONUS_EATEN);
-	}
-
-	@Override
-	public void onPlayerGetsExtraLife(GameEvent e) {
-		SoundManager.get().play(GameSound.EXTRA_LIFE);
-	}
-
-	@Override
-	public void onGhostStartsReturningHome(GameEvent e) {
-		SoundManager.get().play(GameSound.GHOST_RETURNING);
-	}
-
-	@Override
-	public void onGhostEntersHouse(GameEvent e) {
-		if (game.ghosts(GhostState.DEAD).count() == 0) {
-			SoundManager.get().stop(GameSound.GHOST_RETURNING);
-		}
-	}
-
-	@Override
 	public void onGameStateChange(GameStateChangeEvent e) {
 		switch (e.newGameState) {
-		case READY -> {
-			SoundManager.get().stopAll();
-			if (game.credit() > 0 && !game.playing) {
-				SoundManager.get().play(GameSound.GAME_READY);
-			}
-		}
-		case PACMAN_DYING -> {
-			SoundManager.get().stopAll();
-		}
-		case GHOST_DYING -> {
-			SoundManager.get().play(GameSound.GHOST_EATEN);
-		}
 		case LEVEL_STARTING -> {
-			gameController.state().timer().expire();
-		}
-		case LEVEL_COMPLETE -> {
-			SoundManager.get().stopAll();
-		}
-		case GAME_OVER -> {
-			SoundManager.get().stopAll();
+			gameController.state().timer().expire(); // TODO check this
 		}
 		default -> {
 		}
