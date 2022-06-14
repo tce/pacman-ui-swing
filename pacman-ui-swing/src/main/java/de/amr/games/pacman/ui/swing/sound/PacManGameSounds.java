@@ -36,22 +36,22 @@ public class PacManGameSounds extends AbstractGameSounds {
 
 	public PacManGameSounds() {
 		//@formatter:off
-		put(clips, GameSound.BONUS_EATEN,     "/pacman/sound/eat_fruit.mp3");
-		put(clips, GameSound.CREDIT,          "/pacman/sound/credit.mp3");
-		put(clips, GameSound.EXTRA_LIFE,      "/pacman/sound/extend.mp3");
-		put(clips, GameSound.GAME_READY,      "/pacman/sound/game_start.mp3");
-		put(clips, GameSound.GHOST_EATEN,     "/pacman/sound/eat_ghost.mp3");
-		put(clips, GameSound.GHOST_RETURNING, "/pacman/sound/retreating.mp3");
-		put(clips, GameSound.INTERMISSION_1,  "/pacman/sound/intermission.mp3");
-		put(clips, GameSound.INTERMISSION_2,  "/pacman/sound/intermission.mp3");
-		put(clips, GameSound.INTERMISSION_3,  "/pacman/sound/intermission.mp3");
+		put(clips, GameSound.BONUS_EATEN,     "/pacman/sound/eat_fruit.wav");
+		put(clips, GameSound.CREDIT,          "/pacman/sound/credit.wav");
+		put(clips, GameSound.EXTRA_LIFE,      "/pacman/sound/extend.wav");
+		put(clips, GameSound.GAME_READY,      "/pacman/sound/game_start.wav");
+		put(clips, GameSound.GHOST_EATEN,     "/pacman/sound/eat_ghost.wav");
+		put(clips, GameSound.GHOST_RETURNING, "/pacman/sound/retreating.wav");
+		put(clips, GameSound.INTERMISSION_1,  "/pacman/sound/intermission.wav");
+		put(clips, GameSound.INTERMISSION_2,  "/pacman/sound/intermission.wav");
+		put(clips, GameSound.INTERMISSION_3,  "/pacman/sound/intermission.wav");
 		put(clips, GameSound.PACMAN_MUNCH,    "/pacman/sound/munch_1.wav");
 		put(clips, GameSound.PACMAN_DEATH,    "/pacman/sound/pacman_death.wav");
-		put(clips, GameSound.PACMAN_POWER,    "/pacman/sound/power_pellet.mp3");
-		put(clips, GameSound.SIREN_1,         "/pacman/sound/siren_1.mp3");
-		put(clips, GameSound.SIREN_2,         "/pacman/sound/siren_2.mp3");
-		put(clips, GameSound.SIREN_3,         "/pacman/sound/siren_3.mp3");
-		put(clips, GameSound.SIREN_4,         "/pacman/sound/siren_4.mp3");
+		put(clips, GameSound.PACMAN_POWER,    "/pacman/sound/power_pellet.wav");
+		put(clips, GameSound.SIREN_1,         "/pacman/sound/siren_1.wav");
+		put(clips, GameSound.SIREN_2,         "/pacman/sound/siren_2.wav");
+		put(clips, GameSound.SIREN_3,         "/pacman/sound/siren_3.wav");
+		put(clips, GameSound.SIREN_4,         "/pacman/sound/siren_4.wav");
 		//@formatter:on
 		log("Pac-Man audio clips loaded");
 	}
