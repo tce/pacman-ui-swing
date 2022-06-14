@@ -77,11 +77,11 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		((Rendering2D_MsPacMan) r2D).drawFlap(g, $.flap);
+		var ssmp = ((Rendering2D_MsPacMan) r2D);
+		ssmp.drawFlap(g, $.flap);
 		r2D.drawPac(g, $.msPacMan);
 		r2D.drawPac(g, $.pacMan);
-		stork2D.render(g);
-		var sprite = $.bagOpen ? Rendering2D_MsPacMan.get().getJunior() : Rendering2D_MsPacMan.get().getBlueBag();
-		r2D.drawEntity(g, $.bag, sprite);
+		stork2D.render(g); // TODO
+		r2D.drawEntity(g, $.bag, $.bagOpen ? ssmp.getJunior() : ssmp.getBlueBag());
 	}
 }
