@@ -37,6 +37,7 @@ import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
 import de.amr.games.pacman.lib.animation.ThingAnimationMap;
 import de.amr.games.pacman.lib.animation.ThingList;
+import de.amr.games.pacman.model.mspacman.Flap;
 import de.amr.games.pacman.model.mspacman.MsPacManGame;
 import de.amr.games.pacman.ui.swing.assets.Spritesheet;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
@@ -330,5 +331,16 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 		g.setFont(getArcadeFont());
 		g.drawString("MIDWAY MFG CO", x + t(7), y + t(2));
 		g.drawString("1980/1981", x + t(8), y + t(4));
+	}
+
+	public void drawFlap(Graphics2D g, Flap flap) {
+		if (flap.visible) {
+			BufferedImage sprite = (BufferedImage) flap.animation.animate();
+			drawEntity(g, flap, sprite);
+			g.setFont(getArcadeFont());
+			g.setColor(new Color(222, 222, 255));
+			g.drawString(flap.number + "", (int) flap.position.x + sprite.getWidth() - 25, (int) flap.position.y + 18);
+			g.drawString(flap.text, (int) flap.position.x + sprite.getWidth(), (int) flap.position.y);
+		}
 	}
 }

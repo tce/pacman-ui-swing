@@ -29,9 +29,9 @@ import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.Intermission2Controller;
 import de.amr.games.pacman.controller.mspacman.Intermission2Controller.Context;
 import de.amr.games.pacman.lib.animation.ThingAnimationCollection;
-import de.amr.games.pacman.ui.swing.entity.mspacman.Flap2D;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.MsPacMansHusbandAnimations;
+import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
 /**
@@ -45,24 +45,23 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 public class MsPacMan_IntermissionScene2 extends GameScene {
 
 	private Intermission2Controller sceneController;
-	private Context context;
-	private Flap2D flap2D;
+	private Context $;
 
 	@Override
 	public void setContext(GameController gameController) {
 		super.setContext(gameController);
 		sceneController = new Intermission2Controller(gameController);
-		context = sceneController.context();
+		$ = sceneController.context();
 	}
 
 	@Override
 	public void init() {
 		sceneController.restartInInitialState(Intermission2Controller.State.FLAP);
-		flap2D = new Flap2D(context.flap, game);
-		context.msPacMan.setAnimations(new PacAnimations(r2D));
-		context.msPacMan.animations().ifPresent(ThingAnimationCollection::ensureRunning);
-		context.pacMan.setAnimations(new MsPacMansHusbandAnimations());
-		context.pacMan.animations().ifPresent(ThingAnimationCollection::ensureRunning);
+		$.flap.animation = Rendering2D_MsPacMan.get().createFlapAnimation();
+		$.msPacMan.setAnimations(new PacAnimations(r2D));
+		$.msPacMan.animations().ifPresent(ThingAnimationCollection::ensureRunning);
+		$.pacMan.setAnimations(new MsPacMansHusbandAnimations());
+		$.pacMan.animations().ifPresent(ThingAnimationCollection::ensureRunning);
 	}
 
 	@Override
@@ -72,8 +71,8 @@ public class MsPacMan_IntermissionScene2 extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		flap2D.render(g, r2D);
-		r2D.drawPac(g, context.msPacMan);
-		r2D.drawPac(g, context.pacMan);
+		((Rendering2D_MsPacMan) r2D).drawFlap(g, $.flap);
+		r2D.drawPac(g, $.msPacMan);
+		r2D.drawPac(g, $.pacMan);
 	}
 }
