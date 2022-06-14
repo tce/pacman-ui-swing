@@ -31,7 +31,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -71,6 +70,10 @@ public interface Rendering2D {
 
 	BufferedImage getLifeSprite();
 
+	BufferedImage getBonusSymbolSprite(int symbol);
+
+	BufferedImage getBonusValueSprite(int symbol);
+
 	// Animations
 
 	ThingAnimationMap<Direction, BufferedImage> createPacMunchingAnimations();
@@ -86,10 +89,6 @@ public interface Rendering2D {
 	ThingAnimationMap<Direction, BufferedImage> createGhostEyesAnimation();
 
 	ThingList<BufferedImage> createGhostValueList();
-
-	List<BufferedImage> createBonusSymbolList();
-
-	List<BufferedImage> createBonusValueList();
 
 	// Maze
 
@@ -129,13 +128,23 @@ public interface Rendering2D {
 	default void drawBonus(Graphics2D g, Entity bonusEntity) {
 		if (bonusEntity instanceof StaticBonus) {
 			StaticBonus bonus = (StaticBonus) bonusEntity;
-			drawEntity(g, bonus, (BufferedImage) bonus.getSprite());
+			var sprite = switch (bonus.state()) {
+			case INACTIVE -> null;
+			case EDIBLE -> getBonusSymbolSprite(bonus.symbol());
+			case EATEN -> getBonusValueSprite(bonus.symbol());
+			};
+			drawEntity(g, bonus, sprite);
 		} else if (bonusEntity instanceof MovingBonus) {
-			MovingBonus movingBonus = (MovingBonus) bonusEntity;
-			int dy = movingBonus.dy();
+			MovingBonus bonus = (MovingBonus) bonusEntity;
+			var sprite = switch (bonus.state()) {
+			case INACTIVE -> null;
+			case EDIBLE -> getBonusSymbolSprite(bonus.symbol());
+			case EATEN -> getBonusValueSprite(bonus.symbol());
+			};
+			int dy = bonus.dy();
 			Graphics2D g2d = (Graphics2D) g.create();
 			g2d.translate(0, dy);
-			drawEntity(g2d, movingBonus, (BufferedImage) movingBonus.getSprite());
+			drawEntity(g2d, bonus, sprite);
 			g2d.dispose();
 		}
 	}
@@ -198,7 +207,7 @@ public interface Rendering2D {
 		int[] x = new int[1];
 		x[0] = rightX;
 		game.levelCounter.symbols().forEach(symbol -> {
-			var sprite = createBonusSymbolList().get(symbol); // cache animation
+			var sprite = getBonusValueSprite(symbol);
 			drawSpriteCenteredOverBox(g, sprite, x[0], y + World.HTS);
 			x[0] -= t(2);
 		});

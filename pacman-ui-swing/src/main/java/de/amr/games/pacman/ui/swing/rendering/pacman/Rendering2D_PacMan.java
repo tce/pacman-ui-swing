@@ -111,6 +111,16 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
+	public BufferedImage getBonusSymbolSprite(int symbol) {
+		return ss.tile(2 + symbol, 3);
+	}
+
+	@Override
+	public BufferedImage getBonusValueSprite(int symbol) {
+		return symbol <= 3 ? ss.tile(symbol, 9) : symbol == 4 ? ss.tiles(4, 9, 2, 1) : ss.tiles(3, symbol, 3, 1);
+	}
+
+	@Override
 	public BufferedImage getLifeSprite() {
 		return ss.tile(8, 1);
 	}
@@ -188,18 +198,6 @@ public class Rendering2D_PacMan implements Rendering2D {
 	@Override
 	public ThingList<BufferedImage> createGhostValueList() {
 		return new ThingList<>(ss.tile(0, 8), ss.tile(1, 8), ss.tile(2, 8), ss.tile(3, 8));
-	}
-
-	@Override
-	public List<BufferedImage> createBonusSymbolList() {
-		return List.of(ss.tile(2, 3), ss.tile(3, 3), ss.tile(4, 3), ss.tile(5, 3), ss.tile(6, 3), ss.tile(7, 3),
-				ss.tile(8, 3), ss.tile(9, 3));
-	}
-
-	@Override
-	public List<BufferedImage> createBonusValueList() {
-		return List.of(ss.tile(0, 9), ss.tile(1, 9), ss.tile(2, 9), ss.tile(3, 9), ss.tiles(4, 9, 2, 1), // left-aligned
-				ss.tiles(3, 10, 3, 1), ss.tiles(3, 11, 3, 1), ss.tiles(3, 12, 3, 1));
 	}
 
 	// Pac-Man specific

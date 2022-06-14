@@ -27,7 +27,6 @@ import java.awt.Graphics2D;
 
 import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
 import de.amr.games.pacman.model.common.GameModel;
-import de.amr.games.pacman.ui.swing.rendering.common.BonusAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**
@@ -38,12 +37,10 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
  */
 public class Bonus2D extends GameEntity2D {
 
-	public final BonusAnimations animations;
 	private SimpleThingAnimation<Integer> jumpAnimation;
 
-	public Bonus2D(GameModel game, BonusAnimations animations, boolean jumping) {
+	public Bonus2D(GameModel game, boolean jumping) {
 		super(game);
-		this.animations = animations;
 		if (jumping) {
 			jumpAnimation = new SimpleThingAnimation<>(-2, 2);
 			jumpAnimation.frameDuration(10);
@@ -66,7 +63,7 @@ public class Bonus2D extends GameEntity2D {
 	@Override
 	public void render(Graphics2D g, Rendering2D r2D) {
 		var bonus = game.bonus();
-		var sprite = animations.current(bonus);
+		var sprite = r2D.getBonusSymbolSprite(bonus.symbol());
 		int dy = jumpAnimation != null && jumpAnimation.isRunning() ? jumpAnimation.animate() : 0;
 		g.translate(0, dy);
 		r2D.drawSpriteCenteredOverBox(g, sprite, bonus.entity().position.x, bonus.entity().position.y);

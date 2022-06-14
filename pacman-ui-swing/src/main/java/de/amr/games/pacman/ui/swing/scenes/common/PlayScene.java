@@ -52,8 +52,6 @@ public class PlayScene extends GameScene {
 		game.setMazeFlashingAnimation(r2D.createMazeFlashingAnimation(r2D.mazeNumber(game.level.number)));
 		game.pac.setAnimations(new PacAnimations(r2D));
 		game.ghosts().forEach(ghost -> ghost.setAnimations(new GhostAnimations(ghost.id, r2D)));
-		game.bonus().setSymbolList(r2D.createBonusSymbolList());
-		game.bonus().setValueList(r2D.createBonusValueList());
 	}
 
 	@Override

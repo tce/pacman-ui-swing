@@ -152,6 +152,16 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
+	public BufferedImage getBonusSymbolSprite(int symbol) {
+		return rhs(3 + symbol, 0);
+	}
+
+	@Override
+	public BufferedImage getBonusValueSprite(int symbol) {
+		return rhs(3 + symbol, 1);
+	}
+
+	@Override
 	public int mazeNumber(int levelNumber) {
 		return switch (levelNumber) {
 		case 1, 2 -> 1;
@@ -248,16 +258,6 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 		var animation = new SimpleThingAnimation<>(mazeEmptyBright, mazeEmpty[mazeIndex]);
 		animation.frameDuration(15);
 		return animation;
-	}
-
-	@Override
-	public List<BufferedImage> createBonusSymbolList() {
-		return List.of(rhs(3, 0), rhs(4, 0), rhs(5, 0), rhs(6, 0), rhs(7, 0), rhs(8, 0), rhs(9, 0));
-	}
-
-	@Override
-	public List<BufferedImage> createBonusValueList() {
-		return List.of(rhs(3, 1), rhs(4, 1), rhs(5, 1), rhs(6, 1), rhs(7, 1), rhs(8, 1), rhs(9, 1));
 	}
 
 	public ThingAnimationMap<Direction, BufferedImage> createHusbandMunchingAnimations() {
