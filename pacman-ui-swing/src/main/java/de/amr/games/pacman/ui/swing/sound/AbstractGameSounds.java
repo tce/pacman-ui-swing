@@ -88,14 +88,16 @@ public class AbstractGameSounds implements GameSounds {
 		map.put(sound, clip);
 	}
 
-	protected void playClip(Clip clip) {
+	protected void startClip(Clip clip) {
 		if (!silent && !muted) {
+			clip.setFramePosition(0);
 			clip.start();
 		}
 	}
 
-	protected void playClip(Clip clip, int repetitions) {
+	protected void loopClip(Clip clip, int repetitions) {
 		if (!silent && !muted) {
+			clip.setFramePosition(0);
 			clip.loop(repetitions);
 		}
 	}
@@ -120,7 +122,7 @@ public class AbstractGameSounds implements GameSounds {
 
 	@Override
 	public void play(GameSound sound) {
-		loop(sound, 1);
+		startClip(getClip(sound));
 	}
 
 	@Override
@@ -132,8 +134,7 @@ public class AbstractGameSounds implements GameSounds {
 
 	@Override
 	public void loop(GameSound sound, int repetitions) {
-		Clip clip = getClip(sound);
-		playClip(clip, repetitions);
+		loopClip(getClip(sound), repetitions);
 	}
 
 	@Override
