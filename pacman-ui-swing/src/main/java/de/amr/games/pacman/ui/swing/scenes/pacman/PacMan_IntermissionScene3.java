@@ -70,7 +70,6 @@ public class PacMan_IntermissionScene3 extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		r2D.drawLevelCounter(g, gameController.game());
 		r2D.drawPac(g, $.pac);
 		if (sceneController.state() == Intermission3Controller.State.CHASING) {
 			r2D.drawEntity(g, $.blinky, blinkyPatchedAnimation.frame());
@@ -78,6 +77,9 @@ public class PacMan_IntermissionScene3 extends GameScene {
 		} else {
 			r2D.drawEntity(g, $.blinky, blinkyNakedAnimation.frame());
 			blinkyNakedAnimation.advance();
+		}
+		if (game.playing) {
+			r2D.drawLevelCounter(g, game);
 		}
 	}
 }

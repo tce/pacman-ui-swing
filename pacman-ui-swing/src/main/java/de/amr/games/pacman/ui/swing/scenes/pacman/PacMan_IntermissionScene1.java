@@ -83,6 +83,8 @@ public class PacMan_IntermissionScene1 extends GameScene {
 		} else {
 			bigPacMan2D.render(g);
 		}
-		r2D.drawLevelCounter(g, game);
+		if (game.playing) {
+			r2D.drawLevelCounter(g, game);
+		}
 	}
 }
