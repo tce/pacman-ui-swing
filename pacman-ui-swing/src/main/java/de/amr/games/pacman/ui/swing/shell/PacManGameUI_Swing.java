@@ -55,7 +55,6 @@ import de.amr.games.pacman.model.common.GameVariant;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.ui.swing.app.GameLoop;
 import de.amr.games.pacman.ui.swing.lib.U;
-import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.scenes.common.PlayScene;
 import de.amr.games.pacman.ui.swing.scenes.mspacman.MsPacMan_CreditScene;
@@ -77,6 +76,8 @@ import de.amr.games.pacman.ui.swing.sound.PacManGameSounds;
  * @author Armin Reichert
  */
 public class PacManGameUI_Swing implements GameEventAdapter {
+
+	public static boolean debugDraw;
 
 	private final GameLoop gameLoop;
 	private final GameController gameController;
@@ -254,8 +255,8 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 		}
 
 		else if (Keyboard.keyPressed(MOD_CTRL, "D")) {
-			DebugDraw.on = !DebugDraw.on;
-			log("UI debug mode is %s", DebugDraw.on ? "on" : "off");
+			debugDraw = !debugDraw;
+			log("UI debug mode is %s", debugDraw ? "on" : "off");
 		}
 
 		else if (Keyboard.keyPressed("E")) {

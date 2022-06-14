@@ -33,6 +33,7 @@ import de.amr.games.pacman.event.GameStateChangeEvent;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
+import de.amr.games.pacman.ui.swing.shell.PacManGameUI_Swing;
 
 /**
  * The play scene for Pac-Man and Ms. Pac-Man.
@@ -58,9 +59,9 @@ public class PlayScene extends GameScene {
 		r2D.drawBonus(g, game.bonus().entity());
 		r2D.drawPac(g, game.pac);
 		game.ghosts().forEach(ghost -> r2D.drawGhost(g, ghost));
-
-		DebugDraw.drawPlaySceneDebugInfo(g, gameController);
-
+		if (PacManGameUI_Swing.debugDraw) {
+			DebugDraw.drawPlaySceneDebugInfo(g, gameController);
+		}
 		if (hasCredit() && game.playing) {
 			r2D.drawLivesCounter(g, game);
 		}
@@ -80,7 +81,9 @@ public class PlayScene extends GameScene {
 			r2D.drawDarkTiles(g, game.level.world.tiles(), tile -> game.level.world.containsEatenFood(tile)
 					|| game.level.world.isEnergizerTile(tile) && !game.energizerPulse.frame());
 		}
-		DebugDraw.drawMazeStructure(g, game);
+		if (PacManGameUI_Swing.debugDraw) {
+			DebugDraw.drawMazeStructure(g, game);
+		}
 		r2D.drawGameState(g, game, hasCredit() ? gameController.state() : GameState.GAME_OVER);
 	}
 
