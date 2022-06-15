@@ -33,6 +33,7 @@ import de.amr.games.pacman.event.GameStateChangeEvent;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
+import de.amr.games.pacman.ui.swing.shell.Keyboard;
 import de.amr.games.pacman.ui.swing.shell.PacManGameUI_Swing;
 
 /**
@@ -47,6 +48,13 @@ public class PlayScene extends GameScene {
 		game.setMazeFlashingAnimation(r2D.createMazeFlashingAnimation(r2D.mazeNumber(game.level.number)));
 		game.pac.setAnimations(new PacAnimations(r2D));
 		game.ghosts().forEach(ghost -> ghost.setAnimations(new GhostAnimations(ghost.id, r2D)));
+	}
+
+	@Override
+	public void update() {
+		if (Keyboard.keyPressed("5")) {
+			gameController.state().addCredit(game);
+		}
 	}
 
 	@Override
