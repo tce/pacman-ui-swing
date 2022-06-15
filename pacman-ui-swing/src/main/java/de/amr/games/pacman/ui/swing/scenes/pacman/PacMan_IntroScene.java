@@ -60,7 +60,7 @@ public class PacMan_IntroScene extends GameScene {
 		super.setContext(gameController);
 		sceneController = new IntroController(gameController);
 		sceneController.addStateChangeListener(this::onSceneStateChange);
-		$ = sceneController.context;
+		$ = sceneController.$;
 	}
 
 	@Override
