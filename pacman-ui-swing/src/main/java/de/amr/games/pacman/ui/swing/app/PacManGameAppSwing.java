@@ -64,7 +64,7 @@ public class PacManGameAppSwing {
 		ui = new PacManGameUI_Swing(gameLoop, gameController, options.height);
 		ui.show();
 		GameEvents.addEventListener(ui);
-		gameController.setPacController(new PacController("Up", "Down", "Left", "Right"));
+		gameController.setPacSteering(new PacController("Up", "Down", "Left", "Right"));
 		gameLoop.action = () -> {
 			gameLoop.clock.frame(gameController::update);
 			ui.update();
