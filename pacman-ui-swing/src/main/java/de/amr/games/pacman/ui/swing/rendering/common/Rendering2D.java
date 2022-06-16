@@ -37,8 +37,8 @@ import java.util.stream.Stream;
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.V2i;
-import de.amr.games.pacman.lib.animation.SimpleAnimation;
-import de.amr.games.pacman.lib.animation.AnimationMap;
+import de.amr.games.pacman.lib.animation.SingleSpriteAnimation;
+import de.amr.games.pacman.lib.animation.SpriteAnimationMap;
 import de.amr.games.pacman.lib.animation.SpriteArray;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Entity;
@@ -76,17 +76,17 @@ public interface Rendering2D {
 
 	// Animations
 
-	AnimationMap<Direction, BufferedImage> createPacMunchingAnimation();
+	SpriteAnimationMap<Direction, BufferedImage> createPacMunchingAnimation();
 
-	SimpleAnimation<BufferedImage> createPacDyingAnimation();
+	SingleSpriteAnimation<BufferedImage> createPacDyingAnimation();
 
-	AnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID);
+	SpriteAnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID);
 
-	SimpleAnimation<BufferedImage> createGhostBlueAnimation();
+	SingleSpriteAnimation<BufferedImage> createGhostBlueAnimation();
 
-	SimpleAnimation<BufferedImage> createGhostFlashingAnimation();
+	SingleSpriteAnimation<BufferedImage> createGhostFlashingAnimation();
 
-	AnimationMap<Direction, BufferedImage> createGhostEyesAnimation();
+	SpriteAnimationMap<Direction, BufferedImage> createGhostEyesAnimation();
 
 	SpriteArray<BufferedImage> createGhostValueList();
 
@@ -96,7 +96,7 @@ public interface Rendering2D {
 
 	Color getFoodColor(int mazeNumber);
 
-	SimpleAnimation<BufferedImage> createMazeFlashingAnimation(int mazeNumber);
+	SingleSpriteAnimation<BufferedImage> createMazeFlashingAnimation(int mazeNumber);
 
 	void drawFullMaze(Graphics2D g, int mazeNumber, int x, int y);
 

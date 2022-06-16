@@ -27,7 +27,7 @@ import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.Intermission1Controller;
-import de.amr.games.pacman.lib.animation.Animations;
+import de.amr.games.pacman.lib.animation.SpriteAnimations;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Heart2D;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
@@ -64,9 +64,9 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 
 		$.flap.animation = Rendering2D_MsPacMan.get().createFlapAnimation();
 		$.msPac.setAnimations(new PacAnimations(r2D));
-		$.msPac.animations().ifPresent(Animations::ensureRunning);
+		$.msPac.animations().ifPresent(SpriteAnimations::ensureRunning);
 		$.pacMan.setAnimations(new MsPacMansHusbandAnimations());
-		$.pacMan.animations().ifPresent(Animations::ensureRunning);
+		$.pacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
 		$.inky.setAnimations(new GhostAnimations(Ghost.CYAN_GHOST, r2D));
 		$.pinky.setAnimations(new GhostAnimations(Ghost.PINK_GHOST, r2D));
 		heart2D = new Heart2D($.heart);

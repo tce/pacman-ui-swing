@@ -30,8 +30,8 @@ import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.pacman.Intermission2Controller;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.V2d;
-import de.amr.games.pacman.lib.animation.SimpleAnimation;
-import de.amr.games.pacman.lib.animation.Animations;
+import de.amr.games.pacman.lib.animation.SingleSpriteAnimation;
+import de.amr.games.pacman.lib.animation.SpriteAnimations;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
@@ -47,8 +47,8 @@ public class PacMan_IntermissionScene2 extends GameScene {
 
 	private Intermission2Controller sceneController;
 	private Intermission2Controller.Context $;
-	private SimpleAnimation<BufferedImage> blinkyStretchedAnimation;
-	private SimpleAnimation<BufferedImage> blinkyDamagedAnimation;
+	private SingleSpriteAnimation<BufferedImage> blinkyStretchedAnimation;
+	private SingleSpriteAnimation<BufferedImage> blinkyDamagedAnimation;
 
 	@Override
 	public void setContext(GameController gameController) {
@@ -63,7 +63,7 @@ public class PacMan_IntermissionScene2 extends GameScene {
 		$.pac.setAnimations(new PacAnimations(r2D));
 		$.pac.animations().get().ensureRunning();
 		$.blinky.setAnimations(new GhostAnimations(Ghost.RED_GHOST, r2D));
-		$.blinky.animations().ifPresent(Animations::restart);
+		$.blinky.animations().ifPresent(SpriteAnimations::restart);
 		blinkyStretchedAnimation = Rendering2D_PacMan.get().createBlinkyStretchedAnimation();
 		blinkyStretchedAnimation.restart();
 		blinkyDamagedAnimation = Rendering2D_PacMan.get().createBlinkyDamagedAnimation();

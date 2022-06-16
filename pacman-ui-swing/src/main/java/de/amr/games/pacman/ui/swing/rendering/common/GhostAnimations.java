@@ -27,21 +27,21 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.Animations;
-import de.amr.games.pacman.lib.animation.SimpleAnimation;
-import de.amr.games.pacman.lib.animation.AnimationMap;
+import de.amr.games.pacman.lib.animation.SpriteAnimations;
+import de.amr.games.pacman.lib.animation.SingleSpriteAnimation;
+import de.amr.games.pacman.lib.animation.SpriteAnimationMap;
 import de.amr.games.pacman.lib.animation.SpriteArray;
 import de.amr.games.pacman.model.common.actors.Ghost;
 
 /**
  * @author Armin Reichert
  */
-public class GhostAnimations extends Animations<Ghost> {
+public class GhostAnimations extends SpriteAnimations<Ghost> {
 
-	private AnimationMap<Direction, BufferedImage> eyes;
-	private SimpleAnimation<BufferedImage> flashing;
-	private SimpleAnimation<BufferedImage> blue;
-	private AnimationMap<Direction, BufferedImage> color;
+	private SpriteAnimationMap<Direction, BufferedImage> eyes;
+	private SingleSpriteAnimation<BufferedImage> flashing;
+	private SingleSpriteAnimation<BufferedImage> blue;
+	private SpriteAnimationMap<Direction, BufferedImage> color;
 	private SpriteArray<BufferedImage> values;
 
 	public GhostAnimations(int ghostID, Rendering2D r2D) {

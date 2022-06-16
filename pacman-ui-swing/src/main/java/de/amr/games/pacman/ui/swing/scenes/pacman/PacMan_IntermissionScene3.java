@@ -28,7 +28,7 @@ import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.pacman.Intermission3Controller;
-import de.amr.games.pacman.lib.animation.Animation;
+import de.amr.games.pacman.lib.animation.SpriteAnimation;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
@@ -42,8 +42,8 @@ public class PacMan_IntermissionScene3 extends GameScene {
 
 	private Intermission3Controller sceneController;
 	private Intermission3Controller.Context $;
-	private Animation<BufferedImage> blinkyPatchedAnimation;
-	private Animation<BufferedImage> blinkyNakedAnimation;
+	private SpriteAnimation<BufferedImage> blinkyPatchedAnimation;
+	private SpriteAnimation<BufferedImage> blinkyNakedAnimation;
 
 	@Override
 	public void setContext(GameController gameController) {

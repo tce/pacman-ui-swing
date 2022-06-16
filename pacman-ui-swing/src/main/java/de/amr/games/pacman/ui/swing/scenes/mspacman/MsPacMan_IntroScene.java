@@ -32,7 +32,7 @@ import java.util.stream.Stream;
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.IntroController;
 import de.amr.games.pacman.controller.mspacman.IntroController.State;
-import de.amr.games.pacman.lib.animation.Animations;
+import de.amr.games.pacman.lib.animation.SpriteAnimations;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
@@ -60,7 +60,7 @@ public class MsPacMan_IntroScene extends GameScene {
 	public void init() {
 		sceneController.restartInInitialState(IntroController.State.START);
 		$.msPacMan.setAnimations(new PacAnimations(r2D));
-		$.msPacMan.animations().ifPresent(Animations::ensureRunning);
+		$.msPacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
 		for (var ghost : $.ghosts) {
 			ghost.setAnimations(new GhostAnimations(ghost.id, r2D));
 			ghost.animations().get().ensureRunning();

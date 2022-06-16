@@ -28,18 +28,18 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.Animations;
-import de.amr.games.pacman.lib.animation.Animation;
-import de.amr.games.pacman.lib.animation.AnimationMap;
+import de.amr.games.pacman.lib.animation.SpriteAnimations;
+import de.amr.games.pacman.lib.animation.SpriteAnimation;
+import de.amr.games.pacman.lib.animation.SpriteAnimationMap;
 import de.amr.games.pacman.model.common.actors.Pac;
 
 /**
  * @author Armin Reichert
  */
-public class PacAnimations extends Animations<Pac> {
+public class PacAnimations extends SpriteAnimations<Pac> {
 
-	protected AnimationMap<Direction, BufferedImage> munching;
-	protected Animation<BufferedImage> dying;
+	protected SpriteAnimationMap<Direction, BufferedImage> munching;
+	protected SpriteAnimation<BufferedImage> dying;
 
 	public PacAnimations(Rendering2D r2D) {
 		animationsByName = new HashMap<>(2);
