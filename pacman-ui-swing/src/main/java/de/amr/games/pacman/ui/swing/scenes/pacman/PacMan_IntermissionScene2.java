@@ -30,7 +30,7 @@ import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.pacman.Intermission2Controller;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.V2d;
-import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
+import de.amr.games.pacman.lib.animation.SimpleAnimation;
 import de.amr.games.pacman.lib.animation.Animations;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
@@ -47,8 +47,8 @@ public class PacMan_IntermissionScene2 extends GameScene {
 
 	private Intermission2Controller sceneController;
 	private Intermission2Controller.Context $;
-	private SimpleThingAnimation<BufferedImage> blinkyStretchedAnimation;
-	private SimpleThingAnimation<BufferedImage> blinkyDamagedAnimation;
+	private SimpleAnimation<BufferedImage> blinkyStretchedAnimation;
+	private SimpleAnimation<BufferedImage> blinkyDamagedAnimation;
 
 	@Override
 	public void setContext(GameController gameController) {

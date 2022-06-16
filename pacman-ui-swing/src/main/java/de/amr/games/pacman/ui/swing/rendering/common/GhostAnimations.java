@@ -28,9 +28,9 @@ import java.util.HashMap;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.Animations;
-import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
+import de.amr.games.pacman.lib.animation.SimpleAnimation;
 import de.amr.games.pacman.lib.animation.AnimationMap;
-import de.amr.games.pacman.lib.animation.ThingArray;
+import de.amr.games.pacman.lib.animation.SpriteArray;
 import de.amr.games.pacman.model.common.actors.Ghost;
 
 /**
@@ -39,10 +39,10 @@ import de.amr.games.pacman.model.common.actors.Ghost;
 public class GhostAnimations extends Animations<Ghost> {
 
 	private AnimationMap<Direction, BufferedImage> eyes;
-	private SimpleThingAnimation<BufferedImage> flashing;
-	private SimpleThingAnimation<BufferedImage> blue;
+	private SimpleAnimation<BufferedImage> flashing;
+	private SimpleAnimation<BufferedImage> blue;
 	private AnimationMap<Direction, BufferedImage> color;
-	private ThingArray<BufferedImage> values;
+	private SpriteArray<BufferedImage> values;
 
 	public GhostAnimations(int ghostID, Rendering2D r2D) {
 		animationsByName = new HashMap<>(6);

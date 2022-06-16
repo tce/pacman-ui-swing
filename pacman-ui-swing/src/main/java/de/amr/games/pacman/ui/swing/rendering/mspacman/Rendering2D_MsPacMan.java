@@ -34,9 +34,9 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
+import de.amr.games.pacman.lib.animation.SimpleAnimation;
 import de.amr.games.pacman.lib.animation.AnimationMap;
-import de.amr.games.pacman.lib.animation.ThingArray;
+import de.amr.games.pacman.lib.animation.SpriteArray;
 import de.amr.games.pacman.model.mspacman.Flap;
 import de.amr.games.pacman.model.mspacman.MsPacManGame;
 import de.amr.games.pacman.ui.swing.lib.Spritesheet;
@@ -174,8 +174,8 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public SimpleThingAnimation<BufferedImage> createPacDyingAnimation() {
-		var animation = new SimpleThingAnimation<>(rhs(0, 3), rhs(0, 0), rhs(0, 1), rhs(0, 2));
+	public SimpleAnimation<BufferedImage> createPacDyingAnimation() {
+		var animation = new SimpleAnimation<>(rhs(0, 3), rhs(0, 0), rhs(0, 1), rhs(0, 2));
 		animation.frameDuration(10);
 		animation.repeat(2);
 		return animation;
@@ -189,7 +189,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 			var wide = rhs(0, d);
 			var middle = rhs(1, d);
 			var closed = rhs(2, d);
-			var animation = new SimpleThingAnimation<>(middle, closed, middle, wide);
+			var animation = new SimpleAnimation<>(middle, closed, middle, wide);
 			animation.frameDuration(2);
 			animation.repeatForever();
 			map.put(dir, animation);
@@ -201,7 +201,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 		AnimationMap<Direction, BufferedImage> map = new AnimationMap<>(4);
 		for (Direction dir : Direction.values()) {
 			int d = dirIndex(dir);
-			var munching = new SimpleThingAnimation<>(rhs(0, 9 + d), rhs(1, 9 + d), rhs(2, 9));
+			var munching = new SimpleAnimation<>(rhs(0, 9 + d), rhs(1, 9 + d), rhs(2, 9));
 			munching.frameDuration(2);
 			munching.repeatForever();
 			map.put(dir, munching);
@@ -214,7 +214,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 		AnimationMap<Direction, BufferedImage> map = new AnimationMap<>(4);
 		for (Direction dir : Direction.values()) {
 			int d = dirIndex(dir);
-			var color = new SimpleThingAnimation<>(rhs(2 * d, 4 + ghostID), rhs(2 * d + 1, 4 + ghostID));
+			var color = new SimpleAnimation<>(rhs(2 * d, 4 + ghostID), rhs(2 * d + 1, 4 + ghostID));
 			color.frameDuration(4);
 			color.repeatForever();
 			map.put(dir, color);
@@ -223,16 +223,16 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public SimpleThingAnimation<BufferedImage> createGhostBlueAnimation() {
-		var animation = new SimpleThingAnimation<>(rhs(8, 4), rhs(9, 4));
+	public SimpleAnimation<BufferedImage> createGhostBlueAnimation() {
+		var animation = new SimpleAnimation<>(rhs(8, 4), rhs(9, 4));
 		animation.frameDuration(8);
 		animation.repeatForever();
 		return animation;
 	}
 
 	@Override
-	public SimpleThingAnimation<BufferedImage> createGhostFlashingAnimation() {
-		var animation = new SimpleThingAnimation<>(rhs(8, 4), rhs(9, 4), rhs(10, 4), rhs(11, 4));
+	public SimpleAnimation<BufferedImage> createGhostFlashingAnimation() {
+		var animation = new SimpleAnimation<>(rhs(8, 4), rhs(9, 4), rhs(10, 4), rhs(11, 4));
 		animation.frameDuration(4);
 		return animation;
 	}
@@ -241,22 +241,22 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	public AnimationMap<Direction, BufferedImage> createGhostEyesAnimation() {
 		AnimationMap<Direction, BufferedImage> map = new AnimationMap<>(4);
 		for (Direction dir : Direction.values()) {
-			map.put(dir, new SimpleThingAnimation<>(rhs(8 + dirIndex(dir), 5)));
+			map.put(dir, new SimpleAnimation<>(rhs(8 + dirIndex(dir), 5)));
 		}
 		return map;
 	}
 
 	@Override
-	public ThingArray<BufferedImage> createGhostValueList() {
-		return new ThingArray<>(rhs(0, 8), rhs(1, 8), rhs(2, 8), rhs(3, 8));
+	public SpriteArray<BufferedImage> createGhostValueList() {
+		return new SpriteArray<>(rhs(0, 8), rhs(1, 8), rhs(2, 8), rhs(3, 8));
 	}
 
 	@Override
-	public SimpleThingAnimation<BufferedImage> createMazeFlashingAnimation(int mazeNumber) {
+	public SimpleAnimation<BufferedImage> createMazeFlashingAnimation(int mazeNumber) {
 		int mazeIndex = mazeNumber - 1;
 		var mazeEmptyBright = ss.createBrightEffect(mazeEmpty[mazeIndex], MAZE_SIDE_COLORS[mazeIndex],
 				MAZE_TOP_COLORS[mazeIndex]);
-		var animation = new SimpleThingAnimation<>(mazeEmptyBright, mazeEmpty[mazeIndex]);
+		var animation = new SimpleAnimation<>(mazeEmptyBright, mazeEmpty[mazeIndex]);
 		animation.frameDuration(15);
 		return animation;
 	}
@@ -265,7 +265,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 		AnimationMap<Direction, BufferedImage> map = new AnimationMap<>(4);
 		for (var dir : Direction.values()) {
 			int d = dirIndex(dir);
-			var animation = new SimpleThingAnimation<>(rhs(0, 9 + d), rhs(1, 9 + d), rhs(2, 9));
+			var animation = new SimpleAnimation<>(rhs(0, 9 + d), rhs(1, 9 + d), rhs(2, 9));
 			animation.frameDuration(2);
 			animation.repeatForever();
 			map.put(dir, animation);
@@ -273,8 +273,8 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 		return map;
 	}
 
-	public SimpleThingAnimation<BufferedImage> createFlapAnimation() {
-		var animation = new SimpleThingAnimation<>( //
+	public SimpleAnimation<BufferedImage> createFlapAnimation() {
+		var animation = new SimpleAnimation<>( //
 				ss.si(456, 208, 32, 32), //
 				ss.si(488, 208, 32, 32), //
 				ss.si(520, 208, 32, 32), //
@@ -285,8 +285,8 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 		return animation;
 	}
 
-	public SimpleThingAnimation<BufferedImage> createStorkFlyingAnimation() {
-		var animation = new SimpleThingAnimation<>( //
+	public SimpleAnimation<BufferedImage> createStorkFlyingAnimation() {
+		var animation = new SimpleAnimation<>( //
 				ss.si(489, 176, 32, 16), //
 				ss.si(521, 176, 32, 16) //
 		);

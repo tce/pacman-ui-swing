@@ -37,9 +37,9 @@ import java.util.stream.Stream;
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.V2i;
-import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
+import de.amr.games.pacman.lib.animation.SimpleAnimation;
 import de.amr.games.pacman.lib.animation.AnimationMap;
-import de.amr.games.pacman.lib.animation.ThingArray;
+import de.amr.games.pacman.lib.animation.SpriteArray;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.actors.Ghost;
@@ -78,17 +78,17 @@ public interface Rendering2D {
 
 	AnimationMap<Direction, BufferedImage> createPacMunchingAnimation();
 
-	SimpleThingAnimation<BufferedImage> createPacDyingAnimation();
+	SimpleAnimation<BufferedImage> createPacDyingAnimation();
 
 	AnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID);
 
-	SimpleThingAnimation<BufferedImage> createGhostBlueAnimation();
+	SimpleAnimation<BufferedImage> createGhostBlueAnimation();
 
-	SimpleThingAnimation<BufferedImage> createGhostFlashingAnimation();
+	SimpleAnimation<BufferedImage> createGhostFlashingAnimation();
 
 	AnimationMap<Direction, BufferedImage> createGhostEyesAnimation();
 
-	ThingArray<BufferedImage> createGhostValueList();
+	SpriteArray<BufferedImage> createGhostValueList();
 
 	// Maze
 
@@ -96,7 +96,7 @@ public interface Rendering2D {
 
 	Color getFoodColor(int mazeNumber);
 
-	SimpleThingAnimation<BufferedImage> createMazeFlashingAnimation(int mazeNumber);
+	SimpleAnimation<BufferedImage> createMazeFlashingAnimation(int mazeNumber);
 
 	void drawFullMaze(Graphics2D g, int mazeNumber, int x, int y);
 

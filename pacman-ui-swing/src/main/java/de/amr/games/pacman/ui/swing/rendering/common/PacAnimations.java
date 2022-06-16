@@ -29,7 +29,7 @@ import java.util.HashMap;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.Animations;
-import de.amr.games.pacman.lib.animation.ThingAnimation;
+import de.amr.games.pacman.lib.animation.Animation;
 import de.amr.games.pacman.lib.animation.AnimationMap;
 import de.amr.games.pacman.model.common.actors.Pac;
 
@@ -39,7 +39,7 @@ import de.amr.games.pacman.model.common.actors.Pac;
 public class PacAnimations extends Animations<Pac> {
 
 	protected AnimationMap<Direction, BufferedImage> munching;
-	protected ThingAnimation<BufferedImage> dying;
+	protected Animation<BufferedImage> dying;
 
 	public PacAnimations(Rendering2D r2D) {
 		animationsByName = new HashMap<>(2);
