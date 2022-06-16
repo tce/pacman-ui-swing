@@ -36,7 +36,7 @@ import de.amr.games.pacman.model.common.actors.Ghost;
 /**
  * @author Armin Reichert
  */
-public class GhostAnimations extends ThingAnimationCollection<Ghost, String, BufferedImage> {
+public class GhostAnimations extends ThingAnimationCollection<Ghost, String> {
 
 	private ThingAnimationMap<Direction, BufferedImage> eyes;
 	private SimpleThingAnimation<BufferedImage> flashing;

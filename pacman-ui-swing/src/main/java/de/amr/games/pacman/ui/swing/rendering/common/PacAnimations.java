@@ -36,7 +36,7 @@ import de.amr.games.pacman.model.common.actors.Pac;
 /**
  * @author Armin Reichert
  */
-public class PacAnimations extends ThingAnimationCollection<Pac, String, BufferedImage> {
+public class PacAnimations extends ThingAnimationCollection<Pac, String> {
 
 	protected ThingAnimationMap<Direction, BufferedImage> munching;
 	protected ThingAnimation<BufferedImage> dying;
