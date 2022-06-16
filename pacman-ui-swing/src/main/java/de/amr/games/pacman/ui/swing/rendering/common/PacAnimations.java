@@ -28,15 +28,15 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.ThingAnimation;
 import de.amr.games.pacman.lib.animation.Animations;
+import de.amr.games.pacman.lib.animation.ThingAnimation;
 import de.amr.games.pacman.lib.animation.ThingAnimationMap;
 import de.amr.games.pacman.model.common.actors.Pac;
 
 /**
  * @author Armin Reichert
  */
-public class PacAnimations extends Animations<Pac, String> {
+public class PacAnimations extends Animations<Pac> {
 
 	protected ThingAnimationMap<Direction, BufferedImage> munching;
 	protected ThingAnimation<BufferedImage> dying;
