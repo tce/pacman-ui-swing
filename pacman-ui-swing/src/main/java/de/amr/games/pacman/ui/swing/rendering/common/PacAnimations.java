@@ -29,8 +29,6 @@ import java.util.HashMap;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.SpriteAnimations;
-import de.amr.games.pacman.lib.animation.SpriteAnimation;
-import de.amr.games.pacman.lib.animation.SpriteAnimationMap;
 import de.amr.games.pacman.model.common.actors.Pac;
 
 /**
@@ -38,27 +36,23 @@ import de.amr.games.pacman.model.common.actors.Pac;
  */
 public class PacAnimations extends SpriteAnimations<Pac> {
 
-	protected SpriteAnimationMap<Direction, BufferedImage> munching;
-	protected SpriteAnimation<BufferedImage> dying;
-
 	public PacAnimations(Rendering2D r2D) {
 		animationsByName = new HashMap<>(2);
-		put("dying", dying = r2D.createPacDyingAnimation());
-		put("munching", munching = r2D.createPacMunchingAnimationMap());
+		put("dying", r2D.createPacDyingAnimation());
+		put("munching", r2D.createPacMunchingAnimationMap());
 		select("munching");
 	}
 
 	@Override
 	public void ensureRunning() {
-		munching.ensureRunning();
+		byName("munching").ensureRunning();
 	}
 
 	@Override
 	public BufferedImage current(Pac pac) {
 		return switch (selected) {
-		case "dying" -> dying.animate();
-		case "munching" -> munching.get(pac.moveDir()).animate();
-		default -> null;
+		case "munching" -> super.<Direction, BufferedImage>castToMap("munching").get(pac.moveDir()).animate();
+		default -> (BufferedImage) selectedAnimation().animate();
 		};
 	}
 }

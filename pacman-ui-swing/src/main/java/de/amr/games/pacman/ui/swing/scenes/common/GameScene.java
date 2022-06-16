@@ -31,7 +31,7 @@ import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
-import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
+import de.amr.games.pacman.ui.swing.rendering.mspacman.Spritesheet_MsPacMan;
 import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
 
 /**
@@ -50,7 +50,7 @@ public abstract class GameScene implements GameEventAdapter {
 		this.gameController = gameController;
 		this.game = gameController.game();
 		this.r2D = switch (game.variant) {
-		case MS_PACMAN -> Rendering2D_MsPacMan.get();
+		case MS_PACMAN -> Spritesheet_MsPacMan.get();
 		case PACMAN -> Rendering2D_PacMan.get();
 		};
 	}

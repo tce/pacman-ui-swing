@@ -32,8 +32,7 @@ import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Heart2D;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
-import de.amr.games.pacman.ui.swing.rendering.mspacman.MsPacMansHusbandAnimations;
-import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
+import de.amr.games.pacman.ui.swing.rendering.mspacman.Spritesheet_MsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
 /**
@@ -62,15 +61,16 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 	public void init() {
 		sceneController.restartInInitialState(Intermission1Controller.State.FLAP);
 
-		$.flap.animation = Rendering2D_MsPacMan.get().createFlapAnimation();
+		$.flap.animation = Spritesheet_MsPacMan.get().createFlapAnimation();
 		$.msPac.setAnimations(new PacAnimations(r2D));
 		$.msPac.animations().ifPresent(SpriteAnimations::ensureRunning);
-		$.pacMan.setAnimations(new MsPacMansHusbandAnimations());
-		$.pacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
+		$.pacMan.setAnimations(new PacAnimations(r2D));
+		$.pacMan.animations().get().put("munching", Spritesheet_MsPacMan.get().createHusbandMunchingAnimations());
+		$.pacMan.animations().get().ensureRunning();
 		$.inky.setAnimations(new GhostAnimations(Ghost.CYAN_GHOST, r2D));
 		$.pinky.setAnimations(new GhostAnimations(Ghost.PINK_GHOST, r2D));
 		heart2D = new Heart2D($.heart);
-		heart2D.setImage(Rendering2D_MsPacMan.get().getHeart());
+		heart2D.setImage(Spritesheet_MsPacMan.get().getHeart());
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		((Rendering2D_MsPacMan) r2D).drawFlap(g, $.flap);
+		((Spritesheet_MsPacMan) r2D).drawFlap(g, $.flap);
 		r2D.drawPac(g, $.msPac);
 		r2D.drawPac(g, $.pacMan);
 		r2D.drawGhost(g, $.inky);

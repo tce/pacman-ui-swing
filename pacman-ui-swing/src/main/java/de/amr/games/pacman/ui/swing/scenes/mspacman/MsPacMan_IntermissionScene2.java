@@ -29,8 +29,7 @@ import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.Intermission2Controller;
 import de.amr.games.pacman.lib.animation.SpriteAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
-import de.amr.games.pacman.ui.swing.rendering.mspacman.MsPacMansHusbandAnimations;
-import de.amr.games.pacman.ui.swing.rendering.mspacman.Rendering2D_MsPacMan;
+import de.amr.games.pacman.ui.swing.rendering.mspacman.Spritesheet_MsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
 /**
@@ -56,11 +55,12 @@ public class MsPacMan_IntermissionScene2 extends GameScene {
 	@Override
 	public void init() {
 		sceneController.restartInInitialState(Intermission2Controller.State.FLAP);
-		$.flap.animation = Rendering2D_MsPacMan.get().createFlapAnimation();
+		$.flap.animation = Spritesheet_MsPacMan.get().createFlapAnimation();
 		$.msPacMan.setAnimations(new PacAnimations(r2D));
 		$.msPacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
-		$.pacMan.setAnimations(new MsPacMansHusbandAnimations());
-		$.pacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
+		$.pacMan.setAnimations(new PacAnimations(r2D));
+		$.pacMan.animations().get().put("munching", Spritesheet_MsPacMan.get().createHusbandMunchingAnimations());
+		$.pacMan.animations().get().ensureRunning();
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class MsPacMan_IntermissionScene2 extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		((Rendering2D_MsPacMan) r2D).drawFlap(g, $.flap);
+		((Spritesheet_MsPacMan) r2D).drawFlap(g, $.flap);
 		r2D.drawPac(g, $.msPacMan);
 		r2D.drawPac(g, $.pacMan);
 	}
