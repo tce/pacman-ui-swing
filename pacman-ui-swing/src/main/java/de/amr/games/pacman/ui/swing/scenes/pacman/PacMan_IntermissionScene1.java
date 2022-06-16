@@ -29,7 +29,6 @@ import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.pacman.Intermission1Controller;
 import de.amr.games.pacman.lib.animation.ThingAnimationCollection;
 import de.amr.games.pacman.model.common.actors.Ghost;
-import de.amr.games.pacman.model.common.actors.GhostAnimationKey;
 import de.amr.games.pacman.ui.swing.entity.pacman.BigPacMan2D;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
@@ -69,8 +68,8 @@ public class PacMan_IntermissionScene1 extends GameScene {
 	public void update() {
 		sceneController.update();
 		$.blinky.animations().get().select(switch ($.blinky.state) {
-		case FRIGHTENED -> GhostAnimationKey.ANIM_BLUE;
-		case HUNTING_PAC -> GhostAnimationKey.ANIM_COLOR;
+		case FRIGHTENED -> "ANIM_BLUE";
+		case HUNTING_PAC -> "ANIM_COLOR";
 		default -> $.blinky.animations().get().selectedKey();
 		});
 	}

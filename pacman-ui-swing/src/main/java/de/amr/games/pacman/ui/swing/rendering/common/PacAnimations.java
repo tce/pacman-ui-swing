@@ -28,17 +28,16 @@ import java.awt.image.BufferedImage;
 import java.util.stream.Stream;
 
 import de.amr.games.pacman.lib.Direction;
+import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
 import de.amr.games.pacman.lib.animation.ThingAnimation;
 import de.amr.games.pacman.lib.animation.ThingAnimationCollection;
 import de.amr.games.pacman.lib.animation.ThingAnimationMap;
-import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
 import de.amr.games.pacman.model.common.actors.Pac;
-import de.amr.games.pacman.model.common.actors.PacAnimationKey;
 
 /**
  * @author Armin Reichert
  */
-public class PacAnimations extends ThingAnimationCollection<Pac, PacAnimationKey, BufferedImage> {
+public class PacAnimations extends ThingAnimationCollection<Pac, String, BufferedImage> {
 
 	protected ThingAnimationMap<Direction, BufferedImage> munching;
 	protected SimpleThingAnimation<BufferedImage> dying;
@@ -46,7 +45,7 @@ public class PacAnimations extends ThingAnimationCollection<Pac, PacAnimationKey
 	public PacAnimations(Rendering2D r2D) {
 		munching = r2D.createPacMunchingAnimations();
 		dying = r2D.createPacDyingAnimation();
-		select(PacAnimationKey.ANIM_MUNCHING);
+		select("ANIM_MUNCHING");
 	}
 
 	@Override
@@ -55,10 +54,11 @@ public class PacAnimations extends ThingAnimationCollection<Pac, PacAnimationKey
 	}
 
 	@Override
-	public ThingAnimation<BufferedImage> byKey(PacAnimationKey key) {
+	public ThingAnimation<BufferedImage> byKey(String key) {
 		return switch (key) {
-		case ANIM_DYING -> dying;
-		case ANIM_MUNCHING -> munching;
+		case "ANIM_DYING" -> dying;
+		case "ANIM_MUNCHING" -> munching;
+		default -> null;
 		};
 	}
 
@@ -70,8 +70,9 @@ public class PacAnimations extends ThingAnimationCollection<Pac, PacAnimationKey
 	@Override
 	public BufferedImage current(Pac pac) {
 		return switch (selectedKey) {
-		case ANIM_DYING -> dying.animate();
-		case ANIM_MUNCHING -> munching.get(pac.moveDir()).animate();
+		case "ANIM_DYING" -> dying.animate();
+		case "ANIM_MUNCHING" -> munching.get(pac.moveDir()).animate();
+		default -> null;
 		};
 	}
 }
