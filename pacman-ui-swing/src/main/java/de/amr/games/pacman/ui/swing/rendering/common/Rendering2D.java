@@ -102,6 +102,12 @@ public interface Rendering2D {
 
 	// Drawing
 
+	default void drawSprite(Graphics2D g, BufferedImage sprite, int x, int y) {
+		if (sprite != null) {
+			g.drawImage(sprite, x, y, null);
+		}
+	}
+
 	default void drawSpriteCenteredOverBox(Graphics2D g, BufferedImage sprite, double x, double y) {
 		if (sprite != null) {
 			int dx = HTS - sprite.getWidth() / 2, dy = HTS - sprite.getHeight() / 2;

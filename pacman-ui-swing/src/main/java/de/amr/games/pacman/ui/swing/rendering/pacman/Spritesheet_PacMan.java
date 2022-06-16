@@ -41,7 +41,6 @@ import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.SingleSpriteAnimation;
 import de.amr.games.pacman.lib.animation.SpriteAnimationMap;
 import de.amr.games.pacman.lib.animation.SpriteArray;
-import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.lib.Spritesheet;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
@@ -51,11 +50,11 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
  * 
  * @author Armin Reichert
  */
-public class Rendering2D_PacMan implements Rendering2D {
+public class Spritesheet_PacMan implements Rendering2D {
 
-	private static final Rendering2D_PacMan theThing = new Rendering2D_PacMan("/pacman/graphics/sprites.png", 16);
+	private static final Spritesheet_PacMan theThing = new Spritesheet_PacMan("/pacman/graphics/sprites.png", 16);
 
-	public static Rendering2D_PacMan get() {
+	public static Spritesheet_PacMan get() {
 		return theThing;
 	}
 
@@ -79,11 +78,10 @@ public class Rendering2D_PacMan implements Rendering2D {
 
 	private final Spritesheet ss;
 	private final BufferedImage mazeFull;
-	private final BufferedImage nailSprite;
 	private final SingleSpriteAnimation<BufferedImage> mazeFlashingAnim;
 	private final Font font;
 
-	private Rendering2D_PacMan(String path, int rasterSize) {
+	private Spritesheet_PacMan(String path, int rasterSize) {
 		ss = new Spritesheet(image(path), rasterSize);
 		font = font("/common/emulogic.ttf", 8);
 
@@ -92,7 +90,6 @@ public class Rendering2D_PacMan implements Rendering2D {
 		var mazeEmptyBright = ss.createBrightEffect(mazeEmptyDark, new Color(33, 33, 255), Color.BLACK);
 		mazeFlashingAnim = new SingleSpriteAnimation<>(mazeEmptyBright, mazeEmptyDark);
 		mazeFlashingAnim.frameDuration(15);
-		nailSprite = ss.tile(8, 6);
 	}
 
 	@Override
@@ -210,7 +207,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	public SingleSpriteAnimation<BufferedImage> createBlinkyStretchedAnimation() {
-		return new SingleSpriteAnimation<>(ss.tile(9, 6), ss.tile(10, 6), ss.tile(11, 6), ss.tile(12, 6));
+		return new SingleSpriteAnimation<>(ss.tile(8, 6), ss.tile(9, 6), ss.tile(10, 6), ss.tile(11, 6), ss.tile(12, 6));
 	}
 
 	public SingleSpriteAnimation<BufferedImage> createBlinkyDamagedAnimation() {
@@ -255,9 +252,5 @@ public class Rendering2D_PacMan implements Rendering2D {
 		g.setFont(getArcadeFont());
 		g.setColor(getGhostColor(Ghost.PINK_GHOST));
 		g.drawString("\u00A9 1980 MIDWAY MFG. CO.", x, y);
-	}
-
-	public void drawNail(Graphics2D g, Entity nail) {
-		drawEntity(g, nail, nailSprite);
 	}
 }

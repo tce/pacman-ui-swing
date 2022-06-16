@@ -28,7 +28,7 @@ import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.lib.animation.SingleSpriteAnimation;
 import de.amr.games.pacman.model.common.actors.Pac;
-import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
+import de.amr.games.pacman.ui.swing.rendering.pacman.Spritesheet_PacMan;
 
 /**
  * The big Pac-Man from the first intermission scene in Pac-Man.
@@ -37,11 +37,11 @@ import de.amr.games.pacman.ui.swing.rendering.pacman.Rendering2D_PacMan;
  */
 public class BigPacMan2D {
 
-	private final Rendering2D_PacMan rendering;
+	private final Spritesheet_PacMan rendering;
 	private final Pac pacMan;
 	private final SingleSpriteAnimation<BufferedImage> munchingAnimation;
 
-	public BigPacMan2D(Pac pacMan, Rendering2D_PacMan rendering) {
+	public BigPacMan2D(Pac pacMan, Spritesheet_PacMan rendering) {
 		this.pacMan = pacMan;
 		this.rendering = rendering;
 		munchingAnimation = rendering.createBigPacManMunchingAnimation();

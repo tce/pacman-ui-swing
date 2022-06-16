@@ -63,9 +63,9 @@ import de.amr.games.pacman.ui.swing.scenes.mspacman.MsPacMan_IntermissionScene2;
 import de.amr.games.pacman.ui.swing.scenes.mspacman.MsPacMan_IntermissionScene3;
 import de.amr.games.pacman.ui.swing.scenes.mspacman.MsPacMan_IntroScene;
 import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_CreditScene;
-import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_IntermissionScene1;
-import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_IntermissionScene2;
-import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_IntermissionScene3;
+import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_Cutscene1;
+import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_Cutscene2;
+import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_Cutscene3;
 import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_IntroScene;
 import de.amr.games.pacman.ui.swing.sound.MsPacManGameSounds;
 import de.amr.games.pacman.ui.swing.sound.PacManGameSounds;
@@ -92,9 +92,9 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 	private final List<GameScene> gameScenesPacMan = List.of( //
 			new PacMan_IntroScene(), //
 			new PacMan_CreditScene(), //
-			new PacMan_IntermissionScene1(), //
-			new PacMan_IntermissionScene2(), //
-			new PacMan_IntermissionScene3(), //
+			new PacMan_Cutscene1(), //
+			new PacMan_Cutscene2(), //
+			new PacMan_Cutscene3(), //
 			new PlayScene() //
 	);
 
