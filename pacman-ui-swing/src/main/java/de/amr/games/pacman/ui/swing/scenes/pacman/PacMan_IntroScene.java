@@ -113,7 +113,7 @@ public class PacMan_IntroScene extends GameScene {
 	@Override
 	public void render(Graphics2D g) {
 		r2D.drawScores(g, game, true);
-		r2D.drawCredit(g, game.credit());
+		r2D.drawCredit(g, game.credit);
 
 		switch (sceneController.state()) {
 		case START, PRESENTING_GHOSTS -> drawGallery(g);

@@ -56,7 +56,7 @@ public abstract class GameScene implements GameEventAdapter {
 	}
 
 	public boolean hasCredit() {
-		return game.credit() > 0;
+		return game.credit > 0;
 	}
 
 	public V2i size() {

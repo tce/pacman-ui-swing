@@ -69,8 +69,6 @@ public class PacMan_CreditScene extends GameScene {
 		g.drawString("PTS", t(25), t(25));
 
 		r2D.drawCopyright(g, t(4), t(29));
-
-		r2D.drawCredit(g, game.credit());
-//		r2D.drawLevelCounter(g, game, t(24), t(34));
+		r2D.drawCredit(g, game.credit);
 	}
 }

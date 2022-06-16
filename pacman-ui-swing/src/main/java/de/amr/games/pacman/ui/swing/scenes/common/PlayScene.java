@@ -77,7 +77,7 @@ public class PlayScene extends GameScene {
 			r2D.drawLevelCounter(g, game);
 		}
 		if (!hasCredit() && !game.playing) {
-			r2D.drawCredit(g, game.credit());
+			r2D.drawCredit(g, game.credit);
 		}
 	}
 
