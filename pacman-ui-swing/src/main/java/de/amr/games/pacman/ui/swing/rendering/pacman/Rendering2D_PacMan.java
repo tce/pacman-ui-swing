@@ -39,7 +39,7 @@ import java.util.List;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
-import de.amr.games.pacman.lib.animation.ThingAnimationMap;
+import de.amr.games.pacman.lib.animation.AnimationMap;
 import de.amr.games.pacman.lib.animation.ThingArray;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.actors.Ghost;
@@ -145,8 +145,8 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public ThingAnimationMap<Direction, BufferedImage> createPacMunchingAnimation() {
-		ThingAnimationMap<Direction, BufferedImage> munching = new ThingAnimationMap<>(4);
+	public AnimationMap<Direction, BufferedImage> createPacMunchingAnimation() {
+		AnimationMap<Direction, BufferedImage> munching = new AnimationMap<>(4);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
 			BufferedImage wide_open = ss.tile(0, d), open = ss.tile(1, d), closed = ss.tile(2, 0);
@@ -159,8 +159,8 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public ThingAnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID) {
-		ThingAnimationMap<Direction, BufferedImage> map = new ThingAnimationMap<>(4);
+	public AnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID) {
+		AnimationMap<Direction, BufferedImage> map = new AnimationMap<>(4);
 		for (Direction dir : Direction.values()) {
 			var animation = new SimpleThingAnimation<>(ss.tile(2 * index(dir), 4 + ghostID),
 					ss.tile(2 * index(dir) + 1, 4 + ghostID));
@@ -187,8 +187,8 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public ThingAnimationMap<Direction, BufferedImage> createGhostEyesAnimation() {
-		ThingAnimationMap<Direction, BufferedImage> ghostEyesAnimsByDir = new ThingAnimationMap<>(4);
+	public AnimationMap<Direction, BufferedImage> createGhostEyesAnimation() {
+		AnimationMap<Direction, BufferedImage> ghostEyesAnimsByDir = new AnimationMap<>(4);
 		for (Direction dir : Direction.values()) {
 			ghostEyesAnimsByDir.put(dir, new SimpleThingAnimation<>(ss.tile(8 + index(dir), 5)));
 		}
