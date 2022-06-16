@@ -182,7 +182,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public SpriteAnimationMap<Direction, BufferedImage> createPacMunchingAnimation() {
+	public SpriteAnimationMap<Direction, BufferedImage> createPacMunchingAnimationMap() {
 		SpriteAnimationMap<Direction, BufferedImage> map = new SpriteAnimationMap<>(4);
 		for (Direction dir : Direction.values()) {
 			int d = dirIndex(dir);
@@ -210,7 +210,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public SpriteAnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID) {
+	public SpriteAnimationMap<Direction, BufferedImage> createGhostColorAnimationMap(int ghostID) {
 		SpriteAnimationMap<Direction, BufferedImage> map = new SpriteAnimationMap<>(4);
 		for (Direction dir : Direction.values()) {
 			int d = dirIndex(dir);
@@ -238,7 +238,7 @@ public class Rendering2D_MsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public SpriteAnimationMap<Direction, BufferedImage> createGhostEyesAnimation() {
+	public SpriteAnimationMap<Direction, BufferedImage> createGhostEyesAnimationMap() {
 		SpriteAnimationMap<Direction, BufferedImage> map = new SpriteAnimationMap<>(4);
 		for (Direction dir : Direction.values()) {
 			map.put(dir, new SingleSpriteAnimation<>(rhs(8 + dirIndex(dir), 5)));

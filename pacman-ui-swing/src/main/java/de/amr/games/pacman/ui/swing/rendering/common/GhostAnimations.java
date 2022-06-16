@@ -27,10 +27,8 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.SpriteAnimations;
-import de.amr.games.pacman.lib.animation.SingleSpriteAnimation;
 import de.amr.games.pacman.lib.animation.SpriteAnimationMap;
-import de.amr.games.pacman.lib.animation.SpriteArray;
+import de.amr.games.pacman.lib.animation.SpriteAnimations;
 import de.amr.games.pacman.model.common.actors.Ghost;
 
 /**
@@ -38,44 +36,26 @@ import de.amr.games.pacman.model.common.actors.Ghost;
  */
 public class GhostAnimations extends SpriteAnimations<Ghost> {
 
-	private SpriteAnimationMap<Direction, BufferedImage> eyes;
-	private SingleSpriteAnimation<BufferedImage> flashing;
-	private SingleSpriteAnimation<BufferedImage> blue;
-	private SpriteAnimationMap<Direction, BufferedImage> color;
-	private SpriteArray<BufferedImage> values;
-
 	public GhostAnimations(int ghostID, Rendering2D r2D) {
-		animationsByName = new HashMap<>(6);
-		put("eyes", eyes = r2D.createGhostEyesAnimation());
-		put("flashing", flashing = r2D.createGhostFlashingAnimation());
-		put("blue", blue = r2D.createGhostBlueAnimation());
-		put("color", color = r2D.createGhostColorAnimation(ghostID));
-		put("value", values = r2D.createGhostValueList());
+		animationsByName = new HashMap<>();
+		animationsByName.put("eyes", r2D.createGhostEyesAnimationMap());
+		animationsByName.put("flashing", r2D.createGhostFlashingAnimation());
+		animationsByName.put("blue", r2D.createGhostBlueAnimation());
+		animationsByName.put("color", r2D.createGhostColorAnimationMap(ghostID));
+		animationsByName.put("value", r2D.createGhostValueList());
 		select("color");
-	}
-
-	public void startFlashing(int numFlashes, long ticksTotal) {
-		long frameTicks = ticksTotal / (numFlashes * flashing.numFrames());
-		flashing.frameDuration(frameTicks);
-		flashing.repeat(numFlashes);
-		flashing.restart();
 	}
 
 	@Override
 	public BufferedImage current(Ghost ghost) {
-		return switch (selected) {
-		case "eyes" -> eyes.get(ghost.wishDir()).frame();
-		case "flashing" -> flashing.animate();
-		case "blue" -> blue.animate();
-		case "color" -> {
-			var sprite = color.get(ghost.wishDir()).frame();
-			if (ghost.velocity.length() > 0) {
-				color.get(ghost.wishDir()).advance();
-			}
-			yield sprite;
-		}
-		case "value" -> ghost.killIndex >= 0 ? values.frame(ghost.killIndex) : null;
-		default -> null;
+		return (BufferedImage) switch (selected) {
+		case "eyes" -> toMap("eyes").get(ghost.wishDir()).animate();
+		case "color" -> toMap("color").get(ghost.wishDir()).animate();
+		default -> selectedAnimation().animate();
 		};
+	}
+
+	private SpriteAnimationMap<Direction, BufferedImage> toMap(String name) {
+		return super.<Direction, BufferedImage>castToMap(name);
 	}
 }

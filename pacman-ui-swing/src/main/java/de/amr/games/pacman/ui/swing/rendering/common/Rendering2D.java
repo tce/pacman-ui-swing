@@ -76,17 +76,17 @@ public interface Rendering2D {
 
 	// Animations
 
-	SpriteAnimationMap<Direction, BufferedImage> createPacMunchingAnimation();
+	SpriteAnimationMap<Direction, BufferedImage> createPacMunchingAnimationMap();
 
 	SingleSpriteAnimation<BufferedImage> createPacDyingAnimation();
 
-	SpriteAnimationMap<Direction, BufferedImage> createGhostColorAnimation(int ghostID);
+	SpriteAnimationMap<Direction, BufferedImage> createGhostColorAnimationMap(int ghostID);
 
 	SingleSpriteAnimation<BufferedImage> createGhostBlueAnimation();
 
 	SingleSpriteAnimation<BufferedImage> createGhostFlashingAnimation();
 
-	SpriteAnimationMap<Direction, BufferedImage> createGhostEyesAnimation();
+	SpriteAnimationMap<Direction, BufferedImage> createGhostEyesAnimationMap();
 
 	SpriteArray<BufferedImage> createGhostValueList();
 

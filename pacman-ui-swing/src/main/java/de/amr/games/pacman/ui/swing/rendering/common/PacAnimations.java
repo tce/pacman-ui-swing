@@ -44,7 +44,7 @@ public class PacAnimations extends SpriteAnimations<Pac> {
 	public PacAnimations(Rendering2D r2D) {
 		animationsByName = new HashMap<>(2);
 		put("dying", dying = r2D.createPacDyingAnimation());
-		put("munching", munching = r2D.createPacMunchingAnimation());
+		put("munching", munching = r2D.createPacMunchingAnimationMap());
 		select("munching");
 	}
 
