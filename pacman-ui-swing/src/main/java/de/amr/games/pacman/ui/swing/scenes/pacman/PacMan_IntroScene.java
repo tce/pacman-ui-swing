@@ -75,7 +75,7 @@ public class PacMan_IntroScene extends GameScene {
 	private void onSceneStateChange(State fromState, State toState) {
 		if (fromState == State.CHASING_PAC && toState == State.CHASING_GHOSTS) {
 			for (var ghost : $.ghosts) {
-				ghost.animations().get().select("ghost-anim-blue");
+				ghost.animations().get().select("blue");
 			}
 		}
 	}
@@ -97,13 +97,13 @@ public class PacMan_IntroScene extends GameScene {
 		if (sceneController.state() == State.CHASING_GHOSTS) {
 			for (var ghost : $.ghosts) {
 				if (ghost.state == GhostState.DEAD && ghost.killIndex != -1) {
-					ghost.animations().get().select("ghost-anim-value");
+					ghost.animations().get().select("value");
 					ghost.animations().get().selectedAnimation().ensureRunning();
 				} else {
-					ghost.animations().get().select("ghost-anim-blue");
+					ghost.animations().get().select("blue");
 					ghost.animations().get().selectedAnimation().ensureRunning();
 					if (ghost.velocity.length() == 0) {
-						ghost.animations().get().byName("ghost-anim-blue").stop();
+						ghost.animations().get().byName("blue").stop();
 					}
 				}
 			}

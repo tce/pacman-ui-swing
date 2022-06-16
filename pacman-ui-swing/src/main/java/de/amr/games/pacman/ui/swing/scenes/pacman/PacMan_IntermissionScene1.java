@@ -68,8 +68,8 @@ public class PacMan_IntermissionScene1 extends GameScene {
 	public void update() {
 		sceneController.update();
 		$.blinky.animations().get().select(switch ($.blinky.state) {
-		case FRIGHTENED -> "ghost-anim-blue";
-		case HUNTING_PAC -> "ghost-anim-color";
+		case FRIGHTENED -> "blue";
+		case HUNTING_PAC -> "color";
 		default -> $.blinky.animations().get().selected();
 		});
 	}
