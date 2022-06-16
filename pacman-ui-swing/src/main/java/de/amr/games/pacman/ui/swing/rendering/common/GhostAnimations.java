@@ -24,6 +24,7 @@ SOFTWARE.
 package de.amr.games.pacman.ui.swing.rendering.common;
 
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
@@ -44,6 +45,7 @@ public class GhostAnimations extends ThingAnimationCollection<Ghost, String, Buf
 	private ThingArray<BufferedImage> values;
 
 	public GhostAnimations(int ghostID, Rendering2D r2D) {
+		animationsByName = new HashMap<>(6);
 		put("ANIM_EYES", eyes = r2D.createGhostEyesAnimation());
 		put("ANIM_FLASHING", flashing = r2D.createGhostFlashingAnimation());
 		put("ANIM_BLUE", blue = r2D.createGhostBlueAnimation());
@@ -61,7 +63,7 @@ public class GhostAnimations extends ThingAnimationCollection<Ghost, String, Buf
 
 	@Override
 	public BufferedImage current(Ghost ghost) {
-		return switch (selectedKey) {
+		return switch (selected) {
 		case "ANIM_EYES" -> eyes.get(ghost.wishDir()).frame();
 		case "ANIM_FLASHING" -> flashing.animate();
 		case "ANIM_BLUE" -> blue.animate();
