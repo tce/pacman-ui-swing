@@ -46,12 +46,12 @@ public class GhostAnimations extends ThingAnimationCollection<Ghost, String, Buf
 
 	public GhostAnimations(int ghostID, Rendering2D r2D) {
 		animationsByName = new HashMap<>(6);
-		put("ANIM_EYES", eyes = r2D.createGhostEyesAnimation());
-		put("ANIM_FLASHING", flashing = r2D.createGhostFlashingAnimation());
-		put("ANIM_BLUE", blue = r2D.createGhostBlueAnimation());
-		put("ANIM_COLOR", color = r2D.createGhostColorAnimation(ghostID));
-		put("ANIM_VALUE", values = r2D.createGhostValueList());
-		select("ANIM_COLOR");
+		put("ghost-anim-eyes", eyes = r2D.createGhostEyesAnimation());
+		put("ghost-anim-flashing", flashing = r2D.createGhostFlashingAnimation());
+		put("ghost-anim-blue", blue = r2D.createGhostBlueAnimation());
+		put("ghost-anim-color", color = r2D.createGhostColorAnimation(ghostID));
+		put("ghost-anim-value", values = r2D.createGhostValueList());
+		select("ghost-anim-color");
 	}
 
 	public void startFlashing(int numFlashes, long ticksTotal) {
@@ -64,17 +64,17 @@ public class GhostAnimations extends ThingAnimationCollection<Ghost, String, Buf
 	@Override
 	public BufferedImage current(Ghost ghost) {
 		return switch (selected) {
-		case "ANIM_EYES" -> eyes.get(ghost.wishDir()).frame();
-		case "ANIM_FLASHING" -> flashing.animate();
-		case "ANIM_BLUE" -> blue.animate();
-		case "ANIM_COLOR" -> {
+		case "ghost-anim-eyes" -> eyes.get(ghost.wishDir()).frame();
+		case "ghost-anim-flashing" -> flashing.animate();
+		case "ghost-anim-blue" -> blue.animate();
+		case "ghost-anim-color" -> {
 			var sprite = color.get(ghost.wishDir()).frame();
 			if (ghost.velocity.length() > 0) {
 				color.get(ghost.wishDir()).advance();
 			}
 			yield sprite;
 		}
-		case "ANIM_VALUE" -> ghost.killIndex >= 0 ? values.frame(ghost.killIndex) : null;
+		case "ghost-anim-value" -> ghost.killIndex >= 0 ? values.frame(ghost.killIndex) : null;
 		default -> null;
 		};
 	}
