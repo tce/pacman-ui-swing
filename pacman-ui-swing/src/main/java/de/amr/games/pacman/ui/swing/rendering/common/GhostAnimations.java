@@ -24,11 +24,9 @@ SOFTWARE.
 package de.amr.games.pacman.ui.swing.rendering.common;
 
 import java.awt.image.BufferedImage;
-import java.util.stream.Stream;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
-import de.amr.games.pacman.lib.animation.ThingAnimation;
 import de.amr.games.pacman.lib.animation.ThingAnimationCollection;
 import de.amr.games.pacman.lib.animation.ThingAnimationMap;
 import de.amr.games.pacman.lib.animation.ThingArray;
@@ -46,11 +44,11 @@ public class GhostAnimations extends ThingAnimationCollection<Ghost, String, Buf
 	private ThingArray<BufferedImage> values;
 
 	public GhostAnimations(int ghostID, Rendering2D r2D) {
-		eyes = r2D.createGhostEyesAnimation();
-		flashing = r2D.createGhostFlashingAnimation();
-		blue = r2D.createGhostBlueAnimation();
-		color = r2D.createGhostColorAnimation(ghostID);
-		values = r2D.createGhostValueList();
+		put("ANIM_EYES", eyes = r2D.createGhostEyesAnimation());
+		put("ANIM_FLASHING", flashing = r2D.createGhostFlashingAnimation());
+		put("ANIM_BLUE", blue = r2D.createGhostBlueAnimation());
+		put("ANIM_COLOR", color = r2D.createGhostColorAnimation(ghostID));
+		put("ANIM_VALUE", values = r2D.createGhostValueList());
 		select("ANIM_COLOR");
 	}
 
@@ -59,23 +57,6 @@ public class GhostAnimations extends ThingAnimationCollection<Ghost, String, Buf
 		flashing.frameDuration(frameTicks);
 		flashing.repeat(numFlashes);
 		flashing.restart();
-	}
-
-	@Override
-	public ThingAnimation<BufferedImage> byKey(String key) {
-		return switch (key) {
-		case "ANIM_EYES" -> eyes;
-		case "ANIM_FLASHING" -> flashing;
-		case "ANIM_BLUE" -> blue;
-		case "ANIM_COLOR" -> color;
-		case "ANIM_VALUE" -> values;
-		default -> null;
-		};
-	}
-
-	@Override
-	public Stream<ThingAnimation<BufferedImage>> all() {
-		return Stream.of(eyes, flashing, blue, color, values);
 	}
 
 	@Override

@@ -25,10 +25,8 @@ SOFTWARE.
 package de.amr.games.pacman.ui.swing.rendering.common;
 
 import java.awt.image.BufferedImage;
-import java.util.stream.Stream;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
 import de.amr.games.pacman.lib.animation.ThingAnimation;
 import de.amr.games.pacman.lib.animation.ThingAnimationCollection;
 import de.amr.games.pacman.lib.animation.ThingAnimationMap;
@@ -40,31 +38,17 @@ import de.amr.games.pacman.model.common.actors.Pac;
 public class PacAnimations extends ThingAnimationCollection<Pac, String, BufferedImage> {
 
 	protected ThingAnimationMap<Direction, BufferedImage> munching;
-	protected SimpleThingAnimation<BufferedImage> dying;
+	protected ThingAnimation<BufferedImage> dying;
 
 	public PacAnimations(Rendering2D r2D) {
-		munching = r2D.createPacMunchingAnimations();
-		dying = r2D.createPacDyingAnimation();
+		put("ANIM_DYING", dying = r2D.createPacDyingAnimation());
+		put("ANIM_MUNCHING", munching = r2D.createPacMunchingAnimation());
 		select("ANIM_MUNCHING");
 	}
 
 	@Override
 	public void ensureRunning() {
 		munching.ensureRunning();
-	}
-
-	@Override
-	public ThingAnimation<BufferedImage> byKey(String key) {
-		return switch (key) {
-		case "ANIM_DYING" -> dying;
-		case "ANIM_MUNCHING" -> munching;
-		default -> null;
-		};
-	}
-
-	@Override
-	public Stream<ThingAnimation<BufferedImage>> all() {
-		return Stream.of(munching, dying);
 	}
 
 	@Override

@@ -145,7 +145,7 @@ public class Rendering2D_PacMan implements Rendering2D {
 	}
 
 	@Override
-	public ThingAnimationMap<Direction, BufferedImage> createPacMunchingAnimations() {
+	public ThingAnimationMap<Direction, BufferedImage> createPacMunchingAnimation() {
 		ThingAnimationMap<Direction, BufferedImage> munching = new ThingAnimationMap<>(4);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);

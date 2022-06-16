@@ -76,7 +76,7 @@ public interface Rendering2D {
 
 	// Animations
 
-	ThingAnimationMap<Direction, BufferedImage> createPacMunchingAnimations();
+	ThingAnimationMap<Direction, BufferedImage> createPacMunchingAnimation();
 
 	SimpleThingAnimation<BufferedImage> createPacDyingAnimation();
 
