@@ -28,7 +28,7 @@ import java.util.HashMap;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.SimpleThingAnimation;
-import de.amr.games.pacman.lib.animation.ThingAnimationCollection;
+import de.amr.games.pacman.lib.animation.Animations;
 import de.amr.games.pacman.lib.animation.ThingAnimationMap;
 import de.amr.games.pacman.lib.animation.ThingArray;
 import de.amr.games.pacman.model.common.actors.Ghost;
@@ -36,7 +36,7 @@ import de.amr.games.pacman.model.common.actors.Ghost;
 /**
  * @author Armin Reichert
  */
-public class GhostAnimations extends ThingAnimationCollection<Ghost, String> {
+public class GhostAnimations extends Animations<Ghost, String> {
 
 	private ThingAnimationMap<Direction, BufferedImage> eyes;
 	private SimpleThingAnimation<BufferedImage> flashing;
