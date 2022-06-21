@@ -112,7 +112,7 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 	public PacManGameUI_Swing(GameLoop gameLoop, GameController controller, double height) {
 		this.gameLoop = gameLoop;
 		this.gameController = controller;
-		this.unscaledSize = ArcadeWorld.SIZE;
+		this.unscaledSize = ArcadeWorld.MODELSIZE;
 		this.scaling = height / unscaledSize.y;
 		this.scaledSize = new V2d(unscaledSize.x, unscaledSize.y).scaled(scaling).toV2i();
 
