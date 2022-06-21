@@ -42,6 +42,7 @@ import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
+import javax.swing.WindowConstants;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.common.GameState;
@@ -131,7 +132,7 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 		window.setBackground(Color.BLACK);
 		window.setResizable(false);
 		window.setFocusable(true);
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		window.setIconImage(U.image("/pacman/graphics/pacman.png"));
 		window.addWindowListener(new WindowAdapter() {
 
@@ -255,7 +256,7 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 		}
 
 		else if (Keyboard.keyPressed(MOD_CTRL, "D")) {
-			debugDraw = !debugDraw;
+			PacManGameUI_Swing.debugDraw = !PacManGameUI_Swing.debugDraw;
 			log("UI debug mode is %s", debugDraw ? "on" : "off");
 		}
 
