@@ -28,6 +28,7 @@ import java.awt.Graphics2D;
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.Intermission3Controller;
 import de.amr.games.pacman.lib.animation.SpriteAnimations;
+import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Stork2D;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.Spritesheet_MsPacMan;
@@ -64,7 +65,8 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 		$.msPacMan.setAnimations(new PacAnimations(r2D));
 		$.msPacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
 		$.pacMan.setAnimations(new PacAnimations(r2D));
-		$.pacMan.animations().get().put("munching", Spritesheet_MsPacMan.get().createHusbandMunchingAnimations());
+		$.pacMan.animations().get().put(AnimKeys.PAC_MUNCHING,
+				Spritesheet_MsPacMan.get().createHusbandMunchingAnimations());
 		$.pacMan.animations().get().ensureRunning();
 		stork2D = new Stork2D($.stork, r2D);
 		stork2D.animation.restart();

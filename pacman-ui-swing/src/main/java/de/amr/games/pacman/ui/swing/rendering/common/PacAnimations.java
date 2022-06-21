@@ -29,6 +29,7 @@ import java.util.HashMap;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.SpriteAnimations;
+import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.model.common.actors.Pac;
 
 /**
@@ -38,20 +39,21 @@ public class PacAnimations extends SpriteAnimations<Pac> {
 
 	public PacAnimations(Rendering2D r2D) {
 		animationsByName = new HashMap<>(2);
-		put("dying", r2D.createPacDyingAnimation());
-		put("munching", r2D.createPacMunchingAnimationMap());
-		select("munching");
+		put(AnimKeys.PAC_DYING, r2D.createPacDyingAnimation());
+		put(AnimKeys.PAC_MUNCHING, r2D.createPacMunchingAnimationMap());
+		select(AnimKeys.PAC_MUNCHING);
 	}
 
 	@Override
 	public void ensureRunning() {
-		byName("munching").ensureRunning();
+		byName(AnimKeys.PAC_MUNCHING).ensureRunning();
 	}
 
 	@Override
 	public BufferedImage current(Pac pac) {
 		return switch (selected) {
-		case "munching" -> super.<Direction, BufferedImage>castToMap("munching").get(pac.moveDir()).animate();
+		case AnimKeys.PAC_MUNCHING -> super.<Direction, BufferedImage>castToMap(AnimKeys.PAC_MUNCHING).get(pac.moveDir())
+				.animate();
 		default -> (BufferedImage) selectedAnimation().animate();
 		};
 	}

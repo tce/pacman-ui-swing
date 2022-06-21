@@ -32,6 +32,7 @@ import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.model.common.GameSound;
+import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.Pac;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
@@ -56,8 +57,8 @@ public class PacMan_Cutscene2 extends GameScene {
 
 		pac = new Pac("Pac-Man");
 		pac.setAnimations(new PacAnimations(r2D));
-		pac.animations().get().select("munching");
-		pac.animation("munching").get().restart();
+		pac.animations().get().select(AnimKeys.PAC_MUNCHING);
+		pac.animation(AnimKeys.PAC_MUNCHING).get().restart();
 		pac.placeAt(v(29, 20), 0, 0);
 		pac.setMoveDir(Direction.LEFT);
 		pac.setAbsSpeed(1.15);
@@ -67,8 +68,8 @@ public class PacMan_Cutscene2 extends GameScene {
 		blinky.setAnimations(new GhostAnimations(Ghost.RED_GHOST, r2D));
 		blinky.animations().get().put("stretched", ((Spritesheet_PacMan) r2D).createBlinkyStretchedAnimation());
 		blinky.animations().get().put("damaged", ((Spritesheet_PacMan) r2D).createBlinkyDamagedAnimation());
-		blinky.animations().get().select("color");
-		blinky.animation("color").get().restart();
+		blinky.animations().get().select(AnimKeys.GHOST_COLOR);
+		blinky.animation(AnimKeys.GHOST_COLOR).get().restart();
 		blinky.placeAt(v(28, 20), 0, 0);
 		blinky.setBothDirs(Direction.LEFT);
 		blinky.setAbsSpeed(0);

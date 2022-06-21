@@ -30,6 +30,7 @@ import java.awt.Graphics2D;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.model.common.GameSound;
+import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.Pac;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
@@ -55,8 +56,8 @@ public class PacMan_Cutscene1 extends GameScene {
 		pac = new Pac("Pac-Man");
 		pac.setAnimations(new PacAnimations(r2D));
 		pac.animations().get().put("pac-anim-big", ((Spritesheet_PacMan) r2D).createBigPacManMunchingAnimation());
-		pac.animations().get().select("munching");
-		pac.animation("munching").get().restart();
+		pac.animations().get().select(AnimKeys.PAC_MUNCHING);
+		pac.animation(AnimKeys.PAC_MUNCHING).get().restart();
 
 		pac.placeAt(v(29, 20), 0, 0);
 		pac.setMoveDir(Direction.LEFT);
@@ -65,8 +66,8 @@ public class PacMan_Cutscene1 extends GameScene {
 
 		blinky = new Ghost(Ghost.RED_GHOST, "Blinky");
 		blinky.setAnimations(new GhostAnimations(Ghost.RED_GHOST, r2D));
-		blinky.animations().get().select("color");
-		blinky.animation("color").get().restart();
+		blinky.animations().get().select(AnimKeys.GHOST_COLOR);
+		blinky.animation(AnimKeys.GHOST_COLOR).get().restart();
 		blinky.placeAt(v(32, 20), 0, 0);
 		blinky.setBothDirs(Direction.LEFT);
 		blinky.setAbsSpeed(1.3);
@@ -85,7 +86,7 @@ public class PacMan_Cutscene1 extends GameScene {
 		} else if (frame == 260) {
 			blinky.placeAt(v(-2, 20), 4, 0);
 			blinky.setBothDirs(Direction.RIGHT);
-			blinky.animations().get().select("blue");
+			blinky.animations().get().select(AnimKeys.GHOST_BLUE);
 			blinky.animations().get().selectedAnimation().restart();
 			blinky.setAbsSpeed(0.75);
 		} else if (frame == 400) {

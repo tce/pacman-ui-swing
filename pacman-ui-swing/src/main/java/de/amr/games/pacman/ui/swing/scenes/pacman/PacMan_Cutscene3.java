@@ -30,6 +30,7 @@ import java.awt.Graphics2D;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.model.common.GameSound;
+import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.Pac;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
@@ -72,8 +73,8 @@ public class PacMan_Cutscene3 extends GameScene {
 			pac.setMoveDir(Direction.LEFT);
 			pac.setAbsSpeed(1.25);
 			pac.show();
-			pac.animations().get().select("munching");
-			pac.animation("munching").get().restart();
+			pac.animations().get().select(AnimKeys.PAC_MUNCHING);
+			pac.animation(AnimKeys.PAC_MUNCHING).get().restart();
 			blinky.placeAt(v(35, 20), 0, 0);
 			blinky.setBothDirs(Direction.LEFT);
 			blinky.setAbsSpeed(1.25);

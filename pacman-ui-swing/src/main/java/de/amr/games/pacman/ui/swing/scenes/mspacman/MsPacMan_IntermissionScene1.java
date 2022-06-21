@@ -28,6 +28,7 @@ import java.awt.Graphics2D;
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.Intermission1Controller;
 import de.amr.games.pacman.lib.animation.SpriteAnimations;
+import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Heart2D;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
@@ -65,7 +66,8 @@ public class MsPacMan_IntermissionScene1 extends GameScene {
 		$.msPac.setAnimations(new PacAnimations(r2D));
 		$.msPac.animations().ifPresent(SpriteAnimations::ensureRunning);
 		$.pacMan.setAnimations(new PacAnimations(r2D));
-		$.pacMan.animations().get().put("munching", Spritesheet_MsPacMan.get().createHusbandMunchingAnimations());
+		$.pacMan.animations().get().put(AnimKeys.PAC_MUNCHING,
+				Spritesheet_MsPacMan.get().createHusbandMunchingAnimations());
 		$.pacMan.animations().get().ensureRunning();
 		$.inky.setAnimations(new GhostAnimations(Ghost.CYAN_GHOST, r2D));
 		$.pinky.setAnimations(new GhostAnimations(Ghost.PINK_GHOST, r2D));
