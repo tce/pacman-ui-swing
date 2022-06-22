@@ -23,8 +23,6 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.app;
 
-import static de.amr.games.pacman.lib.Logging.log;
-
 public class GameLoop {
 
 	public final SpeedControl clock = new SpeedControl();
@@ -43,7 +41,6 @@ public class GameLoop {
 
 	public void start() {
 		if (running) {
-			log("Cannot start: Game loop is already running");
 			return;
 		}
 		thread = new Thread(this::run, "GameLoop");
@@ -58,7 +55,6 @@ public class GameLoop {
 		} catch (Exception x) {
 			x.printStackTrace();
 		}
-		log("Exit game and terminate VM");
 		System.exit(0);
 	}
 }

@@ -24,8 +24,6 @@ SOFTWARE.
 
 package de.amr.games.pacman.ui.swing.sound;
 
-import static de.amr.games.pacman.lib.Logging.log;
-
 import java.net.URL;
 import java.util.EnumMap;
 import java.util.Map;
@@ -35,7 +33,9 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
-import de.amr.games.pacman.model.common.GameSound;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import de.amr.games.pacman.model.common.GameSounds;
 
 /**
@@ -43,6 +43,8 @@ import de.amr.games.pacman.model.common.GameSounds;
  *
  */
 public class AbstractGameSounds implements GameSounds {
+
+	private static final Logger logger = LogManager.getFormatterLogger();
 
 	protected final Map<GameSound, Clip> clips = new EnumMap<>(GameSound.class);
 	protected boolean silent;
@@ -82,7 +84,7 @@ public class AbstractGameSounds implements GameSounds {
 	protected void put(Map<GameSound, Clip> map, GameSound sound, String path) {
 		URL url = getClass().getResource(path);
 		if (url == null) {
-			throw new RuntimeException("Sound resource does not exist: " + path);
+			throw new GameSoundException("Sound resource '%s' does not exist", path);
 		}
 		Clip clip = createAndOpenClip(url);
 		map.put(sound, clip);
@@ -104,7 +106,7 @@ public class AbstractGameSounds implements GameSounds {
 
 	protected Clip getClip(GameSound sound) {
 		if (!clips.containsKey(sound)) {
-			throw new RuntimeException("No clip found for " + sound);
+			throw new GameSoundException("No clip found for '%s'", sound);
 		}
 		return clips.get(sound);
 	}
@@ -113,31 +115,26 @@ public class AbstractGameSounds implements GameSounds {
 		return getClip(sound).isRunning();
 	}
 
-	@Override
 	public void ensurePlaying(GameSound sound) {
 		if (!isPlaying(sound)) {
 			play(sound);
 		}
 	}
 
-	@Override
 	public void play(GameSound sound) {
 		startClip(getClip(sound));
 	}
 
-	@Override
 	public void ensureLoop(GameSound sound, int repetitions) {
 		if (!isPlaying(sound)) {
 			loop(sound, repetitions);
 		}
 	}
 
-	@Override
 	public void loop(GameSound sound, int repetitions) {
 		loopClip(getClip(sound), repetitions);
 	}
 
-	@Override
 	public void stop(GameSound sound) {
 		getClip(sound).stop();
 	}
@@ -162,7 +159,7 @@ public class AbstractGameSounds implements GameSounds {
 		};
 //		getClip(siren).setVolume(0.2);
 		loop(siren, Clip.LOOP_CONTINUOUSLY);
-		log("Siren %s started", siren);
+		logger.info("Siren %s started", siren);
 	}
 
 	public Stream<GameSound> sirens() {
@@ -181,7 +178,7 @@ public class AbstractGameSounds implements GameSounds {
 		sirens().forEach(siren -> {
 			if (isPlaying(siren)) {
 				getClip(siren).stop();
-				log("Siren %s stopped", siren);
+				logger.info("Siren %s stopped", siren);
 			}
 		});
 	}
