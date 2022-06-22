@@ -29,6 +29,7 @@ import static de.amr.games.pacman.lib.V2i.v;
 import java.awt.Graphics2D;
 
 import de.amr.games.pacman.lib.Direction;
+import de.amr.games.pacman.lib.animation.SpriteAnimation;
 import de.amr.games.pacman.model.common.GameSound;
 import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.model.common.actors.Ghost;
@@ -76,19 +77,19 @@ public class PacManCutscene3 extends GameScene {
 			pac.setMoveDir(Direction.LEFT);
 			pac.setAbsSpeed(1.25);
 			pac.show();
-			pac.animations().get().select(AnimKeys.PAC_MUNCHING);
-			pac.animation(AnimKeys.PAC_MUNCHING).get().restart();
+			pac.animations().ifPresent(anims -> anims.select(AnimKeys.PAC_MUNCHING));
+			pac.animation(AnimKeys.PAC_MUNCHING).ifPresent(SpriteAnimation::restart);
 			blinky.placeAt(v(35, 20), 0, 0);
 			blinky.setBothDirs(Direction.LEFT);
 			blinky.setAbsSpeed(1.25);
 			blinky.show();
-			blinky.animations().get().select(ANIMKEY_PATCHED);
-			blinky.animation(ANIMKEY_PATCHED).get().restart();
+			blinky.animations().ifPresent(anims -> anims.select(ANIMKEY_PATCHED));
+			blinky.animation(ANIMKEY_PATCHED).ifPresent(SpriteAnimation::restart);
 		} else if (frame == 296) {
 			blinky.placeAt(v(-1, 20), 0, 0);
 			blinky.setBothDirs(Direction.RIGHT);
-			blinky.animations().get().select(ANIMKEY_NAKED);
-			blinky.animations().get().selectedAnimation().restart();
+			blinky.animations().ifPresent(anims -> anims.select(ANIMKEY_NAKED));
+			blinky.animations().ifPresent(anims -> anims.selectedAnimation().restart());
 		} else if (frame == 516) {
 			gameController.state().timer().expire();
 			return;
