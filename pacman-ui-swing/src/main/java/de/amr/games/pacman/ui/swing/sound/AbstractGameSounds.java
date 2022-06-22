@@ -77,7 +77,7 @@ public class AbstractGameSounds implements GameSounds {
 			clip.open(as);
 			return clip;
 		} catch (Exception x) {
-			throw new RuntimeException("Error opening audio clip from URL " + url, x);
+			throw new GameSoundException("Error opening audio clip from URL '%s'", url);
 		}
 	}
 
@@ -155,7 +155,7 @@ public class AbstractGameSounds implements GameSounds {
 		case 1 -> GameSound.SIREN_2;
 		case 2 -> GameSound.SIREN_3;
 		case 3 -> GameSound.SIREN_4;
-		default -> throw new IllegalArgumentException("Illegal siren index: " + sirenIndex);
+		default -> throw new GameSoundException("Illegal siren index: %d", sirenIndex);
 		};
 //		getClip(siren).setVolume(0.2);
 		loop(siren, Clip.LOOP_CONTINUOUSLY);
@@ -168,7 +168,7 @@ public class AbstractGameSounds implements GameSounds {
 
 	@Override
 	public void ensureSirenStarted(int sirenIndex) {
-		if (!sirens().anyMatch(this::isPlaying)) {
+		if (sirens().noneMatch(this::isPlaying)) {
 			startSiren(sirenIndex);
 		}
 	}

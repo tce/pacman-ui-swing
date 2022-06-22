@@ -148,6 +148,7 @@ public class PacMan_IntroScene extends GameScene {
 			drawGuys(g, 0);
 		}
 		default -> {
+			// nothing to do
 		}
 		}
 	}

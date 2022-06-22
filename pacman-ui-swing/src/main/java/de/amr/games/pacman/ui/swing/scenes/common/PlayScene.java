@@ -97,12 +97,9 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void onGameStateChange(GameStateChangeEvent e) {
-		switch (e.newGameState) {
-		case LEVEL_STARTING -> {
-			gameController.state().timer().expire(); // TODO check this
-		}
-		default -> {
-		}
+		if (e.newGameState == GameState.LEVEL_STARTING) {
+			// TODO check this
+			gameController.state().timer().expire();
 		}
 	}
 }

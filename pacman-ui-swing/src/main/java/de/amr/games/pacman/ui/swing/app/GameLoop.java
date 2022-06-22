@@ -52,8 +52,9 @@ public class GameLoop {
 		running = false;
 		try {
 			thread.join();
-		} catch (Exception x) {
+		} catch (InterruptedException x) {
 			x.printStackTrace();
+			Thread.currentThread().interrupt();
 		}
 		System.exit(0);
 	}

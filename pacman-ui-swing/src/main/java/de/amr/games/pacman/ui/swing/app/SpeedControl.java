@@ -68,6 +68,7 @@ public class SpeedControl {
 				Thread.sleep((long) sleepMillis);
 			} catch (InterruptedException x) {
 				x.printStackTrace();
+				Thread.currentThread().interrupt();
 			}
 		}
 	}
@@ -97,9 +98,9 @@ public class SpeedControl {
 	}
 
 	/**
-	 * Computes the animation frame at the current clock tick. For example, if each animation frame shall take 2 ticks
-	 * and the complete animation consists of 4 different frames, then the call <code>frame(2, 4)</code> produces
-	 * repeatedly the sequence <code>0, 0, 1, 1, 2, 2, 3, 3</code>.
+	 * Computes the animation frame at the current clock tick. For example, if each animation frame shall take 2 ticks and
+	 * the complete animation consists of 4 different frames, then the call <code>frame(2, 4)</code> produces repeatedly
+	 * the sequence <code>0, 0, 1, 1, 2, 2, 3, 3</code>.
 	 * 
 	 * @param frameDurationTicks duration in ticks of one animation frame
 	 * @param numFrames          number of frames of the complete animation

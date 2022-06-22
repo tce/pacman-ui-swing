@@ -43,6 +43,9 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
  */
 public class PacMan_Cutscene3 extends GameScene {
 
+	private static final String ANIMKEY_PATCHED = "patched";
+	private static final String ANIMKEY_NAKED = "naked";
+
 	private int initialDelay;
 	private int frame;
 	private Pac pac;
@@ -56,8 +59,8 @@ public class PacMan_Cutscene3 extends GameScene {
 		pac.setAnimations(new PacAnimations(r2D));
 		blinky = new Ghost(Ghost.RED_GHOST, "Blinky");
 		blinky.setAnimations(new GhostAnimations(Ghost.RED_GHOST, r2D));
-		blinky.animations().get().put("patched", Spritesheet_PacMan.get().createBlinkyPatchedAnimation());
-		blinky.animations().get().put("naked", Spritesheet_PacMan.get().createBlinkyNakedAnimation());
+		blinky.animations().get().put(ANIMKEY_PATCHED, Spritesheet_PacMan.get().createBlinkyPatchedAnimation());
+		blinky.animations().get().put(ANIMKEY_NAKED, Spritesheet_PacMan.get().createBlinkyNakedAnimation());
 	}
 
 	@Override
@@ -79,12 +82,12 @@ public class PacMan_Cutscene3 extends GameScene {
 			blinky.setBothDirs(Direction.LEFT);
 			blinky.setAbsSpeed(1.25);
 			blinky.show();
-			blinky.animations().get().select("patched");
-			blinky.animation("patched").get().restart();
+			blinky.animations().get().select(ANIMKEY_PATCHED);
+			blinky.animation(ANIMKEY_PATCHED).get().restart();
 		} else if (frame == 296) {
 			blinky.placeAt(v(-1, 20), 0, 0);
 			blinky.setBothDirs(Direction.RIGHT);
-			blinky.animations().get().select("naked");
+			blinky.animations().get().select(ANIMKEY_NAKED);
 			blinky.animations().get().selectedAnimation().restart();
 		} else if (frame == 516) {
 			gameController.state().timer().expire();

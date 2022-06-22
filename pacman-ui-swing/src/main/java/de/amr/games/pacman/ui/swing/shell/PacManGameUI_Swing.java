@@ -243,7 +243,6 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 		smooth.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		smooth.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 		smooth.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-//		smooth.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 		return smooth;
 	}
 
@@ -260,7 +259,7 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 		}
 
 		else if (Keyboard.keyPressed(MOD_CTRL, "D")) {
-			PacManGameUI_Swing.debugDraw = !PacManGameUI_Swing.debugDraw;
+			debugDraw = !debugDraw;
 			logger.info("UI debug mode is %s", debugDraw ? "on" : "off");
 		}
 
