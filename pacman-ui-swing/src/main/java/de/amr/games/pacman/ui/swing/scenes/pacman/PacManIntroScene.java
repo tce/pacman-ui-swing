@@ -35,6 +35,7 @@ import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.pacman.IntroController;
 import de.amr.games.pacman.controller.pacman.IntroController.State;
 import de.amr.games.pacman.lib.Direction;
+import de.amr.games.pacman.lib.animation.SpriteAnimations;
 import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.model.common.actors.GhostState;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
@@ -67,7 +68,7 @@ public class PacManIntroScene extends GameScene {
 	public void init() {
 		sceneController.restartInInitialState(IntroController.State.START);
 		$.pacMan.setAnimations(new PacAnimations(r2D));
-		$.pacMan.animations().get().ensureRunning();
+		$.pacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
 		Stream.of($.ghosts).forEach(ghost -> {
 			ghost.setAnimations(new GhostAnimations(ghost.id, r2D));
 		});
@@ -76,7 +77,7 @@ public class PacManIntroScene extends GameScene {
 	private void onSceneStateChange(State fromState, State toState) {
 		if (fromState == State.CHASING_PAC && toState == State.CHASING_GHOSTS) {
 			for (var ghost : $.ghosts) {
-				ghost.animations().get().select(AnimKeys.GHOST_BLUE);
+				ghost.animations().ifPresent(anims -> anims.select(AnimKeys.GHOST_BLUE));
 			}
 		}
 	}
@@ -94,19 +95,20 @@ public class PacManIntroScene extends GameScene {
 	}
 
 	private void updateAnimations() {
-		// TODO this is not elegant but works
 		if (sceneController.state() == State.CHASING_GHOSTS) {
 			for (var ghost : $.ghosts) {
-				if (ghost.state == GhostState.DEAD && ghost.killIndex != -1) {
-					ghost.animations().get().select(AnimKeys.GHOST_VALUE);
-					ghost.animations().get().selectedAnimation().ensureRunning();
-				} else {
-					ghost.animations().get().select(AnimKeys.GHOST_BLUE);
-					ghost.animations().get().selectedAnimation().ensureRunning();
-					if (ghost.velocity.length() == 0) {
-						ghost.animations().get().byName(AnimKeys.GHOST_BLUE).stop();
+				ghost.animations().ifPresent(anims -> {
+					if (ghost.state == GhostState.DEAD && ghost.killIndex != -1) {
+						anims.select(AnimKeys.GHOST_VALUE);
+						anims.selectedAnimation().ensureRunning();
+					} else {
+						anims.select(AnimKeys.GHOST_BLUE);
+						anims.selectedAnimation().ensureRunning();
+						if (ghost.velocity.length() == 0) {
+							anims.byName(AnimKeys.GHOST_BLUE).stop();
+						}
 					}
-				}
+				});
 			}
 		}
 	}
@@ -130,7 +132,7 @@ public class PacManIntroScene extends GameScene {
 			drawGallery(g);
 			drawPoints(g, 11, 25);
 			r2D.drawCopyright(g, t(3), t(32));
-			if ($.blinking.frame()) {
+			if (Boolean.TRUE.equals($.blinking.frame())) {
 				drawEnergizer(g);
 			}
 			int offset = sceneController.state().timer().tick() % 5 < 2 ? 0 : -1;
@@ -189,7 +191,7 @@ public class PacManIntroScene extends GameScene {
 	private void drawPoints(Graphics2D g, int tileX, int tileY) {
 		g.setColor(r2D.getFoodColor(1));
 		g.fillRect(t(tileX) + 6, t(tileY - 1) + 2, 2, 2);
-		if ($.blinking.frame()) {
+		if (Boolean.TRUE.equals($.blinking.frame())) {
 			g.fillOval(t(tileX), t(tileY + 1) - 2, 10, 10);
 		}
 		g.setColor(Color.WHITE);
