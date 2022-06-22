@@ -114,7 +114,10 @@ public class Spritesheet_PacMan implements Rendering2D {
 
 	@Override
 	public BufferedImage getBonusValueSprite(int symbol) {
-		return symbol <= 3 ? ss.tile(symbol, 9) : symbol == 4 ? ss.tiles(4, 9, 2, 1) : ss.tiles(3, symbol, 3, 1);
+		if (symbol <= 3) {
+			return ss.tile(symbol, 9);
+		}
+		return symbol == 4 ? ss.tiles(4, 9, 2, 1) : ss.tiles(3, symbol, 3, 1);
 	}
 
 	@Override

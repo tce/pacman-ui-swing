@@ -60,9 +60,9 @@ public class MsPacManIntermissionScene2 extends GameScene {
 		$.msPacMan.setAnimations(new PacAnimations(r2D));
 		$.msPacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
 		$.pacMan.setAnimations(new PacAnimations(r2D));
-		$.pacMan.animations().get().put(AnimKeys.PAC_MUNCHING,
-				Spritesheet_MsPacMan.get().createHusbandMunchingAnimations());
-		$.pacMan.animations().get().ensureRunning();
+		var husbandMunching = Spritesheet_MsPacMan.get().createHusbandMunchingAnimations();
+		$.pacMan.animations().ifPresent(anims -> anims.put(AnimKeys.PAC_MUNCHING, husbandMunching));
+		$.pacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
 	}
 
 	@Override

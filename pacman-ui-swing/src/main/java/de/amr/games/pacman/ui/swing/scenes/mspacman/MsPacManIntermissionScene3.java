@@ -65,9 +65,9 @@ public class MsPacManIntermissionScene3 extends GameScene {
 		$.msPacMan.setAnimations(new PacAnimations(r2D));
 		$.msPacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
 		$.pacMan.setAnimations(new PacAnimations(r2D));
-		$.pacMan.animations().get().put(AnimKeys.PAC_MUNCHING,
-				Spritesheet_MsPacMan.get().createHusbandMunchingAnimations());
-		$.pacMan.animations().get().ensureRunning();
+		var husbandMunching = Spritesheet_MsPacMan.get().createHusbandMunchingAnimations();
+		$.pacMan.animations().ifPresent(anims -> anims.put(AnimKeys.PAC_MUNCHING, husbandMunching));
+		$.pacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
 		stork2D = new Stork2D($.stork, r2D);
 		stork2D.animation.restart();
 	}
@@ -83,7 +83,7 @@ public class MsPacManIntermissionScene3 extends GameScene {
 		ssmp.drawFlap(g, $.flap);
 		r2D.drawPac(g, $.msPacMan);
 		r2D.drawPac(g, $.pacMan);
-		stork2D.render(g); // TODO
+		stork2D.render(g);
 		r2D.drawEntity(g, $.bag, $.bagOpen ? ssmp.getJunior() : ssmp.getBlueBag());
 	}
 }
