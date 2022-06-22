@@ -34,13 +34,13 @@ import javax.swing.Timer;
 /**
  * @author Armin Reichert
  */
-public class U {
+public class Uswing {
 
-	private U() {
+	private Uswing() {
 	}
 
 	public static URL url(String path) {
-		return U.class.getResource(path);
+		return Uswing.class.getResource(path);
 	}
 
 	public static BufferedImage image(String path) {

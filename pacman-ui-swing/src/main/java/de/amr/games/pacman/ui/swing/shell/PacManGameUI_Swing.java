@@ -57,7 +57,7 @@ import de.amr.games.pacman.model.common.GameSounds;
 import de.amr.games.pacman.model.common.GameVariant;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.ui.swing.app.GameLoop;
-import de.amr.games.pacman.ui.swing.lib.U;
+import de.amr.games.pacman.ui.swing.lib.Uswing;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.scenes.common.PlayScene;
 import de.amr.games.pacman.ui.swing.scenes.mspacman.MsPacManCreditScene;
@@ -137,7 +137,7 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 		window.setResizable(false);
 		window.setFocusable(true);
 		window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		window.setIconImage(U.image("/pacman/graphics/pacman.png"));
+		window.setIconImage(Uswing.image("/pacman/graphics/pacman.png"));
 		window.addWindowListener(new WindowAdapter() {
 
 			@Override
