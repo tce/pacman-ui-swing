@@ -177,7 +177,7 @@ public class Spritesheet_MsPacMan implements Rendering2D {
 	public SingleSpriteAnimation<BufferedImage> createPacDyingAnimation() {
 		var animation = new SingleSpriteAnimation<>(rhs(0, 3), rhs(0, 0), rhs(0, 1), rhs(0, 2));
 		animation.frameDuration(10);
-		animation.repeat(2);
+		animation.repetions(2);
 		return animation;
 	}
 
