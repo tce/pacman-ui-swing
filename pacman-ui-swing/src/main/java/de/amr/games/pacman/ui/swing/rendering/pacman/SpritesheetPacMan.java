@@ -50,11 +50,11 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
  * 
  * @author Armin Reichert
  */
-public class Spritesheet_PacMan implements Rendering2D {
+public class SpritesheetPacMan implements Rendering2D {
 
-	private static final Spritesheet_PacMan theThing = new Spritesheet_PacMan("/pacman/graphics/sprites.png", 16);
+	private static final SpritesheetPacMan theThing = new SpritesheetPacMan("/pacman/graphics/sprites.png", 16);
 
-	public static Spritesheet_PacMan get() {
+	public static SpritesheetPacMan get() {
 		return theThing;
 	}
 
@@ -81,7 +81,7 @@ public class Spritesheet_PacMan implements Rendering2D {
 	private final SingleSpriteAnimation<BufferedImage> mazeFlashingAnim;
 	private final Font font;
 
-	private Spritesheet_PacMan(String path, int rasterSize) {
+	private SpritesheetPacMan(String path, int rasterSize) {
 		ss = new Spritesheet(image(path), rasterSize);
 		font = font("/common/emulogic.ttf", 8);
 
@@ -149,7 +149,9 @@ public class Spritesheet_PacMan implements Rendering2D {
 		SpriteAnimationMap<Direction, BufferedImage> munching = new SpriteAnimationMap<>(4);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
-			BufferedImage wide_open = ss.tile(0, d), open = ss.tile(1, d), closed = ss.tile(2, 0);
+			var wide_open = ss.tile(0, d);
+			var open = ss.tile(1, d);
+			var closed = ss.tile(2, 0);
 			var animation = new SingleSpriteAnimation<>(closed, open, wide_open, open);
 			animation.frameDuration(2);
 			animation.repeatForever();

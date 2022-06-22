@@ -47,7 +47,9 @@ public class SpeedControl {
 	 * @param work some work to do during this frame
 	 */
 	public void frame(Runnable work) {
-		long workStart, workEnd, workDuration;
+		long workStart;
+		long workEnd;
+		long workDuration;
 
 		workStart = System.nanoTime();
 		work.run();

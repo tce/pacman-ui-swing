@@ -36,7 +36,7 @@ import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.Pac;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
-import de.amr.games.pacman.ui.swing.rendering.pacman.Spritesheet_PacMan;
+import de.amr.games.pacman.ui.swing.rendering.pacman.SpritesheetPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
 /**
@@ -58,7 +58,7 @@ public class PacManCutscene1 extends GameScene {
 
 		pac = new Pac("Pac-Man");
 		pac.setAnimations(new PacAnimations(r2D));
-		var bigPacAnim = Spritesheet_PacMan.get().createBigPacManMunchingAnimation();
+		var bigPacAnim = SpritesheetPacMan.get().createBigPacManMunchingAnimation();
 		pac.animations().ifPresent(anims -> anims.put(ANIMKEY_BIG_PAC, bigPacAnim));
 		pac.animations().ifPresent(anims -> anims.select(AnimKeys.PAC_MUNCHING));
 		pac.animation(AnimKeys.PAC_MUNCHING).ifPresent(SpriteAnimation::restart);

@@ -47,7 +47,7 @@ import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
  * 
  * @author Armin Reichert
  */
-public class Spritesheet_MsPacMan implements Rendering2D {
+public class SpritesheetMsPacMan implements Rendering2D {
 
 	/** Sprite sheet order of directions. */
 	static final List<Direction> order = List.of(Direction.RIGHT, Direction.LEFT, Direction.UP, Direction.DOWN);
@@ -92,9 +92,9 @@ public class Spritesheet_MsPacMan implements Rendering2D {
 	};
 	//@formatter:on
 
-	private static final Spritesheet_MsPacMan theThing = new Spritesheet_MsPacMan("/mspacman/graphics/sprites.png", 16);
+	private static final SpritesheetMsPacMan theThing = new SpritesheetMsPacMan("/mspacman/graphics/sprites.png", 16);
 
-	public static Spritesheet_MsPacMan get() {
+	public static SpritesheetMsPacMan get() {
 		return theThing;
 	}
 
@@ -105,7 +105,7 @@ public class Spritesheet_MsPacMan implements Rendering2D {
 	private final BufferedImage[] symbols;
 	private final Font font;
 
-	private Spritesheet_MsPacMan(String path, int rasterSize) {
+	private SpritesheetMsPacMan(String path, int rasterSize) {
 		ss = new Spritesheet(image(path), rasterSize);
 		font = font("/common/emulogic.ttf", 8);
 		midwayLogo = image("/mspacman/graphics/midway.png");

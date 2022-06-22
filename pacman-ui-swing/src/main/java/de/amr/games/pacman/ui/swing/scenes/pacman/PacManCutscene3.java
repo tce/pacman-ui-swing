@@ -36,7 +36,7 @@ import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.Pac;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
-import de.amr.games.pacman.ui.swing.rendering.pacman.Spritesheet_PacMan;
+import de.amr.games.pacman.ui.swing.rendering.pacman.SpritesheetPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
 /**
@@ -61,9 +61,9 @@ public class PacManCutscene3 extends GameScene {
 		blinky = new Ghost(Ghost.RED_GHOST, "Blinky");
 		blinky.setAnimations(new GhostAnimations(Ghost.RED_GHOST, r2D));
 		blinky.animations()
-				.ifPresent(anims -> anims.put(ANIMKEY_PATCHED, Spritesheet_PacMan.get().createBlinkyPatchedAnimation()));
+				.ifPresent(anims -> anims.put(ANIMKEY_PATCHED, SpritesheetPacMan.get().createBlinkyPatchedAnimation()));
 		blinky.animations()
-				.ifPresent(anims -> anims.put(ANIMKEY_NAKED, Spritesheet_PacMan.get().createBlinkyNakedAnimation()));
+				.ifPresent(anims -> anims.put(ANIMKEY_NAKED, SpritesheetPacMan.get().createBlinkyNakedAnimation()));
 	}
 
 	@Override

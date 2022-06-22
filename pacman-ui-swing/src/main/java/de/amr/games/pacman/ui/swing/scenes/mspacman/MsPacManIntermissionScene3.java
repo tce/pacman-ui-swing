@@ -31,7 +31,7 @@ import de.amr.games.pacman.lib.animation.SpriteAnimations;
 import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Stork2D;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
-import de.amr.games.pacman.ui.swing.rendering.mspacman.Spritesheet_MsPacMan;
+import de.amr.games.pacman.ui.swing.rendering.mspacman.SpritesheetMsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
 /**
@@ -61,11 +61,11 @@ public class MsPacManIntermissionScene3 extends GameScene {
 	public void init() {
 		sceneController.restartInInitialState(Intermission3Controller.State.FLAP);
 
-		$.flap.animation = Spritesheet_MsPacMan.get().createFlapAnimation();
+		$.flap.animation = SpritesheetMsPacMan.get().createFlapAnimation();
 		$.msPacMan.setAnimations(new PacAnimations(r2D));
 		$.msPacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
 		$.pacMan.setAnimations(new PacAnimations(r2D));
-		var husbandMunching = Spritesheet_MsPacMan.get().createHusbandMunchingAnimations();
+		var husbandMunching = SpritesheetMsPacMan.get().createHusbandMunchingAnimations();
 		$.pacMan.animations().ifPresent(anims -> anims.put(AnimKeys.PAC_MUNCHING, husbandMunching));
 		$.pacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
 		stork2D = new Stork2D($.stork, r2D);
@@ -79,7 +79,7 @@ public class MsPacManIntermissionScene3 extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		var ssmp = ((Spritesheet_MsPacMan) r2D);
+		var ssmp = ((SpritesheetMsPacMan) r2D);
 		ssmp.drawFlap(g, $.flap);
 		r2D.drawPac(g, $.msPacMan);
 		r2D.drawPac(g, $.pacMan);

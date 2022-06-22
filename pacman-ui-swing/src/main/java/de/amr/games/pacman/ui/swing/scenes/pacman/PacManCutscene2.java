@@ -39,7 +39,7 @@ import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.Pac;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
-import de.amr.games.pacman.ui.swing.rendering.pacman.Spritesheet_PacMan;
+import de.amr.games.pacman.ui.swing.rendering.pacman.SpritesheetPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
 /**
@@ -69,10 +69,10 @@ public class PacManCutscene2 extends GameScene {
 		pac.setAbsSpeed(1.15);
 		pac.show();
 
-		stretched = Spritesheet_PacMan.get().createBlinkyStretchedAnimation();
+		stretched = SpritesheetPacMan.get().createBlinkyStretchedAnimation();
 		blinky = new Ghost(Ghost.RED_GHOST, "Blinky");
 		blinky.setAnimations(new GhostAnimations(Ghost.RED_GHOST, r2D));
-		var damaged = Spritesheet_PacMan.get().createBlinkyDamagedAnimation();
+		var damaged = SpritesheetPacMan.get().createBlinkyDamagedAnimation();
 		blinky.animations().ifPresent(anims -> anims.put(ANIM_KEY_DAMAGED, damaged));
 		blinky.animations().ifPresent(anims -> anims.select(AnimKeys.GHOST_COLOR));
 		blinky.animation(AnimKeys.GHOST_COLOR).ifPresent(SpriteAnimation::restart);

@@ -31,7 +31,7 @@ import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.world.World;
-import de.amr.games.pacman.ui.swing.rendering.mspacman.Spritesheet_MsPacMan;
+import de.amr.games.pacman.ui.swing.rendering.mspacman.SpritesheetMsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.shell.Keyboard;
 
@@ -59,7 +59,7 @@ public class MsPacManCreditScene extends GameScene {
 		g.drawString("PUSH START BUTTON", t(6), t(16));
 		g.drawString("1 PLAYER ONLY", t(8), t(18));
 		g.drawString("ADDITIONAL    AT 10000", t(2), t(25));
-		BufferedImage msPacMan = Spritesheet_MsPacMan.get().rhs(1, 0);
+		BufferedImage msPacMan = SpritesheetMsPacMan.get().rhs(1, 0);
 		r2D.drawSpriteCenteredOverBox(g, msPacMan, t(13) + World.HTS, t(24) - 2);
 		g.setFont(r2D.getArcadeFont());
 		g.setFont(r2D.getArcadeFont().deriveFont(6.0f));
