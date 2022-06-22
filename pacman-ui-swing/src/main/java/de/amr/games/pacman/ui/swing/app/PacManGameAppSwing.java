@@ -28,7 +28,7 @@ import static java.awt.EventQueue.invokeLater;
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.event.GameEvents;
 import de.amr.games.pacman.ui.swing.shell.PacController;
-import de.amr.games.pacman.ui.swing.shell.PacManGameUI_Swing;
+import de.amr.games.pacman.ui.swing.shell.PacManGameUI;
 
 /**
  * The Pac-Man application.
@@ -60,7 +60,7 @@ public class PacManGameAppSwing {
 	}
 
 	private void createAndShowUI() {
-		var ui = new PacManGameUI_Swing(gameLoop, gameController, options.height);
+		var ui = new PacManGameUI(gameLoop, gameController, options.height);
 		ui.show();
 		GameEvents.addEventListener(ui);
 		gameController.setPacSteering(new PacController("Up", "Down", "Left", "Right"));

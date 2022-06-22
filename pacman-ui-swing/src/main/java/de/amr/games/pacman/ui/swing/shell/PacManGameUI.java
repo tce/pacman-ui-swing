@@ -78,11 +78,19 @@ import de.amr.games.pacman.ui.swing.sound.PacManGameSounds;
  * 
  * @author Armin Reichert
  */
-public class PacManGameUI_Swing implements GameEventAdapter {
+public class PacManGameUI implements GameEventAdapter {
 
 	private static final Logger logger = LogManager.getFormatterLogger();
 
-	public static boolean debugDraw = true;
+	private static boolean debugDraw = false;
+
+	public static boolean isDebugDraw() {
+		return debugDraw;
+	}
+
+	public static void toggleDebugDraw() {
+		debugDraw = !debugDraw;
+	}
 
 	private final GameLoop gameLoop;
 	private final GameController gameController;
@@ -114,7 +122,7 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 
 	private GameScene currentGameScene;
 
-	public PacManGameUI_Swing(GameLoop gameLoop, GameController controller, double height) {
+	public PacManGameUI(GameLoop gameLoop, GameController controller, double height) {
 		this.gameLoop = gameLoop;
 		this.gameController = controller;
 		this.unscaledSize = ArcadeWorld.MODELSIZE;
@@ -259,7 +267,7 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 		}
 
 		else if (Keyboard.keyPressed(MOD_CTRL, "D")) {
-			debugDraw = !debugDraw;
+			toggleDebugDraw();
 			logger.info("UI debug mode is %s", debugDraw ? "on" : "off");
 		}
 
