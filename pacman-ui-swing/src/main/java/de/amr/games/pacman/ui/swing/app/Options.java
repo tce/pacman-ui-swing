@@ -24,20 +24,14 @@ SOFTWARE.
 package de.amr.games.pacman.ui.swing.app;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Function;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
+import de.amr.games.pacman.lib.OptionParser;
 import de.amr.games.pacman.model.common.GameVariant;
 
 /**
  * @author Armin Reichert
  */
-class Options {
-
-	private static final Logger logger = LogManager.getFormatterLogger();
+class Options extends OptionParser {
 
 	//@formatter:off
 	private static final String OPT_HEIGHT           = "-height";
@@ -45,7 +39,12 @@ class Options {
 	private static final String OPT_VARIANT_PACMAN   = "-pacman";
 	//@formatter:on
 
-	private static final List<String> ALL_OPTIONS = List.of(OPT_HEIGHT, OPT_VARIANT_MSPACMAN, OPT_VARIANT_PACMAN);
+	private List<String> optionNames = List.of(OPT_HEIGHT, OPT_VARIANT_MSPACMAN, OPT_VARIANT_PACMAN);
+
+	@Override
+	protected List<String> options() {
+		return optionNames;
+	}
 
 	public double height = 576;
 	public GameVariant gameVariant = GameVariant.PACMAN;
@@ -60,37 +59,6 @@ class Options {
 			option0(args, OPT_VARIANT_PACMAN, Options::convertGameVariant).ifPresent(value -> gameVariant = value);
 			++i;
 		}
-	}
-
-	private <T> Optional<T> option1(List<String> args, String name, Function<String, T> fnConvert) {
-		if (name.equals(args.get(i))) {
-			if (i + 1 == args.size() || ALL_OPTIONS.contains(args.get(i + 1))) {
-				logger.error("!!! Error: missing value for parameter '%s'.", name);
-			} else {
-				++i;
-				try {
-					T value = fnConvert.apply(args.get(i));
-					logger.info("Found parameter %s = %s", name, value);
-					return Optional.ofNullable(value);
-				} catch (Exception x) {
-					logger.error("!!! Error: '%s' is no legal value for parameter '%s'.", args.get(i), name);
-				}
-			}
-		}
-		return Optional.empty();
-	}
-
-	private <T> Optional<T> option0(List<String> args, String name, Function<String, T> fnConvert) {
-		if (name.equals(args.get(i))) {
-			logger.info("Found parameter %s", name);
-			try {
-				T value = fnConvert.apply(name);
-				return Optional.ofNullable(value);
-			} catch (Exception x) {
-				logger.error("!!! Error: '%s' is no legal parameter.", name);
-			}
-		}
-		return Optional.empty();
 	}
 
 	private static GameVariant convertGameVariant(String s) {
