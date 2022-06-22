@@ -35,24 +35,22 @@ class Options extends OptionParser {
 
 	private static final String OPT_HEIGHT = "-height";
 
-	private List<String> optionNames = List.of(OPT_HEIGHT, OPT_VARIANT_MSPACMAN, OPT_VARIANT_PACMAN);
+	private static final List<String> OPTION_NAMES = List.of(OPT_HEIGHT, OPT_VARIANT_MSPACMAN, OPT_VARIANT_PACMAN);
 
 	@Override
 	protected List<String> options() {
-		return optionNames;
+		return OPTION_NAMES;
 	}
 
 	public double height = 576;
 	public GameVariant gameVariant = GameVariant.PACMAN;
 
-	private int i;
-
 	public Options(List<String> args) {
 		i = 0;
 		while (i < args.size()) {
-			option1(args, OPT_HEIGHT, Double::valueOf).ifPresent(value -> height = value);
-			option0(args, OPT_VARIANT_MSPACMAN, OptionParser::convertGameVariant).ifPresent(value -> gameVariant = value);
-			option0(args, OPT_VARIANT_PACMAN, OptionParser::convertGameVariant).ifPresent(value -> gameVariant = value);
+			height = optNameValue(args, OPT_HEIGHT, Double::valueOf).orElse(height);
+			gameVariant = optName(args, OPT_VARIANT_MSPACMAN, OptionParser::convertGameVariant).orElse(gameVariant);
+			gameVariant = optName(args, OPT_VARIANT_PACMAN, OptionParser::convertGameVariant).orElse(gameVariant);
 			++i;
 		}
 	}
