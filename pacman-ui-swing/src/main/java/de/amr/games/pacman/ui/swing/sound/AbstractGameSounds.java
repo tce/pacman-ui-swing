@@ -36,6 +36,7 @@ import javax.sound.sampled.Clip;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import de.amr.games.pacman.model.common.GameSound;
 import de.amr.games.pacman.model.common.GameSounds;
 
 /**

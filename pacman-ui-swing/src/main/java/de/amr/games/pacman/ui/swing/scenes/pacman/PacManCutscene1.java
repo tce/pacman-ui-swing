@@ -29,6 +29,7 @@ import static de.amr.games.pacman.lib.V2i.v;
 import java.awt.Graphics2D;
 
 import de.amr.games.pacman.lib.Direction;
+import de.amr.games.pacman.lib.animation.SpriteAnimation;
 import de.amr.games.pacman.model.common.GameSound;
 import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.model.common.actors.Ghost;
@@ -43,6 +44,8 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
  */
 public class PacManCutscene1 extends GameScene {
 
+	private static final String ANIMKEY_BIG_PAC = "big";
+
 	private int initialDelay;
 	private int frame;
 	private Pac pac;
@@ -55,9 +58,10 @@ public class PacManCutscene1 extends GameScene {
 
 		pac = new Pac("Pac-Man");
 		pac.setAnimations(new PacAnimations(r2D));
-		pac.animations().get().put("pac-anim-big", ((Spritesheet_PacMan) r2D).createBigPacManMunchingAnimation());
-		pac.animations().get().select(AnimKeys.PAC_MUNCHING);
-		pac.animation(AnimKeys.PAC_MUNCHING).get().restart();
+		var bigPacAnim = Spritesheet_PacMan.get().createBigPacManMunchingAnimation();
+		pac.animations().ifPresent(anims -> anims.put(ANIMKEY_BIG_PAC, bigPacAnim));
+		pac.animations().ifPresent(anims -> anims.select(AnimKeys.PAC_MUNCHING));
+		pac.animation(AnimKeys.PAC_MUNCHING).ifPresent(SpriteAnimation::restart);
 
 		pac.placeAt(v(29, 20), 0, 0);
 		pac.setMoveDir(Direction.LEFT);
@@ -66,8 +70,8 @@ public class PacManCutscene1 extends GameScene {
 
 		blinky = new Ghost(Ghost.RED_GHOST, "Blinky");
 		blinky.setAnimations(new GhostAnimations(Ghost.RED_GHOST, r2D));
-		blinky.animations().get().select(AnimKeys.GHOST_COLOR);
-		blinky.animation(AnimKeys.GHOST_COLOR).get().restart();
+		blinky.animations().ifPresent(anims -> anims.select(AnimKeys.GHOST_COLOR));
+		blinky.animation(AnimKeys.GHOST_COLOR).ifPresent(SpriteAnimation::restart);
 		blinky.placeAt(v(32, 20), 0, 0);
 		blinky.setBothDirs(Direction.LEFT);
 		blinky.setAbsSpeed(1.3);
@@ -86,14 +90,14 @@ public class PacManCutscene1 extends GameScene {
 		} else if (frame == 260) {
 			blinky.placeAt(v(-2, 20), 4, 0);
 			blinky.setBothDirs(Direction.RIGHT);
-			blinky.animations().get().select(AnimKeys.GHOST_BLUE);
-			blinky.animations().get().selectedAnimation().restart();
+			blinky.animations().ifPresent(anims -> anims.select(AnimKeys.GHOST_BLUE));
+			blinky.animations().ifPresent(anims -> anims.selectedAnimation().restart());
 			blinky.setAbsSpeed(0.75);
 		} else if (frame == 400) {
 			pac.placeAt(v(-3, 19), 0, 0);
 			pac.setMoveDir(Direction.RIGHT);
-			pac.animations().get().select("pac-anim-big");
-			pac.animations().get().selectedAnimation().restart();
+			pac.animations().ifPresent(anims -> anims.select(ANIMKEY_BIG_PAC));
+			pac.animations().ifPresent(anims -> anims.selectedAnimation().restart());
 		} else if (frame == 632) {
 			gameController.state().timer().expire();
 			return;

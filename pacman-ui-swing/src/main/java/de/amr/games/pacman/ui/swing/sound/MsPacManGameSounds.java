@@ -27,6 +27,8 @@ package de.amr.games.pacman.ui.swing.sound;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import de.amr.games.pacman.model.common.GameSound;
+
 /**
  * @author Armin Reichert
  *

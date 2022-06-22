@@ -63,7 +63,7 @@ public class MsPacManIntroScene extends GameScene {
 		$.msPacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
 		for (var ghost : $.ghosts) {
 			ghost.setAnimations(new GhostAnimations(ghost.id, r2D));
-			ghost.animations().get().ensureRunning();
+			ghost.animations().ifPresent(SpriteAnimations::ensureRunning);
 		}
 	}
 
@@ -123,7 +123,8 @@ public class MsPacManIntroScene extends GameScene {
 		long time = $.lightsTimer.tick();
 		int light = (int) (time / 2) % (numDotsX / 2);
 		for (int dot = 0; dot < 2 * (numDotsX + numDotsY); ++dot) {
-			int x = 0, y = 0;
+			int x = 0;
+			int y = 0;
 			if (dot <= numDotsX) {
 				x = dot;
 			} else if (dot < numDotsX + numDotsY) {
