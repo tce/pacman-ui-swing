@@ -32,11 +32,9 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.Stroke;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.common.GameState;
-import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
@@ -90,22 +88,12 @@ public class DebugDraw {
 
 	public static void drawMazeStructure(Graphics2D g, GameModel game) {
 		Color dark = new Color(80, 80, 80);
-		Stroke thin = new BasicStroke(0.5f);
 		for (int x = 0; x < game.level.world.numCols(); ++x) {
 			for (int y = 0; y < game.level.world.numRows(); ++y) {
 				V2i tile = new V2i(x, y);
 				if (game.level.world.isIntersection(tile)) {
 					g.setColor(dark);
 					g.drawOval(t(x), t(y), TS, TS);
-					for (Direction dir : Direction.values()) {
-						V2i neighbor = tile.plus(dir.vec);
-						if (game.level.world.isWall(neighbor)) {
-							continue;
-						}
-						g.setColor(dark);
-						g.setStroke(thin);
-//						g.drawLine(t(x) + HTS, t(y) + HTS, t(neighbor.x) + HTS, t(neighbor.y) + HTS);
-					}
 				}
 			}
 		}
