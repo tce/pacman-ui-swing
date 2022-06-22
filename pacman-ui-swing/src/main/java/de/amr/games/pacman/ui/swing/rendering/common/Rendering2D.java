@@ -212,7 +212,7 @@ public interface Rendering2D {
 		// LOL :-)
 		int[] x = new int[1];
 		x[0] = rightX;
-		game.levelCounter.symbols().forEach(symbol -> {
+		game.levelCounter.symbolStream().forEach(symbol -> {
 			var sprite = getBonusSymbolSprite(symbol);
 			drawSpriteCenteredOverBox(g, sprite, x[0], y + World.HTS);
 			x[0] -= t(2);
