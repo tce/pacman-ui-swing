@@ -33,11 +33,7 @@ import de.amr.games.pacman.model.common.GameVariant;
  */
 class Options extends OptionParser {
 
-	//@formatter:off
-	private static final String OPT_HEIGHT           = "-height";
-	private static final String OPT_VARIANT_MSPACMAN = "-mspacman";
-	private static final String OPT_VARIANT_PACMAN   = "-pacman";
-	//@formatter:on
+	private static final String OPT_HEIGHT = "-height";
 
 	private List<String> optionNames = List.of(OPT_HEIGHT, OPT_VARIANT_MSPACMAN, OPT_VARIANT_PACMAN);
 
@@ -55,17 +51,9 @@ class Options extends OptionParser {
 		i = 0;
 		while (i < args.size()) {
 			option1(args, OPT_HEIGHT, Double::valueOf).ifPresent(value -> height = value);
-			option0(args, OPT_VARIANT_MSPACMAN, Options::convertGameVariant).ifPresent(value -> gameVariant = value);
-			option0(args, OPT_VARIANT_PACMAN, Options::convertGameVariant).ifPresent(value -> gameVariant = value);
+			option0(args, OPT_VARIANT_MSPACMAN, OptionParser::convertGameVariant).ifPresent(value -> gameVariant = value);
+			option0(args, OPT_VARIANT_PACMAN, OptionParser::convertGameVariant).ifPresent(value -> gameVariant = value);
 			++i;
 		}
-	}
-
-	private static GameVariant convertGameVariant(String s) {
-		return switch (s) {
-		case OPT_VARIANT_MSPACMAN -> GameVariant.MS_PACMAN;
-		case OPT_VARIANT_PACMAN -> GameVariant.PACMAN;
-		default -> null;
-		};
 	}
 }
