@@ -122,13 +122,11 @@ public interface Rendering2D {
 	}
 
 	default void drawPac(Graphics2D g, Pac pac) {
-		drawEntity(g, pac, (BufferedImage) pac.animations().get().current(pac));
+		pac.animations().ifPresent(anims -> drawEntity(g, pac, (BufferedImage) anims.current(pac)));
 	}
 
 	default void drawGhost(Graphics2D g, Ghost ghost) {
-		ghost.animations().ifPresent(anim -> {
-			drawEntity(g, ghost, (BufferedImage) anim.current(ghost));
-		});
+		ghost.animations().ifPresent(anims -> drawEntity(g, ghost, (BufferedImage) anims.current(ghost)));
 	}
 
 	default void drawBonus(Graphics2D g, Entity bonusEntity) {
@@ -157,9 +155,7 @@ public interface Rendering2D {
 
 	default void drawDarkTiles(Graphics2D g, Stream<V2i> tiles, Predicate<V2i> fnDark) {
 		g.setColor(Color.BLACK);
-		tiles.filter(fnDark).forEach(tile -> {
-			g.fillRect(tile.x * TS, tile.y * TS, TS, TS);
-		});
+		tiles.filter(fnDark).forEach(tile -> g.fillRect(tile.x * TS, tile.y * TS, TS, TS));
 	}
 
 	default void drawCredit(Graphics2D g, int credit) {
@@ -195,7 +191,8 @@ public interface Rendering2D {
 	}
 
 	default void drawLivesCounter(Graphics2D g, GameModel game) {
-		int x = t(2), y = t(34);
+		int x = t(2);
+		int y = t(34);
 		int maxLivesDisplayed = 5;
 		for (int i = 0; i < Math.min(game.lives, maxLivesDisplayed); ++i) {
 			g.drawImage(getLifeSprite(), x + t(2 * i), y, null);
@@ -208,7 +205,8 @@ public interface Rendering2D {
 	}
 
 	default void drawLevelCounter(Graphics2D g, GameModel game) {
-		int rightX = t(24), y = t(34);
+		int rightX = t(24);
+		int y = t(34);
 		// LOL :-)
 		int[] x = new int[1];
 		x[0] = rightX;

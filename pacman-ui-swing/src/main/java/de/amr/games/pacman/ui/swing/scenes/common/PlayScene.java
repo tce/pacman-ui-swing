@@ -82,8 +82,9 @@ public class PlayScene extends GameScene {
 	}
 
 	private void drawMaze(Graphics2D g) {
-		if (game.mazeFlashingAnimation().isPresent() && game.mazeFlashingAnimation().get().isRunning()) {
-			g.drawImage((Image) game.mazeFlashingAnimation().get().frame(), 0, t(3), null);
+		var mazeFlashing = game.mazeFlashingAnimation();
+		if (mazeFlashing.isPresent() && mazeFlashing.get().isRunning()) {
+			g.drawImage((Image) mazeFlashing.get().frame(), 0, t(3), null);
 		} else {
 			r2D.drawFullMaze(g, r2D.mazeNumber(game.level.number), 0, t(3));
 			r2D.drawDarkTiles(g, game.level.world.tiles(), tile -> game.level.world.containsEatenFood(tile)
