@@ -22,23 +22,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package de.amr.games.pacman.ui.swing.scenes.mspacman;
+package de.amr.games.pacman.ui.swing.scenes.pacman;
 
 import static de.amr.games.pacman.model.common.world.World.t;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.model.common.actors.Ghost;
-import de.amr.games.pacman.model.common.world.World;
-import de.amr.games.pacman.ui.swing.rendering.mspacman.Spritesheet_MsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.shell.Keyboard;
 
 /**
  * @author Armin Reichert
  */
-public class MsPacMan_CreditScene extends GameScene {
+public class PacManCreditScene extends GameScene {
 
 	@Override
 	public void update() {
@@ -56,17 +54,21 @@ public class MsPacMan_CreditScene extends GameScene {
 
 		g.setFont(r2D.getArcadeFont());
 		g.setColor(r2D.getGhostColor(Ghost.ORANGE_GHOST));
-		g.drawString("PUSH START BUTTON", t(6), t(16));
-		g.drawString("1 PLAYER ONLY", t(8), t(18));
-		g.drawString("ADDITIONAL    AT 10000", t(2), t(25));
-		BufferedImage msPacMan = Spritesheet_MsPacMan.get().rhs(1, 0);
-		r2D.drawSpriteCenteredOverBox(g, msPacMan, t(13) + World.HTS, t(24) - 2);
+		g.drawString("PUSH START BUTTON", t(6), t(17));
+
+		g.setFont(r2D.getArcadeFont());
+		g.setColor(r2D.getGhostColor(Ghost.CYAN_GHOST));
+		g.drawString("1 PLAYER ONLY", t(8), t(21));
+
+		g.setFont(r2D.getArcadeFont());
+		g.setColor(new Color(255, 184, 174));
+		g.drawString("BONUS PAC-MAN FOR 10000", t(1), t(25));
+
 		g.setFont(r2D.getArcadeFont());
 		g.setFont(r2D.getArcadeFont().deriveFont(6.0f));
 		g.drawString("PTS", t(25), t(25));
 
-		r2D.drawCopyright(g, t(6), t(28));
+		r2D.drawCopyright(g, t(4), t(29));
 		r2D.drawCredit(g, game.credit);
 	}
-
 }

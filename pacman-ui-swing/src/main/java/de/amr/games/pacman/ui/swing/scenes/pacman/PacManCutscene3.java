@@ -41,7 +41,10 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 /**
  * @author Armin Reichert
  */
-public class PacMan_Cutscene1 extends GameScene {
+public class PacManCutscene3 extends GameScene {
+
+	private static final String ANIMKEY_PATCHED = "patched";
+	private static final String ANIMKEY_NAKED = "naked";
 
 	private int initialDelay;
 	private int frame;
@@ -52,26 +55,12 @@ public class PacMan_Cutscene1 extends GameScene {
 	public void init() {
 		frame = -1;
 		initialDelay = 120;
-
 		pac = new Pac("Pac-Man");
 		pac.setAnimations(new PacAnimations(r2D));
-		pac.animations().get().put("pac-anim-big", ((Spritesheet_PacMan) r2D).createBigPacManMunchingAnimation());
-		pac.animations().get().select(AnimKeys.PAC_MUNCHING);
-		pac.animation(AnimKeys.PAC_MUNCHING).get().restart();
-
-		pac.placeAt(v(29, 20), 0, 0);
-		pac.setMoveDir(Direction.LEFT);
-		pac.setAbsSpeed(1.25);
-		pac.show();
-
 		blinky = new Ghost(Ghost.RED_GHOST, "Blinky");
 		blinky.setAnimations(new GhostAnimations(Ghost.RED_GHOST, r2D));
-		blinky.animations().get().select(AnimKeys.GHOST_COLOR);
-		blinky.animation(AnimKeys.GHOST_COLOR).get().restart();
-		blinky.placeAt(v(32, 20), 0, 0);
-		blinky.setBothDirs(Direction.LEFT);
-		blinky.setAbsSpeed(1.3);
-		blinky.show();
+		blinky.animations().get().put(ANIMKEY_PATCHED, Spritesheet_PacMan.get().createBlinkyPatchedAnimation());
+		blinky.animations().get().put(ANIMKEY_NAKED, Spritesheet_PacMan.get().createBlinkyNakedAnimation());
 	}
 
 	@Override
@@ -83,18 +72,24 @@ public class PacMan_Cutscene1 extends GameScene {
 		++frame;
 		if (frame == 0) {
 			game.sounds().ifPresent(snd -> snd.loop(GameSound.INTERMISSION_1, 1));
-		} else if (frame == 260) {
-			blinky.placeAt(v(-2, 20), 4, 0);
+			pac.placeAt(v(29, 20), 0, 0);
+			pac.setMoveDir(Direction.LEFT);
+			pac.setAbsSpeed(1.25);
+			pac.show();
+			pac.animations().get().select(AnimKeys.PAC_MUNCHING);
+			pac.animation(AnimKeys.PAC_MUNCHING).get().restart();
+			blinky.placeAt(v(35, 20), 0, 0);
+			blinky.setBothDirs(Direction.LEFT);
+			blinky.setAbsSpeed(1.25);
+			blinky.show();
+			blinky.animations().get().select(ANIMKEY_PATCHED);
+			blinky.animation(ANIMKEY_PATCHED).get().restart();
+		} else if (frame == 296) {
+			blinky.placeAt(v(-1, 20), 0, 0);
 			blinky.setBothDirs(Direction.RIGHT);
-			blinky.animations().get().select(AnimKeys.GHOST_BLUE);
+			blinky.animations().get().select(ANIMKEY_NAKED);
 			blinky.animations().get().selectedAnimation().restart();
-			blinky.setAbsSpeed(0.75);
-		} else if (frame == 400) {
-			pac.placeAt(v(-3, 19), 0, 0);
-			pac.setMoveDir(Direction.RIGHT);
-			pac.animations().get().select("pac-anim-big");
-			pac.animations().get().selectedAnimation().restart();
-		} else if (frame == 632) {
+		} else if (frame == 516) {
 			gameController.state().timer().expire();
 			return;
 		}

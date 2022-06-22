@@ -25,10 +25,14 @@ SOFTWARE.
 package de.amr.games.pacman.ui.swing.scenes.pacman;
 
 import static de.amr.games.pacman.lib.V2i.v;
+import static de.amr.games.pacman.model.common.world.World.t;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.lib.Direction;
+import de.amr.games.pacman.lib.animation.SingleSpriteAnimation;
+import de.amr.games.pacman.lib.animation.SpriteAnimation;
 import de.amr.games.pacman.model.common.GameSound;
 import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.model.common.actors.Ghost;
@@ -41,26 +45,41 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 /**
  * @author Armin Reichert
  */
-public class PacMan_Cutscene3 extends GameScene {
+public class PacManCutscene2 extends GameScene {
 
-	private static final String ANIMKEY_PATCHED = "patched";
-	private static final String ANIMKEY_NAKED = "naked";
+	private static final String ANIM_KEY_DAMAGED = "damaged";
 
 	private int initialDelay;
 	private int frame;
 	private Pac pac;
 	private Ghost blinky;
+	private SingleSpriteAnimation<BufferedImage> stretched;
 
 	@Override
 	public void init() {
 		frame = -1;
 		initialDelay = 120;
+
 		pac = new Pac("Pac-Man");
 		pac.setAnimations(new PacAnimations(r2D));
+		pac.animations().ifPresent(anims -> anims.select(AnimKeys.PAC_MUNCHING));
+		pac.animation(AnimKeys.PAC_MUNCHING).ifPresent(SpriteAnimation::restart);
+		pac.placeAt(v(29, 20), 0, 0);
+		pac.setMoveDir(Direction.LEFT);
+		pac.setAbsSpeed(1.15);
+		pac.show();
+
+		stretched = Spritesheet_PacMan.get().createBlinkyStretchedAnimation();
 		blinky = new Ghost(Ghost.RED_GHOST, "Blinky");
 		blinky.setAnimations(new GhostAnimations(Ghost.RED_GHOST, r2D));
-		blinky.animations().get().put(ANIMKEY_PATCHED, Spritesheet_PacMan.get().createBlinkyPatchedAnimation());
-		blinky.animations().get().put(ANIMKEY_NAKED, Spritesheet_PacMan.get().createBlinkyNakedAnimation());
+		var damaged = Spritesheet_PacMan.get().createBlinkyDamagedAnimation();
+		blinky.animations().ifPresent(anims -> anims.put(ANIM_KEY_DAMAGED, damaged));
+		blinky.animations().ifPresent(anims -> anims.select(AnimKeys.GHOST_COLOR));
+		blinky.animation(AnimKeys.GHOST_COLOR).ifPresent(SpriteAnimation::restart);
+		blinky.placeAt(v(28, 20), 0, 0);
+		blinky.setBothDirs(Direction.LEFT);
+		blinky.setAbsSpeed(0);
+		blinky.hide();
 	}
 
 	@Override
@@ -71,25 +90,29 @@ public class PacMan_Cutscene3 extends GameScene {
 		}
 		++frame;
 		if (frame == 0) {
-			game.sounds().ifPresent(snd -> snd.loop(GameSound.INTERMISSION_1, 1));
-			pac.placeAt(v(29, 20), 0, 0);
-			pac.setMoveDir(Direction.LEFT);
-			pac.setAbsSpeed(1.25);
-			pac.show();
-			pac.animations().get().select(AnimKeys.PAC_MUNCHING);
-			pac.animation(AnimKeys.PAC_MUNCHING).get().restart();
-			blinky.placeAt(v(35, 20), 0, 0);
-			blinky.setBothDirs(Direction.LEFT);
+			game.sounds().ifPresent(snd -> snd.play(GameSound.INTERMISSION_1));
+		} else if (frame == 110) {
 			blinky.setAbsSpeed(1.25);
 			blinky.show();
-			blinky.animations().get().select(ANIMKEY_PATCHED);
-			blinky.animation(ANIMKEY_PATCHED).get().restart();
-		} else if (frame == 296) {
-			blinky.placeAt(v(-1, 20), 0, 0);
-			blinky.setBothDirs(Direction.RIGHT);
-			blinky.animations().get().select(ANIMKEY_NAKED);
-			blinky.animations().get().selectedAnimation().restart();
-		} else if (frame == 516) {
+		} else if (frame == 196) {
+			blinky.setAbsSpeed(0.17);
+			stretched.setFrameIndex(1);
+		} else if (frame == 226) {
+			stretched.setFrameIndex(2);
+		} else if (frame == 248) {
+			blinky.setAbsSpeed(0);
+			blinky.animations().ifPresent(anims -> anims.selectedAnimation().stop());
+			stretched.setFrameIndex(3);
+		} else if (frame == 328) {
+			stretched.setFrameIndex(4);
+		} else if (frame == 329) {
+			blinky.animations().ifPresent(anims -> anims.select(ANIM_KEY_DAMAGED));
+			blinky.animation(ANIM_KEY_DAMAGED).ifPresent(damaged -> damaged.setFrameIndex(0));
+		} else if (frame == 389) {
+			blinky.animation(ANIM_KEY_DAMAGED).ifPresent(damaged -> damaged.setFrameIndex(1));
+		} else if (frame == 508) {
+			stretched = null;
+		} else if (frame == 509) {
 			gameController.state().timer().expire();
 			return;
 		}
@@ -99,7 +122,10 @@ public class PacMan_Cutscene3 extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		r2D.drawPac(g, pac);
+		if (stretched != null) {
+			r2D.drawSprite(g, stretched.frame(), t(14), t(19) + 3);
+		}
 		r2D.drawGhost(g, blinky);
+		r2D.drawPac(g, pac);
 	}
 }

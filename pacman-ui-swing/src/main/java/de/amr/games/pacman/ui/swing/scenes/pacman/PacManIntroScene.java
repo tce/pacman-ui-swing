@@ -50,7 +50,7 @@ import de.amr.games.pacman.ui.swing.shell.Keyboard;
  * 
  * @author Armin Reichert
  */
-public class PacMan_IntroScene extends GameScene {
+public class PacManIntroScene extends GameScene {
 
 	private IntroController sceneController;
 	private IntroController.Context $;

@@ -26,43 +26,53 @@ package de.amr.games.pacman.ui.swing.scenes.mspacman;
 import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
-import de.amr.games.pacman.controller.mspacman.Intermission2Controller;
+import de.amr.games.pacman.controller.mspacman.Intermission1Controller;
 import de.amr.games.pacman.lib.animation.SpriteAnimations;
 import de.amr.games.pacman.model.common.actors.AnimKeys;
+import de.amr.games.pacman.model.common.actors.Ghost;
+import de.amr.games.pacman.ui.swing.entity.mspacman.Heart2D;
+import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.Spritesheet_MsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
 /**
- * Intermission scene 2: "The chase".
+ * Intermission scene 1: "They meet".
  * <p>
- * Pac-Man and Ms. Pac-Man chase each other across the screen over and over. After three turns, they both rapidly run
- * from left to right and right to left. (Played after round 5)
+ * Pac-Man leads Inky and Ms. Pac-Man leads Pinky. Soon, the two Pac-Men are about to collide, they quickly move
+ * upwards, causing Inky and Pinky to collide and vanish. Finally, Pac-Man and Ms. Pac-Man face each other at the top of
+ * the screen and a big pink heart appears above them. (Played after round 2)
  * 
  * @author Armin Reichert
  */
-public class MsPacMan_IntermissionScene2 extends GameScene {
+public class MsPacManIntermissionScene1 extends GameScene {
 
-	private Intermission2Controller sceneController;
-	private Intermission2Controller.Context $;
+	private Intermission1Controller sceneController;
+	private Intermission1Controller.Context $;
+	private Heart2D heart2D;
 
 	@Override
 	public void setContext(GameController gameController) {
 		super.setContext(gameController);
-		sceneController = new Intermission2Controller(gameController);
+		sceneController = new Intermission1Controller(gameController);
 		$ = sceneController.context();
 	}
 
 	@Override
 	public void init() {
-		sceneController.restartInInitialState(Intermission2Controller.State.FLAP);
+		sceneController.restartInInitialState(Intermission1Controller.State.FLAP);
+
 		$.flap.animation = Spritesheet_MsPacMan.get().createFlapAnimation();
-		$.msPacMan.setAnimations(new PacAnimations(r2D));
-		$.msPacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
+		$.msPac.setAnimations(new PacAnimations(r2D));
+		$.msPac.animations().ifPresent(SpriteAnimations::ensureRunning);
 		$.pacMan.setAnimations(new PacAnimations(r2D));
-		$.pacMan.animations().get().put(AnimKeys.PAC_MUNCHING,
-				Spritesheet_MsPacMan.get().createHusbandMunchingAnimations());
-		$.pacMan.animations().get().ensureRunning();
+		var husbandMunching = Spritesheet_MsPacMan.get().createHusbandMunchingAnimations();
+		$.pacMan.animations().ifPresent(anims -> anims.put(AnimKeys.PAC_MUNCHING, husbandMunching));
+		$.pacMan.animations().ifPresent(anims -> anims.selectedAnimation().ensureRunning());
+		$.inky.setAnimations(new GhostAnimations(Ghost.CYAN_GHOST, r2D));
+		$.pinky.setAnimations(new GhostAnimations(Ghost.PINK_GHOST, r2D));
+		heart2D = new Heart2D($.heart);
+		heart2D.setImage(Spritesheet_MsPacMan.get().getHeart());
 	}
 
 	@Override
@@ -73,7 +83,10 @@ public class MsPacMan_IntermissionScene2 extends GameScene {
 	@Override
 	public void render(Graphics2D g) {
 		((Spritesheet_MsPacMan) r2D).drawFlap(g, $.flap);
-		r2D.drawPac(g, $.msPacMan);
+		r2D.drawPac(g, $.msPac);
 		r2D.drawPac(g, $.pacMan);
+		r2D.drawGhost(g, $.inky);
+		r2D.drawGhost(g, $.pinky);
+		heart2D.render(g);
 	}
 }

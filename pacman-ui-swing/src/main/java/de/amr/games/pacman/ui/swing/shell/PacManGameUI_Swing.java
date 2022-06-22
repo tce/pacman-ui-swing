@@ -60,16 +60,16 @@ import de.amr.games.pacman.ui.swing.app.GameLoop;
 import de.amr.games.pacman.ui.swing.lib.U;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.scenes.common.PlayScene;
-import de.amr.games.pacman.ui.swing.scenes.mspacman.MsPacMan_CreditScene;
-import de.amr.games.pacman.ui.swing.scenes.mspacman.MsPacMan_IntermissionScene1;
-import de.amr.games.pacman.ui.swing.scenes.mspacman.MsPacMan_IntermissionScene2;
-import de.amr.games.pacman.ui.swing.scenes.mspacman.MsPacMan_IntermissionScene3;
-import de.amr.games.pacman.ui.swing.scenes.mspacman.MsPacMan_IntroScene;
-import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_CreditScene;
-import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_Cutscene1;
-import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_Cutscene2;
-import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_Cutscene3;
-import de.amr.games.pacman.ui.swing.scenes.pacman.PacMan_IntroScene;
+import de.amr.games.pacman.ui.swing.scenes.mspacman.MsPacManCreditScene;
+import de.amr.games.pacman.ui.swing.scenes.mspacman.MsPacManIntermissionScene1;
+import de.amr.games.pacman.ui.swing.scenes.mspacman.MsPacManIntermissionScene2;
+import de.amr.games.pacman.ui.swing.scenes.mspacman.MsPacManIntermissionScene3;
+import de.amr.games.pacman.ui.swing.scenes.mspacman.MsPacManIntroScene;
+import de.amr.games.pacman.ui.swing.scenes.pacman.PacManCreditScene;
+import de.amr.games.pacman.ui.swing.scenes.pacman.PacManCutscene1;
+import de.amr.games.pacman.ui.swing.scenes.pacman.PacManCutscene2;
+import de.amr.games.pacman.ui.swing.scenes.pacman.PacManCutscene3;
+import de.amr.games.pacman.ui.swing.scenes.pacman.PacManIntroScene;
 import de.amr.games.pacman.ui.swing.sound.MsPacManGameSounds;
 import de.amr.games.pacman.ui.swing.sound.PacManGameSounds;
 
@@ -95,20 +95,20 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 	private final FlashMessageDisplay flashMessageDisplay;
 
 	private final List<GameScene> gameScenesPacMan = List.of( //
-			new PacMan_IntroScene(), //
-			new PacMan_CreditScene(), //
-			new PacMan_Cutscene1(), //
-			new PacMan_Cutscene2(), //
-			new PacMan_Cutscene3(), //
+			new PacManIntroScene(), //
+			new PacManCreditScene(), //
+			new PacManCutscene1(), //
+			new PacManCutscene2(), //
+			new PacManCutscene3(), //
 			new PlayScene() //
 	);
 
 	private final List<GameScene> gameScenesMsPacMan = List.of( //
-			new MsPacMan_IntroScene(), //
-			new MsPacMan_CreditScene(), //
-			new MsPacMan_IntermissionScene1(), //
-			new MsPacMan_IntermissionScene2(), //
-			new MsPacMan_IntermissionScene3(), //
+			new MsPacManIntroScene(), //
+			new MsPacManCreditScene(), //
+			new MsPacManIntermissionScene1(), //
+			new MsPacManIntermissionScene2(), //
+			new MsPacManIntermissionScene3(), //
 			new PlayScene()//
 	);
 

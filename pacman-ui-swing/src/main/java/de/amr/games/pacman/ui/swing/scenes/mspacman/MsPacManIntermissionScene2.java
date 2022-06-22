@@ -26,41 +26,36 @@ package de.amr.games.pacman.ui.swing.scenes.mspacman;
 import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
-import de.amr.games.pacman.controller.mspacman.Intermission3Controller;
+import de.amr.games.pacman.controller.mspacman.Intermission2Controller;
 import de.amr.games.pacman.lib.animation.SpriteAnimations;
 import de.amr.games.pacman.model.common.actors.AnimKeys;
-import de.amr.games.pacman.ui.swing.entity.mspacman.Stork2D;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.Spritesheet_MsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 
 /**
- * Intermission scene 3: "Junior".
- * 
+ * Intermission scene 2: "The chase".
  * <p>
- * Pac-Man and Ms. Pac-Man gradually wait for a stork, who flies overhead with a little blue bundle. The stork drops the
- * bundle, which falls to the ground in front of Pac-Man and Ms. Pac-Man, and finally opens up to reveal a tiny Pac-Man.
- * (Played after rounds 9, 13, and 17)
+ * Pac-Man and Ms. Pac-Man chase each other across the screen over and over. After three turns, they both rapidly run
+ * from left to right and right to left. (Played after round 5)
  * 
  * @author Armin Reichert
  */
-public class MsPacMan_IntermissionScene3 extends GameScene {
+public class MsPacManIntermissionScene2 extends GameScene {
 
-	private Intermission3Controller sceneController;
-	private Intermission3Controller.Context $;
-	private Stork2D stork2D;
+	private Intermission2Controller sceneController;
+	private Intermission2Controller.Context $;
 
 	@Override
 	public void setContext(GameController gameController) {
 		super.setContext(gameController);
-		sceneController = new Intermission3Controller(gameController);
+		sceneController = new Intermission2Controller(gameController);
 		$ = sceneController.context();
 	}
 
 	@Override
 	public void init() {
-		sceneController.restartInInitialState(Intermission3Controller.State.FLAP);
-
+		sceneController.restartInInitialState(Intermission2Controller.State.FLAP);
 		$.flap.animation = Spritesheet_MsPacMan.get().createFlapAnimation();
 		$.msPacMan.setAnimations(new PacAnimations(r2D));
 		$.msPacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
@@ -68,8 +63,6 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 		$.pacMan.animations().get().put(AnimKeys.PAC_MUNCHING,
 				Spritesheet_MsPacMan.get().createHusbandMunchingAnimations());
 		$.pacMan.animations().get().ensureRunning();
-		stork2D = new Stork2D($.stork, r2D);
-		stork2D.animation.restart();
 	}
 
 	@Override
@@ -79,11 +72,8 @@ public class MsPacMan_IntermissionScene3 extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		var ssmp = ((Spritesheet_MsPacMan) r2D);
-		ssmp.drawFlap(g, $.flap);
+		((Spritesheet_MsPacMan) r2D).drawFlap(g, $.flap);
 		r2D.drawPac(g, $.msPacMan);
 		r2D.drawPac(g, $.pacMan);
-		stork2D.render(g); // TODO
-		r2D.drawEntity(g, $.bag, $.bagOpen ? ssmp.getJunior() : ssmp.getBlueBag());
 	}
 }
