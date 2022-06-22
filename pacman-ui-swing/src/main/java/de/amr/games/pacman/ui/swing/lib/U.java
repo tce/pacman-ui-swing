@@ -36,6 +36,9 @@ import javax.swing.Timer;
  */
 public class U {
 
+	private U() {
+	}
+
 	public static URL url(String path) {
 		return U.class.getResource(path);
 	}

@@ -46,6 +46,9 @@ import de.amr.games.pacman.model.common.GameModel;
  */
 public class DebugDraw {
 
+	private DebugDraw() {
+	}
+
 	public static void drawPlaySceneDebugInfo(Graphics2D g, GameController controller) {
 		GameModel game = controller.game();
 		final Color[] GHOST_COLORS = { Color.RED, Color.PINK, Color.CYAN, Color.ORANGE };
