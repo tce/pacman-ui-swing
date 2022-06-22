@@ -89,20 +89,22 @@ public class DebugDraw {
 	}
 
 	public static void drawMazeStructure(Graphics2D g, GameModel game) {
-		Color dark = new Color(80, 80, 80, 200);
-		Stroke thin = new BasicStroke(0.1f);
-		g.setColor(dark);
-		g.setStroke(thin);
+		Color dark = new Color(80, 80, 80);
+		Stroke thin = new BasicStroke(0.5f);
 		for (int x = 0; x < game.level.world.numCols(); ++x) {
 			for (int y = 0; y < game.level.world.numRows(); ++y) {
 				V2i tile = new V2i(x, y);
 				if (game.level.world.isIntersection(tile)) {
+					g.setColor(dark);
+					g.drawOval(t(x), t(y), TS, TS);
 					for (Direction dir : Direction.values()) {
 						V2i neighbor = tile.plus(dir.vec);
 						if (game.level.world.isWall(neighbor)) {
 							continue;
 						}
-						g.drawLine(t(x) + HTS, t(y) + HTS, t(neighbor.x) + HTS, t(neighbor.y) + HTS);
+						g.setColor(dark);
+						g.setStroke(thin);
+//						g.drawLine(t(x) + HTS, t(y) + HTS, t(neighbor.x) + HTS, t(neighbor.y) + HTS);
 					}
 				}
 			}

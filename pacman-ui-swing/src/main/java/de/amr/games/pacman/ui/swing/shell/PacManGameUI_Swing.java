@@ -82,7 +82,7 @@ public class PacManGameUI_Swing implements GameEventAdapter {
 
 	private static final Logger logger = LogManager.getFormatterLogger();
 
-	public static boolean debugDraw;
+	public static boolean debugDraw = true;
 
 	private final GameLoop gameLoop;
 	private final GameController gameController;
