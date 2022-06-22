@@ -116,26 +116,31 @@ public class AbstractGameSounds implements GameSounds {
 		return getClip(sound).isRunning();
 	}
 
+	@Override
 	public void ensurePlaying(GameSound sound) {
 		if (!isPlaying(sound)) {
 			play(sound);
 		}
 	}
 
+	@Override
 	public void play(GameSound sound) {
 		startClip(getClip(sound));
 	}
 
+	@Override
 	public void ensureLoop(GameSound sound, int repetitions) {
 		if (!isPlaying(sound)) {
 			loop(sound, repetitions);
 		}
 	}
 
+	@Override
 	public void loop(GameSound sound, int repetitions) {
 		loopClip(getClip(sound), repetitions);
 	}
 
+	@Override
 	public void stop(GameSound sound) {
 		getClip(sound).stop();
 	}
