@@ -157,7 +157,6 @@ public class AbstractGameSounds implements GameSounds {
 		case 3 -> GameSound.SIREN_4;
 		default -> throw new GameSoundException("Illegal siren index: %d", sirenIndex);
 		};
-//		getClip(siren).setVolume(0.2);
 		loop(siren, Clip.LOOP_CONTINUOUSLY);
 		logger.info("Siren %s started", siren);
 	}

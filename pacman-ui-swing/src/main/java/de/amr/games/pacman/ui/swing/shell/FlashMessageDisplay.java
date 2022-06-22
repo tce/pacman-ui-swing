@@ -64,16 +64,14 @@ public class FlashMessageDisplay {
 	}
 
 	public void update() {
-		FlashMessage message = flashMessageQ.peek();
-		if (message != null) {
-			if (message.hasExpired()) {
-				flashMessageQ.remove();
-			}
+		var message = flashMessageQ.peek();
+		if (message != null && message.hasExpired()) {
+			flashMessageQ.remove();
 		}
 	}
 
 	public void render(Graphics2D g) {
-		FlashMessage message = flashMessageQ.peek();
+		var message = flashMessageQ.peek();
 		if (message != null) {
 			double t = ((double) System.currentTimeMillis() - message.createdAt) / message.displayTimeMillis;
 			double alpha = Math.abs(Math.cos(0.5 * Math.PI * t));

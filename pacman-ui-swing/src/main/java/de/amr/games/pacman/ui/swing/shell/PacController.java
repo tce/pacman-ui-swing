@@ -35,7 +35,10 @@ import de.amr.games.pacman.model.common.actors.Creature;
  */
 public class PacController implements Consumer<Creature> {
 
-	private final String up, down, left, right;
+	private String up;
+	private String down;
+	private String left;
+	private String right;
 
 	public PacController(String up, String down, String left, String right) {
 		this.up = up;

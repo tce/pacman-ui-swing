@@ -31,6 +31,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.lib.Direction;
+import de.amr.games.pacman.lib.animation.SingleSpriteAnimation;
 import de.amr.games.pacman.lib.animation.SpriteAnimation;
 import de.amr.games.pacman.model.common.GameSound;
 import de.amr.games.pacman.model.common.actors.AnimKeys;
@@ -47,12 +48,12 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 public class PacMan_Cutscene2 extends GameScene {
 
 	private static final String ANIM_KEY_DAMAGED = "damaged";
-	private static final String ANIM_KEY_STRETCHED = "streched";
 
 	private int initialDelay;
 	private int frame;
 	private Pac pac;
 	private Ghost blinky;
+	private SingleSpriteAnimation<BufferedImage> stretched;
 
 	@Override
 	public void init() {
@@ -68,12 +69,13 @@ public class PacMan_Cutscene2 extends GameScene {
 		pac.setAbsSpeed(1.15);
 		pac.show();
 
+		stretched = Spritesheet_PacMan.get().createBlinkyStretchedAnimation();
 		blinky = new Ghost(Ghost.RED_GHOST, "Blinky");
 		blinky.setAnimations(new GhostAnimations(Ghost.RED_GHOST, r2D));
-		blinky.animations().get().put(ANIM_KEY_STRETCHED, ((Spritesheet_PacMan) r2D).createBlinkyStretchedAnimation());
-		blinky.animations().get().put(ANIM_KEY_DAMAGED, ((Spritesheet_PacMan) r2D).createBlinkyDamagedAnimation());
-		blinky.animations().get().select(AnimKeys.GHOST_COLOR);
-		blinky.animation(AnimKeys.GHOST_COLOR).get().restart();
+		var damaged = Spritesheet_PacMan.get().createBlinkyDamagedAnimation();
+		blinky.animations().ifPresent(anims -> anims.put(ANIM_KEY_DAMAGED, damaged));
+		blinky.animations().ifPresent(anims -> anims.select(AnimKeys.GHOST_COLOR));
+		blinky.animation(AnimKeys.GHOST_COLOR).ifPresent(SpriteAnimation::restart);
 		blinky.placeAt(v(28, 20), 0, 0);
 		blinky.setBothDirs(Direction.LEFT);
 		blinky.setAbsSpeed(0);
@@ -86,8 +88,6 @@ public class PacMan_Cutscene2 extends GameScene {
 			--initialDelay;
 			return;
 		}
-		var stretched = blinky.animation(ANIM_KEY_STRETCHED).orElse(null);
-		var damaged = blinky.animation(ANIM_KEY_DAMAGED).orElse(null);
 		++frame;
 		if (frame == 0) {
 			game.sounds().ifPresent(snd -> snd.play(GameSound.INTERMISSION_1));
@@ -101,17 +101,17 @@ public class PacMan_Cutscene2 extends GameScene {
 			stretched.setFrameIndex(2);
 		} else if (frame == 248) {
 			blinky.setAbsSpeed(0);
-			blinky.animations().get().selectedAnimation().stop();
+			blinky.animations().ifPresent(anims -> anims.selectedAnimation().stop());
 			stretched.setFrameIndex(3);
 		} else if (frame == 328) {
 			stretched.setFrameIndex(4);
 		} else if (frame == 329) {
-			blinky.animations().get().select(ANIM_KEY_DAMAGED);
-			damaged.setFrameIndex(0);
+			blinky.animations().ifPresent(anims -> anims.select(ANIM_KEY_DAMAGED));
+			blinky.animation(ANIM_KEY_DAMAGED).ifPresent(damaged -> damaged.setFrameIndex(0));
 		} else if (frame == 389) {
-			damaged.setFrameIndex(1);
+			blinky.animation(ANIM_KEY_DAMAGED).ifPresent(damaged -> damaged.setFrameIndex(1));
 		} else if (frame == 508) {
-			blinky.animations().get().put(ANIM_KEY_STRETCHED, null);
+			stretched = null;
 		} else if (frame == 509) {
 			gameController.state().timer().expire();
 			return;
@@ -122,9 +122,9 @@ public class PacMan_Cutscene2 extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		blinky.animation(ANIM_KEY_STRETCHED).ifPresent(stretched -> {
-			r2D.drawSprite(g, (BufferedImage) stretched.frame(), t(14), t(19) + 3);
-		});
+		if (stretched != null) {
+			r2D.drawSprite(g, stretched.frame(), t(14), t(19) + 3);
+		}
 		r2D.drawGhost(g, blinky);
 		r2D.drawPac(g, pac);
 	}

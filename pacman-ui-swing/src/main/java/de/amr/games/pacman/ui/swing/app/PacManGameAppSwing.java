@@ -46,12 +46,11 @@ public class PacManGameAppSwing {
 
 	public static void main(String[] args) {
 		PacManGameAppSwing app = new PacManGameAppSwing(new Options(args));
-		invokeLater(() -> app.createAndShowUI());
+		invokeLater(app::createAndShowUI);
 	}
 
 	private Options options;
 	private GameController gameController;
-	private PacManGameUI_Swing ui;
 	private GameLoop gameLoop = new GameLoop();
 
 	public PacManGameAppSwing(Options options) {
@@ -61,7 +60,7 @@ public class PacManGameAppSwing {
 	}
 
 	private void createAndShowUI() {
-		ui = new PacManGameUI_Swing(gameLoop, gameController, options.height);
+		var ui = new PacManGameUI_Swing(gameLoop, gameController, options.height);
 		ui.show();
 		GameEvents.addEventListener(ui);
 		gameController.setPacSteering(new PacController("Up", "Down", "Left", "Right"));
