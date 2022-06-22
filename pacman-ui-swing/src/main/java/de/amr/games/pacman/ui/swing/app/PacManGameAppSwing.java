@@ -25,6 +25,8 @@ package de.amr.games.pacman.ui.swing.app;
 
 import static java.awt.EventQueue.invokeLater;
 
+import java.util.Arrays;
+
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.event.GameEvents;
 import de.amr.games.pacman.ui.swing.shell.PacController;
@@ -45,7 +47,7 @@ import de.amr.games.pacman.ui.swing.shell.PacManGameUI;
 public class PacManGameAppSwing {
 
 	public static void main(String[] args) {
-		PacManGameAppSwing app = new PacManGameAppSwing(new Options(args));
+		PacManGameAppSwing app = new PacManGameAppSwing(new Options(Arrays.asList(args)));
 		invokeLater(app::createAndShowUI);
 	}
 

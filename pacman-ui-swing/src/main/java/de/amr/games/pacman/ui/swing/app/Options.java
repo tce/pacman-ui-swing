@@ -23,6 +23,10 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.app;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,33 +39,65 @@ class Options {
 
 	private static final Logger logger = LogManager.getFormatterLogger();
 
-	double height = 576;
-	GameVariant gameVariant = GameVariant.PACMAN;
+	//@formatter:off
+	private static final String OPT_HEIGHT           = "-height";
+	private static final String OPT_VARIANT_MSPACMAN = "-mspacman";
+	private static final String OPT_VARIANT_PACMAN   = "-pacman";
+	//@formatter:on
 
-	public Options(String[] args) {
-		int i = -1;
-		while (++i < args.length) {
-			if ("-pacman".equals(args[i])) {
-				gameVariant = GameVariant.PACMAN;
-				continue;
-			}
-			if ("-mspacman".equals(args[i])) {
-				gameVariant = GameVariant.MS_PACMAN;
-				continue;
-			}
-			if ("-height".equals(args[i])) {
-				if (++i == args.length) {
-					logger.error("Error parsing options: missing height value.");
-					break;
-				}
-				try {
-					height = Double.parseDouble(args[i]);
-				} catch (NumberFormatException x) {
-					logger.error("Error parsing options: '%s' is no legal height value.", args[i]);
-				}
-				continue;
-			}
-			logger.error("Error parsing options: Found garbage '%s'", args[i]);
+	private static final List<String> ALL_OPTIONS = List.of(OPT_HEIGHT, OPT_VARIANT_MSPACMAN, OPT_VARIANT_PACMAN);
+
+	public double height = 576;
+	public GameVariant gameVariant = GameVariant.PACMAN;
+
+	private int i;
+
+	public Options(List<String> args) {
+		i = 0;
+		while (i < args.size()) {
+			option1(args, OPT_HEIGHT, Double::valueOf).ifPresent(value -> height = value);
+			option0(args, OPT_VARIANT_MSPACMAN, Options::convertGameVariant).ifPresent(value -> gameVariant = value);
+			option0(args, OPT_VARIANT_PACMAN, Options::convertGameVariant).ifPresent(value -> gameVariant = value);
+			++i;
 		}
+	}
+
+	private <T> Optional<T> option1(List<String> args, String name, Function<String, T> fnConvert) {
+		if (name.equals(args.get(i))) {
+			if (i + 1 == args.size() || ALL_OPTIONS.contains(args.get(i + 1))) {
+				logger.error("!!! Error: missing value for parameter '%s'.", name);
+			} else {
+				++i;
+				try {
+					T value = fnConvert.apply(args.get(i));
+					logger.info("Found parameter %s = %s", name, value);
+					return Optional.ofNullable(value);
+				} catch (Exception x) {
+					logger.error("!!! Error: '%s' is no legal value for parameter '%s'.", args.get(i), name);
+				}
+			}
+		}
+		return Optional.empty();
+	}
+
+	private <T> Optional<T> option0(List<String> args, String name, Function<String, T> fnConvert) {
+		if (name.equals(args.get(i))) {
+			logger.info("Found parameter %s", name);
+			try {
+				T value = fnConvert.apply(name);
+				return Optional.ofNullable(value);
+			} catch (Exception x) {
+				logger.error("!!! Error: '%s' is no legal parameter.", name);
+			}
+		}
+		return Optional.empty();
+	}
+
+	private static GameVariant convertGameVariant(String s) {
+		return switch (s) {
+		case OPT_VARIANT_MSPACMAN -> GameVariant.MS_PACMAN;
+		case OPT_VARIANT_PACMAN -> GameVariant.PACMAN;
+		default -> null;
+		};
 	}
 }
