@@ -47,7 +47,7 @@ import de.amr.games.pacman.ui.swing.shell.PacManGameUI;
  */
 public class PacManGameAppSwing {
 
-	static final Option<Float> OPT_HEIGHT = new Option<>("-height", 576f, Float::valueOf);
+	static final Option<Integer> OPT_HEIGHT = new Option.IntegerOption("-height", 576);
 	static final Option<GameVariant> OPT_VARIANT = new Option<>("-variant", GameVariant.PACMAN, GameVariant::valueOf);
 
 	public static void main(String[] args) {
