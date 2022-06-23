@@ -53,7 +53,7 @@ public class PacManGameAppSwing {
 	static final Option<GameVariant> OPT_VARIANT = option("-variant", GameVariant.PACMAN, GameVariant::valueOf);
 
 	public static void main(String[] args) {
-		new OptionParser(OPT_HEIGHT, OPT_VARIANT).parse(args);
+		OptionParser.of(OPT_HEIGHT, OPT_VARIANT).parse(args);
 		var app = new PacManGameAppSwing(OPT_VARIANT.getValue());
 		invokeLater(app::createAndShowUI);
 	}
