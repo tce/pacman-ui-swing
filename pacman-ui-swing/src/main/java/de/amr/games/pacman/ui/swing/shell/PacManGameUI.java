@@ -51,7 +51,6 @@ import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameEventAdapter;
 import de.amr.games.pacman.event.GameStateChangeEvent;
-import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameSounds;
 import de.amr.games.pacman.model.common.GameVariant;
@@ -96,7 +95,7 @@ public class PacManGameUI implements GameEventAdapter {
 	private final GameController gameController;
 	private final V2i unscaledSize;
 	private final V2i scaledSize;
-	private final double scaling;
+	private final float scaling;
 	private final JFrame window;
 	private final Timer titleUpdateTimer;
 	private final Canvas canvas;
@@ -122,12 +121,12 @@ public class PacManGameUI implements GameEventAdapter {
 
 	private GameScene currentGameScene;
 
-	public PacManGameUI(GameLoop gameLoop, GameController controller, double height) {
+	public PacManGameUI(GameLoop gameLoop, GameController controller, float height) {
 		this.gameLoop = gameLoop;
 		this.gameController = controller;
 		this.unscaledSize = ArcadeWorld.MODELSIZE;
 		this.scaling = height / unscaledSize.y;
-		this.scaledSize = new V2d(unscaledSize.x, unscaledSize.y).scaled(scaling).toV2i();
+		this.scaledSize = new V2i(Math.round(scaling * unscaledSize.x), Math.round(scaling * unscaledSize.y));
 
 		gameController.game(GameVariant.MS_PACMAN).setSounds(new MsPacManGameSounds());
 		gameController.game(GameVariant.PACMAN).setSounds(new PacManGameSounds());

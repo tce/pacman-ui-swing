@@ -42,13 +42,13 @@ class Options extends OptionParser {
 		return OPTION_NAMES;
 	}
 
-	public double height = 576;
+	public float height = 576;
 	public GameVariant gameVariant = GameVariant.PACMAN;
 
 	public Options(List<String> args) {
 		i = 0;
 		while (i < args.size()) {
-			height = optNameValue(args, OPT_HEIGHT, Double::valueOf).orElse(height);
+			height = optNameValue(args, OPT_HEIGHT, Float::valueOf).orElse(height);
 			gameVariant = optName(args, OPT_VARIANT_MSPACMAN, OptionParser::convertGameVariant).orElse(gameVariant);
 			gameVariant = optName(args, OPT_VARIANT_PACMAN, OptionParser::convertGameVariant).orElse(gameVariant);
 			++i;
