@@ -29,6 +29,7 @@ import java.util.Arrays;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.event.GameEvents;
+import de.amr.games.pacman.model.common.GameVariant;
 import de.amr.games.pacman.ui.swing.shell.PacController;
 import de.amr.games.pacman.ui.swing.shell.PacManGameUI;
 
@@ -47,23 +48,21 @@ import de.amr.games.pacman.ui.swing.shell.PacManGameUI;
 public class PacManGameAppSwing {
 
 	public static void main(String[] args) {
-		var options = new Options(Arrays.asList(args));
-		var app = new PacManGameAppSwing(options);
+		Options.parse(Arrays.asList(args));
+		var app = new PacManGameAppSwing(Options.OPT_VARIANT.getValue());
 		invokeLater(app::createAndShowUI);
 	}
 
-	private final Options options;
 	private GameController gameController;
 
-	public PacManGameAppSwing(Options options) {
-		this.options = options;
+	public PacManGameAppSwing(GameVariant gameVariant) {
 		gameController = new GameController();
-		gameController.selectGame(options.gameVariant);
+		gameController.selectGame(gameVariant);
 	}
 
 	private void createAndShowUI() {
 		var gameLoop = new GameLoop();
-		var ui = new PacManGameUI(gameLoop, gameController, options.height);
+		var ui = new PacManGameUI(gameLoop, gameController, Options.OPT_HEIGHT.getValue());
 		ui.show();
 		GameEvents.addEventListener(ui);
 		gameController.setPacSteering(new PacController("Up", "Down", "Left", "Right"));
