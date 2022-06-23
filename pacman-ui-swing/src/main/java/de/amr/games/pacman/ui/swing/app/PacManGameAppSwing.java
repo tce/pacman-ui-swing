@@ -23,6 +23,8 @@ SOFTWARE.
 */
 package de.amr.games.pacman.ui.swing.app;
 
+import static de.amr.games.pacman.lib.Option.integerOption;
+import static de.amr.games.pacman.lib.Option.option;
 import static java.awt.EventQueue.invokeLater;
 
 import de.amr.games.pacman.controller.common.GameController;
@@ -47,8 +49,8 @@ import de.amr.games.pacman.ui.swing.shell.PacManGameUI;
  */
 public class PacManGameAppSwing {
 
-	static final Option<Integer> OPT_HEIGHT = new Option.IntegerOption("-height", 576);
-	static final Option<GameVariant> OPT_VARIANT = new Option<>("-variant", GameVariant.PACMAN, GameVariant::valueOf);
+	static final Option<Integer> OPT_HEIGHT = integerOption("-height", 576);
+	static final Option<GameVariant> OPT_VARIANT = option("-variant", GameVariant.PACMAN, GameVariant::valueOf);
 
 	public static void main(String[] args) {
 		new OptionParser(OPT_HEIGHT, OPT_VARIANT).parse(args);
