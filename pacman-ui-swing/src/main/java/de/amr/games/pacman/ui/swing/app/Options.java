@@ -38,7 +38,17 @@ class Options extends OptionParser {
 
 	private static final Logger logger = LogManager.getFormatterLogger();
 
-	private static final String OPT_HEIGHT = "-height";
+	public static GameVariant convertGameVariant(String s) {
+		return switch (s) {
+		case OPT_VARIANT_MSPACMAN -> GameVariant.MS_PACMAN;
+		case OPT_VARIANT_PACMAN -> GameVariant.PACMAN;
+		default -> null;
+		};
+	}
+
+	public static final String OPT_HEIGHT = "-height";
+	public static final String OPT_VARIANT_MSPACMAN = "-mspacman";
+	public static final String OPT_VARIANT_PACMAN = "-pacman";
 
 	public float height = 576;
 	public GameVariant gameVariant = GameVariant.PACMAN;
@@ -47,8 +57,8 @@ class Options extends OptionParser {
 		super(List.of(OPT_HEIGHT, OPT_VARIANT_MSPACMAN, OPT_VARIANT_PACMAN), args);
 		while (hasMoreArgs()) {
 			height = parseNameValue(OPT_HEIGHT, Float::valueOf).orElse(height);
-			gameVariant = parseName(OPT_VARIANT_MSPACMAN, OptionParser::convertGameVariant).orElse(gameVariant);
-			gameVariant = parseName(OPT_VARIANT_PACMAN, OptionParser::convertGameVariant).orElse(gameVariant);
+			gameVariant = parseName(OPT_VARIANT_MSPACMAN, Options::convertGameVariant).orElse(gameVariant);
+			gameVariant = parseName(OPT_VARIANT_PACMAN, Options::convertGameVariant).orElse(gameVariant);
 		}
 		printOptions();
 	}
