@@ -52,9 +52,8 @@ public class PacManGameAppSwing {
 		invokeLater(app::createAndShowUI);
 	}
 
-	private Options options;
+	private final Options options;
 	private GameController gameController;
-	private GameLoop gameLoop = new GameLoop();
 
 	public PacManGameAppSwing(Options options) {
 		this.options = options;
@@ -63,6 +62,7 @@ public class PacManGameAppSwing {
 	}
 
 	private void createAndShowUI() {
+		var gameLoop = new GameLoop();
 		var ui = new PacManGameUI(gameLoop, gameController, options.height);
 		ui.show();
 		GameEvents.addEventListener(ui);
