@@ -25,10 +25,10 @@ package de.amr.games.pacman.ui.swing.app;
 
 import static java.awt.EventQueue.invokeLater;
 
-import java.util.Arrays;
-
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.event.GameEvents;
+import de.amr.games.pacman.lib.Option;
+import de.amr.games.pacman.lib.OptionParser;
 import de.amr.games.pacman.model.common.GameVariant;
 import de.amr.games.pacman.ui.swing.shell.PacController;
 import de.amr.games.pacman.ui.swing.shell.PacManGameUI;
@@ -47,9 +47,12 @@ import de.amr.games.pacman.ui.swing.shell.PacManGameUI;
  */
 public class PacManGameAppSwing {
 
+	static final Option<Float> OPT_HEIGHT = new Option<>("-height", 576f, Float::valueOf);
+	static final Option<GameVariant> OPT_VARIANT = new Option<>("-variant", GameVariant.PACMAN, GameVariant::valueOf);
+
 	public static void main(String[] args) {
-		Options.parse(Arrays.asList(args));
-		var app = new PacManGameAppSwing(Options.OPT_VARIANT.getValue());
+		new OptionParser(OPT_HEIGHT, OPT_VARIANT).parse(args);
+		var app = new PacManGameAppSwing(OPT_VARIANT.getValue());
 		invokeLater(app::createAndShowUI);
 	}
 
@@ -62,7 +65,7 @@ public class PacManGameAppSwing {
 
 	private void createAndShowUI() {
 		var gameLoop = new GameLoop();
-		var ui = new PacManGameUI(gameLoop, gameController, Options.OPT_HEIGHT.getValue());
+		var ui = new PacManGameUI(gameLoop, gameController, OPT_HEIGHT.getValue());
 		ui.show();
 		GameEvents.addEventListener(ui);
 		gameController.setPacSteering(new PacController("Up", "Down", "Left", "Right"));
