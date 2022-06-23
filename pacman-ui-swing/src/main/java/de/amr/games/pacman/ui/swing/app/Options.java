@@ -25,6 +25,9 @@ package de.amr.games.pacman.ui.swing.app;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import de.amr.games.pacman.lib.OptionParser;
 import de.amr.games.pacman.model.common.GameVariant;
 
@@ -33,25 +36,26 @@ import de.amr.games.pacman.model.common.GameVariant;
  */
 class Options extends OptionParser {
 
+	private static final Logger logger = LogManager.getFormatterLogger();
+
 	private static final String OPT_HEIGHT = "-height";
-
-	private static final List<String> OPTION_NAMES = List.of(OPT_HEIGHT, OPT_VARIANT_MSPACMAN, OPT_VARIANT_PACMAN);
-
-	@Override
-	protected List<String> options() {
-		return OPTION_NAMES;
-	}
 
 	public float height = 576;
 	public GameVariant gameVariant = GameVariant.PACMAN;
 
 	public Options(List<String> args) {
-		i = 0;
-		while (i < args.size()) {
-			height = optNameValue(args, OPT_HEIGHT, Float::valueOf).orElse(height);
-			gameVariant = optName(args, OPT_VARIANT_MSPACMAN, OptionParser::convertGameVariant).orElse(gameVariant);
-			gameVariant = optName(args, OPT_VARIANT_PACMAN, OptionParser::convertGameVariant).orElse(gameVariant);
-			++i;
+		super(List.of(OPT_HEIGHT, OPT_VARIANT_MSPACMAN, OPT_VARIANT_PACMAN), args);
+		while (hasMoreArgs()) {
+			height = parseNameValue(OPT_HEIGHT, Float::valueOf).orElse(height);
+			gameVariant = parseName(OPT_VARIANT_MSPACMAN, OptionParser::convertGameVariant).orElse(gameVariant);
+			gameVariant = parseName(OPT_VARIANT_PACMAN, OptionParser::convertGameVariant).orElse(gameVariant);
 		}
+		printOptions();
+	}
+
+	@Override
+	protected void printOptions() {
+		logger.info("height = %s", height);
+		logger.info("gameVariant = %s", gameVariant);
 	}
 }

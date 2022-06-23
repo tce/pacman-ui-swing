@@ -47,7 +47,8 @@ import de.amr.games.pacman.ui.swing.shell.PacManGameUI;
 public class PacManGameAppSwing {
 
 	public static void main(String[] args) {
-		PacManGameAppSwing app = new PacManGameAppSwing(new Options(Arrays.asList(args)));
+		var options = new Options(Arrays.asList(args));
+		var app = new PacManGameAppSwing(options);
 		invokeLater(app::createAndShowUI);
 	}
 
