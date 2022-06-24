@@ -98,7 +98,7 @@ public class PacManIntroScene extends GameScene {
 		if (sceneController.state() == State.CHASING_GHOSTS) {
 			for (var ghost : $.ghosts) {
 				ghost.animations().ifPresent(anims -> {
-					if (ghost.state == GhostState.DEAD && ghost.killIndex != -1) {
+					if (ghost.is(GhostState.DEAD) && ghost.killIndex != -1) {
 						anims.select(AnimKeys.GHOST_VALUE);
 						anims.selectedAnimation().ensureRunning();
 					} else {
