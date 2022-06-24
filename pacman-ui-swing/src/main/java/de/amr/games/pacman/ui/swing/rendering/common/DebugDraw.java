@@ -48,21 +48,20 @@ public class DebugDraw {
 	}
 
 	public static void drawPlaySceneDebugInfo(Graphics2D g, GameController controller) {
-		GameModel game = controller.game();
-		final Color[] GHOST_COLORS = { Color.RED, Color.PINK, Color.CYAN, Color.ORANGE };
-
-		String stateText = "";
-		long ticks;
-		int scatterPhase = game.huntingTimer.scatteringPhase();
+		final Color[] ghostColors = { Color.RED, Color.PINK, Color.CYAN, Color.ORANGE };
+		var game = controller.game();
+		var state = controller.state();
+		int scatterPhase = game.huntingTimer.scatterPhase();
 		int chasingPhase = game.huntingTimer.chasingPhase();
-		if (controller.state() == GameState.HUNTING && scatterPhase != -1) {
-			ticks = game.huntingTimer.remaining();
+		String stateText;
+		if (state == GameState.HUNTING && game.huntingTimer.inScatterPhase()) {
+			var ticks = game.huntingTimer.remaining();
 			stateText = "Scattering Phase %d Remaining: %s".formatted(scatterPhase, ticksToString(ticks));
-		} else if (controller.state() == GameState.HUNTING && chasingPhase != -1) {
-			ticks = game.huntingTimer.remaining();
+		} else if (state == GameState.HUNTING && game.huntingTimer.inChasingPhase()) {
+			var ticks = game.huntingTimer.remaining();
 			stateText = "Chasing Phase %d Remaining: %s".formatted(chasingPhase, ticksToString(ticks));
 		} else {
-			ticks = controller.state().timer().tick();
+			var ticks = state.timer().tick();
 			stateText = "State %s Running: %s".formatted(controller.state(), ticksToString(ticks));
 		}
 		g.setColor(Color.WHITE);
@@ -72,7 +71,7 @@ public class DebugDraw {
 			g.setColor(Color.WHITE);
 			g.drawRect((int) ghost.position.x, (int) ghost.position.y, TS, TS);
 			if (ghost.targetTile != null) {
-				Color c = GHOST_COLORS[ghost.id];
+				Color c = ghostColors[ghost.id];
 				g.setColor(c);
 				g.fillRect(t(ghost.targetTile.x) + HTS / 2, t(ghost.targetTile.y) + HTS / 2, HTS, HTS);
 				g.setStroke(new BasicStroke(0.5f));
