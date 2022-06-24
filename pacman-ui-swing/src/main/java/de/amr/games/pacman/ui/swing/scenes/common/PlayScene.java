@@ -30,6 +30,7 @@ import java.awt.Image;
 
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.event.GameStateChangeEvent;
+import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
@@ -45,7 +46,8 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void init() {
-		game.setMazeFlashingAnimation(r2D.createMazeFlashingAnimation(r2D.mazeNumber(game.level.number)));
+		var world = (ArcadeWorld) game.world();
+		world.setFlashingAnimation(r2D.createMazeFlashingAnimation(r2D.mazeNumber(game.level.number)));
 		game.pac.setAnimations(new PacAnimations(r2D));
 		game.ghosts().forEach(ghost -> ghost.setAnimations(new GhostAnimations(ghost.id, r2D)));
 	}
@@ -82,7 +84,8 @@ public class PlayScene extends GameScene {
 	}
 
 	private void drawMaze(Graphics2D g) {
-		var mazeFlashing = game.mazeFlashingAnimation();
+		var world = (ArcadeWorld) game.world();
+		var mazeFlashing = world.flashingAnimation();
 		if (mazeFlashing.isPresent() && mazeFlashing.get().isRunning()) {
 			g.drawImage((Image) mazeFlashing.get().frame(), 0, t(3), null);
 		} else {
@@ -99,8 +102,7 @@ public class PlayScene extends GameScene {
 	@Override
 	public void onGameStateChange(GameStateChangeEvent e) {
 		if (e.newGameState == GameState.LEVEL_STARTING) {
-			// TODO check this
-			gameController.state().timer().expire();
+			gameController.state().timer().expire(); // TODO check if needed
 		}
 	}
 }
