@@ -27,8 +27,8 @@ import static de.amr.games.pacman.lib.Direction.DOWN;
 import static de.amr.games.pacman.lib.Direction.LEFT;
 import static de.amr.games.pacman.lib.Direction.RIGHT;
 import static de.amr.games.pacman.lib.Direction.UP;
-import static de.amr.games.pacman.ui.swing.lib.Uswing.font;
-import static de.amr.games.pacman.ui.swing.lib.Uswing.image;
+import static de.amr.games.pacman.ui.swing.lib.Ujfc.font;
+import static de.amr.games.pacman.ui.swing.lib.Ujfc.image;
 
 import java.awt.Color;
 import java.awt.Font;

@@ -24,8 +24,8 @@ SOFTWARE.
 package de.amr.games.pacman.ui.swing.rendering.mspacman;
 
 import static de.amr.games.pacman.model.common.world.World.t;
-import static de.amr.games.pacman.ui.swing.lib.Uswing.font;
-import static de.amr.games.pacman.ui.swing.lib.Uswing.image;
+import static de.amr.games.pacman.ui.swing.lib.Ujfc.font;
+import static de.amr.games.pacman.ui.swing.lib.Ujfc.image;
 
 import java.awt.Color;
 import java.awt.Font;
