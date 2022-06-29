@@ -53,7 +53,6 @@ import de.amr.games.pacman.event.GameEventAdapter;
 import de.amr.games.pacman.event.GameStateChangeEvent;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameSounds;
-import de.amr.games.pacman.model.common.GameVariant;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.ui.swing.app.GameLoop;
 import de.amr.games.pacman.ui.swing.lib.Ujfc;
@@ -69,8 +68,6 @@ import de.amr.games.pacman.ui.swing.scenes.pacman.PacManCutscene1;
 import de.amr.games.pacman.ui.swing.scenes.pacman.PacManCutscene2;
 import de.amr.games.pacman.ui.swing.scenes.pacman.PacManCutscene3;
 import de.amr.games.pacman.ui.swing.scenes.pacman.PacManIntroScene;
-import de.amr.games.pacman.ui.swing.sound.MsPacManGameSounds;
-import de.amr.games.pacman.ui.swing.sound.PacManGameSounds;
 
 /**
  * A Swing UI for the Pac-Man / Ms. Pac-Man game.
@@ -93,6 +90,7 @@ public class PacManGameUI implements GameEventAdapter {
 
 	private final GameLoop gameLoop;
 	private final GameController gameController;
+
 	private final V2i unscaledSize;
 	private final V2i scaledSize;
 	private final float scaling;
@@ -127,9 +125,6 @@ public class PacManGameUI implements GameEventAdapter {
 		this.unscaledSize = ArcadeWorld.MODELSIZE;
 		this.scaling = height / unscaledSize.y;
 		this.scaledSize = new V2i(Math.round(scaling * unscaledSize.x), Math.round(scaling * unscaledSize.y));
-
-		gameController.game(GameVariant.MS_PACMAN).setSounds(new MsPacManGameSounds());
-		gameController.game(GameVariant.PACMAN).setSounds(new PacManGameSounds());
 
 		flashMessageDisplay = new FlashMessageDisplay(unscaledSize);
 
@@ -325,7 +320,7 @@ public class PacManGameUI implements GameEventAdapter {
 
 	private void restartIntro() {
 		currentGameScene.end();
-		gameController.game().sounds().ifPresent(GameSounds::stopAll);
+		gameController.sounds().ifPresent(GameSounds::stopAll);
 		gameController.restartIntro();
 	}
 

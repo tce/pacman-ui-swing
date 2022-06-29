@@ -29,10 +29,13 @@ import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.event.GameEventAdapter;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
+import de.amr.games.pacman.model.common.GameSounds;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.SpritesheetMsPacMan;
 import de.amr.games.pacman.ui.swing.rendering.pacman.SpritesheetPacMan;
+import de.amr.games.pacman.ui.swing.sound.MsPacManGameSounds;
+import de.amr.games.pacman.ui.swing.sound.PacManGameSounds;
 
 /**
  * Common game scene base class.
@@ -40,6 +43,9 @@ import de.amr.games.pacman.ui.swing.rendering.pacman.SpritesheetPacMan;
  * @author Armin Reichert
  */
 public abstract class GameScene implements GameEventAdapter {
+
+	private static final GameSounds PACMAN_SOUNDS = new PacManGameSounds();
+	private static final GameSounds MS_PACMAN_SOUNDS = new MsPacManGameSounds();
 
 	protected GameController gameController;
 	protected V2i size = ArcadeWorld.MODELSIZE;
@@ -53,6 +59,11 @@ public abstract class GameScene implements GameEventAdapter {
 		case MS_PACMAN -> SpritesheetMsPacMan.get();
 		case PACMAN -> SpritesheetPacMan.get();
 		};
+		var sounds = switch (game.variant) {
+		case MS_PACMAN -> MS_PACMAN_SOUNDS;
+		case PACMAN -> PACMAN_SOUNDS;
+		};
+		gameController.setSounds(sounds);
 	}
 
 	public boolean hasCredit() {
