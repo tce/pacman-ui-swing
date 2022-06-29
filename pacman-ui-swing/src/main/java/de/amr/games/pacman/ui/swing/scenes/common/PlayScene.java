@@ -29,7 +29,9 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 
 import de.amr.games.pacman.controller.common.GameState;
+import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameStateChangeEvent;
+import de.amr.games.pacman.model.common.GameSound;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
@@ -104,5 +106,10 @@ public class PlayScene extends GameScene {
 		if (e.newGameState == GameState.LEVEL_STARTING) {
 			gameController.state().timer().expire(); // TODO check if needed
 		}
+	}
+
+	@Override
+	public void onBonusGetsEaten(GameEvent e) {
+		gameController.sounds().ifPresent(snd -> snd.play(GameSound.BONUS_EATEN));
 	}
 }
