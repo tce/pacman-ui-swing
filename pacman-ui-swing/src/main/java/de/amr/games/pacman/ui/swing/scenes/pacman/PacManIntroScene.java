@@ -54,29 +54,29 @@ import de.amr.games.pacman.ui.swing.shell.Keyboard;
 public class PacManIntroScene extends GameScene {
 
 	private IntroController sceneController;
-	private IntroController.Context $;
+	private IntroController.Context ctx;
 
 	@Override
 	public void setContext(GameController gameController) {
 		super.setContext(gameController);
 		sceneController = new IntroController(gameController);
 		sceneController.addStateChangeListener(this::onSceneStateChange);
-		$ = sceneController.$;
+		ctx = sceneController.ctx;
 	}
 
 	@Override
 	public void init() {
 		sceneController.restartInInitialState(IntroController.State.START);
-		$.pacMan.setAnimations(new PacAnimations(r2D));
-		$.pacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
-		Stream.of($.ghosts).forEach(ghost -> {
+		ctx.pacMan.setAnimations(new PacAnimations(r2D));
+		ctx.pacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
+		Stream.of(ctx.ghosts).forEach(ghost -> {
 			ghost.setAnimations(new GhostAnimations(ghost.id, r2D));
 		});
 	}
 
 	private void onSceneStateChange(State fromState, State toState) {
 		if (fromState == State.CHASING_PAC && toState == State.CHASING_GHOSTS) {
-			for (var ghost : $.ghosts) {
+			for (var ghost : ctx.ghosts) {
 				ghost.animations().ifPresent(anims -> anims.select(AnimKeys.GHOST_BLUE));
 			}
 		}
@@ -96,7 +96,7 @@ public class PacManIntroScene extends GameScene {
 
 	private void updateAnimations() {
 		if (sceneController.state() == State.CHASING_GHOSTS) {
-			for (var ghost : $.ghosts) {
+			for (var ghost : ctx.ghosts) {
 				ghost.animations().ifPresent(anims -> {
 					if (ghost.is(GhostState.DEAD) && ghost.killIndex != -1) {
 						anims.select(AnimKeys.GHOST_VALUE);
@@ -132,7 +132,7 @@ public class PacManIntroScene extends GameScene {
 			drawGallery(g);
 			drawPoints(g, 11, 25);
 			r2D.drawCopyright(g, t(3), t(32));
-			if (Boolean.TRUE.equals($.blinking.frame())) {
+			if (Boolean.TRUE.equals(ctx.blinking.frame())) {
 				drawEnergizer(g);
 			}
 			int offset = sceneController.state().timer().tick() % 5 < 2 ? 0 : -1;
@@ -158,12 +158,12 @@ public class PacManIntroScene extends GameScene {
 	private void drawGuys(Graphics2D g, int offset) {
 		Graphics2D gg = (Graphics2D) g.create();
 		gg.translate(offset, 0);
-		r2D.drawGhost(gg, $.ghosts[1]);
-		r2D.drawGhost(gg, $.ghosts[2]);
+		r2D.drawGhost(gg, ctx.ghosts[1]);
+		r2D.drawGhost(gg, ctx.ghosts[2]);
 		gg.dispose();
-		r2D.drawGhost(g, $.ghosts[0]);
-		r2D.drawGhost(g, $.ghosts[3]);
-		r2D.drawPac(g, $.pacMan);
+		r2D.drawGhost(g, ctx.ghosts[0]);
+		r2D.drawGhost(g, ctx.ghosts[3]);
+		r2D.drawPac(g, ctx.pacMan);
 	}
 
 	private void drawGallery(Graphics2D g) {
@@ -173,16 +173,16 @@ public class PacManIntroScene extends GameScene {
 		g.drawString("/", t(16), t(6));
 		g.drawString("NICKNAME", t(18), t(6));
 		for (int id = 0; id < 4; ++id) {
-			if ($.pictureVisible[id]) {
+			if (ctx.pictureVisible[id]) {
 				int tileY = 7 + 3 * id;
 				r2D.drawSpriteCenteredOverBox(g, r2D.getGhostSprite(id, Direction.RIGHT), t(3), t(tileY));
-				if ($.characterVisible[id]) {
+				if (ctx.characterVisible[id]) {
 					g.setColor(r2D.getGhostColor(id));
-					g.drawString("-" + $.characters[id], t(6), t(tileY + 1));
+					g.drawString("-" + ctx.characters[id], t(6), t(tileY + 1));
 				}
-				if ($.nicknameVisible[id]) {
+				if (ctx.nicknameVisible[id]) {
 					g.setColor(r2D.getGhostColor(id));
-					g.drawString("\"" + $.nicknames[id] + "\"", t(17), t(tileY + 1));
+					g.drawString("\"" + ctx.nicknames[id] + "\"", t(17), t(tileY + 1));
 				}
 			}
 		}
@@ -191,7 +191,7 @@ public class PacManIntroScene extends GameScene {
 	private void drawPoints(Graphics2D g, int tileX, int tileY) {
 		g.setColor(r2D.getFoodColor(1));
 		g.fillRect(t(tileX) + 6, t(tileY - 1) + 2, 2, 2);
-		if (Boolean.TRUE.equals($.blinking.frame())) {
+		if (Boolean.TRUE.equals(ctx.blinking.frame())) {
 			g.fillOval(t(tileX), t(tileY + 1) - 2, 10, 10);
 		}
 		g.setColor(Color.WHITE);
