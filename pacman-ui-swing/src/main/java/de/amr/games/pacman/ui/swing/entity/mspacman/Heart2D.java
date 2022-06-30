@@ -48,10 +48,10 @@ public class Heart2D {
 	}
 
 	public void render(Graphics2D g) {
-		if (heart.visible) {
+		if (heart.isVisible()) {
 			int dx = -(image.getWidth() - TS) / 2;
 			int dy = -(image.getHeight() - TS) / 2;
-			g.drawImage(image, (int) heart.position.x + dx, (int) heart.position.y + dy, null);
+			g.drawImage(image, (int) heart.getPosition().x + dx, (int) heart.getPosition().y + dy, null);
 		}
 	}
 }

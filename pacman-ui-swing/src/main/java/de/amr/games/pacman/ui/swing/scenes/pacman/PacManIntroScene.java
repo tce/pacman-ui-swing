@@ -69,9 +69,7 @@ public class PacManIntroScene extends GameScene {
 		sceneController.restartInInitialState(IntroController.State.START);
 		ctx.pacMan.setAnimations(new PacAnimations(r2D));
 		ctx.pacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
-		Stream.of(ctx.ghosts).forEach(ghost -> {
-			ghost.setAnimations(new GhostAnimations(ghost.id, r2D));
-		});
+		Stream.of(ctx.ghosts).forEach(ghost -> ghost.setAnimations(new GhostAnimations(ghost.id, r2D)));
 	}
 
 	private void onSceneStateChange(State fromState, State toState) {
@@ -104,7 +102,7 @@ public class PacManIntroScene extends GameScene {
 					} else {
 						anims.select(AnimKeys.GHOST_BLUE);
 						anims.selectedAnimation().ensureRunning();
-						if (ghost.velocity.length() == 0) {
+						if (ghost.getVelocity().length() == 0) {
 							anims.byName(AnimKeys.GHOST_BLUE).stop();
 						}
 					}

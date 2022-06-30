@@ -334,13 +334,14 @@ public class SpritesheetMsPacMan implements Rendering2D {
 	}
 
 	public void drawFlap(Graphics2D g, Flap flap) {
-		if (flap.visible) {
+		if (flap.isVisible()) {
 			BufferedImage sprite = (BufferedImage) flap.animation.animate();
 			drawEntity(g, flap, sprite);
 			g.setFont(getArcadeFont());
 			g.setColor(new Color(222, 222, 255));
-			g.drawString(flap.number + "", (int) flap.position.x + sprite.getWidth() - 25, (int) flap.position.y + 18);
-			g.drawString(flap.text, (int) flap.position.x + sprite.getWidth(), (int) flap.position.y);
+			g.drawString(flap.number + "", (int) flap.getPosition().x + sprite.getWidth() - 25,
+					(int) flap.getPosition().y + 18);
+			g.drawString(flap.text, (int) flap.getPosition().x + sprite.getWidth(), (int) flap.getPosition().y);
 		}
 	}
 }
