@@ -112,6 +112,7 @@ public class AbstractGameSounds implements GameSoundController {
 		return clips.get(sound);
 	}
 
+	@Override
 	public boolean isPlaying(GameSound sound) {
 		return getClip(sound).isRunning();
 	}
@@ -154,6 +155,7 @@ public class AbstractGameSounds implements GameSoundController {
 
 	// -----------------
 
+	@Override
 	public void startSiren(int sirenIndex) {
 		stopSirens();
 		var siren = switch (sirenIndex) {
@@ -167,6 +169,7 @@ public class AbstractGameSounds implements GameSoundController {
 		logger.info("Siren %s started", siren);
 	}
 
+	@Override
 	public Stream<GameSound> sirens() {
 		return Stream.of(GameSound.SIREN_1, GameSound.SIREN_2, GameSound.SIREN_3, GameSound.SIREN_4);
 	}
