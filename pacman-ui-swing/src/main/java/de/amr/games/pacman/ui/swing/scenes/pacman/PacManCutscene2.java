@@ -61,7 +61,7 @@ public class PacManCutscene2 extends GameScene {
 		initialDelay = 120;
 
 		pac = new Pac("Pac-Man");
-		pac.setAnimations(new PacAnimations(r2D));
+		pac.setAnimations(new PacAnimations(pac, r2D));
 		pac.animations().ifPresent(anims -> anims.select(AnimKeys.PAC_MUNCHING));
 		pac.animation(AnimKeys.PAC_MUNCHING).ifPresent(SpriteAnimation::restart);
 		pac.placeAt(v(29, 20), 0, 0);
@@ -71,7 +71,7 @@ public class PacManCutscene2 extends GameScene {
 
 		stretched = SpritesheetPacMan.get().createBlinkyStretchedAnimation();
 		blinky = new Ghost(Ghost.RED_GHOST, "Blinky");
-		blinky.setAnimations(new GhostAnimations(Ghost.RED_GHOST, r2D));
+		blinky.setAnimations(new GhostAnimations(blinky, r2D));
 		var damaged = SpritesheetPacMan.get().createBlinkyDamagedAnimation();
 		blinky.animations().ifPresent(anims -> anims.put(ANIM_KEY_DAMAGED, damaged));
 		blinky.animations().ifPresent(anims -> anims.select(AnimKeys.GHOST_COLOR));

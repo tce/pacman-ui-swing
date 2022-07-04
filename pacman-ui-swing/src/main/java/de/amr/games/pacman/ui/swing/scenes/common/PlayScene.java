@@ -50,8 +50,8 @@ public class PlayScene extends GameScene {
 	public void init() {
 		var world = (ArcadeWorld) game.world();
 		world.setFlashingAnimation(r2D.createMazeFlashingAnimation(r2D.mazeNumber(game.level.number)));
-		game.pac.setAnimations(new PacAnimations(r2D));
-		game.ghosts().forEach(ghost -> ghost.setAnimations(new GhostAnimations(ghost.id, r2D)));
+		game.pac.setAnimations(new PacAnimations(game.pac, r2D));
+		game.ghosts().forEach(ghost -> ghost.setAnimations(new GhostAnimations(ghost, r2D)));
 	}
 
 	@Override

@@ -39,10 +39,11 @@ import java.util.List;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.SingleSpriteAnimation;
-import de.amr.games.pacman.lib.animation.SpriteAnimationMap;
 import de.amr.games.pacman.lib.animation.SpriteArray;
 import de.amr.games.pacman.model.common.actors.Ghost;
+import de.amr.games.pacman.model.common.actors.Pac;
 import de.amr.games.pacman.ui.swing.lib.Spritesheet;
+import de.amr.games.pacman.ui.swing.rendering.common.DirectionAnimationMap;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**
@@ -145,14 +146,14 @@ public class SpritesheetPacMan implements Rendering2D {
 	}
 
 	@Override
-	public SpriteAnimationMap<Direction, BufferedImage> createPacMunchingAnimationMap() {
-		SpriteAnimationMap<Direction, BufferedImage> munching = new SpriteAnimationMap<>(4);
+	public DirectionAnimationMap createPacMunchingAnimationMap(Pac pac) {
+		DirectionAnimationMap munching = new DirectionAnimationMap(pac::moveDir);
 		for (Direction dir : Direction.values()) {
 			int d = index(dir);
-			var wide_open = ss.tile(0, d);
+			var wide = ss.tile(0, d);
 			var open = ss.tile(1, d);
 			var closed = ss.tile(2, 0);
-			var animation = new SingleSpriteAnimation<>(closed, open, wide_open, open);
+			var animation = new SingleSpriteAnimation<>(closed, open, wide, open);
 			animation.frameDuration(2);
 			animation.repeatForever();
 			munching.put(dir, animation);
@@ -161,11 +162,11 @@ public class SpritesheetPacMan implements Rendering2D {
 	}
 
 	@Override
-	public SpriteAnimationMap<Direction, BufferedImage> createGhostColorAnimationMap(int ghostID) {
-		SpriteAnimationMap<Direction, BufferedImage> map = new SpriteAnimationMap<>(4);
+	public DirectionAnimationMap createGhostColorAnimationMap(Ghost ghost) {
+		DirectionAnimationMap map = new DirectionAnimationMap(ghost::wishDir);
 		for (Direction dir : Direction.values()) {
-			var animation = new SingleSpriteAnimation<>(ss.tile(2 * index(dir), 4 + ghostID),
-					ss.tile(2 * index(dir) + 1, 4 + ghostID));
+			var animation = new SingleSpriteAnimation<>(ss.tile(2 * index(dir), 4 + ghost.id),
+					ss.tile(2 * index(dir) + 1, 4 + ghost.id));
 			animation.frameDuration(8);
 			animation.repeatForever();
 			map.put(dir, animation);
@@ -189,8 +190,8 @@ public class SpritesheetPacMan implements Rendering2D {
 	}
 
 	@Override
-	public SpriteAnimationMap<Direction, BufferedImage> createGhostEyesAnimationMap() {
-		SpriteAnimationMap<Direction, BufferedImage> ghostEyesAnimsByDir = new SpriteAnimationMap<>(4);
+	public DirectionAnimationMap createGhostEyesAnimationMap(Ghost ghost) {
+		DirectionAnimationMap ghostEyesAnimsByDir = new DirectionAnimationMap(ghost::wishDir);
 		for (Direction dir : Direction.values()) {
 			ghostEyesAnimsByDir.put(dir, new SingleSpriteAnimation<>(ss.tile(8 + index(dir), 5)));
 		}

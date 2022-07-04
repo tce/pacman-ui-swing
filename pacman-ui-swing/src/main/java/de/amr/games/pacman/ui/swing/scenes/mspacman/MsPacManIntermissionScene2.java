@@ -57,10 +57,10 @@ public class MsPacManIntermissionScene2 extends GameScene {
 	public void init() {
 		sceneController.restartInInitialState(Intermission2Controller.State.FLAP);
 		$.flap.animation = SpritesheetMsPacMan.get().createFlapAnimation();
-		$.msPacMan.setAnimations(new PacAnimations(r2D));
+		$.msPacMan.setAnimations(new PacAnimations($.msPacMan, r2D));
 		$.msPacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
-		$.pacMan.setAnimations(new PacAnimations(r2D));
-		var husbandMunching = SpritesheetMsPacMan.get().createHusbandMunchingAnimations();
+		$.pacMan.setAnimations(new PacAnimations($.pacMan, r2D));
+		var husbandMunching = SpritesheetMsPacMan.get().createHusbandMunchingAnimations($.pacMan);
 		$.pacMan.animations().ifPresent(anims -> anims.put(AnimKeys.PAC_MUNCHING, husbandMunching));
 		$.pacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
 	}

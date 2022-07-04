@@ -38,7 +38,6 @@ import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.lib.animation.SingleSpriteAnimation;
-import de.amr.games.pacman.lib.animation.SpriteAnimationMap;
 import de.amr.games.pacman.lib.animation.SpriteArray;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Entity;
@@ -76,17 +75,17 @@ public interface Rendering2D {
 
 	// Animations
 
-	SpriteAnimationMap<Direction, BufferedImage> createPacMunchingAnimationMap();
+	DirectionAnimationMap createPacMunchingAnimationMap(Pac pac);
 
 	SingleSpriteAnimation<BufferedImage> createPacDyingAnimation();
 
-	SpriteAnimationMap<Direction, BufferedImage> createGhostColorAnimationMap(int ghostID);
+	DirectionAnimationMap createGhostColorAnimationMap(Ghost ghost);
 
 	SingleSpriteAnimation<BufferedImage> createGhostBlueAnimation();
 
 	SingleSpriteAnimation<BufferedImage> createGhostFlashingAnimation();
 
-	SpriteAnimationMap<Direction, BufferedImage> createGhostEyesAnimationMap();
+	DirectionAnimationMap createGhostEyesAnimationMap(Ghost ghost);
 
 	SpriteArray<BufferedImage> createGhostValueList();
 

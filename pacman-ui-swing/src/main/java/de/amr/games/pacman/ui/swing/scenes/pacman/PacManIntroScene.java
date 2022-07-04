@@ -67,9 +67,9 @@ public class PacManIntroScene extends GameScene {
 	@Override
 	public void init() {
 		sceneController.restartInInitialState(IntroController.State.START);
-		ctx.pacMan.setAnimations(new PacAnimations(r2D));
+		ctx.pacMan.setAnimations(new PacAnimations(ctx.pacMan, r2D));
 		ctx.pacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
-		Stream.of(ctx.ghosts).forEach(ghost -> ghost.setAnimations(new GhostAnimations(ghost.id, r2D)));
+		Stream.of(ctx.ghosts).forEach(ghost -> ghost.setAnimations(new GhostAnimations(ghost, r2D)));
 	}
 
 	private void onSceneStateChange(State fromState, State toState) {

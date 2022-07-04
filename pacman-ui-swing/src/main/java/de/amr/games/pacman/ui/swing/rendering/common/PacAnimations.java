@@ -37,10 +37,10 @@ import de.amr.games.pacman.model.common.actors.Pac;
  */
 public class PacAnimations extends SpriteAnimations<Pac> {
 
-	public PacAnimations(Rendering2D r2D) {
+	public PacAnimations(Pac pac, Rendering2D r2D) {
 		animationsByName = new HashMap<>(2);
 		put(AnimKeys.PAC_DYING, r2D.createPacDyingAnimation());
-		put(AnimKeys.PAC_MUNCHING, r2D.createPacMunchingAnimationMap());
+		put(AnimKeys.PAC_MUNCHING, r2D.createPacMunchingAnimationMap(pac));
 		select(AnimKeys.PAC_MUNCHING);
 	}
 
@@ -53,8 +53,8 @@ public class PacAnimations extends SpriteAnimations<Pac> {
 	public BufferedImage current(Pac pac) {
 		return switch (selected) {
 		case AnimKeys.PAC_MUNCHING -> super.<Direction, BufferedImage>castToMap(AnimKeys.PAC_MUNCHING).get(pac.moveDir())
-				.animate();
-		default -> (BufferedImage) selectedAnimation().animate();
+				.frame();
+		default -> (BufferedImage) selectedAnimation().frame();
 		};
 	}
 }

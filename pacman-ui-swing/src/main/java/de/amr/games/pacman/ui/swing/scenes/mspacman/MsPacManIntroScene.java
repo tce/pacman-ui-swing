@@ -59,10 +59,10 @@ public class MsPacManIntroScene extends GameScene {
 	@Override
 	public void init() {
 		sceneController.restartInInitialState(IntroController.State.START);
-		$.msPacMan.setAnimations(new PacAnimations(r2D));
+		$.msPacMan.setAnimations(new PacAnimations($.msPacMan, r2D));
 		$.msPacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
 		for (var ghost : $.ghosts) {
-			ghost.setAnimations(new GhostAnimations(ghost.id, r2D));
+			ghost.setAnimations(new GhostAnimations(ghost, r2D));
 			ghost.animations().ifPresent(SpriteAnimations::ensureRunning);
 		}
 	}

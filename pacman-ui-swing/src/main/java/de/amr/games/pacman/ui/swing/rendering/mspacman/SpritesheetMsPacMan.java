@@ -35,11 +35,13 @@ import java.util.List;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.SingleSpriteAnimation;
-import de.amr.games.pacman.lib.animation.SpriteAnimationMap;
 import de.amr.games.pacman.lib.animation.SpriteArray;
+import de.amr.games.pacman.model.common.actors.Ghost;
+import de.amr.games.pacman.model.common.actors.Pac;
 import de.amr.games.pacman.model.mspacman.Flap;
 import de.amr.games.pacman.model.mspacman.MsPacManGame;
 import de.amr.games.pacman.ui.swing.lib.Spritesheet;
+import de.amr.games.pacman.ui.swing.rendering.common.DirectionAnimationMap;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**
@@ -182,8 +184,8 @@ public class SpritesheetMsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public SpriteAnimationMap<Direction, BufferedImage> createPacMunchingAnimationMap() {
-		SpriteAnimationMap<Direction, BufferedImage> map = new SpriteAnimationMap<>(4);
+	public DirectionAnimationMap createPacMunchingAnimationMap(Pac pac) {
+		DirectionAnimationMap map = new DirectionAnimationMap(pac::moveDir);
 		for (Direction dir : Direction.values()) {
 			int d = dirIndex(dir);
 			var wide = rhs(0, d);
@@ -197,8 +199,8 @@ public class SpritesheetMsPacMan implements Rendering2D {
 		return map;
 	}
 
-	public SpriteAnimationMap<Direction, BufferedImage> createSpouseMunchingAnimations() {
-		SpriteAnimationMap<Direction, BufferedImage> map = new SpriteAnimationMap<>(4);
+	public DirectionAnimationMap createSpouseMunchingAnimations(Pac pac) {
+		DirectionAnimationMap map = new DirectionAnimationMap(pac::moveDir);
 		for (Direction dir : Direction.values()) {
 			int d = dirIndex(dir);
 			var munching = new SingleSpriteAnimation<>(rhs(0, 9 + d), rhs(1, 9 + d), rhs(2, 9));
@@ -210,11 +212,11 @@ public class SpritesheetMsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public SpriteAnimationMap<Direction, BufferedImage> createGhostColorAnimationMap(int ghostID) {
-		SpriteAnimationMap<Direction, BufferedImage> map = new SpriteAnimationMap<>(4);
+	public DirectionAnimationMap createGhostColorAnimationMap(Ghost ghost) {
+		DirectionAnimationMap map = new DirectionAnimationMap(ghost::wishDir);
 		for (Direction dir : Direction.values()) {
 			int d = dirIndex(dir);
-			var color = new SingleSpriteAnimation<>(rhs(2 * d, 4 + ghostID), rhs(2 * d + 1, 4 + ghostID));
+			var color = new SingleSpriteAnimation<>(rhs(2 * d, 4 + ghost.id), rhs(2 * d + 1, 4 + ghost.id));
 			color.frameDuration(4);
 			color.repeatForever();
 			map.put(dir, color);
@@ -238,8 +240,8 @@ public class SpritesheetMsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public SpriteAnimationMap<Direction, BufferedImage> createGhostEyesAnimationMap() {
-		SpriteAnimationMap<Direction, BufferedImage> map = new SpriteAnimationMap<>(4);
+	public DirectionAnimationMap createGhostEyesAnimationMap(Ghost ghost) {
+		DirectionAnimationMap map = new DirectionAnimationMap(ghost::wishDir);
 		for (Direction dir : Direction.values()) {
 			map.put(dir, new SingleSpriteAnimation<>(rhs(8 + dirIndex(dir), 5)));
 		}
@@ -261,8 +263,8 @@ public class SpritesheetMsPacMan implements Rendering2D {
 		return animation;
 	}
 
-	public SpriteAnimationMap<Direction, BufferedImage> createHusbandMunchingAnimations() {
-		SpriteAnimationMap<Direction, BufferedImage> map = new SpriteAnimationMap<>(4);
+	public DirectionAnimationMap createHusbandMunchingAnimations(Pac pac) {
+		DirectionAnimationMap map = new DirectionAnimationMap(pac::moveDir);
 		for (var dir : Direction.values()) {
 			int d = dirIndex(dir);
 			var animation = new SingleSpriteAnimation<>(rhs(0, 9 + d), rhs(1, 9 + d), rhs(2, 9));
