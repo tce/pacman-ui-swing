@@ -131,16 +131,14 @@ public interface Rendering2D {
 	}
 
 	default void drawBonus(Graphics2D g, Entity bonusEntity) {
-		if (bonusEntity instanceof StaticBonus) {
-			StaticBonus bonus = (StaticBonus) bonusEntity;
+		if (bonusEntity instanceof StaticBonus bonus) {
 			var sprite = switch (bonus.state()) {
 			case INACTIVE -> null;
 			case EDIBLE -> getBonusSymbolSprite(bonus.symbol());
 			case EATEN -> getBonusValueSprite(bonus.symbol());
 			};
 			drawEntity(g, bonus, sprite);
-		} else if (bonusEntity instanceof MovingBonus) {
-			MovingBonus bonus = (MovingBonus) bonusEntity;
+		} else if (bonusEntity instanceof MovingBonus bonus) {
 			var sprite = switch (bonus.state()) {
 			case INACTIVE -> null;
 			case EDIBLE -> getBonusSymbolSprite(bonus.symbol());
