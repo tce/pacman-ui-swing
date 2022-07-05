@@ -64,7 +64,7 @@ public class PacManCutscene2 extends GameScene {
 		pac.setAnimations(new PacAnimations(pac, r2D));
 		pac.animations().ifPresent(anims -> anims.select(AnimKeys.PAC_MUNCHING));
 		pac.animation(AnimKeys.PAC_MUNCHING).ifPresent(SpriteAnimation::restart);
-		pac.placeAt(v(29, 20), 0, 0);
+		pac.placeAtTile(v(29, 20), 0, 0);
 		pac.setMoveDir(Direction.LEFT);
 		pac.setAbsSpeed(1.15);
 		pac.show();
@@ -76,7 +76,7 @@ public class PacManCutscene2 extends GameScene {
 		blinky.animations().ifPresent(anims -> anims.put(ANIM_KEY_DAMAGED, damaged));
 		blinky.animations().ifPresent(anims -> anims.select(AnimKeys.GHOST_COLOR));
 		blinky.animation(AnimKeys.GHOST_COLOR).ifPresent(SpriteAnimation::restart);
-		blinky.placeAt(v(28, 20), 0, 0);
+		blinky.placeAtTile(v(28, 20), 0, 0);
 		blinky.setBothDirs(Direction.LEFT);
 		blinky.setAbsSpeed(0);
 		blinky.hide();

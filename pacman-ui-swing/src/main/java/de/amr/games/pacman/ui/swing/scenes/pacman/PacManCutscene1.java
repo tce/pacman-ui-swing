@@ -63,7 +63,7 @@ public class PacManCutscene1 extends GameScene {
 		pac.animations().ifPresent(anims -> anims.select(AnimKeys.PAC_MUNCHING));
 		pac.animation(AnimKeys.PAC_MUNCHING).ifPresent(SpriteAnimation::restart);
 
-		pac.placeAt(v(29, 20), 0, 0);
+		pac.placeAtTile(v(29, 20), 0, 0);
 		pac.setMoveDir(Direction.LEFT);
 		pac.setAbsSpeed(1.25);
 		pac.show();
@@ -72,7 +72,7 @@ public class PacManCutscene1 extends GameScene {
 		blinky.setAnimations(new GhostAnimations(blinky, r2D));
 		blinky.animations().ifPresent(anims -> anims.select(AnimKeys.GHOST_COLOR));
 		blinky.animation(AnimKeys.GHOST_COLOR).ifPresent(SpriteAnimation::restart);
-		blinky.placeAt(v(32, 20), 0, 0);
+		blinky.placeAtTile(v(32, 20), 0, 0);
 		blinky.setBothDirs(Direction.LEFT);
 		blinky.setAbsSpeed(1.3);
 		blinky.show();
@@ -88,13 +88,13 @@ public class PacManCutscene1 extends GameScene {
 		if (frame == 0) {
 			gameController.sounds().ifPresent(snd -> snd.loop(GameSound.INTERMISSION_1, 1));
 		} else if (frame == 260) {
-			blinky.placeAt(v(-2, 20), 4, 0);
+			blinky.placeAtTile(v(-2, 20), 4, 0);
 			blinky.setBothDirs(Direction.RIGHT);
 			blinky.animations().ifPresent(anims -> anims.select(AnimKeys.GHOST_BLUE));
 			blinky.animations().ifPresent(anims -> anims.selectedAnimation().restart());
 			blinky.setAbsSpeed(0.75);
 		} else if (frame == 400) {
-			pac.placeAt(v(-3, 19), 0, 0);
+			pac.placeAtTile(v(-3, 19), 0, 0);
 			pac.setMoveDir(Direction.RIGHT);
 			pac.animations().ifPresent(anims -> anims.select(ANIMKEY_BIG_PAC));
 			pac.animations().ifPresent(anims -> anims.selectedAnimation().restart());
