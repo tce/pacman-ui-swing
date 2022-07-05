@@ -37,6 +37,7 @@ import java.util.stream.Stream;
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.V2i;
+import de.amr.games.pacman.lib.animation.DirectionAnimationMap;
 import de.amr.games.pacman.lib.animation.SingleSpriteAnimation;
 import de.amr.games.pacman.lib.animation.SpriteArray;
 import de.amr.games.pacman.model.common.GameModel;

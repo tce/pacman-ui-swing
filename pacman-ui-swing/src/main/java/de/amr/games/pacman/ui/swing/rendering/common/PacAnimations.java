@@ -27,7 +27,6 @@ package de.amr.games.pacman.ui.swing.rendering.common;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
-import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.SpriteAnimations;
 import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.model.common.actors.Pac;
@@ -51,10 +50,6 @@ public class PacAnimations extends SpriteAnimations<Pac> {
 
 	@Override
 	public BufferedImage current(Pac pac) {
-		return switch (selected) {
-		case AnimKeys.PAC_MUNCHING -> super.<Direction, BufferedImage>castToMap(AnimKeys.PAC_MUNCHING).get(pac.moveDir())
-				.frame();
-		default -> (BufferedImage) selectedAnimation().frame();
-		};
+		return (BufferedImage) selectedAnimation().frame();
 	}
 }

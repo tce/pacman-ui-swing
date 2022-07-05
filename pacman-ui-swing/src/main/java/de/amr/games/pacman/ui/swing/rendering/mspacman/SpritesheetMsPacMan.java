@@ -34,6 +34,7 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 import de.amr.games.pacman.lib.Direction;
+import de.amr.games.pacman.lib.animation.DirectionAnimationMap;
 import de.amr.games.pacman.lib.animation.SingleSpriteAnimation;
 import de.amr.games.pacman.lib.animation.SpriteArray;
 import de.amr.games.pacman.model.common.actors.Ghost;
@@ -41,7 +42,6 @@ import de.amr.games.pacman.model.common.actors.Pac;
 import de.amr.games.pacman.model.mspacman.Flap;
 import de.amr.games.pacman.model.mspacman.MsPacManGame;
 import de.amr.games.pacman.ui.swing.lib.Spritesheet;
-import de.amr.games.pacman.ui.swing.rendering.common.DirectionAnimationMap;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
 /**

@@ -26,8 +26,6 @@ package de.amr.games.pacman.ui.swing.rendering.common;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
-import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.SpriteAnimationMap;
 import de.amr.games.pacman.lib.animation.SpriteAnimations;
 import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.model.common.actors.Ghost;
@@ -49,14 +47,6 @@ public class GhostAnimations extends SpriteAnimations<Ghost> {
 
 	@Override
 	public BufferedImage current(Ghost ghost) {
-		return (BufferedImage) switch (selected) {
-		case AnimKeys.GHOST_EYES -> toMap(AnimKeys.GHOST_EYES).get(ghost.wishDir()).frame();
-		case AnimKeys.GHOST_COLOR -> toMap(AnimKeys.GHOST_COLOR).get(ghost.wishDir()).frame();
-		default -> selectedAnimation().frame();
-		};
-	}
-
-	private SpriteAnimationMap<Direction, BufferedImage> toMap(String name) {
-		return super.<Direction, BufferedImage>castToMap(name);
+		return (BufferedImage) selectedAnimation().frame();
 	}
 }
