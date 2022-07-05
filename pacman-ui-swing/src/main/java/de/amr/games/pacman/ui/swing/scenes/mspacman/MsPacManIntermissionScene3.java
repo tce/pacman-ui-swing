@@ -47,28 +47,28 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 public class MsPacManIntermissionScene3 extends GameScene {
 
 	private Intermission3Controller sceneController;
-	private Intermission3Controller.Context $;
+	private Intermission3Controller.Context ctx;
 	private Stork2D stork2D;
 
 	@Override
 	public void setContext(GameController gameController) {
 		super.setContext(gameController);
 		sceneController = new Intermission3Controller(gameController);
-		$ = sceneController.context();
+		ctx = sceneController.context();
 	}
 
 	@Override
 	public void init() {
 		sceneController.restartInInitialState(Intermission3Controller.State.FLAP);
 
-		$.flap.animation = SpritesheetMsPacMan.get().createFlapAnimation();
-		$.msPacMan.setAnimations(new PacAnimations($.msPacMan, r2D));
-		$.msPacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
-		$.pacMan.setAnimations(new PacAnimations($.pacMan, r2D));
-		var husbandMunching = SpritesheetMsPacMan.get().createHusbandMunchingAnimations($.pacMan);
-		$.pacMan.animations().ifPresent(anims -> anims.put(AnimKeys.PAC_MUNCHING, husbandMunching));
-		$.pacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
-		stork2D = new Stork2D($.stork, r2D);
+		ctx.flap.animation = SpritesheetMsPacMan.get().createFlapAnimation();
+		ctx.msPacMan.setAnimations(new PacAnimations(ctx.msPacMan, r2D));
+		ctx.msPacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
+		ctx.pacMan.setAnimations(new PacAnimations(ctx.pacMan, r2D));
+		var husbandMunching = SpritesheetMsPacMan.get().createHusbandMunchingAnimations(ctx.pacMan);
+		ctx.pacMan.animations().ifPresent(anims -> anims.put(AnimKeys.PAC_MUNCHING, husbandMunching));
+		ctx.pacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
+		stork2D = new Stork2D(ctx.stork, r2D);
 		stork2D.animation.restart();
 	}
 
@@ -80,10 +80,10 @@ public class MsPacManIntermissionScene3 extends GameScene {
 	@Override
 	public void render(Graphics2D g) {
 		var ssmp = ((SpritesheetMsPacMan) r2D);
-		ssmp.drawFlap(g, $.flap);
-		r2D.drawPac(g, $.msPacMan);
-		r2D.drawPac(g, $.pacMan);
+		ssmp.drawFlap(g, ctx.flap);
+		r2D.drawPac(g, ctx.msPacMan);
+		r2D.drawPac(g, ctx.pacMan);
 		stork2D.render(g);
-		r2D.drawEntity(g, $.bag, $.bagOpen ? ssmp.getJunior() : ssmp.getBlueBag());
+		r2D.drawEntity(g, ctx.bag, ctx.bagOpen ? ssmp.getJunior() : ssmp.getBlueBag());
 	}
 }

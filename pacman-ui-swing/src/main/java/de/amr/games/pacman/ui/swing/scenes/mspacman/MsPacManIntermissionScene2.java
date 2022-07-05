@@ -44,25 +44,25 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 public class MsPacManIntermissionScene2 extends GameScene {
 
 	private Intermission2Controller sceneController;
-	private Intermission2Controller.Context $;
+	private Intermission2Controller.Context ctx;
 
 	@Override
 	public void setContext(GameController gameController) {
 		super.setContext(gameController);
 		sceneController = new Intermission2Controller(gameController);
-		$ = sceneController.context();
+		ctx = sceneController.context();
 	}
 
 	@Override
 	public void init() {
 		sceneController.restartInInitialState(Intermission2Controller.State.FLAP);
-		$.flap.animation = SpritesheetMsPacMan.get().createFlapAnimation();
-		$.msPacMan.setAnimations(new PacAnimations($.msPacMan, r2D));
-		$.msPacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
-		$.pacMan.setAnimations(new PacAnimations($.pacMan, r2D));
-		var husbandMunching = SpritesheetMsPacMan.get().createHusbandMunchingAnimations($.pacMan);
-		$.pacMan.animations().ifPresent(anims -> anims.put(AnimKeys.PAC_MUNCHING, husbandMunching));
-		$.pacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
+		ctx.flap.animation = SpritesheetMsPacMan.get().createFlapAnimation();
+		ctx.msPacMan.setAnimations(new PacAnimations(ctx.msPacMan, r2D));
+		ctx.msPacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
+		ctx.pacMan.setAnimations(new PacAnimations(ctx.pacMan, r2D));
+		var husbandMunching = SpritesheetMsPacMan.get().createHusbandMunchingAnimations(ctx.pacMan);
+		ctx.pacMan.animations().ifPresent(anims -> anims.put(AnimKeys.PAC_MUNCHING, husbandMunching));
+		ctx.pacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
 	}
 
 	@Override
@@ -72,8 +72,8 @@ public class MsPacManIntermissionScene2 extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		((SpritesheetMsPacMan) r2D).drawFlap(g, $.flap);
-		r2D.drawPac(g, $.msPacMan);
-		r2D.drawPac(g, $.pacMan);
+		((SpritesheetMsPacMan) r2D).drawFlap(g, ctx.flap);
+		r2D.drawPac(g, ctx.msPacMan);
+		r2D.drawPac(g, ctx.pacMan);
 	}
 }

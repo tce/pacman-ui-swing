@@ -47,30 +47,30 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 public class MsPacManIntermissionScene1 extends GameScene {
 
 	private Intermission1Controller sceneController;
-	private Intermission1Controller.Context $;
+	private Intermission1Controller.Context ctx;
 	private Heart2D heart2D;
 
 	@Override
 	public void setContext(GameController gameController) {
 		super.setContext(gameController);
 		sceneController = new Intermission1Controller(gameController);
-		$ = sceneController.context();
+		ctx = sceneController.context();
 	}
 
 	@Override
 	public void init() {
 		sceneController.restartInInitialState(Intermission1Controller.State.FLAP);
 
-		$.flap.animation = SpritesheetMsPacMan.get().createFlapAnimation();
-		$.msPac.setAnimations(new PacAnimations($.msPac, r2D));
-		$.msPac.animations().ifPresent(SpriteAnimations::ensureRunning);
-		$.pacMan.setAnimations(new PacAnimations($.pacMan, r2D));
-		var husbandMunching = SpritesheetMsPacMan.get().createHusbandMunchingAnimations($.pacMan);
-		$.pacMan.animations().ifPresent(anims -> anims.put(AnimKeys.PAC_MUNCHING, husbandMunching));
-		$.pacMan.animations().ifPresent(anims -> anims.selectedAnimation().ensureRunning());
-		$.inky.setAnimations(new GhostAnimations($.inky, r2D));
-		$.pinky.setAnimations(new GhostAnimations($.pinky, r2D));
-		heart2D = new Heart2D($.heart);
+		ctx.flap.animation = SpritesheetMsPacMan.get().createFlapAnimation();
+		ctx.msPac.setAnimations(new PacAnimations(ctx.msPac, r2D));
+		ctx.msPac.animations().ifPresent(SpriteAnimations::ensureRunning);
+		ctx.pacMan.setAnimations(new PacAnimations(ctx.pacMan, r2D));
+		var husbandMunching = SpritesheetMsPacMan.get().createHusbandMunchingAnimations(ctx.pacMan);
+		ctx.pacMan.animations().ifPresent(anims -> anims.put(AnimKeys.PAC_MUNCHING, husbandMunching));
+		ctx.pacMan.animations().ifPresent(anims -> anims.selectedAnimation().ensureRunning());
+		ctx.inky.setAnimations(new GhostAnimations(ctx.inky, r2D));
+		ctx.pinky.setAnimations(new GhostAnimations(ctx.pinky, r2D));
+		heart2D = new Heart2D(ctx.heart);
 		heart2D.setImage(SpritesheetMsPacMan.get().getHeart());
 	}
 
@@ -81,11 +81,11 @@ public class MsPacManIntermissionScene1 extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		((SpritesheetMsPacMan) r2D).drawFlap(g, $.flap);
-		r2D.drawPac(g, $.msPac);
-		r2D.drawPac(g, $.pacMan);
-		r2D.drawGhost(g, $.inky);
-		r2D.drawGhost(g, $.pinky);
+		((SpritesheetMsPacMan) r2D).drawFlap(g, ctx.flap);
+		r2D.drawPac(g, ctx.msPac);
+		r2D.drawPac(g, ctx.pacMan);
+		r2D.drawGhost(g, ctx.inky);
+		r2D.drawGhost(g, ctx.pinky);
 		heart2D.render(g);
 	}
 }
