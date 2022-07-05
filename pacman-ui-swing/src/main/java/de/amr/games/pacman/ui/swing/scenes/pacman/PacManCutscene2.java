@@ -31,8 +31,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.SingleSpriteAnimation;
-import de.amr.games.pacman.lib.animation.SpriteAnimation;
+import de.amr.games.pacman.lib.animation.SingleEntityAnimation;
+import de.amr.games.pacman.lib.animation.EntityAnimation;
 import de.amr.games.pacman.model.common.GameSound;
 import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.model.common.actors.Ghost;
@@ -53,7 +53,7 @@ public class PacManCutscene2 extends GameScene {
 	private int frame;
 	private Pac pac;
 	private Ghost blinky;
-	private SingleSpriteAnimation<BufferedImage> stretched;
+	private SingleEntityAnimation<BufferedImage> stretched;
 
 	@Override
 	public void init() {
@@ -63,7 +63,7 @@ public class PacManCutscene2 extends GameScene {
 		pac = new Pac("Pac-Man");
 		pac.setAnimations(new PacAnimations(pac, r2D));
 		pac.animations().ifPresent(anims -> anims.select(AnimKeys.PAC_MUNCHING));
-		pac.animation(AnimKeys.PAC_MUNCHING).ifPresent(SpriteAnimation::restart);
+		pac.animation(AnimKeys.PAC_MUNCHING).ifPresent(EntityAnimation::restart);
 		pac.placeAtTile(v(29, 20), 0, 0);
 		pac.setMoveDir(Direction.LEFT);
 		pac.setAbsSpeed(1.15);
@@ -75,7 +75,7 @@ public class PacManCutscene2 extends GameScene {
 		var damaged = SpritesheetPacMan.get().createBlinkyDamagedAnimation();
 		blinky.animations().ifPresent(anims -> anims.put(ANIM_KEY_DAMAGED, damaged));
 		blinky.animations().ifPresent(anims -> anims.select(AnimKeys.GHOST_COLOR));
-		blinky.animation(AnimKeys.GHOST_COLOR).ifPresent(SpriteAnimation::restart);
+		blinky.animation(AnimKeys.GHOST_COLOR).ifPresent(EntityAnimation::restart);
 		blinky.placeAtTile(v(28, 20), 0, 0);
 		blinky.setBothDirs(Direction.LEFT);
 		blinky.setAbsSpeed(0);

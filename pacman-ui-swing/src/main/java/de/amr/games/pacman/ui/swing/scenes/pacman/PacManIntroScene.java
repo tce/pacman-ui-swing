@@ -35,7 +35,7 @@ import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.pacman.IntroController;
 import de.amr.games.pacman.controller.pacman.IntroController.State;
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.SpriteAnimations;
+import de.amr.games.pacman.lib.animation.EntityAnimations;
 import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.model.common.actors.GhostState;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
@@ -68,7 +68,7 @@ public class PacManIntroScene extends GameScene {
 	public void init() {
 		sceneController.restartInInitialState(IntroController.State.START);
 		ctx.pacMan.setAnimations(new PacAnimations(ctx.pacMan, r2D));
-		ctx.pacMan.animations().ifPresent(SpriteAnimations::ensureRunning);
+		ctx.pacMan.animations().ifPresent(EntityAnimations::ensureRunning);
 		Stream.of(ctx.ghosts).forEach(ghost -> ghost.setAnimations(new GhostAnimations(ghost, r2D)));
 	}
 

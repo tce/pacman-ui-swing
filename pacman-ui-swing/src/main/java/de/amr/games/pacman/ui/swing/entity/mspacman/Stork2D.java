@@ -26,7 +26,7 @@ package de.amr.games.pacman.ui.swing.entity.mspacman;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import de.amr.games.pacman.lib.animation.SingleSpriteAnimation;
+import de.amr.games.pacman.lib.animation.SingleEntityAnimation;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.SpritesheetMsPacMan;
@@ -35,7 +35,7 @@ public class Stork2D {
 
 	private final Entity stork;
 	private final Rendering2D rendering;
-	public SingleSpriteAnimation<BufferedImage> animation;
+	public SingleEntityAnimation<BufferedImage> animation;
 
 	public Stork2D(Entity stork, Rendering2D rendering) {
 		this.stork = stork;

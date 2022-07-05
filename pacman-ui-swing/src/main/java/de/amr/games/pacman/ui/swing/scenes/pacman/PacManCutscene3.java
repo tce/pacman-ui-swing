@@ -29,7 +29,7 @@ import static de.amr.games.pacman.lib.V2i.v;
 import java.awt.Graphics2D;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.SpriteAnimation;
+import de.amr.games.pacman.lib.animation.EntityAnimation;
 import de.amr.games.pacman.model.common.GameSound;
 import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.model.common.actors.Ghost;
@@ -80,13 +80,13 @@ public class PacManCutscene3 extends GameScene {
 			pac.setAbsSpeed(1.25);
 			pac.show();
 			pac.animations().ifPresent(anims -> anims.select(AnimKeys.PAC_MUNCHING));
-			pac.animation(AnimKeys.PAC_MUNCHING).ifPresent(SpriteAnimation::restart);
+			pac.animation(AnimKeys.PAC_MUNCHING).ifPresent(EntityAnimation::restart);
 			blinky.placeAtTile(v(35, 20), 0, 0);
 			blinky.setBothDirs(Direction.LEFT);
 			blinky.setAbsSpeed(1.25);
 			blinky.show();
 			blinky.animations().ifPresent(anims -> anims.select(ANIMKEY_PATCHED));
-			blinky.animation(ANIMKEY_PATCHED).ifPresent(SpriteAnimation::restart);
+			blinky.animation(ANIMKEY_PATCHED).ifPresent(EntityAnimation::restart);
 		} else if (frame == 296) {
 			blinky.placeAtTile(v(-1, 20), 0, 0);
 			blinky.setBothDirs(Direction.RIGHT);

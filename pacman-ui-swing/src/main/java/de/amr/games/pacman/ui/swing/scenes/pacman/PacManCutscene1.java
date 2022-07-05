@@ -29,7 +29,7 @@ import static de.amr.games.pacman.lib.V2i.v;
 import java.awt.Graphics2D;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.SpriteAnimation;
+import de.amr.games.pacman.lib.animation.EntityAnimation;
 import de.amr.games.pacman.model.common.GameSound;
 import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.model.common.actors.Ghost;
@@ -61,7 +61,7 @@ public class PacManCutscene1 extends GameScene {
 		var bigPacAnim = SpritesheetPacMan.get().createBigPacManMunchingAnimation();
 		pac.animations().ifPresent(anims -> anims.put(ANIMKEY_BIG_PAC, bigPacAnim));
 		pac.animations().ifPresent(anims -> anims.select(AnimKeys.PAC_MUNCHING));
-		pac.animation(AnimKeys.PAC_MUNCHING).ifPresent(SpriteAnimation::restart);
+		pac.animation(AnimKeys.PAC_MUNCHING).ifPresent(EntityAnimation::restart);
 
 		pac.placeAtTile(v(29, 20), 0, 0);
 		pac.setMoveDir(Direction.LEFT);
@@ -71,7 +71,7 @@ public class PacManCutscene1 extends GameScene {
 		blinky = new Ghost(Ghost.RED_GHOST, "Blinky");
 		blinky.setAnimations(new GhostAnimations(blinky, r2D));
 		blinky.animations().ifPresent(anims -> anims.select(AnimKeys.GHOST_COLOR));
-		blinky.animation(AnimKeys.GHOST_COLOR).ifPresent(SpriteAnimation::restart);
+		blinky.animation(AnimKeys.GHOST_COLOR).ifPresent(EntityAnimation::restart);
 		blinky.placeAtTile(v(32, 20), 0, 0);
 		blinky.setBothDirs(Direction.LEFT);
 		blinky.setAbsSpeed(1.3);

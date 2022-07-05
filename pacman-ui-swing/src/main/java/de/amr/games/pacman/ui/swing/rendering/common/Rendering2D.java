@@ -38,11 +38,11 @@ import java.util.stream.Stream;
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.V2i;
-import de.amr.games.pacman.lib.animation.DirectionAnimationMap;
-import de.amr.games.pacman.lib.animation.SingleSpriteAnimation;
-import de.amr.games.pacman.lib.animation.SpriteAnimation;
-import de.amr.games.pacman.lib.animation.SpriteAnimations;
-import de.amr.games.pacman.lib.animation.SpriteArray;
+import de.amr.games.pacman.lib.animation.EntityAnimationByDirection;
+import de.amr.games.pacman.lib.animation.SingleEntityAnimation;
+import de.amr.games.pacman.lib.animation.EntityAnimation;
+import de.amr.games.pacman.lib.animation.EntityAnimations;
+import de.amr.games.pacman.lib.animation.FixedEntityAnimation;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.actors.Ghost;
@@ -79,19 +79,19 @@ public interface Rendering2D {
 
 	// Animations
 
-	DirectionAnimationMap createPacMunchingAnimationMap(Pac pac);
+	EntityAnimationByDirection createPacMunchingAnimationMap(Pac pac);
 
-	SingleSpriteAnimation<BufferedImage> createPacDyingAnimation();
+	SingleEntityAnimation<BufferedImage> createPacDyingAnimation();
 
-	DirectionAnimationMap createGhostColorAnimationMap(Ghost ghost);
+	EntityAnimationByDirection createGhostColorAnimationMap(Ghost ghost);
 
-	SingleSpriteAnimation<BufferedImage> createGhostBlueAnimation();
+	SingleEntityAnimation<BufferedImage> createGhostBlueAnimation();
 
-	SingleSpriteAnimation<BufferedImage> createGhostFlashingAnimation();
+	SingleEntityAnimation<BufferedImage> createGhostFlashingAnimation();
 
-	DirectionAnimationMap createGhostEyesAnimationMap(Ghost ghost);
+	EntityAnimationByDirection createGhostEyesAnimationMap(Ghost ghost);
 
-	SpriteArray<BufferedImage> createGhostValueList();
+	FixedEntityAnimation<BufferedImage> createGhostValueList();
 
 	// Maze
 
@@ -99,7 +99,7 @@ public interface Rendering2D {
 
 	Color getFoodColor(int mazeNumber);
 
-	SingleSpriteAnimation<BufferedImage> createMazeFlashingAnimation(int mazeNumber);
+	SingleEntityAnimation<BufferedImage> createMazeFlashingAnimation(int mazeNumber);
 
 	void drawFullMaze(Graphics2D g, int mazeNumber, int x, int y);
 
@@ -125,8 +125,8 @@ public interface Rendering2D {
 		}
 	}
 
-	static Optional<BufferedImage> currentFrame(Optional<SpriteAnimations> anims) {
-		return anims.map(SpriteAnimations::selectedAnimation).map(SpriteAnimation::frame).map(BufferedImage.class::cast);
+	static Optional<BufferedImage> currentFrame(Optional<EntityAnimations> anims) {
+		return anims.map(EntityAnimations::selectedAnimation).map(EntityAnimation::frame).map(BufferedImage.class::cast);
 	}
 
 	default void drawPac(Graphics2D g, Pac pac) {

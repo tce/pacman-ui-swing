@@ -34,9 +34,9 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.DirectionAnimationMap;
-import de.amr.games.pacman.lib.animation.SingleSpriteAnimation;
-import de.amr.games.pacman.lib.animation.SpriteArray;
+import de.amr.games.pacman.lib.animation.EntityAnimationByDirection;
+import de.amr.games.pacman.lib.animation.SingleEntityAnimation;
+import de.amr.games.pacman.lib.animation.FixedEntityAnimation;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.Pac;
 import de.amr.games.pacman.model.mspacman.Flap;
@@ -176,22 +176,22 @@ public class SpritesheetMsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public SingleSpriteAnimation<BufferedImage> createPacDyingAnimation() {
-		var animation = new SingleSpriteAnimation<>(rhs(0, 3), rhs(0, 0), rhs(0, 1), rhs(0, 2));
+	public SingleEntityAnimation<BufferedImage> createPacDyingAnimation() {
+		var animation = new SingleEntityAnimation<>(rhs(0, 3), rhs(0, 0), rhs(0, 1), rhs(0, 2));
 		animation.frameDuration(10);
 		animation.repetions(2);
 		return animation;
 	}
 
 	@Override
-	public DirectionAnimationMap createPacMunchingAnimationMap(Pac pac) {
-		DirectionAnimationMap map = new DirectionAnimationMap(pac::moveDir);
+	public EntityAnimationByDirection createPacMunchingAnimationMap(Pac pac) {
+		EntityAnimationByDirection map = new EntityAnimationByDirection(pac::moveDir);
 		for (Direction dir : Direction.values()) {
 			int d = dirIndex(dir);
 			var wide = rhs(0, d);
 			var middle = rhs(1, d);
 			var closed = rhs(2, d);
-			var animation = new SingleSpriteAnimation<>(middle, closed, middle, wide);
+			var animation = new SingleEntityAnimation<>(middle, closed, middle, wide);
 			animation.frameDuration(2);
 			animation.repeatForever();
 			map.put(dir, animation);
@@ -199,11 +199,11 @@ public class SpritesheetMsPacMan implements Rendering2D {
 		return map;
 	}
 
-	public DirectionAnimationMap createSpouseMunchingAnimations(Pac pac) {
-		DirectionAnimationMap map = new DirectionAnimationMap(pac::moveDir);
+	public EntityAnimationByDirection createSpouseMunchingAnimations(Pac pac) {
+		EntityAnimationByDirection map = new EntityAnimationByDirection(pac::moveDir);
 		for (Direction dir : Direction.values()) {
 			int d = dirIndex(dir);
-			var munching = new SingleSpriteAnimation<>(rhs(0, 9 + d), rhs(1, 9 + d), rhs(2, 9));
+			var munching = new SingleEntityAnimation<>(rhs(0, 9 + d), rhs(1, 9 + d), rhs(2, 9));
 			munching.frameDuration(2);
 			munching.repeatForever();
 			map.put(dir, munching);
@@ -212,11 +212,11 @@ public class SpritesheetMsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public DirectionAnimationMap createGhostColorAnimationMap(Ghost ghost) {
-		DirectionAnimationMap map = new DirectionAnimationMap(ghost::wishDir);
+	public EntityAnimationByDirection createGhostColorAnimationMap(Ghost ghost) {
+		EntityAnimationByDirection map = new EntityAnimationByDirection(ghost::wishDir);
 		for (Direction dir : Direction.values()) {
 			int d = dirIndex(dir);
-			var color = new SingleSpriteAnimation<>(rhs(2 * d, 4 + ghost.id), rhs(2 * d + 1, 4 + ghost.id));
+			var color = new SingleEntityAnimation<>(rhs(2 * d, 4 + ghost.id), rhs(2 * d + 1, 4 + ghost.id));
 			color.frameDuration(4);
 			color.repeatForever();
 			map.put(dir, color);
@@ -225,49 +225,49 @@ public class SpritesheetMsPacMan implements Rendering2D {
 	}
 
 	@Override
-	public SingleSpriteAnimation<BufferedImage> createGhostBlueAnimation() {
-		var animation = new SingleSpriteAnimation<>(rhs(8, 4), rhs(9, 4));
+	public SingleEntityAnimation<BufferedImage> createGhostBlueAnimation() {
+		var animation = new SingleEntityAnimation<>(rhs(8, 4), rhs(9, 4));
 		animation.frameDuration(8);
 		animation.repeatForever();
 		return animation;
 	}
 
 	@Override
-	public SingleSpriteAnimation<BufferedImage> createGhostFlashingAnimation() {
-		var animation = new SingleSpriteAnimation<>(rhs(8, 4), rhs(9, 4), rhs(10, 4), rhs(11, 4));
+	public SingleEntityAnimation<BufferedImage> createGhostFlashingAnimation() {
+		var animation = new SingleEntityAnimation<>(rhs(8, 4), rhs(9, 4), rhs(10, 4), rhs(11, 4));
 		animation.frameDuration(4);
 		return animation;
 	}
 
 	@Override
-	public DirectionAnimationMap createGhostEyesAnimationMap(Ghost ghost) {
-		DirectionAnimationMap map = new DirectionAnimationMap(ghost::wishDir);
+	public EntityAnimationByDirection createGhostEyesAnimationMap(Ghost ghost) {
+		EntityAnimationByDirection map = new EntityAnimationByDirection(ghost::wishDir);
 		for (Direction dir : Direction.values()) {
-			map.put(dir, new SingleSpriteAnimation<>(rhs(8 + dirIndex(dir), 5)));
+			map.put(dir, new SingleEntityAnimation<>(rhs(8 + dirIndex(dir), 5)));
 		}
 		return map;
 	}
 
 	@Override
-	public SpriteArray<BufferedImage> createGhostValueList() {
-		return new SpriteArray<>(rhs(0, 8), rhs(1, 8), rhs(2, 8), rhs(3, 8));
+	public FixedEntityAnimation<BufferedImage> createGhostValueList() {
+		return new FixedEntityAnimation<>(rhs(0, 8), rhs(1, 8), rhs(2, 8), rhs(3, 8));
 	}
 
 	@Override
-	public SingleSpriteAnimation<BufferedImage> createMazeFlashingAnimation(int mazeNumber) {
+	public SingleEntityAnimation<BufferedImage> createMazeFlashingAnimation(int mazeNumber) {
 		int mazeIndex = mazeNumber - 1;
 		var mazeEmptyBright = ss.createBrightEffect(mazeEmpty[mazeIndex], MAZE_SIDE_COLORS[mazeIndex],
 				MAZE_TOP_COLORS[mazeIndex]);
-		var animation = new SingleSpriteAnimation<>(mazeEmptyBright, mazeEmpty[mazeIndex]);
+		var animation = new SingleEntityAnimation<>(mazeEmptyBright, mazeEmpty[mazeIndex]);
 		animation.frameDuration(15);
 		return animation;
 	}
 
-	public DirectionAnimationMap createHusbandMunchingAnimations(Pac pac) {
-		DirectionAnimationMap map = new DirectionAnimationMap(pac::moveDir);
+	public EntityAnimationByDirection createHusbandMunchingAnimations(Pac pac) {
+		EntityAnimationByDirection map = new EntityAnimationByDirection(pac::moveDir);
 		for (var dir : Direction.values()) {
 			int d = dirIndex(dir);
-			var animation = new SingleSpriteAnimation<>(rhs(0, 9 + d), rhs(1, 9 + d), rhs(2, 9));
+			var animation = new SingleEntityAnimation<>(rhs(0, 9 + d), rhs(1, 9 + d), rhs(2, 9));
 			animation.frameDuration(2);
 			animation.repeatForever();
 			map.put(dir, animation);
@@ -275,8 +275,8 @@ public class SpritesheetMsPacMan implements Rendering2D {
 		return map;
 	}
 
-	public SingleSpriteAnimation<BufferedImage> createFlapAnimation() {
-		var animation = new SingleSpriteAnimation<>( //
+	public SingleEntityAnimation<BufferedImage> createFlapAnimation() {
+		var animation = new SingleEntityAnimation<>( //
 				ss.si(456, 208, 32, 32), //
 				ss.si(488, 208, 32, 32), //
 				ss.si(520, 208, 32, 32), //
@@ -287,8 +287,8 @@ public class SpritesheetMsPacMan implements Rendering2D {
 		return animation;
 	}
 
-	public SingleSpriteAnimation<BufferedImage> createStorkFlyingAnimation() {
-		var animation = new SingleSpriteAnimation<>( //
+	public SingleEntityAnimation<BufferedImage> createStorkFlyingAnimation() {
+		var animation = new SingleEntityAnimation<>( //
 				ss.si(489, 176, 32, 16), //
 				ss.si(521, 176, 32, 16) //
 		);

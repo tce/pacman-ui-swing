@@ -26,7 +26,7 @@ package de.amr.games.pacman.ui.swing.entity.pacman;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import de.amr.games.pacman.lib.animation.SingleSpriteAnimation;
+import de.amr.games.pacman.lib.animation.SingleEntityAnimation;
 import de.amr.games.pacman.model.common.actors.Pac;
 import de.amr.games.pacman.ui.swing.rendering.pacman.SpritesheetPacMan;
 
@@ -39,7 +39,7 @@ public class BigPacMan2D {
 
 	private final SpritesheetPacMan rendering;
 	private final Pac pacMan;
-	private final SingleSpriteAnimation<BufferedImage> munchingAnimation;
+	private final SingleEntityAnimation<BufferedImage> munchingAnimation;
 
 	public BigPacMan2D(Pac pacMan, SpritesheetPacMan rendering) {
 		this.pacMan = pacMan;
