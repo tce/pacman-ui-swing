@@ -125,7 +125,7 @@ public interface Rendering2D {
 		}
 	}
 
-	static <E> Optional<BufferedImage> currentFrame(Optional<SpriteAnimations<E>> anims) {
+	static Optional<BufferedImage> currentFrame(Optional<SpriteAnimations> anims) {
 		return anims.map(SpriteAnimations::selectedAnimation).map(SpriteAnimation::frame).map(BufferedImage.class::cast);
 	}
 
