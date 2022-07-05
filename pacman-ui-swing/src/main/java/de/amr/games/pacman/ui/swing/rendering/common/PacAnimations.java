@@ -24,7 +24,6 @@ SOFTWARE.
 
 package de.amr.games.pacman.ui.swing.rendering.common;
 
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 import de.amr.games.pacman.lib.animation.SpriteAnimations;
@@ -46,10 +45,5 @@ public class PacAnimations extends SpriteAnimations<Pac> {
 	@Override
 	public void ensureRunning() {
 		byName(AnimKeys.PAC_MUNCHING).ensureRunning();
-	}
-
-	@Override
-	public BufferedImage current(Pac pac) {
-		return (BufferedImage) selectedAnimation().frame();
 	}
 }

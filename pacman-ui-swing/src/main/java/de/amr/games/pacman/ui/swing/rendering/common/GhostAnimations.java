@@ -23,7 +23,6 @@ SOFTWARE.
 */
 package de.amr.games.pacman.ui.swing.rendering.common;
 
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 import de.amr.games.pacman.lib.animation.SpriteAnimations;
@@ -43,10 +42,5 @@ public class GhostAnimations extends SpriteAnimations<Ghost> {
 		animationsByName.put(AnimKeys.GHOST_COLOR, r2D.createGhostColorAnimationMap(ghost));
 		animationsByName.put(AnimKeys.GHOST_VALUE, r2D.createGhostValueList());
 		select(AnimKeys.GHOST_COLOR);
-	}
-
-	@Override
-	public BufferedImage current(Ghost ghost) {
-		return (BufferedImage) selectedAnimation().frame();
 	}
 }
