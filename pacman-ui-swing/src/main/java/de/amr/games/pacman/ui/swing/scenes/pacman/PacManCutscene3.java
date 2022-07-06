@@ -57,12 +57,12 @@ public class PacManCutscene3 extends GameScene {
 		frame = -1;
 		initialDelay = 120;
 		pac = new Pac("Pac-Man");
-		pac.setAnimations(new PacAnimations(pac, r2D));
+		pac.setAnimationSet(new PacAnimations(pac, r2D));
 		blinky = new Ghost(Ghost.RED_GHOST, "Blinky");
-		blinky.setAnimations(new GhostAnimations(blinky, r2D));
-		blinky.animations()
+		blinky.setAnimationSet(new GhostAnimations(blinky, r2D));
+		blinky.animationSet()
 				.ifPresent(anims -> anims.put(ANIMKEY_PATCHED, SpritesheetPacMan.get().createBlinkyPatchedAnimation()));
-		blinky.animations()
+		blinky.animationSet()
 				.ifPresent(anims -> anims.put(ANIMKEY_NAKED, SpritesheetPacMan.get().createBlinkyNakedAnimation()));
 	}
 
@@ -79,27 +79,27 @@ public class PacManCutscene3 extends GameScene {
 			pac.setMoveDir(Direction.LEFT);
 			pac.setAbsSpeed(1.25);
 			pac.show();
-			pac.animations().ifPresent(anims -> anims.select(AnimKeys.PAC_MUNCHING));
+			pac.animationSet().ifPresent(anims -> anims.select(AnimKeys.PAC_MUNCHING));
 			pac.animation(AnimKeys.PAC_MUNCHING).ifPresent(EntityAnimation::restart);
 			blinky.placeAtTile(v(35, 20), 0, 0);
 			blinky.setBothDirs(Direction.LEFT);
 			blinky.setAbsSpeed(1.25);
 			blinky.show();
-			blinky.animations().ifPresent(anims -> anims.select(ANIMKEY_PATCHED));
+			blinky.animationSet().ifPresent(anims -> anims.select(ANIMKEY_PATCHED));
 			blinky.animation(ANIMKEY_PATCHED).ifPresent(EntityAnimation::restart);
 		} else if (frame == 296) {
 			blinky.placeAtTile(v(-1, 20), 0, 0);
 			blinky.setBothDirs(Direction.RIGHT);
-			blinky.animations().ifPresent(anims -> anims.select(ANIMKEY_NAKED));
-			blinky.animations().ifPresent(anims -> anims.selectedAnimation().restart());
+			blinky.animationSet().ifPresent(anims -> anims.select(ANIMKEY_NAKED));
+			blinky.animationSet().ifPresent(anims -> anims.selectedAnimation().restart());
 		} else if (frame == 516) {
 			gameController.state().timer().expire();
 			return;
 		}
 		pac.move();
-		pac.animate();
+		pac.advance();
 		blinky.move();
-		blinky.animate();
+		blinky.advance();
 	}
 
 	@Override

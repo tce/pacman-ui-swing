@@ -35,7 +35,7 @@ import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.pacman.IntroController;
 import de.amr.games.pacman.controller.pacman.IntroController.State;
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.EntityAnimations;
+import de.amr.games.pacman.lib.animation.EntityAnimationSet;
 import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.model.common.actors.GhostState;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
@@ -67,15 +67,15 @@ public class PacManIntroScene extends GameScene {
 	@Override
 	public void init() {
 		sceneController.restartInInitialState(IntroController.State.START);
-		ctx.pacMan.setAnimations(new PacAnimations(ctx.pacMan, r2D));
-		ctx.pacMan.animations().ifPresent(EntityAnimations::ensureRunning);
-		Stream.of(ctx.ghosts).forEach(ghost -> ghost.setAnimations(new GhostAnimations(ghost, r2D)));
+		ctx.pacMan.setAnimationSet(new PacAnimations(ctx.pacMan, r2D));
+		ctx.pacMan.animationSet().ifPresent(EntityAnimationSet::ensureRunning);
+		Stream.of(ctx.ghosts).forEach(ghost -> ghost.setAnimationSet(new GhostAnimations(ghost, r2D)));
 	}
 
 	private void onSceneStateChange(State fromState, State toState) {
 		if (fromState == State.CHASING_PAC && toState == State.CHASING_GHOSTS) {
 			for (var ghost : ctx.ghosts) {
-				ghost.animations().ifPresent(anims -> anims.select(AnimKeys.GHOST_BLUE));
+				ghost.animationSet().ifPresent(anims -> anims.select(AnimKeys.GHOST_BLUE));
 			}
 		}
 	}
@@ -95,7 +95,7 @@ public class PacManIntroScene extends GameScene {
 	private void updateAnimations() {
 		if (sceneController.state() == State.CHASING_GHOSTS) {
 			for (var ghost : ctx.ghosts) {
-				ghost.animations().ifPresent(anims -> {
+				ghost.animationSet().ifPresent(anims -> {
 					if (ghost.is(GhostState.DEAD) && ghost.killIndex != -1) {
 						anims.select(AnimKeys.GHOST_VALUE);
 						anims.selectedAnimation().ensureRunning();

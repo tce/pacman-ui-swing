@@ -57,10 +57,10 @@ public class PacManCutscene1 extends GameScene {
 		initialDelay = 120;
 
 		pac = new Pac("Pac-Man");
-		pac.setAnimations(new PacAnimations(pac, r2D));
+		pac.setAnimationSet(new PacAnimations(pac, r2D));
 		var bigPacAnim = SpritesheetPacMan.get().createBigPacManMunchingAnimation();
-		pac.animations().ifPresent(anims -> anims.put(ANIMKEY_BIG_PAC, bigPacAnim));
-		pac.animations().ifPresent(anims -> anims.select(AnimKeys.PAC_MUNCHING));
+		pac.animationSet().ifPresent(anims -> anims.put(ANIMKEY_BIG_PAC, bigPacAnim));
+		pac.animationSet().ifPresent(anims -> anims.select(AnimKeys.PAC_MUNCHING));
 		pac.animation(AnimKeys.PAC_MUNCHING).ifPresent(EntityAnimation::restart);
 
 		pac.placeAtTile(v(29, 20), 0, 0);
@@ -69,8 +69,8 @@ public class PacManCutscene1 extends GameScene {
 		pac.show();
 
 		blinky = new Ghost(Ghost.RED_GHOST, "Blinky");
-		blinky.setAnimations(new GhostAnimations(blinky, r2D));
-		blinky.animations().ifPresent(anims -> anims.select(AnimKeys.GHOST_COLOR));
+		blinky.setAnimationSet(new GhostAnimations(blinky, r2D));
+		blinky.animationSet().ifPresent(anims -> anims.select(AnimKeys.GHOST_COLOR));
 		blinky.animation(AnimKeys.GHOST_COLOR).ifPresent(EntityAnimation::restart);
 		blinky.placeAtTile(v(32, 20), 0, 0);
 		blinky.setBothDirs(Direction.LEFT);
@@ -90,22 +90,22 @@ public class PacManCutscene1 extends GameScene {
 		} else if (frame == 260) {
 			blinky.placeAtTile(v(-2, 20), 4, 0);
 			blinky.setBothDirs(Direction.RIGHT);
-			blinky.animations().ifPresent(anims -> anims.select(AnimKeys.GHOST_BLUE));
-			blinky.animations().ifPresent(anims -> anims.selectedAnimation().restart());
+			blinky.animationSet().ifPresent(anims -> anims.select(AnimKeys.GHOST_BLUE));
+			blinky.animationSet().ifPresent(anims -> anims.selectedAnimation().restart());
 			blinky.setAbsSpeed(0.75);
 		} else if (frame == 400) {
 			pac.placeAtTile(v(-3, 19), 0, 0);
 			pac.setMoveDir(Direction.RIGHT);
-			pac.animations().ifPresent(anims -> anims.select(ANIMKEY_BIG_PAC));
-			pac.animations().ifPresent(anims -> anims.selectedAnimation().restart());
+			pac.animationSet().ifPresent(anims -> anims.select(ANIMKEY_BIG_PAC));
+			pac.animationSet().ifPresent(anims -> anims.selectedAnimation().restart());
 		} else if (frame == 632) {
 			gameController.state().timer().expire();
 			return;
 		}
 		pac.move();
-		pac.animate();
+		pac.advance();
 		blinky.move();
-		blinky.animate();
+		blinky.advance();
 	}
 
 	@Override
