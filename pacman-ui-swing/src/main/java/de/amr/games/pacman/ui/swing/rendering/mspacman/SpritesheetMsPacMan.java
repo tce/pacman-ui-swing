@@ -34,9 +34,10 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 import de.amr.games.pacman.lib.Direction;
+import de.amr.games.pacman.lib.animation.EntityAnimation;
 import de.amr.games.pacman.lib.animation.EntityAnimationByDirection;
-import de.amr.games.pacman.lib.animation.SingleEntityAnimation;
 import de.amr.games.pacman.lib.animation.FixedEntityAnimation;
+import de.amr.games.pacman.lib.animation.SingleEntityAnimation;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.Pac;
 import de.amr.games.pacman.model.mspacman.Flap;
@@ -337,13 +338,15 @@ public class SpritesheetMsPacMan implements Rendering2D {
 
 	public void drawFlap(Graphics2D g, Flap flap) {
 		if (flap.isVisible()) {
-			BufferedImage sprite = (BufferedImage) flap.animation.animate();
-			drawEntity(g, flap, sprite);
-			g.setFont(getArcadeFont());
-			g.setColor(new Color(222, 222, 255));
-			g.drawString(flap.number + "", (int) flap.getPosition().x + sprite.getWidth() - 25,
-					(int) flap.getPosition().y + 18);
-			g.drawString(flap.text, (int) flap.getPosition().x + sprite.getWidth(), (int) flap.getPosition().y);
+			flap.animation().map(EntityAnimation::animate).ifPresent(spriteObj -> {
+				var sprite = (BufferedImage) spriteObj;
+				drawEntity(g, flap, sprite);
+				g.setFont(getArcadeFont());
+				g.setColor(new Color(222, 222, 255));
+				g.drawString(flap.number + "", (int) flap.getPosition().x + sprite.getWidth() - 25,
+						(int) flap.getPosition().y + 18);
+				g.drawString(flap.text, (int) flap.getPosition().x + sprite.getWidth(), (int) flap.getPosition().y);
+			});
 		}
 	}
 }
