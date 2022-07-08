@@ -27,6 +27,7 @@ import static de.amr.games.pacman.lib.TickTimer.secToTicks;
 import static de.amr.games.pacman.model.common.world.World.TS;
 import static de.amr.games.pacman.model.common.world.World.t;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.stream.Stream;
@@ -38,6 +39,7 @@ import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.EntityAnimationSet;
 import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.model.common.actors.GhostState;
+import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
@@ -66,7 +68,7 @@ public class PacManIntroScene extends GameScene {
 
 	@Override
 	public void init() {
-		sceneController.restartInInitialState(IntroController.State.START);
+		sceneController.restartInInitialState(IntroController.State.WARMUP);
 		ctx.pacMan.setAnimationSet(new PacAnimations(ctx.pacMan, r2D));
 		ctx.pacMan.animationSet().ifPresent(EntityAnimationSet::ensureRunning);
 		Stream.of(ctx.ghosts).forEach(ghost -> ghost.setAnimationSet(new GhostAnimations(ghost, r2D)));
@@ -113,12 +115,17 @@ public class PacManIntroScene extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		r2D.drawScores(g, game, true);
-		r2D.drawCredit(g, game.credit);
 
 		switch (sceneController.state()) {
-		case START, PRESENTING_GHOSTS -> drawGallery(g);
+		case WARMUP -> {
+			drawGrid(g);
+		}
+		case START, PRESENTING_GHOSTS -> {
+			drawScoresAndCredit(g);
+			drawGallery(g);
+		}
 		case SHOWING_POINTS -> {
+			drawScoresAndCredit(g);
 			drawGallery(g);
 			drawPoints(g, 11, 25);
 			if (sceneController.state().timer().tick() > secToTicks(1)) {
@@ -127,6 +134,7 @@ public class PacManIntroScene extends GameScene {
 			}
 		}
 		case CHASING_PAC -> {
+			drawScoresAndCredit(g);
 			drawGallery(g);
 			drawPoints(g, 11, 25);
 			r2D.drawCopyright(g, t(3), t(32));
@@ -137,12 +145,14 @@ public class PacManIntroScene extends GameScene {
 			drawGuys(g, offset);
 		}
 		case CHASING_GHOSTS -> {
+			drawScoresAndCredit(g);
 			drawGallery(g);
 			drawPoints(g, 11, 25);
 			r2D.drawCopyright(g, t(3), t(32));
 			drawGuys(g, 0);
 		}
 		case READY_TO_PLAY -> {
+			drawScoresAndCredit(g);
 			drawGallery(g);
 			drawPoints(g, 11, 25);
 			drawGuys(g, 0);
@@ -150,6 +160,22 @@ public class PacManIntroScene extends GameScene {
 		default -> {
 			// nothing to do
 		}
+		}
+	}
+
+	private void drawScoresAndCredit(Graphics2D g) {
+		r2D.drawScores(g, game, true);
+		r2D.drawCredit(g, game.credit);
+	}
+
+	private void drawGrid(Graphics2D g) {
+		g.setColor(Color.LIGHT_GRAY);
+		g.setStroke(new BasicStroke(2));
+		for (int row = 0; row < ArcadeWorld.TILES_Y / 2; ++row) {
+			g.drawLine(0, row * 2 * TS, ArcadeWorld.TILES_X * TS, row * 2 * TS);
+		}
+		for (int col = 0; col < ArcadeWorld.TILES_X / 2; ++col) {
+			g.drawLine(col * 2 * TS, 0, col * 2 * TS, ArcadeWorld.TILES_Y * TS);
 		}
 	}
 
