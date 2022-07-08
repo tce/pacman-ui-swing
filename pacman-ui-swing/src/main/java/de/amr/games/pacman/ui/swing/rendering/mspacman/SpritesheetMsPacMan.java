@@ -180,7 +180,7 @@ public class SpritesheetMsPacMan implements Rendering2D {
 	public SingleEntityAnimation<BufferedImage> createPacDyingAnimation() {
 		var animation = new SingleEntityAnimation<>(rhs(0, 3), rhs(0, 0), rhs(0, 1), rhs(0, 2));
 		animation.frameDuration(10);
-		animation.repetions(2);
+		animation.setRepetions(2);
 		return animation;
 	}
 
