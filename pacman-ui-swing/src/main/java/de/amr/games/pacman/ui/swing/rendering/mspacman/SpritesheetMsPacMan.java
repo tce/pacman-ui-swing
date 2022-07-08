@@ -179,7 +179,7 @@ public class SpritesheetMsPacMan implements Rendering2D {
 	@Override
 	public SingleEntityAnimation<BufferedImage> createPacDyingAnimation() {
 		var animation = new SingleEntityAnimation<>(rhs(0, 3), rhs(0, 0), rhs(0, 1), rhs(0, 2));
-		animation.frameDuration(10);
+		animation.setFrameDuration(10);
 		animation.setRepetions(2);
 		return animation;
 	}
@@ -193,7 +193,7 @@ public class SpritesheetMsPacMan implements Rendering2D {
 			var middle = rhs(1, d);
 			var closed = rhs(2, d);
 			var animation = new SingleEntityAnimation<>(middle, closed, middle, wide);
-			animation.frameDuration(2);
+			animation.setFrameDuration(2);
 			animation.repeatForever();
 			map.put(dir, animation);
 		}
@@ -205,7 +205,7 @@ public class SpritesheetMsPacMan implements Rendering2D {
 		for (Direction dir : Direction.values()) {
 			int d = dirIndex(dir);
 			var munching = new SingleEntityAnimation<>(rhs(0, 9 + d), rhs(1, 9 + d), rhs(2, 9));
-			munching.frameDuration(2);
+			munching.setFrameDuration(2);
 			munching.repeatForever();
 			map.put(dir, munching);
 		}
@@ -218,7 +218,7 @@ public class SpritesheetMsPacMan implements Rendering2D {
 		for (Direction dir : Direction.values()) {
 			int d = dirIndex(dir);
 			var color = new SingleEntityAnimation<>(rhs(2 * d, 4 + ghost.id), rhs(2 * d + 1, 4 + ghost.id));
-			color.frameDuration(4);
+			color.setFrameDuration(4);
 			color.repeatForever();
 			map.put(dir, color);
 		}
@@ -228,7 +228,7 @@ public class SpritesheetMsPacMan implements Rendering2D {
 	@Override
 	public SingleEntityAnimation<BufferedImage> createGhostBlueAnimation() {
 		var animation = new SingleEntityAnimation<>(rhs(8, 4), rhs(9, 4));
-		animation.frameDuration(8);
+		animation.setFrameDuration(8);
 		animation.repeatForever();
 		return animation;
 	}
@@ -236,7 +236,7 @@ public class SpritesheetMsPacMan implements Rendering2D {
 	@Override
 	public SingleEntityAnimation<BufferedImage> createGhostFlashingAnimation() {
 		var animation = new SingleEntityAnimation<>(rhs(8, 4), rhs(9, 4), rhs(10, 4), rhs(11, 4));
-		animation.frameDuration(4);
+		animation.setFrameDuration(4);
 		return animation;
 	}
 
@@ -260,7 +260,7 @@ public class SpritesheetMsPacMan implements Rendering2D {
 		var mazeEmptyBright = ss.createBrightEffect(mazeEmpty[mazeIndex], MAZE_SIDE_COLORS[mazeIndex],
 				MAZE_TOP_COLORS[mazeIndex]);
 		var animation = new SingleEntityAnimation<>(mazeEmptyBright, mazeEmpty[mazeIndex]);
-		animation.frameDuration(15);
+		animation.setFrameDuration(15);
 		return animation;
 	}
 
@@ -269,7 +269,7 @@ public class SpritesheetMsPacMan implements Rendering2D {
 		for (var dir : Direction.values()) {
 			int d = dirIndex(dir);
 			var animation = new SingleEntityAnimation<>(rhs(0, 9 + d), rhs(1, 9 + d), rhs(2, 9));
-			animation.frameDuration(2);
+			animation.setFrameDuration(2);
 			animation.repeatForever();
 			map.put(dir, animation);
 		}
@@ -284,7 +284,7 @@ public class SpritesheetMsPacMan implements Rendering2D {
 				ss.si(488, 208, 32, 32), //
 				ss.si(456, 208, 32, 32)//
 		);
-		animation.frameDuration(4);
+		animation.setFrameDuration(4);
 		return animation;
 	}
 
@@ -294,7 +294,7 @@ public class SpritesheetMsPacMan implements Rendering2D {
 				ss.si(521, 176, 32, 16) //
 		);
 		animation.repeatForever();
-		animation.frameDuration(10);
+		animation.setFrameDuration(10);
 		return animation;
 	}
 

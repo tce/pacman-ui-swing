@@ -39,8 +39,8 @@ import java.util.List;
 
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.EntityAnimationByDirection;
-import de.amr.games.pacman.lib.animation.SingleEntityAnimation;
 import de.amr.games.pacman.lib.animation.FixedEntityAnimation;
+import de.amr.games.pacman.lib.animation.SingleEntityAnimation;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.Pac;
 import de.amr.games.pacman.ui.swing.lib.Spritesheet;
@@ -90,7 +90,7 @@ public class SpritesheetPacMan implements Rendering2D {
 		var mazeEmptyDark = image("/pacman/graphics/maze_empty.png");
 		var mazeEmptyBright = ss.createBrightEffect(mazeEmptyDark, new Color(33, 33, 255), Color.BLACK);
 		mazeFlashingAnim = new SingleEntityAnimation<>(mazeEmptyBright, mazeEmptyDark);
-		mazeFlashingAnim.frameDuration(15);
+		mazeFlashingAnim.setFrameDuration(15);
 	}
 
 	@Override
@@ -141,7 +141,7 @@ public class SpritesheetPacMan implements Rendering2D {
 				ss.tile(3, 0), ss.tile(4, 0), ss.tile(5, 0), ss.tile(6, 0), //
 				ss.tile(7, 0), ss.tile(8, 0), ss.tile(9, 0), ss.tile(10, 0), //
 				ss.tile(11, 0), ss.tile(12, 0), ss.tile(13, 0));
-		animation.frameDuration(8);
+		animation.setFrameDuration(8);
 		return animation;
 	}
 
@@ -154,7 +154,7 @@ public class SpritesheetPacMan implements Rendering2D {
 			var open = ss.tile(1, d);
 			var closed = ss.tile(2, 0);
 			var animation = new SingleEntityAnimation<>(closed, open, wide, open);
-			animation.frameDuration(2);
+			animation.setFrameDuration(2);
 			animation.repeatForever();
 			munching.put(dir, animation);
 		}
@@ -167,7 +167,7 @@ public class SpritesheetPacMan implements Rendering2D {
 		for (Direction dir : Direction.values()) {
 			var animation = new SingleEntityAnimation<>(ss.tile(2 * index(dir), 4 + ghost.id),
 					ss.tile(2 * index(dir) + 1, 4 + ghost.id));
-			animation.frameDuration(8);
+			animation.setFrameDuration(8);
 			animation.repeatForever();
 			map.put(dir, animation);
 		}
@@ -177,7 +177,7 @@ public class SpritesheetPacMan implements Rendering2D {
 	@Override
 	public SingleEntityAnimation<BufferedImage> createGhostBlueAnimation() {
 		var animation = new SingleEntityAnimation<>(ss.tile(8, 4), ss.tile(9, 4));
-		animation.frameDuration(8);
+		animation.setFrameDuration(8);
 		animation.repeatForever();
 		return animation;
 	}
@@ -185,7 +185,7 @@ public class SpritesheetPacMan implements Rendering2D {
 	@Override
 	public SingleEntityAnimation<BufferedImage> createGhostFlashingAnimation() {
 		var animation = new SingleEntityAnimation<>(ss.tile(8, 4), ss.tile(9, 4), ss.tile(10, 4), ss.tile(11, 4));
-		animation.frameDuration(4);
+		animation.setFrameDuration(4);
 		return animation;
 	}
 
@@ -207,7 +207,7 @@ public class SpritesheetPacMan implements Rendering2D {
 
 	public SingleEntityAnimation<BufferedImage> createBigPacManMunchingAnimation() {
 		var animation = new SingleEntityAnimation<>(ss.tiles(2, 1, 2, 2), ss.tiles(4, 1, 2, 2), ss.tiles(6, 1, 2, 2));
-		animation.frameDuration(4);
+		animation.setFrameDuration(4);
 		animation.repeatForever();
 		return animation;
 	}
@@ -222,14 +222,14 @@ public class SpritesheetPacMan implements Rendering2D {
 
 	public SingleEntityAnimation<BufferedImage> createBlinkyPatchedAnimation() {
 		var blinkyPatched = new SingleEntityAnimation<>(ss.tile(10, 7), ss.tile(11, 7));
-		blinkyPatched.frameDuration(4);
+		blinkyPatched.setFrameDuration(4);
 		blinkyPatched.repeatForever();
 		return blinkyPatched;
 	}
 
 	public SingleEntityAnimation<BufferedImage> createBlinkyNakedAnimation() {
 		var blinkyNaked = new SingleEntityAnimation<>(ss.tiles(8, 8, 2, 1), ss.tiles(10, 8, 2, 1));
-		blinkyNaked.frameDuration(4);
+		blinkyNaked.setFrameDuration(4);
 		blinkyNaked.repeatForever();
 		return blinkyNaked;
 	}
