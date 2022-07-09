@@ -197,16 +197,20 @@ public interface Rendering2D {
 	}
 
 	default void drawLivesCounter(Graphics2D g, GameModel game) {
+		int numLivesDisplayed = game.livesOneLessShown ? game.lives - 1 : game.lives;
+		if (numLivesDisplayed <= 0) {
+			return;
+		}
 		int x = t(2);
 		int y = t(34);
 		int maxLivesDisplayed = 5;
-		for (int i = 0; i < Math.min(game.livesDisplayed, maxLivesDisplayed); ++i) {
+		for (int i = 0; i < Math.min(numLivesDisplayed, maxLivesDisplayed); ++i) {
 			g.drawImage(getLifeSprite(), x + t(2 * i), y, null);
 		}
-		if (game.livesDisplayed > maxLivesDisplayed) {
+		if (numLivesDisplayed > maxLivesDisplayed) {
 			g.setColor(Color.YELLOW);
 			g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 6));
-			g.drawString("+" + (game.livesDisplayed - maxLivesDisplayed), x + t(10), y + t(1) - 2);
+			g.drawString("+" + (numLivesDisplayed - maxLivesDisplayed), x + t(10), y + t(1) - 2);
 		}
 	}
 
