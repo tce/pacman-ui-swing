@@ -133,6 +133,10 @@ public class SpritesheetMsPacMan implements Rendering2D {
 		}
 	}
 
+	public BufferedImage getSourceImage() {
+		return ss.image;
+	}
+
 	/**
 	 * Picks sprite from the right part of the sheet, on the left are the maze images
 	 */

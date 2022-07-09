@@ -94,6 +94,11 @@ public class SpritesheetPacMan implements Rendering2D {
 	}
 
 	@Override
+	public BufferedImage getSourceImage() {
+		return ss.image;
+	}
+
+	@Override
 	public Font getArcadeFont() {
 		return font;
 	}

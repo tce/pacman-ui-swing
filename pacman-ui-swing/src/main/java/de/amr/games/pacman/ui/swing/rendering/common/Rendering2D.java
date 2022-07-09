@@ -69,6 +69,8 @@ public interface Rendering2D {
 
 	// Sprites
 
+	BufferedImage getSourceImage();
+
 	BufferedImage getGhostSprite(int ghostID, Direction dir);
 
 	BufferedImage getLifeSprite();
