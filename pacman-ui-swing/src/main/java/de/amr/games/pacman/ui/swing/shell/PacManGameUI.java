@@ -277,6 +277,7 @@ public class PacManGameUI implements GameEventAdapter {
 		else if (Keyboard.keyPressed("L")) {
 			if (game.playing) {
 				game.lives += 3;
+				game.livesDisplayed += 3;
 			}
 		}
 

@@ -38,11 +38,11 @@ import java.util.stream.Stream;
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.V2i;
-import de.amr.games.pacman.lib.animation.EntityAnimationByDirection;
-import de.amr.games.pacman.lib.animation.SingleEntityAnimation;
 import de.amr.games.pacman.lib.animation.EntityAnimation;
+import de.amr.games.pacman.lib.animation.EntityAnimationByDirection;
 import de.amr.games.pacman.lib.animation.EntityAnimationSet;
 import de.amr.games.pacman.lib.animation.FixedEntityAnimation;
+import de.amr.games.pacman.lib.animation.SingleEntityAnimation;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.actors.Ghost;
@@ -200,13 +200,13 @@ public interface Rendering2D {
 		int x = t(2);
 		int y = t(34);
 		int maxLivesDisplayed = 5;
-		for (int i = 0; i < Math.min(game.lives, maxLivesDisplayed); ++i) {
+		for (int i = 0; i < Math.min(game.livesDisplayed, maxLivesDisplayed); ++i) {
 			g.drawImage(getLifeSprite(), x + t(2 * i), y, null);
 		}
-		if (game.lives > maxLivesDisplayed) {
+		if (game.livesDisplayed > maxLivesDisplayed) {
 			g.setColor(Color.YELLOW);
 			g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 6));
-			g.drawString("+" + (game.lives - maxLivesDisplayed), x + t(10), y + t(1) - 2);
+			g.drawString("+" + (game.livesDisplayed - maxLivesDisplayed), x + t(10), y + t(1) - 2);
 		}
 	}
 
