@@ -66,10 +66,6 @@ public abstract class GameScene implements GameEventAdapter {
 		gameController.setSounds(sounds);
 	}
 
-	public boolean hasCredit() {
-		return game.credit > 0;
-	}
-
 	public V2i size() {
 		return size;
 	}

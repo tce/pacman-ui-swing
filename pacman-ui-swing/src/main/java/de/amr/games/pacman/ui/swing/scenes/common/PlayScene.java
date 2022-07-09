@@ -74,14 +74,14 @@ public class PlayScene extends GameScene {
 		if (PacManGameUI.isDebugDraw()) {
 			DebugDraw.drawPlaySceneDebugInfo(g, gameController);
 		}
-		if (hasCredit() && game.playing) {
+		if (game.hasCredit() && game.playing) {
 			r2D.drawLivesCounter(g, game);
 		}
-		if (hasCredit()) {
+		if (game.hasCredit()) {
 			r2D.drawLevelCounter(g, game);
 		}
-		if (!hasCredit() && !game.playing) {
-			r2D.drawCredit(g, game.credit);
+		if (!game.hasCredit() && !game.playing) {
+			r2D.drawCredit(g, game.getCredit());
 		}
 	}
 
@@ -98,7 +98,7 @@ public class PlayScene extends GameScene {
 		if (PacManGameUI.isDebugDraw()) {
 			DebugDraw.drawMazeStructure(g, game);
 		}
-		r2D.drawGameState(g, game, hasCredit() ? gameController.state() : GameState.GAME_OVER);
+		r2D.drawGameState(g, game, game.hasCredit() ? gameController.state() : GameState.GAME_OVER);
 	}
 
 	@Override

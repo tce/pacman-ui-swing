@@ -27,7 +27,6 @@ import static de.amr.games.pacman.lib.TickTimer.secToTicks;
 import static de.amr.games.pacman.model.common.world.World.TS;
 import static de.amr.games.pacman.model.common.world.World.t;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.stream.Stream;
@@ -39,7 +38,6 @@ import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.EntityAnimationSet;
 import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.model.common.actors.GhostState;
-import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
@@ -68,7 +66,7 @@ public class PacManIntroScene extends GameScene {
 
 	@Override
 	public void init() {
-		sceneController.restartInInitialState(IntroController.State.WARMUP);
+		sceneController.restartInInitialState(IntroController.State.START);
 		ctx.pacMan.setAnimationSet(new PacAnimations(ctx.pacMan, r2D));
 		ctx.pacMan.animationSet().ifPresent(EntityAnimationSet::ensureRunning);
 		Stream.of(ctx.ghosts).forEach(ghost -> ghost.setAnimationSet(new GhostAnimations(ghost, r2D)));
@@ -117,9 +115,6 @@ public class PacManIntroScene extends GameScene {
 	public void render(Graphics2D g) {
 
 		switch (sceneController.state()) {
-		case WARMUP -> {
-			drawGrid(g);
-		}
 		case START, PRESENTING_GHOSTS -> {
 			drawScoresAndCredit(g);
 			drawGallery(g);
@@ -165,18 +160,7 @@ public class PacManIntroScene extends GameScene {
 
 	private void drawScoresAndCredit(Graphics2D g) {
 		r2D.drawScores(g, game, true);
-		r2D.drawCredit(g, game.credit);
-	}
-
-	private void drawGrid(Graphics2D g) {
-		g.setColor(Color.LIGHT_GRAY);
-		g.setStroke(new BasicStroke(2));
-		for (int row = 0; row < ArcadeWorld.TILES_Y / 2; ++row) {
-			g.drawLine(0, row * 2 * TS, ArcadeWorld.TILES_X * TS, row * 2 * TS);
-		}
-		for (int col = 0; col < ArcadeWorld.TILES_X / 2; ++col) {
-			g.drawLine(col * 2 * TS, 0, col * 2 * TS, ArcadeWorld.TILES_Y * TS);
-		}
+		r2D.drawCredit(g, game.getCredit());
 	}
 
 	private void drawGuys(Graphics2D g, int offset) {
