@@ -56,6 +56,7 @@ import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.ui.swing.app.GameLoop;
 import de.amr.games.pacman.ui.swing.lib.Ujfc;
+import de.amr.games.pacman.ui.swing.scenes.common.BootScene;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.scenes.common.PlayScene;
 import de.amr.games.pacman.ui.swing.scenes.mspacman.MsPacManCreditScene;
@@ -100,6 +101,7 @@ public class PacManGameUI implements GameEventAdapter {
 	private final FlashMessageDisplay flashMessageDisplay;
 
 	private final List<GameScene> gameScenesPacMan = List.of( //
+			new BootScene(), //
 			new PacManIntroScene(), //
 			new PacManCreditScene(), //
 			new PacManCutscene1(), //
@@ -109,6 +111,7 @@ public class PacManGameUI implements GameEventAdapter {
 	);
 
 	private final List<GameScene> gameScenesMsPacMan = List.of( //
+			new BootScene(), //
 			new MsPacManIntroScene(), //
 			new MsPacManCreditScene(), //
 			new MsPacManIntermissionScene1(), //
@@ -201,11 +204,12 @@ public class PacManGameUI implements GameEventAdapter {
 		var game = gameController.game();
 		var scenes = game.variant == MS_PACMAN ? gameScenesMsPacMan : gameScenesPacMan;
 		return switch (state) {
-		case INTRO -> scenes.get(0);
-		case CREDIT -> scenes.get(1);
-		case INTERMISSION -> scenes.get(1 + game.intermissionNumber(game.level.number));
-		case INTERMISSION_TEST -> scenes.get(1 + game.intermissionTestNumber);
-		default -> scenes.get(5);
+		case BOOT -> scenes.get(0);
+		case INTRO -> scenes.get(1);
+		case CREDIT -> scenes.get(2);
+		case INTERMISSION -> scenes.get(2 + game.intermissionNumber(game.level.number));
+		case INTERMISSION_TEST -> scenes.get(2 + game.intermissionTestNumber);
+		default -> scenes.get(6);
 		};
 	}
 

@@ -133,6 +133,7 @@ public class SpritesheetMsPacMan implements Rendering2D {
 		}
 	}
 
+	@Override
 	public BufferedImage getSourceImage() {
 		return ss.image;
 	}

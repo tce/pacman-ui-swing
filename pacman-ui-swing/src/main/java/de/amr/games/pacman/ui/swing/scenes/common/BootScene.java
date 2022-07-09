@@ -110,7 +110,15 @@ public class BootScene extends GameScene {
 				continue;
 			}
 			for (int col = 0; col < ArcadeWorld.TILES_X / 2; ++col) {
-				var rect = sheet.getSourceImage().getSubimage(rnd.nextInt(sheetWidth), rnd.nextInt(sheetHeight), 16, 16);
+				var x = rnd.nextInt(sheetWidth);
+				if (x + 16 > sheetWidth) {
+					x -= 16;
+				}
+				var y = rnd.nextInt(sheetHeight);
+				if (y + 16 > sheetHeight) {
+					y -= 16;
+				}
+				var rect = sheet.getSourceImage().getSubimage(x, y, 16, 16);
 				sheet.drawSprite(g, rect, 16 * col, 16 * row);
 			}
 		}

@@ -116,6 +116,5 @@ public class PlayScene extends GameScene {
 	@Override
 	public void onPlayerGetsExtraLife(GameEvent e) {
 		gameController.sounds().ifPresent(snd -> snd.play(GameSound.EXTRA_LIFE));
-
 	}
 }
