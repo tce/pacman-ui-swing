@@ -100,7 +100,6 @@ public class AbstractGameSounds implements GameSoundController {
 
 	protected void loopClip(Clip clip, int repetitions) {
 		if (!silent && !muted) {
-			clip.setFramePosition(0);
 			clip.loop(repetitions);
 		}
 	}
