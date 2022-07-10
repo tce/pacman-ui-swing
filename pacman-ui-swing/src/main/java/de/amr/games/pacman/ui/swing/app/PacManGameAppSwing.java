@@ -32,7 +32,7 @@ import de.amr.games.pacman.event.GameEvents;
 import de.amr.games.pacman.lib.Option;
 import de.amr.games.pacman.lib.OptionParser;
 import de.amr.games.pacman.model.common.GameVariant;
-import de.amr.games.pacman.ui.swing.shell.PacController;
+import de.amr.games.pacman.ui.swing.shell.KeySteering;
 import de.amr.games.pacman.ui.swing.shell.PacManGameUI;
 
 /**
@@ -70,7 +70,7 @@ public class PacManGameAppSwing {
 		var ui = new PacManGameUI(gameLoop, gameController, OPT_HEIGHT.getValue());
 		ui.show();
 		GameEvents.addEventListener(ui);
-		gameController.setPacSteering(new PacController("Up", "Down", "Left", "Right"));
+		gameController.setPacSteering(new KeySteering("Up", "Down", "Left", "Right"));
 		gameLoop.action = () -> {
 			gameLoop.clock.frame(gameController::update);
 			ui.update();

@@ -23,8 +23,7 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.shell;
 
-import java.util.function.Consumer;
-
+import de.amr.games.pacman.controller.common.Steering;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.model.common.actors.Creature;
 
@@ -33,14 +32,14 @@ import de.amr.games.pacman.model.common.actors.Creature;
  * 
  * @author Armin Reichert
  */
-public class PacController implements Consumer<Creature> {
+public class KeySteering implements Steering {
 
 	private String up;
 	private String down;
 	private String left;
 	private String right;
 
-	public PacController(String up, String down, String left, String right) {
+	public KeySteering(String up, String down, String left, String right) {
 		this.up = up;
 		this.down = down;
 		this.left = left;
@@ -48,7 +47,7 @@ public class PacController implements Consumer<Creature> {
 	}
 
 	@Override
-	public void accept(Creature pac) {
+	public void steer(Creature pac) {
 		if (Keyboard.keyPressed(up)) {
 			pac.setWishDir(Direction.UP);
 		} else if (Keyboard.keyPressed(down)) {
