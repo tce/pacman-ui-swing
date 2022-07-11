@@ -34,7 +34,7 @@ import de.amr.games.pacman.model.common.GameSound;
  */
 public class PacManGameSounds extends AbstractGameSounds {
 
-	private static final Logger logger = LogManager.getFormatterLogger();
+	private static final Logger LOGGER = LogManager.getFormatterLogger();
 
 	public PacManGameSounds() {
 		//@formatter:off
@@ -53,6 +53,6 @@ public class PacManGameSounds extends AbstractGameSounds {
 		put(clips, GameSound.SIREN_3,         "/pacman/sound/siren_3.wav");
 		put(clips, GameSound.SIREN_4,         "/pacman/sound/siren_4.wav");
 		//@formatter:on
-		logger.info("Pac-Man audio clips loaded");
+		LOGGER.info("Pac-Man audio clips loaded");
 	}
 }

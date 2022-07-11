@@ -35,7 +35,7 @@ import de.amr.games.pacman.model.common.GameSound;
  */
 public class MsPacManGameSounds extends AbstractGameSounds {
 
-	private static final Logger logger = LogManager.getFormatterLogger();
+	private static final Logger LOGGER = LogManager.getFormatterLogger();
 
 	public MsPacManGameSounds() {
 		//@formatter:off
@@ -56,6 +56,6 @@ public class MsPacManGameSounds extends AbstractGameSounds {
 		put(clips, GameSound.SIREN_3,         "/mspacman/sound/Ghost Noise 3.wav");
 		put(clips, GameSound.SIREN_4,         "/mspacman/sound/Ghost Noise 4.wav");
 		//@formatter:on
-		logger.info("Ms. Pac-Man audio clips loaded");
+		LOGGER.info("Ms. Pac-Man audio clips loaded");
 	}
 }

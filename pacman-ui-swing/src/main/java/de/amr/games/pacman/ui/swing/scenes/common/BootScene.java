@@ -46,7 +46,7 @@ import de.amr.games.pacman.ui.swing.rendering.pacman.SpritesheetPacMan;
  */
 public class BootScene extends GameScene {
 
-	private static final Logger logger = LogManager.getFormatterLogger();
+	private static final Logger LOGGER = LogManager.getFormatterLogger();
 
 	private final Random rnd = new Random();
 	private BufferedImage buffer;
@@ -97,7 +97,7 @@ public class BootScene extends GameScene {
 				g.drawString(hexCode, col * 8, row * 8 + 8);
 			}
 		}
-		logger.trace("Hex codes");
+		LOGGER.trace("Hex codes");
 	}
 
 	private void drawRandomSprites(Graphics2D g) {
@@ -122,7 +122,7 @@ public class BootScene extends GameScene {
 				sheet.drawSprite(g, rect, 16 * col, 16 * row);
 			}
 		}
-		logger.trace("Random sprites");
+		LOGGER.trace("Random sprites");
 	}
 
 	private void drawGrid(Graphics2D g) {
@@ -134,6 +134,6 @@ public class BootScene extends GameScene {
 		for (int col = 0; col < ArcadeWorld.TILES_X / 2; ++col) {
 			g.drawLine(col * 2 * TS, 0, col * 2 * TS, ArcadeWorld.TILES_Y * TS);
 		}
-		logger.trace("Grid");
+		LOGGER.trace("Grid");
 	}
 }
