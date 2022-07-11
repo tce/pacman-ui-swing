@@ -47,7 +47,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.amr.games.pacman.controller.common.GameController;
-import de.amr.games.pacman.controller.common.GameSoundController;
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameEventAdapter;
@@ -324,7 +323,7 @@ public class PacManGameUI implements GameEventAdapter {
 
 	private void restartIntro() {
 		currentGameScene.end();
-		gameController.sounds().ifPresent(GameSoundController::stopAll);
+		gameController.sounds().stopAll();
 		gameController.restartIntro();
 	}
 

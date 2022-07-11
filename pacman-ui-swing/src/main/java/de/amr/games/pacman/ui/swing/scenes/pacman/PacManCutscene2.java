@@ -31,8 +31,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.SingleEntityAnimation;
 import de.amr.games.pacman.lib.animation.EntityAnimation;
+import de.amr.games.pacman.lib.animation.SingleEntityAnimation;
 import de.amr.games.pacman.model.common.GameSound;
 import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.model.common.actors.Ghost;
@@ -90,7 +90,7 @@ public class PacManCutscene2 extends GameScene {
 		}
 		++frame;
 		if (frame == 0) {
-			gameController.sounds().ifPresent(snd -> snd.play(GameSound.INTERMISSION_1));
+			gameController.sounds().play(GameSound.INTERMISSION_1);
 		} else if (frame == 110) {
 			blinky.setAbsSpeed(1.25);
 			blinky.show();
