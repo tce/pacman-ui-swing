@@ -73,7 +73,7 @@ public class DebugDraw {
 			if (ghost.targetTile != null) {
 				Color c = ghostColors[ghost.id];
 				g.setColor(c);
-				g.fillRect(t(ghost.targetTile.x) + HTS / 2, t(ghost.targetTile.y) + HTS / 2, HTS, HTS);
+				g.fillRect(t(ghost.targetTile.x()) + HTS / 2, t(ghost.targetTile.y()) + HTS / 2, HTS, HTS);
 				g.setStroke(new BasicStroke(0.5f));
 				V2d targetPosition = new V2d(ghost.targetTile.scaled(TS)).plus(HTS, HTS);
 				g.drawLine((int) ghost.getPosition().x, (int) ghost.getPosition().y, (int) targetPosition.x,
@@ -82,7 +82,7 @@ public class DebugDraw {
 		});
 		if (game.pac.targetTile != null) {
 			g.setColor(new Color(255, 255, 0, 200));
-			g.fillRect(t(game.pac.targetTile.x), t(game.pac.targetTile.y), TS, TS);
+			g.fillRect(t(game.pac.targetTile.x()), t(game.pac.targetTile.y()), TS, TS);
 		}
 	}
 

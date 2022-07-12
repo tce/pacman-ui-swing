@@ -60,7 +60,7 @@ public class Spritesheet {
 	}
 
 	public BufferedImage tile(V2i tile) {
-		return tile(tile.x, tile.y);
+		return tile(tile.x(), tile.y());
 	}
 
 	public BufferedImage createBrightEffect(BufferedImage src, Color borderColor, Color fillColor) {

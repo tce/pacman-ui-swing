@@ -76,12 +76,12 @@ public class FlashMessageDisplay {
 			double t = ((double) System.currentTimeMillis() - message.createdAt) / message.displayTimeMillis;
 			double alpha = Math.abs(Math.cos(0.5 * Math.PI * t));
 			g.setColor(Color.BLACK);
-			g.fillRect(0, unscaledSize.y - 16, unscaledSize.x, 12);
+			g.fillRect(0, unscaledSize.y() - 16, unscaledSize.x(), 12);
 			g.setColor(new Color(0.8f, 0.8f, 0.8f, (float) alpha));
 			g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 16));
 			g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-			g.drawString(message.text, (unscaledSize.x - g.getFontMetrics().stringWidth(message.text)) / 2,
-					unscaledSize.y / 2);
+			g.drawString(message.text, (unscaledSize.x() - g.getFontMetrics().stringWidth(message.text)) / 2,
+					unscaledSize.y() / 2);
 			g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
 		}
 	}

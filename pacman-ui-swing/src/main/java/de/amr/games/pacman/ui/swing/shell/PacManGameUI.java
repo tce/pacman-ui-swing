@@ -125,14 +125,14 @@ public class PacManGameUI implements GameEventAdapter {
 		this.gameLoop = gameLoop;
 		this.gameController = controller;
 		this.unscaledSize = ArcadeWorld.WORLD_SIZE;
-		this.scaling = height / unscaledSize.y;
-		this.scaledSize = new V2i(Math.round(scaling * unscaledSize.x), Math.round(scaling * unscaledSize.y));
+		this.scaling = height / unscaledSize.y();
+		this.scaledSize = new V2i(Math.round(scaling * unscaledSize.x()), Math.round(scaling * unscaledSize.y()));
 
 		flashMessageDisplay = new FlashMessageDisplay(unscaledSize);
 
 		canvas = new Canvas();
 		canvas.setBackground(Color.BLACK);
-		canvas.setSize(scaledSize.x, scaledSize.y);
+		canvas.setSize(scaledSize.x(), scaledSize.y());
 		canvas.setFocusable(false);
 
 		window = new JFrame();

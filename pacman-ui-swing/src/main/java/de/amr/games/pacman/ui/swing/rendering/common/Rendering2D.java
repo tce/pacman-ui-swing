@@ -163,7 +163,7 @@ public interface Rendering2D {
 
 	default void drawDarkTiles(Graphics2D g, Stream<V2i> tiles, Predicate<V2i> fnDark) {
 		g.setColor(Color.BLACK);
-		tiles.filter(fnDark).forEach(tile -> g.fillRect(tile.x * TS, tile.y * TS, TS, TS));
+		tiles.filter(fnDark).forEach(tile -> g.fillRect(tile.x() * TS, tile.y() * TS, TS, TS));
 	}
 
 	default void drawCredit(Graphics2D g, int credit) {

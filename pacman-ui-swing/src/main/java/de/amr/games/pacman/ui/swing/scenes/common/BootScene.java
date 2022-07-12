@@ -53,7 +53,7 @@ public class BootScene extends GameScene {
 
 	@Override
 	public void init() {
-		buffer = new BufferedImage(size.x, size.y, BufferedImage.TYPE_INT_RGB);
+		buffer = new BufferedImage(size.x(), size.y(), BufferedImage.TYPE_INT_RGB);
 		clearBuffer();
 	}
 
