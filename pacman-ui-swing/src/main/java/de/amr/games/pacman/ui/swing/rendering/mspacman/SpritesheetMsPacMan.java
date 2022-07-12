@@ -348,9 +348,9 @@ public class SpritesheetMsPacMan implements Rendering2D {
 				drawEntity(g, flap, sprite);
 				g.setFont(getArcadeFont());
 				g.setColor(new Color(222, 222, 255));
-				g.drawString(flap.number + "", (int) flap.getPosition().x + sprite.getWidth() - 25,
-						(int) flap.getPosition().y + 18);
-				g.drawString(flap.text, (int) flap.getPosition().x + sprite.getWidth(), (int) flap.getPosition().y);
+				g.drawString(flap.number + "", (int) flap.getPosition().x() + sprite.getWidth() - 25,
+						(int) flap.getPosition().y() + 18);
+				g.drawString(flap.text, (int) flap.getPosition().x() + sprite.getWidth(), (int) flap.getPosition().y());
 			});
 		}
 	}

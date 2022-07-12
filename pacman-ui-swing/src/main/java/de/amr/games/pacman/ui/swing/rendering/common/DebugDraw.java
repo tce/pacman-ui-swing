@@ -69,15 +69,15 @@ public class DebugDraw {
 		g.drawString(stateText, t(1), t(3));
 		game.ghosts().forEach(ghost -> {
 			g.setColor(Color.WHITE);
-			g.drawRect((int) ghost.getPosition().x, (int) ghost.getPosition().y, TS, TS);
+			g.drawRect((int) ghost.getPosition().x(), (int) ghost.getPosition().y(), TS, TS);
 			if (ghost.targetTile != null) {
 				Color c = ghostColors[ghost.id];
 				g.setColor(c);
 				g.fillRect(t(ghost.targetTile.x()) + HTS / 2, t(ghost.targetTile.y()) + HTS / 2, HTS, HTS);
 				g.setStroke(new BasicStroke(0.5f));
 				V2d targetPosition = new V2d(ghost.targetTile.scaled(TS)).plus(HTS, HTS);
-				g.drawLine((int) ghost.getPosition().x, (int) ghost.getPosition().y, (int) targetPosition.x,
-						(int) targetPosition.y);
+				g.drawLine((int) ghost.getPosition().x(), (int) ghost.getPosition().y(), (int) targetPosition.x(),
+						(int) targetPosition.y());
 			}
 		});
 		if (game.pac.targetTile != null) {
