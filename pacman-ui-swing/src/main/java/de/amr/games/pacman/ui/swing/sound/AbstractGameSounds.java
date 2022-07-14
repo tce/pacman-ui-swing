@@ -52,14 +52,6 @@ public class AbstractGameSounds implements GameSoundController {
 	protected boolean muted;
 
 	@Override
-	public void setSilent(boolean silent) {
-		this.silent = silent;
-		if (silent) {
-			stopAll();
-		}
-	}
-
-	@Override
 	public boolean isMuted() {
 		return muted;
 	}
