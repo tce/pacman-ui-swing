@@ -59,7 +59,7 @@ public class MsPacManIntermissionScene1 extends GameScene {
 
 	@Override
 	public void init() {
-		sceneController.restartInInitialState(Intermission1Controller.State.FLAP);
+		sceneController.restartInState(Intermission1Controller.State.FLAP);
 
 		var flapAnimationSet = new EntityAnimationSet(1) {
 			{

@@ -104,7 +104,7 @@ public class PlayScene extends GameScene {
 	@Override
 	public void onGameStateChange(GameStateChangeEvent e) {
 		if (e.newGameState == GameState.LEVEL_STARTING) {
-			gameController.state().timer().expire(); // TODO check if needed
+			gameController.terminateCurrentState(); // TODO check if needed
 		}
 	}
 

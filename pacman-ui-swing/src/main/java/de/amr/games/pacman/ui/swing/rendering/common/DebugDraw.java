@@ -62,7 +62,7 @@ public class DebugDraw {
 			stateText = "Chasing Phase %d Remaining: %s".formatted(chasingPhase, ticksToString(ticks));
 		} else {
 			var ticks = state.timer().tick();
-			stateText = "State %s Running: %s".formatted(controller.state(), ticksToString(ticks));
+			stateText = "State %s Running: %s".formatted(state, ticksToString(ticks));
 		}
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Arial", Font.PLAIN, 6));

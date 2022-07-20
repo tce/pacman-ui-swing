@@ -58,7 +58,7 @@ public class MsPacManIntroScene extends GameScene {
 
 	@Override
 	public void init() {
-		sceneController.restartInInitialState(IntroController.State.START);
+		sceneController.restartInState(IntroController.State.START);
 		ctx.msPacMan.setAnimationSet(new PacAnimations(ctx.msPacMan, r2D));
 		ctx.msPacMan.animationSet().ifPresent(EntityAnimationSet::ensureRunning);
 		for (var ghost : ctx.ghosts) {

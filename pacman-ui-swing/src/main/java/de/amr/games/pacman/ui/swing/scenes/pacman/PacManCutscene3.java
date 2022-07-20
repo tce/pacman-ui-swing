@@ -93,7 +93,7 @@ public class PacManCutscene3 extends GameScene {
 			blinky.animationSet().ifPresent(anims -> anims.select(ANIMKEY_NAKED));
 			blinky.animationSet().ifPresent(anims -> anims.selectedAnimation().restart());
 		} else if (frame == 516) {
-			gameController.state().timer().expire();
+			gameController.terminateCurrentState();
 			return;
 		}
 		pac.move();

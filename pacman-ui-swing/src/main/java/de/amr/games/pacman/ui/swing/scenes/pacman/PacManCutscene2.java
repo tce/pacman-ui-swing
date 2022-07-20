@@ -113,7 +113,7 @@ public class PacManCutscene2 extends GameScene {
 		} else if (frame == 508) {
 			stretched = null;
 		} else if (frame == 509) {
-			gameController.state().timer().expire();
+			gameController.terminateCurrentState();
 			return;
 		}
 		pac.move();

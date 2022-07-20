@@ -99,7 +99,7 @@ public class PacManCutscene1 extends GameScene {
 			pac.animationSet().ifPresent(anims -> anims.select(ANIMKEY_BIG_PAC));
 			pac.animationSet().ifPresent(anims -> anims.selectedAnimation().restart());
 		} else if (frame == 632) {
-			gameController.state().timer().expire();
+			gameController.terminateCurrentState();
 			return;
 		}
 		pac.move();
