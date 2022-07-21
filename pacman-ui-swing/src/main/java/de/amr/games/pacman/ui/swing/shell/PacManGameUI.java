@@ -317,7 +317,7 @@ public class PacManGameUI implements GameEventAdapter {
 		}
 
 		else if (Keyboard.keyPressed("Z")) {
-			gameController.state().startIntermissionTest(game);
+			gameController.state().startCutscenesTest(gameController.game());
 		}
 	}
 
