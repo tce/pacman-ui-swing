@@ -67,15 +67,17 @@ public class BootScene extends GameScene {
 	public void update() {
 		var g = buffer.createGraphics();
 		var tick = gameController.state().timer().tick();
-		if (between(1.0, 2.0, tick) && tick % 6 == 0) {
+		if (between(0.5, 1.5, tick) && tick % 5 == 0) {
 			clearBuffer();
 			drawHexCodes(g);
-		} else if (between(2.0, 3.0, tick) && tick % 6 == 0) {
+		} else if (between(1.5, 3.0, tick) && tick % 10 == 0) {
 			clearBuffer();
 			drawRandomSprites(g);
 		} else if (tick == TickTimer.secToTicks(3.0)) {
 			clearBuffer();
 			drawGrid(g);
+		} else if (tick == TickTimer.secToTicks(3.5)) {
+			gameController.terminateCurrentState();
 		}
 	}
 
