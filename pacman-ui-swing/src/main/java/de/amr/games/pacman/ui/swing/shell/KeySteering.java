@@ -48,6 +48,10 @@ public class KeySteering implements Steering {
 	}
 
 	@Override
+	public void init() {
+	}
+
+	@Override
 	public void steer(GameModel game, Creature pac) {
 		if (Keyboard.keyPressed(up)) {
 			pac.setWishDir(Direction.UP);
