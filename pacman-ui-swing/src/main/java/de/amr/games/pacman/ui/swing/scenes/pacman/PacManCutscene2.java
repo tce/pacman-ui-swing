@@ -77,7 +77,7 @@ public class PacManCutscene2 extends GameScene {
 		blinky.animationSet().ifPresent(anims -> anims.select(AnimKeys.GHOST_COLOR));
 		blinky.animation(AnimKeys.GHOST_COLOR).ifPresent(EntityAnimation::restart);
 		blinky.placeAtTile(v(28, 20), 0, 0);
-		blinky.setBothDirs(Direction.LEFT);
+		blinky.setMoveAndWishDir(Direction.LEFT);
 		blinky.setAbsSpeed(0);
 		blinky.hide();
 	}
