@@ -70,20 +70,20 @@ public class DebugDraw {
 		game.ghosts().forEach(ghost -> {
 			g.setColor(Color.WHITE);
 			g.drawRect((int) ghost.getPosition().x(), (int) ghost.getPosition().y(), TS, TS);
-			if (ghost.targetTile != null) {
+			ghost.targetTile().ifPresent(targetTile -> {
 				Color c = ghostColors[ghost.id];
 				g.setColor(c);
-				g.fillRect(t(ghost.targetTile.x()) + HTS / 2, t(ghost.targetTile.y()) + HTS / 2, HTS, HTS);
+				g.fillRect(t(targetTile.x()) + HTS / 2, t(targetTile.y()) + HTS / 2, HTS, HTS);
 				g.setStroke(new BasicStroke(0.5f));
-				V2d targetPosition = new V2d(ghost.targetTile.scaled(TS)).plus(HTS, HTS);
+				V2d targetPosition = new V2d(targetTile.scaled(TS)).plus(HTS, HTS);
 				g.drawLine((int) ghost.getPosition().x(), (int) ghost.getPosition().y(), (int) targetPosition.x(),
 						(int) targetPosition.y());
-			}
+			});
 		});
-		if (game.pac.targetTile != null) {
+		game.pac.targetTile().ifPresent(targetTile -> {
 			g.setColor(new Color(255, 255, 0, 200));
-			g.fillRect(t(game.pac.targetTile.x()), t(game.pac.targetTile.y()), TS, TS);
-		}
+			g.fillRect(t(targetTile.x()), t(targetTile.y()), TS, TS);
+		});
 	}
 
 	public static void drawMazeStructure(Graphics2D g, GameModel game) {
