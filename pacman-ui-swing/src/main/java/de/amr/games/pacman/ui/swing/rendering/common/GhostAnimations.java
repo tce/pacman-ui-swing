@@ -34,11 +34,11 @@ public class GhostAnimations extends EntityAnimationSet {
 
 	public GhostAnimations(Ghost ghost, Rendering2D r2D) {
 		super(5);
-		animationsByName.put(AnimKeys.GHOST_EYES, r2D.createGhostEyesAnimationMap(ghost));
-		animationsByName.put(AnimKeys.GHOST_FLASHING, r2D.createGhostFlashingAnimation());
-		animationsByName.put(AnimKeys.GHOST_BLUE, r2D.createGhostBlueAnimation());
-		animationsByName.put(AnimKeys.GHOST_COLOR, r2D.createGhostColorAnimationMap(ghost));
-		animationsByName.put(AnimKeys.GHOST_VALUE, r2D.createGhostValueList());
+		put(AnimKeys.GHOST_EYES, r2D.createGhostEyesAnimationMap(ghost));
+		put(AnimKeys.GHOST_FLASHING, r2D.createGhostFlashingAnimation());
+		put(AnimKeys.GHOST_BLUE, r2D.createGhostBlueAnimation());
+		put(AnimKeys.GHOST_COLOR, r2D.createGhostColorAnimationMap(ghost));
+		put(AnimKeys.GHOST_VALUE, r2D.createGhostValueList());
 		select(AnimKeys.GHOST_COLOR);
 	}
 }
