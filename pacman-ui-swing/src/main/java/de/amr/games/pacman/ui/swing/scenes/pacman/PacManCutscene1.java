@@ -44,8 +44,6 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
  */
 public class PacManCutscene1 extends GameScene {
 
-	private static final String ANIMKEY_BIG_PAC = "big";
-
 	private int initialDelay;
 	private int frame;
 	private Pac pac;
@@ -59,7 +57,7 @@ public class PacManCutscene1 extends GameScene {
 		pac = new Pac("Pac-Man");
 		pac.setAnimationSet(new PacAnimations(pac, r2D));
 		var bigPacAnim = SpritesheetPacMan.get().createBigPacManMunchingAnimation();
-		pac.animationSet().ifPresent(anims -> anims.put(ANIMKEY_BIG_PAC, bigPacAnim));
+		pac.animationSet().ifPresent(anims -> anims.put(AnimKeys.PAC_BIG, bigPacAnim));
 		pac.animationSet().ifPresent(anims -> anims.select(AnimKeys.PAC_MUNCHING));
 		pac.animation(AnimKeys.PAC_MUNCHING).ifPresent(EntityAnimation::restart);
 
@@ -96,7 +94,7 @@ public class PacManCutscene1 extends GameScene {
 		} else if (frame == 400) {
 			pac.placeAtTile(v(-3, 19), 0, 0);
 			pac.setMoveDir(Direction.RIGHT);
-			pac.animationSet().ifPresent(anims -> anims.select(ANIMKEY_BIG_PAC));
+			pac.animationSet().ifPresent(anims -> anims.select(AnimKeys.PAC_BIG));
 			pac.animationSet().ifPresent(anims -> anims.selectedAnimation().restart());
 		} else if (frame == 632) {
 			gameController.terminateCurrentState();

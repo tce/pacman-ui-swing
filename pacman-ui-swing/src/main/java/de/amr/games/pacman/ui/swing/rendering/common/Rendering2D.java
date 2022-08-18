@@ -44,6 +44,7 @@ import de.amr.games.pacman.lib.animation.EntityAnimationSet;
 import de.amr.games.pacman.lib.animation.FixedEntityAnimation;
 import de.amr.games.pacman.lib.animation.SingleEntityAnimation;
 import de.amr.games.pacman.model.common.GameModel;
+import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.Pac;
@@ -127,7 +128,7 @@ public interface Rendering2D {
 		}
 	}
 
-	static Optional<BufferedImage> currentFrame(Optional<EntityAnimationSet> anims) {
+	static Optional<BufferedImage> currentFrame(Optional<EntityAnimationSet<AnimKeys>> anims) {
 		return anims.map(EntityAnimationSet::selectedAnimation).map(EntityAnimation::frame).map(BufferedImage.class::cast);
 	}
 

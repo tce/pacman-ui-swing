@@ -30,7 +30,7 @@ import de.amr.games.pacman.model.common.actors.Ghost;
 /**
  * @author Armin Reichert
  */
-public class GhostAnimations extends EntityAnimationSet {
+public class GhostAnimations extends EntityAnimationSet<AnimKeys> {
 
 	public GhostAnimations(Ghost ghost, Rendering2D r2D) {
 		super(5);

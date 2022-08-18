@@ -29,9 +29,8 @@ import de.amr.games.pacman.ui.swing.rendering.mspacman.SpritesheetMsPacMan;
 
 /**
  * @author Armin Reichert
- *
  */
-public class FlapAnimations extends EntityAnimationSet {
+public class FlapAnimations extends EntityAnimationSet<String> {
 
 	public FlapAnimations() {
 		super(1);

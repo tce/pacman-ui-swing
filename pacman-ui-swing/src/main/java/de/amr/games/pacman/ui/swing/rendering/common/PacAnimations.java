@@ -31,7 +31,7 @@ import de.amr.games.pacman.model.common.actors.Pac;
 /**
  * @author Armin Reichert
  */
-public class PacAnimations extends EntityAnimationSet {
+public class PacAnimations extends EntityAnimationSet<AnimKeys> {
 
 	public PacAnimations(Pac pac, Rendering2D r2D) {
 		super(2);

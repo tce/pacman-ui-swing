@@ -47,8 +47,6 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
  */
 public class PacManCutscene2 extends GameScene {
 
-	private static final String ANIM_KEY_DAMAGED = "damaged";
-
 	private int initialDelay;
 	private int frame;
 	private Pac pac;
@@ -72,8 +70,8 @@ public class PacManCutscene2 extends GameScene {
 		stretched = SpritesheetPacMan.get().createBlinkyStretchedAnimation();
 		blinky = new Ghost(Ghost.RED_GHOST, "Blinky");
 		blinky.setAnimationSet(new GhostAnimations(blinky, r2D));
-		var damaged = SpritesheetPacMan.get().createBlinkyDamagedAnimation();
-		blinky.animationSet().ifPresent(anims -> anims.put(ANIM_KEY_DAMAGED, damaged));
+		var damagedBlinkyAnimation = SpritesheetPacMan.get().createBlinkyDamagedAnimation();
+		blinky.animationSet().ifPresent(anims -> anims.put(AnimKeys.BLINKY_DAMAGED, damagedBlinkyAnimation));
 		blinky.animationSet().ifPresent(anims -> anims.select(AnimKeys.GHOST_COLOR));
 		blinky.animation(AnimKeys.GHOST_COLOR).ifPresent(EntityAnimation::restart);
 		blinky.placeAtTile(v(28, 20), 0, 0);
@@ -106,10 +104,10 @@ public class PacManCutscene2 extends GameScene {
 		} else if (frame == 328) {
 			stretched.setFrameIndex(4);
 		} else if (frame == 329) {
-			blinky.animationSet().ifPresent(anims -> anims.select(ANIM_KEY_DAMAGED));
-			blinky.animation(ANIM_KEY_DAMAGED).ifPresent(damaged -> damaged.setFrameIndex(0));
+			blinky.animationSet().ifPresent(anims -> anims.select(AnimKeys.BLINKY_DAMAGED));
+			blinky.animation(AnimKeys.BLINKY_DAMAGED).ifPresent(damaged -> damaged.setFrameIndex(0));
 		} else if (frame == 389) {
-			blinky.animation(ANIM_KEY_DAMAGED).ifPresent(damaged -> damaged.setFrameIndex(1));
+			blinky.animation(AnimKeys.BLINKY_DAMAGED).ifPresent(damaged -> damaged.setFrameIndex(1));
 		} else if (frame == 508) {
 			stretched = null;
 		} else if (frame == 509) {
