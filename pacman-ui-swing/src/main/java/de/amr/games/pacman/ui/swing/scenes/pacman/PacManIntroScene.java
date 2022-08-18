@@ -98,12 +98,12 @@ public class PacManIntroScene extends GameScene {
 				ghost.animationSet().ifPresent(anims -> {
 					if (ghost.is(GhostState.EATEN)) {
 						anims.select(AnimKeys.GHOST_VALUE);
-						anims.selectedAnimation().ensureRunning();
+						anims.selectedAnimation().get().ensureRunning();
 					} else {
 						anims.select(AnimKeys.GHOST_BLUE);
-						anims.selectedAnimation().ensureRunning();
+						anims.selectedAnimation().get().ensureRunning();
 						if (ghost.getVelocity().length() == 0) {
-							anims.byName(AnimKeys.GHOST_BLUE).stop();
+							anims.animation(AnimKeys.GHOST_BLUE).get().stop();
 						}
 					}
 				});

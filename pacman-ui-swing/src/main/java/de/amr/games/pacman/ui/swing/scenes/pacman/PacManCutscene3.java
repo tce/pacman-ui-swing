@@ -88,7 +88,7 @@ public class PacManCutscene3 extends GameScene {
 			blinky.placeAtTile(v(-1, 20), 0, 0);
 			blinky.setMoveAndWishDir(Direction.RIGHT);
 			blinky.animationSet().ifPresent(anims -> anims.select(AnimKeys.BLINKY_NAKED));
-			blinky.animationSet().ifPresent(anims -> anims.selectedAnimation().restart());
+			blinky.animationSet().ifPresent(anims -> anims.selectedAnimation().get().restart());
 		} else if (frame == 516) {
 			gameController.terminateCurrentState();
 			return;

@@ -66,7 +66,7 @@ public class MsPacManIntermissionScene1 extends GameScene {
 		ctx.pacMan.setAnimationSet(new PacAnimations(ctx.pacMan, r2D));
 		var husbandMunching = SpritesheetMsPacMan.get().createHusbandMunchingAnimations(ctx.pacMan);
 		ctx.pacMan.animationSet().ifPresent(anims -> anims.put(AnimKeys.PAC_MUNCHING, husbandMunching));
-		ctx.pacMan.animationSet().ifPresent(anims -> anims.selectedAnimation().ensureRunning());
+		ctx.pacMan.animationSet().ifPresent(anims -> anims.selectedAnimation().get().ensureRunning());
 		ctx.inky.setAnimationSet(new GhostAnimations(ctx.inky, r2D));
 		ctx.pinky.setAnimationSet(new GhostAnimations(ctx.pinky, r2D));
 		heart2D = new Heart2D(ctx.heart);

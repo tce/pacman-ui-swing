@@ -24,6 +24,7 @@ SOFTWARE.
 
 package de.amr.games.pacman.ui.swing.rendering.common;
 
+import de.amr.games.pacman.lib.animation.EntityAnimation;
 import de.amr.games.pacman.lib.animation.EntityAnimationSet;
 import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.model.common.actors.Pac;
@@ -42,6 +43,6 @@ public class PacAnimations extends EntityAnimationSet<AnimKeys> {
 
 	@Override
 	public void ensureRunning() {
-		byName(AnimKeys.PAC_MUNCHING).ensureRunning();
+		animation(AnimKeys.PAC_MUNCHING).ifPresent(EntityAnimation::ensureRunning);
 	}
 }

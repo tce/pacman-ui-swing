@@ -31,20 +31,16 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.V2i;
-import de.amr.games.pacman.lib.animation.EntityAnimation;
 import de.amr.games.pacman.lib.animation.EntityAnimationByDirection;
-import de.amr.games.pacman.lib.animation.EntityAnimationSet;
 import de.amr.games.pacman.lib.animation.FixedEntityAnimation;
 import de.amr.games.pacman.lib.animation.SingleEntityAnimation;
 import de.amr.games.pacman.model.common.GameModel;
-import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.Pac;
@@ -128,16 +124,12 @@ public interface Rendering2D {
 		}
 	}
 
-	static Optional<BufferedImage> currentFrame(Optional<EntityAnimationSet<AnimKeys>> anims) {
-		return anims.map(EntityAnimationSet::selectedAnimation).map(EntityAnimation::frame).map(BufferedImage.class::cast);
-	}
-
 	default void drawPac(Graphics2D g, Pac pac) {
-		currentFrame(pac.animationSet()).ifPresent(frame -> drawEntity(g, pac, frame));
+		pac.animation().ifPresent(animation -> drawEntity(g, pac, (BufferedImage) animation.frame()));
 	}
 
 	default void drawGhost(Graphics2D g, Ghost ghost) {
-		currentFrame(ghost.animationSet()).ifPresent(frame -> drawEntity(g, ghost, frame));
+		ghost.animation().ifPresent(animation -> drawEntity(g, ghost, (BufferedImage) animation.frame()));
 	}
 
 	default void drawBonus(Graphics2D g, Entity bonusEntity) {

@@ -89,13 +89,13 @@ public class PacManCutscene1 extends GameScene {
 			blinky.placeAtTile(v(-2, 20), 4, 0);
 			blinky.setMoveAndWishDir(Direction.RIGHT);
 			blinky.animationSet().ifPresent(anims -> anims.select(AnimKeys.GHOST_BLUE));
-			blinky.animationSet().ifPresent(anims -> anims.selectedAnimation().restart());
+			blinky.animationSet().ifPresent(anims -> anims.selectedAnimation().get().restart());
 			blinky.setAbsSpeed(0.75);
 		} else if (frame == 400) {
 			pac.placeAtTile(v(-3, 19), 0, 0);
 			pac.setMoveDir(Direction.RIGHT);
 			pac.animationSet().ifPresent(anims -> anims.select(AnimKeys.PAC_BIG));
-			pac.animationSet().ifPresent(anims -> anims.selectedAnimation().restart());
+			pac.animationSet().ifPresent(anims -> anims.selectedAnimation().get().restart());
 		} else if (frame == 632) {
 			gameController.terminateCurrentState();
 			return;

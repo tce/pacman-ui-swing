@@ -99,7 +99,7 @@ public class PacManCutscene2 extends GameScene {
 			stretched.setFrameIndex(2);
 		} else if (frame == 248) {
 			blinky.setAbsSpeed(0);
-			blinky.animationSet().ifPresent(anims -> anims.selectedAnimation().stop());
+			blinky.animationSet().ifPresent(anims -> anims.selectedAnimation().get().stop());
 			stretched.setFrameIndex(3);
 		} else if (frame == 328) {
 			stretched.setFrameIndex(4);
