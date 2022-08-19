@@ -25,16 +25,17 @@ SOFTWARE.
 package de.amr.games.pacman.ui.swing.scenes.mspacman;
 
 import de.amr.games.pacman.lib.animation.EntityAnimationSet;
+import de.amr.games.pacman.model.mspacman.Clapperboard;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.SpritesheetMsPacMan;
 
 /**
  * @author Armin Reichert
  */
-public class FlapAnimations extends EntityAnimationSet<String> {
+public class ClapperboardAnimations extends EntityAnimationSet<Integer> {
 
-	public FlapAnimations() {
+	public ClapperboardAnimations() {
 		super(1);
-		put("flap", SpritesheetMsPacMan.get().createFlapAnimation());
-		select("flap");
+		put(Clapperboard.ACTION, SpritesheetMsPacMan.get().createClapperboardAnimation());
+		select(Clapperboard.ACTION);
 	}
 }

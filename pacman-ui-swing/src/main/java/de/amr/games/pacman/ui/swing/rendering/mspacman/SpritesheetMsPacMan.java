@@ -40,7 +40,7 @@ import de.amr.games.pacman.lib.animation.FixedEntityAnimation;
 import de.amr.games.pacman.lib.animation.SingleEntityAnimation;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.Pac;
-import de.amr.games.pacman.model.mspacman.Flap;
+import de.amr.games.pacman.model.mspacman.Clapperboard;
 import de.amr.games.pacman.model.mspacman.MsPacManGame;
 import de.amr.games.pacman.ui.swing.lib.Spritesheet;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
@@ -281,7 +281,7 @@ public class SpritesheetMsPacMan implements Rendering2D {
 		return map;
 	}
 
-	public SingleEntityAnimation<BufferedImage> createFlapAnimation() {
+	public SingleEntityAnimation<BufferedImage> createClapperboardAnimation() {
 		var animation = new SingleEntityAnimation<>( //
 				ss.si(456, 208, 32, 32), //
 				ss.si(488, 208, 32, 32), //
@@ -341,16 +341,16 @@ public class SpritesheetMsPacMan implements Rendering2D {
 		g.drawString("1980/1981", x + t(8), y + t(4));
 	}
 
-	public void drawFlap(Graphics2D g, Flap flap) {
+	public void drawFlap(Graphics2D g, Clapperboard flap) {
 		if (flap.isVisible()) {
 			flap.animation().map(EntityAnimation::animate).ifPresent(spriteObj -> {
 				var sprite = (BufferedImage) spriteObj;
 				drawEntity(g, flap, sprite);
 				g.setFont(getArcadeFont());
 				g.setColor(new Color(222, 222, 255));
-				g.drawString(flap.number + "", (int) flap.getPosition().x() + sprite.getWidth() - 25,
+				g.drawString(flap.sceneNumber + "", (int) flap.getPosition().x() + sprite.getWidth() - 25,
 						(int) flap.getPosition().y() + 18);
-				g.drawString(flap.text, (int) flap.getPosition().x() + sprite.getWidth(), (int) flap.getPosition().y());
+				g.drawString(flap.sceneTitle, (int) flap.getPosition().x() + sprite.getWidth(), (int) flap.getPosition().y());
 			});
 		}
 	}
