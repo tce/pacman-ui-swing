@@ -88,10 +88,10 @@ public class DebugDraw {
 
 	public static void drawMazeStructure(Graphics2D g, GameModel game) {
 		Color dark = new Color(80, 80, 80);
-		for (int x = 0; x < game.level.world.numCols(); ++x) {
-			for (int y = 0; y < game.level.world.numRows(); ++y) {
+		for (int x = 0; x < game.level.world().numCols(); ++x) {
+			for (int y = 0; y < game.level.world().numRows(); ++y) {
 				V2i tile = new V2i(x, y);
-				if (game.level.world.isIntersection(tile)) {
+				if (game.level.world().isIntersection(tile)) {
 					g.setColor(dark);
 					g.drawOval(t(x), t(y), TS, TS);
 				}

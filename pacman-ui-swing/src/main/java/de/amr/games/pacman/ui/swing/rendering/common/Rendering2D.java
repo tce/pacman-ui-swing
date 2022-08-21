@@ -181,7 +181,7 @@ public interface Rendering2D {
 		} else {
 			g.drawString(String.format("%7d", game.gameScore.points), t(1), t(2));
 			g.setColor(Color.LIGHT_GRAY);
-			g.drawString(String.format("L%d", game.level.number), t(9), t(2));
+			g.drawString(String.format("L%d", game.level.number()), t(9), t(2));
 		}
 		// Highscore
 		g.setColor(Color.WHITE);
