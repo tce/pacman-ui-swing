@@ -41,7 +41,6 @@ import de.amr.games.pacman.lib.animation.SingleEntityAnimation;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.Pac;
 import de.amr.games.pacman.model.mspacman.Clapperboard;
-import de.amr.games.pacman.model.mspacman.MsPacManGame;
 import de.amr.games.pacman.ui.swing.lib.Spritesheet;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 
@@ -105,25 +104,12 @@ public class SpritesheetMsPacMan implements Rendering2D {
 	private final BufferedImage midwayLogo;
 	private final BufferedImage[] mazeFull;
 	private final BufferedImage[] mazeEmpty;
-	private final BufferedImage[] symbols;
 	private final Font font;
 
 	private SpritesheetMsPacMan(String path, int rasterSize) {
 		ss = new Spritesheet(image(path), rasterSize);
 		font = font("/common/emulogic.ttf", 8);
 		midwayLogo = image("/mspacman/graphics/midway.png");
-
-		//@formatter:off
-		symbols = new BufferedImage[7];
-		symbols[MsPacManGame.CHERRIES]   = rhs(3,0);
-		symbols[MsPacManGame.STRAWBERRY] = rhs(4,0);
-		symbols[MsPacManGame.PEACH]      = rhs(5,0);
-		symbols[MsPacManGame.PRETZEL]    = rhs(6,0);
-		symbols[MsPacManGame.APPLE]      = rhs(7,0);
-		symbols[MsPacManGame.PEAR]       = rhs(8,0);
-		symbols[MsPacManGame.BANANA]     = rhs(9,0);
-		//@formatter:on
-
 		int numMazes = 6;
 		mazeEmpty = new BufferedImage[numMazes];
 		mazeFull = new BufferedImage[numMazes];
