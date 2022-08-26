@@ -136,15 +136,15 @@ public interface Rendering2D {
 		if (bonusEntity instanceof StaticBonus bonus) {
 			var sprite = switch (bonus.state()) {
 			case INACTIVE -> null;
-			case EDIBLE -> getBonusSymbolSprite(bonus.symbol());
-			case EATEN -> getBonusValueSprite(bonus.symbol());
+			case EDIBLE -> getBonusSymbolSprite(bonus.index());
+			case EATEN -> getBonusValueSprite(bonus.index());
 			};
 			drawEntity(g, bonus, sprite);
 		} else if (bonusEntity instanceof MovingBonus bonus) {
 			var sprite = switch (bonus.state()) {
 			case INACTIVE -> null;
-			case EDIBLE -> getBonusSymbolSprite(bonus.symbol());
-			case EATEN -> getBonusValueSprite(bonus.symbol());
+			case EDIBLE -> getBonusSymbolSprite(bonus.index());
+			case EATEN -> getBonusValueSprite(bonus.index());
 			};
 			int dy = bonus.dy();
 			Graphics2D g2d = (Graphics2D) g.create();
