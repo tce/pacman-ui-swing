@@ -49,7 +49,7 @@ public class PlayScene extends GameScene {
 	@Override
 	public void init() {
 		var world = (ArcadeWorld) game.world();
-		world.setFlashingAnimation(r2D.createMazeFlashingAnimation(r2D.mazeNumber(game.level.number())));
+		world.setLevelCompleteAnimation(r2D.createMazeFlashingAnimation(r2D.mazeNumber(game.level.number())));
 		game.pac.setAnimationSet(new PacAnimations(game.pac, r2D));
 		game.ghosts().forEach(ghost -> ghost.setAnimationSet(new GhostAnimations(ghost, r2D)));
 	}
@@ -87,7 +87,7 @@ public class PlayScene extends GameScene {
 
 	private void drawMaze(Graphics2D g) {
 		var world = (ArcadeWorld) game.world();
-		var mazeFlashing = world.flashingAnimation();
+		var mazeFlashing = world.levelCompleteAnimation();
 		if (mazeFlashing.isPresent() && mazeFlashing.get().isRunning()) {
 			g.drawImage((Image) mazeFlashing.get().frame(), 0, t(3), null);
 		} else {
