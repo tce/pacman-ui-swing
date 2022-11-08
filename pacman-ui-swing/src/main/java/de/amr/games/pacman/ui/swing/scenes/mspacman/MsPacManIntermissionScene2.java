@@ -56,7 +56,7 @@ public class MsPacManIntermissionScene2 extends GameScene {
 	@Override
 	public void init() {
 		sceneController.restartInState(Intermission2Controller.State.FLAP);
-		ctx.flap.setAnimationSet(new ClapperboardAnimations());
+		ctx.clapperboard.setAnimationSet(new ClapperboardAnimations());
 		ctx.msPacMan.setAnimationSet(new PacAnimations(ctx.msPacMan, r2D));
 		ctx.msPacMan.animationSet().ifPresent(EntityAnimationSet::ensureRunning);
 		ctx.pacMan.setAnimationSet(new PacAnimations(ctx.pacMan, r2D));
@@ -72,7 +72,7 @@ public class MsPacManIntermissionScene2 extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		((SpritesheetMsPacMan) r2D).drawFlap(g, ctx.flap);
+		((SpritesheetMsPacMan) r2D).drawFlap(g, ctx.clapperboard);
 		r2D.drawPac(g, ctx.msPacMan);
 		r2D.drawPac(g, ctx.pacMan);
 	}
