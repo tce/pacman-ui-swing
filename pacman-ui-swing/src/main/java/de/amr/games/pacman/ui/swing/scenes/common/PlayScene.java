@@ -48,8 +48,9 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void init() {
-		var world = (ArcadeWorld) game.world();
-		world.setLevelCompleteAnimation(r2D.createMazeFlashingAnimation(r2D.mazeNumber(game.level.number())));
+		if (game.level.world() instanceof ArcadeWorld arcadeWorld) {
+			arcadeWorld.setLevelCompleteAnimation(r2D.createMazeFlashingAnimation(r2D.mazeNumber(game.level.number())));
+		}
 		game.pac.setAnimationSet(new PacAnimations(game.pac, r2D));
 		game.ghosts().forEach(ghost -> ghost.setAnimationSet(new GhostAnimations(ghost, r2D)));
 	}
@@ -86,10 +87,15 @@ public class PlayScene extends GameScene {
 	}
 
 	private void drawMaze(Graphics2D g) {
-		var world = (ArcadeWorld) game.world();
-		var mazeFlashing = world.levelCompleteAnimation();
-		if (mazeFlashing.isPresent() && mazeFlashing.get().isRunning()) {
-			g.drawImage((Image) mazeFlashing.get().frame(), 0, t(3), null);
+		if (game.level.world() instanceof ArcadeWorld arcadeWorld) {
+			var mazeFlashing = arcadeWorld.levelCompleteAnimation();
+			if (mazeFlashing.isPresent() && mazeFlashing.get().isRunning()) {
+				g.drawImage((Image) mazeFlashing.get().frame(), 0, t(3), null);
+			} else {
+				r2D.drawFullMaze(g, r2D.mazeNumber(game.level.number()), 0, t(3));
+				r2D.drawDarkTiles(g, game.level.world().tiles(), tile -> game.level.world().containsEatenFood(tile)
+						|| game.level.world().isEnergizerTile(tile) && !game.energizerPulse.frame());
+			}
 		} else {
 			r2D.drawFullMaze(g, r2D.mazeNumber(game.level.number()), 0, t(3));
 			r2D.drawDarkTiles(g, game.level.world().tiles(), tile -> game.level.world().containsEatenFood(tile)
