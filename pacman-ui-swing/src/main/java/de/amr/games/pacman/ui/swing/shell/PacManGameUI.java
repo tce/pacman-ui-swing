@@ -154,7 +154,7 @@ public class PacManGameUI implements GameEventAdapter {
 		window.addKeyListener(Keyboard.theKeyboard.handler);
 
 		titleUpdateTimer = new Timer(1000, e -> window.setTitle(String.format("%s (%d fps, JFC Swing)",
-				gameController.game().variant == MS_PACMAN ? "Ms. Pac-Man" : "Pac-Man", gameLoop.clock.getLastFPS())));
+				gameController.game().variant() == MS_PACMAN ? "Ms. Pac-Man" : "Pac-Man", gameLoop.clock.getLastFPS())));
 
 		onGameStateChange(new GameStateChangeEvent(gameController.game(), null, controller.state()));
 	}
@@ -201,7 +201,7 @@ public class PacManGameUI implements GameEventAdapter {
 
 	private GameScene getSceneForGameState(GameState state) {
 		var game = gameController.game();
-		var scenes = game.variant == MS_PACMAN ? gameScenesMsPacMan : gameScenesPacMan;
+		var scenes = game.variant() == MS_PACMAN ? gameScenesMsPacMan : gameScenesPacMan;
 		return switch (state) {
 		case BOOT -> scenes.get(0);
 		case INTRO -> scenes.get(1);
@@ -309,7 +309,7 @@ public class PacManGameUI implements GameEventAdapter {
 		}
 
 		else if (Keyboard.keyPressed("V")) {
-			gameController.state().selectGameVariant(gameController.game().variant.next());
+			gameController.state().selectGameVariant(gameController.game().variant().next());
 		}
 
 		else if (Keyboard.keyPressed("X")) {

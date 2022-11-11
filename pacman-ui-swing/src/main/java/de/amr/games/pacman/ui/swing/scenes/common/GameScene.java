@@ -55,11 +55,11 @@ public abstract class GameScene implements GameEventAdapter {
 	public void setContext(GameController gameController) {
 		this.gameController = gameController;
 		this.game = gameController.game();
-		this.r2D = switch (game.variant) {
+		this.r2D = switch (game.variant()) {
 		case MS_PACMAN -> SpritesheetMsPacMan.get();
 		case PACMAN -> SpritesheetPacMan.get();
 		};
-		var sounds = switch (game.variant) {
+		var sounds = switch (game.variant()) {
 		case MS_PACMAN -> MS_PACMAN_SOUNDS;
 		case PACMAN -> PACMAN_SOUNDS;
 		};

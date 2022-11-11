@@ -103,7 +103,7 @@ public class BootScene extends GameScene {
 	}
 
 	private void drawRandomSprites(Graphics2D g) {
-		var sheet = gameController.game().variant == GameVariant.MS_PACMAN ? SpritesheetMsPacMan.get()
+		var sheet = gameController.game().variant() == GameVariant.MS_PACMAN ? SpritesheetMsPacMan.get()
 				: SpritesheetPacMan.get();
 		var sheetWidth = sheet.getSourceImage().getWidth();
 		var sheetHeight = sheet.getSourceImage().getHeight();
