@@ -23,7 +23,6 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.rendering.common;
 
-import static de.amr.games.pacman.lib.TickTimer.ticksToString;
 import static de.amr.games.pacman.model.common.world.World.HTS;
 import static de.amr.games.pacman.model.common.world.World.TS;
 import static de.amr.games.pacman.model.common.world.World.t;
@@ -56,13 +55,13 @@ public class DebugDraw {
 		String stateText;
 		if (state == GameState.HUNTING && game.huntingTimer.inScatterPhase()) {
 			var ticks = game.huntingTimer.remaining();
-			stateText = "Scattering Phase %d Remaining: %s".formatted(scatterPhase, ticksToString(ticks));
+			stateText = "Scattering Phase %d Remaining: %s".formatted(scatterPhase, state.timer().ticksToString(ticks));
 		} else if (state == GameState.HUNTING && game.huntingTimer.inChasingPhase()) {
 			var ticks = game.huntingTimer.remaining();
-			stateText = "Chasing Phase %d Remaining: %s".formatted(chasingPhase, ticksToString(ticks));
+			stateText = "Chasing Phase %d Remaining: %s".formatted(chasingPhase, state.timer().ticksToString(ticks));
 		} else {
 			var ticks = state.timer().tick();
-			stateText = "State %s Running: %s".formatted(state, ticksToString(ticks));
+			stateText = "State %s Running: %s".formatted(state, state.timer().ticksToString(ticks));
 		}
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Arial", Font.PLAIN, 6));

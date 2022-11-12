@@ -66,17 +66,18 @@ public class BootScene extends GameScene {
 	@Override
 	public void update() {
 		var g = buffer.createGraphics();
-		var tick = gameController.state().timer().tick();
-		if (between(0.5, 1.5, tick) && tick % 5 == 0) {
+		var timer = gameController.state().timer();
+		var tick = timer.tick();
+		if (between(timer, 0.5, 1.5, tick) && tick % 5 == 0) {
 			clearBuffer();
 			drawHexCodes(g);
-		} else if (between(1.5, 3.0, tick) && tick % 10 == 0) {
+		} else if (between(timer, 1.5, 3.0, tick) && tick % 10 == 0) {
 			clearBuffer();
 			drawRandomSprites(g);
-		} else if (tick == TickTimer.secToTicks(3.0)) {
+		} else if (tick == timer.secToTicks(3.0)) {
 			clearBuffer();
 			drawGrid(g);
-		} else if (tick == TickTimer.secToTicks(3.5)) {
+		} else if (tick == timer.secToTicks(3.5)) {
 			gameController.terminateCurrentState();
 		}
 	}
@@ -86,8 +87,8 @@ public class BootScene extends GameScene {
 		g.drawImage(buffer, 0, 0, null);
 	}
 
-	private boolean between(double secLeft, double secRight, double tick) {
-		return TickTimer.secToTicks(secLeft) <= tick && tick < TickTimer.secToTicks(secRight);
+	private boolean between(TickTimer timer, double secLeft, double secRight, double tick) {
+		return timer.secToTicks(secLeft) <= tick && tick < timer.secToTicks(secRight);
 	}
 
 	private void drawHexCodes(Graphics2D g) {

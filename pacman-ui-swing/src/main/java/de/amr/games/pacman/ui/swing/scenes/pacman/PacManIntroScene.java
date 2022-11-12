@@ -23,7 +23,6 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.scenes.pacman;
 
-import static de.amr.games.pacman.lib.TickTimer.secToTicks;
 import static de.amr.games.pacman.model.common.world.World.TS;
 import static de.amr.games.pacman.model.common.world.World.t;
 
@@ -123,7 +122,8 @@ public class PacManIntroScene extends GameScene {
 			drawScoresAndCredit(g);
 			drawGallery(g);
 			drawPoints(g, 11, 25);
-			if (sceneController.state().timer().tick() > secToTicks(1)) {
+			var timer = sceneController.state().timer();
+			if (timer.tick() > timer.secToTicks(1)) {
 				drawEnergizer(g);
 				r2D.drawCopyright(g, t(3), t(32));
 			}
