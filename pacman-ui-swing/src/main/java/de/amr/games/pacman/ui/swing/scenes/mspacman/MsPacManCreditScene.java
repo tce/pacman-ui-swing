@@ -66,7 +66,7 @@ public class MsPacManCreditScene extends GameScene {
 		g.drawString("PTS", t(25), t(25));
 
 		r2D.drawCopyright(g, t(6), t(28));
-		r2D.drawCredit(g, game.getCredit());
+		r2D.drawCredit(g, game.credit());
 	}
 
 }

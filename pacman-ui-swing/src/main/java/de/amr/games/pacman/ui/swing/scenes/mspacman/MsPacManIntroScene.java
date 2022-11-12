@@ -90,7 +90,7 @@ public class MsPacManIntroScene extends GameScene {
 		ctx.game.ghosts().forEach(ghost -> r2D.drawGhost(g, ghost));
 		r2D.drawPac(g, ctx.game.pac);
 		r2D.drawCopyright(g, t(6), t(28));
-		r2D.drawCredit(g, game.getCredit());
+		r2D.drawCredit(g, game.credit());
 	}
 
 	private void drawTitle(Graphics2D g) {

@@ -160,7 +160,7 @@ public class PacManIntroScene extends GameScene {
 
 	private void drawScoresAndCredit(Graphics2D g) {
 		r2D.drawScores(g, game, true);
-		r2D.drawCredit(g, game.getCredit());
+		r2D.drawCredit(g, game.credit());
 	}
 
 	private void drawGuys(Graphics2D g, int offset) {
