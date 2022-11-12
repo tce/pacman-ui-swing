@@ -120,7 +120,7 @@ public interface Rendering2D {
 
 	default void drawEntity(Graphics2D g, Entity entity, BufferedImage sprite) {
 		if (entity.isVisible() && sprite != null) {
-			drawSpriteCenteredOverBox(g, sprite, (int) entity.getPosition().x(), (int) entity.getPosition().y());
+			drawSpriteCenteredOverBox(g, sprite, (int) entity.position().x(), (int) entity.position().y());
 		}
 	}
 
