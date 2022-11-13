@@ -59,7 +59,7 @@ public class MsPacManIntermissionScene1 extends GameScene {
 
 	@Override
 	public void init() {
-		sceneController.restartInState(MsPacManIntermission1.State.FLAP);
+		sceneController.restartInState(MsPacManIntermission1.IntermissionState.FLAP);
 		ctx.clapperboard.setAnimationSet(new ClapperboardAnimations());
 		ctx.msPac.setAnimationSet(new PacAnimations(ctx.msPac, r2D));
 		ctx.msPac.animationSet().ifPresent(EntityAnimationSet::ensureRunning);
