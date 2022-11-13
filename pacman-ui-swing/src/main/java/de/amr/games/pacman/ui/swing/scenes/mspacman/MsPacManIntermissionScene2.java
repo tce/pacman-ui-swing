@@ -26,7 +26,7 @@ package de.amr.games.pacman.ui.swing.scenes.mspacman;
 import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
-import de.amr.games.pacman.controller.mspacman.Intermission2Controller;
+import de.amr.games.pacman.controller.mspacman.MsPacManIntermission2;
 import de.amr.games.pacman.lib.animation.EntityAnimationSet;
 import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
@@ -43,19 +43,19 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
  */
 public class MsPacManIntermissionScene2 extends GameScene {
 
-	private Intermission2Controller sceneController;
-	private Intermission2Controller.Context ctx;
+	private MsPacManIntermission2 sceneController;
+	private MsPacManIntermission2.Context ctx;
 
 	@Override
 	public void setContext(GameController gameController) {
 		super.setContext(gameController);
-		sceneController = new Intermission2Controller(gameController);
+		sceneController = new MsPacManIntermission2(gameController);
 		ctx = sceneController.context();
 	}
 
 	@Override
 	public void init() {
-		sceneController.restartInState(Intermission2Controller.State.FLAP);
+		sceneController.restartInState(MsPacManIntermission2.State.FLAP);
 		ctx.clapperboard.setAnimationSet(new ClapperboardAnimations());
 		ctx.msPacMan.setAnimationSet(new PacAnimations(ctx.msPacMan, r2D));
 		ctx.msPacMan.animationSet().ifPresent(EntityAnimationSet::ensureRunning);

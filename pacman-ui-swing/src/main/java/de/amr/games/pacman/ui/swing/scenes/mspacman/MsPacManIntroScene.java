@@ -29,8 +29,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
-import de.amr.games.pacman.controller.mspacman.IntroController;
-import de.amr.games.pacman.controller.mspacman.IntroController.State;
+import de.amr.games.pacman.controller.mspacman.MsPacManIntro;
+import de.amr.games.pacman.controller.mspacman.MsPacManIntro.State;
 import de.amr.games.pacman.lib.animation.EntityAnimationSet;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
@@ -45,19 +45,19 @@ import de.amr.games.pacman.ui.swing.shell.Keyboard;
  */
 public class MsPacManIntroScene extends GameScene {
 
-	private IntroController sceneController;
-	private IntroController.Context ctx;
+	private MsPacManIntro sceneController;
+	private MsPacManIntro.Context ctx;
 
 	@Override
 	public void setContext(GameController gameController) {
 		super.setContext(gameController);
-		sceneController = new IntroController(gameController);
+		sceneController = new MsPacManIntro(gameController);
 		ctx = sceneController.context();
 	}
 
 	@Override
 	public void init() {
-		sceneController.restartInState(IntroController.State.START);
+		sceneController.restartInState(MsPacManIntro.State.START);
 		ctx.game().pac.setAnimationSet(new PacAnimations(ctx.game().pac, r2D));
 		ctx.game().pac.animationSet().ifPresent(EntityAnimationSet::ensureRunning);
 		for (var ghost : ctx.game().theGhosts) {

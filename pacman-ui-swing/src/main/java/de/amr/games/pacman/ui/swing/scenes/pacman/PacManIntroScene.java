@@ -31,8 +31,8 @@ import java.awt.Graphics2D;
 import java.util.stream.Stream;
 
 import de.amr.games.pacman.controller.common.GameController;
-import de.amr.games.pacman.controller.pacman.IntroController;
-import de.amr.games.pacman.controller.pacman.IntroController.State;
+import de.amr.games.pacman.controller.pacman.PacManIntro;
+import de.amr.games.pacman.controller.pacman.PacManIntro.State;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.EntityAnimationSet;
 import de.amr.games.pacman.model.common.actors.AnimKeys;
@@ -52,20 +52,20 @@ import de.amr.games.pacman.ui.swing.shell.Keyboard;
  */
 public class PacManIntroScene extends GameScene {
 
-	private IntroController sceneController;
-	private IntroController.Context ctx;
+	private PacManIntro sceneController;
+	private PacManIntro.Context ctx;
 
 	@Override
 	public void setContext(GameController gameController) {
 		super.setContext(gameController);
-		sceneController = new IntroController(gameController);
+		sceneController = new PacManIntro(gameController);
 		sceneController.addStateChangeListener(this::onSceneStateChange);
 		ctx = sceneController.ctx;
 	}
 
 	@Override
 	public void init() {
-		sceneController.restartInState(IntroController.State.START);
+		sceneController.restartInState(PacManIntro.State.START);
 		ctx.pacMan.setAnimationSet(new PacAnimations(ctx.pacMan, r2D));
 		ctx.pacMan.animationSet().ifPresent(EntityAnimationSet::ensureRunning);
 		Stream.of(ctx.ghosts).forEach(ghost -> ghost.setAnimationSet(new GhostAnimations(ghost, r2D)));
