@@ -24,7 +24,7 @@ SOFTWARE.
 
 package de.amr.games.pacman.ui.swing.scenes.pacman;
 
-import static de.amr.games.pacman.lib.V2i.v;
+import static de.amr.games.pacman.lib.V2i.v2i;
 import static de.amr.games.pacman.model.common.world.World.t;
 
 import java.awt.Graphics2D;
@@ -62,7 +62,7 @@ public class PacManCutscene2 extends GameScene {
 		pac.setAnimationSet(new PacAnimations(pac, r2D));
 		pac.animationSet().ifPresent(anims -> anims.select(AnimKeys.PAC_MUNCHING));
 		pac.animation(AnimKeys.PAC_MUNCHING).ifPresent(EntityAnimation::restart);
-		pac.placeAtTile(v(29, 20), 0, 0);
+		pac.placeAtTile(v2i(29, 20), 0, 0);
 		pac.setMoveDir(Direction.LEFT);
 		pac.setAbsSpeed(1.15);
 		pac.show();
@@ -74,7 +74,7 @@ public class PacManCutscene2 extends GameScene {
 		blinky.animationSet().ifPresent(anims -> anims.put(AnimKeys.BLINKY_DAMAGED, damagedBlinkyAnimation));
 		blinky.animationSet().ifPresent(anims -> anims.select(AnimKeys.GHOST_COLOR));
 		blinky.animation(AnimKeys.GHOST_COLOR).ifPresent(EntityAnimation::restart);
-		blinky.placeAtTile(v(28, 20), 0, 0);
+		blinky.placeAtTile(v2i(28, 20), 0, 0);
 		blinky.setMoveAndWishDir(Direction.LEFT);
 		blinky.setAbsSpeed(0);
 		blinky.hide();

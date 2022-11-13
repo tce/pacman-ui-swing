@@ -24,7 +24,7 @@ SOFTWARE.
 
 package de.amr.games.pacman.ui.swing.scenes.pacman;
 
-import static de.amr.games.pacman.lib.V2i.v;
+import static de.amr.games.pacman.lib.V2i.v2i;
 
 import java.awt.Graphics2D;
 
@@ -72,20 +72,20 @@ public class PacManCutscene3 extends GameScene {
 		++frame;
 		if (frame == 0) {
 			gameController.sounds().loop(GameSound.INTERMISSION_1, 1);
-			pac.placeAtTile(v(29, 20), 0, 0);
+			pac.placeAtTile(v2i(29, 20), 0, 0);
 			pac.setMoveDir(Direction.LEFT);
 			pac.setAbsSpeed(1.25);
 			pac.show();
 			pac.animationSet().ifPresent(anims -> anims.select(AnimKeys.PAC_MUNCHING));
 			pac.animation(AnimKeys.PAC_MUNCHING).ifPresent(EntityAnimation::restart);
-			blinky.placeAtTile(v(35, 20), 0, 0);
+			blinky.placeAtTile(v2i(35, 20), 0, 0);
 			blinky.setMoveAndWishDir(Direction.LEFT);
 			blinky.setAbsSpeed(1.25);
 			blinky.show();
 			blinky.animationSet().ifPresent(anims -> anims.select(AnimKeys.BLINKY_PATCHED));
 			blinky.animation(AnimKeys.BLINKY_PATCHED).ifPresent(EntityAnimation::restart);
 		} else if (frame == 296) {
-			blinky.placeAtTile(v(-1, 20), 0, 0);
+			blinky.placeAtTile(v2i(-1, 20), 0, 0);
 			blinky.setMoveAndWishDir(Direction.RIGHT);
 			blinky.animationSet().ifPresent(anims -> anims.select(AnimKeys.BLINKY_NAKED));
 			blinky.animationSet().ifPresent(anims -> anims.selectedAnimation().get().restart());
