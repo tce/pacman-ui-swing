@@ -30,7 +30,7 @@ import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.MsPacManIntro;
-import de.amr.games.pacman.controller.mspacman.MsPacManIntro.State;
+import de.amr.games.pacman.controller.mspacman.MsPacManIntro.IntroState;
 import de.amr.games.pacman.lib.animation.EntityAnimationSet;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
@@ -46,7 +46,7 @@ import de.amr.games.pacman.ui.swing.shell.Keyboard;
 public class MsPacManIntroScene extends GameScene {
 
 	private MsPacManIntro sceneController;
-	private MsPacManIntro.Context ctx;
+	private MsPacManIntro.IntroData ctx;
 
 	@Override
 	public void setContext(GameController gameController) {
@@ -57,7 +57,7 @@ public class MsPacManIntroScene extends GameScene {
 
 	@Override
 	public void init() {
-		sceneController.restartInState(MsPacManIntro.State.START);
+		sceneController.restartInState(MsPacManIntro.IntroState.START);
 		ctx.game().pac.setAnimationSet(new PacAnimations(ctx.game().pac, r2D));
 		ctx.game().pac.animationSet().ifPresent(EntityAnimationSet::ensureRunning);
 		for (var ghost : ctx.game().theGhosts) {
@@ -82,9 +82,9 @@ public class MsPacManIntroScene extends GameScene {
 		r2D.drawScores(g, gameController.game(), true);
 		drawTitle(g);
 		drawLights(g, 32, 16);
-		if (sceneController.state() == State.GHOSTS) {
+		if (sceneController.state() == IntroState.GHOSTS) {
 			drawGhostText(g);
-		} else if (sceneController.state() == State.MSPACMAN || sceneController.state() == State.READY_TO_PLAY) {
+		} else if (sceneController.state() == IntroState.MSPACMAN || sceneController.state() == IntroState.READY_TO_PLAY) {
 			drawMsPacManText(g);
 		}
 		ctx.game().ghosts().forEach(ghost -> r2D.drawGhost(g, ghost));

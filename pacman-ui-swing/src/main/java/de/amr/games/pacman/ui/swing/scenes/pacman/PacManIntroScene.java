@@ -32,7 +32,7 @@ import java.util.stream.Stream;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.pacman.PacManIntro;
-import de.amr.games.pacman.controller.pacman.PacManIntro.State;
+import de.amr.games.pacman.controller.pacman.PacManIntro.IntroState;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.EntityAnimationSet;
 import de.amr.games.pacman.model.common.actors.AnimKeys;
@@ -53,26 +53,26 @@ import de.amr.games.pacman.ui.swing.shell.Keyboard;
 public class PacManIntroScene extends GameScene {
 
 	private PacManIntro sceneController;
-	private PacManIntro.Context ctx;
+	private PacManIntro.IntroData ctx;
 
 	@Override
 	public void setContext(GameController gameController) {
 		super.setContext(gameController);
 		sceneController = new PacManIntro(gameController);
 		sceneController.addStateChangeListener(this::onSceneStateChange);
-		ctx = sceneController.ctx;
+		ctx = sceneController.context();
 	}
 
 	@Override
 	public void init() {
-		sceneController.restartInState(PacManIntro.State.START);
+		sceneController.restartInState(PacManIntro.IntroState.START);
 		ctx.pacMan.setAnimationSet(new PacAnimations(ctx.pacMan, r2D));
 		ctx.pacMan.animationSet().ifPresent(EntityAnimationSet::ensureRunning);
 		Stream.of(ctx.ghosts).forEach(ghost -> ghost.setAnimationSet(new GhostAnimations(ghost, r2D)));
 	}
 
-	private void onSceneStateChange(State fromState, State toState) {
-		if (fromState == State.CHASING_PAC && toState == State.CHASING_GHOSTS) {
+	private void onSceneStateChange(IntroState fromState, IntroState toState) {
+		if (fromState == IntroState.CHASING_PAC && toState == IntroState.CHASING_GHOSTS) {
 			for (var ghost : ctx.ghosts) {
 				ghost.animationSet().ifPresent(anims -> anims.select(AnimKeys.GHOST_BLUE));
 			}
@@ -92,7 +92,7 @@ public class PacManIntroScene extends GameScene {
 	}
 
 	private void updateAnimations() {
-		if (sceneController.state() == State.CHASING_GHOSTS) {
+		if (sceneController.state() == IntroState.CHASING_GHOSTS) {
 			for (var ghost : ctx.ghosts) {
 				ghost.animationSet().ifPresent(anims -> {
 					if (ghost.is(GhostState.EATEN)) {

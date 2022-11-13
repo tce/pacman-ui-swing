@@ -44,7 +44,7 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 public class MsPacManIntermissionScene2 extends GameScene {
 
 	private MsPacManIntermission2 sceneController;
-	private MsPacManIntermission2.Context ctx;
+	private MsPacManIntermission2.IntermissionData ctx;
 
 	@Override
 	public void setContext(GameController gameController) {

@@ -47,7 +47,7 @@ import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 public class MsPacManIntermissionScene3 extends GameScene {
 
 	private MsPacManIntermission3 sceneController;
-	private MsPacManIntermission3.Context ctx;
+	private MsPacManIntermission3.IntermissionData ctx;
 	private Stork2D stork2D;
 
 	@Override
