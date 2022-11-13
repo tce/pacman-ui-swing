@@ -58,9 +58,9 @@ public class MsPacManIntroScene extends GameScene {
 	@Override
 	public void init() {
 		sceneController.restartInState(IntroController.State.START);
-		ctx.game.pac.setAnimationSet(new PacAnimations(ctx.game.pac, r2D));
-		ctx.game.pac.animationSet().ifPresent(EntityAnimationSet::ensureRunning);
-		for (var ghost : ctx.game.theGhosts) {
+		ctx.game().pac.setAnimationSet(new PacAnimations(ctx.game().pac, r2D));
+		ctx.game().pac.animationSet().ifPresent(EntityAnimationSet::ensureRunning);
+		for (var ghost : ctx.game().theGhosts) {
 			ghost.setAnimationSet(new GhostAnimations(ghost, r2D));
 			ghost.animationSet().ifPresent(EntityAnimationSet::ensureRunning);
 		}
@@ -87,8 +87,8 @@ public class MsPacManIntroScene extends GameScene {
 		} else if (sceneController.state() == State.MSPACMAN || sceneController.state() == State.READY_TO_PLAY) {
 			drawMsPacManText(g);
 		}
-		ctx.game.ghosts().forEach(ghost -> r2D.drawGhost(g, ghost));
-		r2D.drawPac(g, ctx.game.pac);
+		ctx.game().ghosts().forEach(ghost -> r2D.drawGhost(g, ghost));
+		r2D.drawPac(g, ctx.game().pac);
 		r2D.drawCopyright(g, t(6), t(28));
 		r2D.drawCredit(g, game.credit());
 	}
@@ -105,7 +105,7 @@ public class MsPacManIntroScene extends GameScene {
 		if (ctx.ghostIndex == 0) {
 			g.drawString("WITH", ctx.titlePosition.x(), ctx.lightsTopLeft.y() + t(3));
 		}
-		Ghost ghost = ctx.game.theGhosts[ctx.ghostIndex];
+		Ghost ghost = ctx.game().theGhosts[ctx.ghostIndex];
 		g.setColor(r2D.getGhostColor(ghost.id));
 		g.drawString(ghost.name.toUpperCase(), t(14 - ghost.name.length() / 2), ctx.lightsTopLeft.y() + t(6));
 	}
