@@ -27,7 +27,7 @@ import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.common.GameSoundController;
-import de.amr.games.pacman.event.GameEventAdapter;
+import de.amr.games.pacman.event.GameEventListener;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
@@ -42,7 +42,7 @@ import de.amr.games.pacman.ui.swing.sound.PacManGameSounds;
  * 
  * @author Armin Reichert
  */
-public abstract class GameScene implements GameEventAdapter {
+public abstract class GameScene implements GameEventListener {
 
 	private static final GameSoundController PACMAN_SOUNDS = new PacManGameSounds();
 	private static final GameSoundController MS_PACMAN_SOUNDS = new MsPacManGameSounds();

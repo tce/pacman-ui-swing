@@ -49,7 +49,7 @@ import org.apache.logging.log4j.Logger;
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.event.GameEvent;
-import de.amr.games.pacman.event.GameEventAdapter;
+import de.amr.games.pacman.event.GameEventListener;
 import de.amr.games.pacman.event.GameStateChangeEvent;
 import de.amr.games.pacman.lib.V2i;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
@@ -74,7 +74,7 @@ import de.amr.games.pacman.ui.swing.scenes.pacman.PacManIntroScene;
  * 
  * @author Armin Reichert
  */
-public class PacManGameUI implements GameEventAdapter {
+public class PacManGameUI implements GameEventListener {
 
 	private static final Logger LOGGER = LogManager.getFormatterLogger();
 
@@ -169,7 +169,7 @@ public class PacManGameUI implements GameEventAdapter {
 
 	@Override
 	public void onGameEvent(GameEvent event) {
-		GameEventAdapter.super.onGameEvent(event);
+		GameEventListener.super.onGameEvent(event);
 		currentGameScene.onGameEvent(event);
 	}
 
