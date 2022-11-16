@@ -261,7 +261,7 @@ public class SpritesheetPacMan implements Rendering2D {
 	@Override
 	public void drawCopyright(Graphics2D g, int x, int y) {
 		g.setFont(getArcadeFont());
-		g.setColor(getGhostColor(Ghost.PINK_GHOST));
+		g.setColor(getGhostColor(Ghost.ID_PINK_GHOST));
 		g.drawString("\u00A9 1980 MIDWAY MFG. CO.", x, y);
 	}
 }
