@@ -125,11 +125,11 @@ public interface Rendering2D {
 	}
 
 	default void drawPac(Graphics2D g, Pac pac) {
-		pac.animation().ifPresent(animation -> drawEntity(g, pac, (BufferedImage) animation.frame()));
+		pac.selectedAnimation().ifPresent(animation -> drawEntity(g, pac, (BufferedImage) animation.frame()));
 	}
 
 	default void drawGhost(Graphics2D g, Ghost ghost) {
-		ghost.animation().ifPresent(animation -> drawEntity(g, ghost, (BufferedImage) animation.frame()));
+		ghost.selectedAnimation().ifPresent(animation -> drawEntity(g, ghost, (BufferedImage) animation.frame()));
 	}
 
 	default void drawBonus(Graphics2D g, Entity bonusEntity) {
