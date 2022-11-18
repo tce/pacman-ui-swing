@@ -45,7 +45,6 @@ import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.Pac;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
-import de.amr.games.pacman.model.common.world.World;
 import de.amr.games.pacman.model.mspacman.MovingBonus;
 import de.amr.games.pacman.model.pacman.StaticBonus;
 
@@ -210,16 +209,13 @@ public interface Rendering2D {
 	}
 
 	default void drawLevelCounter(Graphics2D g, GameModel game) {
-		int rightX = t(24);
-		int y = t(34);
-		// LOL :-)
-		int[] x = new int[1];
-		x[0] = rightX;
-		game.levelCounter.symbolStream().forEach(symbol -> {
-			var sprite = getBonusSymbolSprite(symbol);
-			drawSpriteCenteredOverBox(g, sprite, x[0], y + World.HTS);
-			x[0] -= t(2);
-		});
+		if (game.levelCounter.isVisible()) {
+			int x = t(24);
+			for (var symbol : game.levelCounter) {
+				drawSprite(g, getBonusSymbolSprite(symbol), x, t(34));
+				x -= t(2);
+			}
+		}
 	}
 
 	default void drawGameState(Graphics2D g, GameModel game, GameState gameState) {
