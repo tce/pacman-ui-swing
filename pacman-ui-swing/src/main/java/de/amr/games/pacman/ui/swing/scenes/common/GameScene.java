@@ -48,7 +48,7 @@ public abstract class GameScene implements GameEventListener {
 	private static final GameSoundController MS_PACMAN_SOUNDS = new MsPacManGameSounds();
 
 	protected GameController gameController;
-	protected V2i size = ArcadeWorld.WORLD_SIZE;
+	protected V2i size = ArcadeWorld.WORLD_SIZE_PX;
 	protected GameModel game;
 	protected Rendering2D r2D;
 
