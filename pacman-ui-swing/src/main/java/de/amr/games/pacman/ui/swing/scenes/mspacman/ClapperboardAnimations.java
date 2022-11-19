@@ -25,7 +25,6 @@ SOFTWARE.
 package de.amr.games.pacman.ui.swing.scenes.mspacman;
 
 import de.amr.games.pacman.lib.animation.EntityAnimationSet;
-import de.amr.games.pacman.model.mspacman.Clapperboard;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.SpritesheetMsPacMan;
 
 /**
@@ -35,7 +34,7 @@ public class ClapperboardAnimations extends EntityAnimationSet<Integer> {
 
 	public ClapperboardAnimations() {
 		super(1);
-		put(Clapperboard.ACTION, SpritesheetMsPacMan.get().createClapperboardAnimation());
-		select(Clapperboard.ACTION);
+		put(0, SpritesheetMsPacMan.get().createClapperboardAnimation());
+		select(0);
 	}
 }
