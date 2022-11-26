@@ -279,7 +279,7 @@ public class PacManGameUI implements GameEventListener {
 
 		else if (Keyboard.keyPressed("L")) {
 			if (game.isPlaying()) {
-				game.lives += 3;
+				game.setLives(game.lives() + 3);
 			}
 		}
 
