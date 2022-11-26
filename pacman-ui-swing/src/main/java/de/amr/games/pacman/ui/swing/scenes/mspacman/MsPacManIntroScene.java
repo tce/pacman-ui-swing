@@ -60,10 +60,10 @@ public class MsPacManIntroScene extends GameScene {
 		sceneController.restartInState(MsPacManIntro.IntroState.START);
 		ctx.game().pac.setAnimationSet(new PacAnimations(ctx.game().pac, r2D));
 		ctx.game().pac.animationSet().ifPresent(EntityAnimationSet::ensureRunning);
-		for (var ghost : ctx.game().theGhosts) {
+		ctx.game().ghosts().forEach(ghost -> {
 			ghost.setAnimationSet(new GhostAnimations(ghost, r2D));
 			ghost.animationSet().ifPresent(EntityAnimationSet::ensureRunning);
-		}
+		});
 	}
 
 	@Override
@@ -105,7 +105,7 @@ public class MsPacManIntroScene extends GameScene {
 		if (ctx.ghostIndex == 0) {
 			g.drawString("WITH", ctx.titlePosition.x(), ctx.redGhostEndPosition.y() + t(3));
 		}
-		Ghost ghost = ctx.game().theGhosts[ctx.ghostIndex];
+		Ghost ghost = ctx.game().ghost(ctx.ghostIndex);
 		g.setColor(r2D.getGhostColor(ghost.id));
 		g.drawString(ghost.name().toUpperCase(), t(14 - ghost.name().length() / 2), ctx.redGhostEndPosition.y() + t(6));
 	}
