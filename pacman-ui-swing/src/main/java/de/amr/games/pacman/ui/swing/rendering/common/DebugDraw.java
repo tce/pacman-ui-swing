@@ -36,7 +36,7 @@ import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.lib.V2d;
 import de.amr.games.pacman.lib.V2i;
-import de.amr.games.pacman.model.common.GameModel;
+import de.amr.games.pacman.model.common.world.World;
 
 /**
  * @author Armin Reichert
@@ -85,12 +85,12 @@ public class DebugDraw {
 		});
 	}
 
-	public static void drawMazeStructure(Graphics2D g, GameModel game) {
+	public static void drawMazeStructure(Graphics2D g, World world) {
 		Color dark = new Color(80, 80, 80);
-		for (int x = 0; x < game.level.world().numCols(); ++x) {
-			for (int y = 0; y < game.level.world().numRows(); ++y) {
+		for (int x = 0; x < world.numCols(); ++x) {
+			for (int y = 0; y < world.numRows(); ++y) {
 				V2i tile = new V2i(x, y);
-				if (game.level.world().isIntersection(tile)) {
+				if (world.isIntersection(tile)) {
 					g.setColor(dark);
 					g.drawOval(t(x), t(y), TS, TS);
 				}
