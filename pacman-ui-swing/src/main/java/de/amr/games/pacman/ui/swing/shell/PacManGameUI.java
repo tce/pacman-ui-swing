@@ -278,13 +278,13 @@ public class PacManGameUI implements GameEventListener {
 		}
 
 		else if (Keyboard.keyPressed("L")) {
-			if (game.playing) {
+			if (game.isPlaying()) {
 				game.lives += 3;
 			}
 		}
 
 		else if (Keyboard.keyPressed("N")) {
-			if (game.playing) {
+			if (game.isPlaying()) {
 				gameController.changeState(GameState.LEVEL_COMPLETE);
 			}
 		}

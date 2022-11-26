@@ -64,7 +64,7 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		boolean showHighScoreOnly = !game.playing && gameController.state() != GameState.READY
+		boolean showHighScoreOnly = !game.isPlaying() && gameController.state() != GameState.READY
 				&& gameController.state() != GameState.GAME_OVER;
 
 		r2D.drawScores(g, game, showHighScoreOnly);
@@ -75,13 +75,13 @@ public class PlayScene extends GameScene {
 		if (PacManGameUI.isDebugDraw()) {
 			DebugDraw.drawPlaySceneDebugInfo(g, gameController);
 		}
-		if (game.hasCredit() && game.playing) {
+		if (game.hasCredit() && game.isPlaying()) {
 			r2D.drawLivesCounter(g, game);
 		}
 		if (game.hasCredit()) {
 			r2D.drawLevelCounter(g, game);
 		}
-		if (!game.hasCredit() && !game.playing) {
+		if (!game.hasCredit() && !game.isPlaying()) {
 			r2D.drawCredit(g, game.credit());
 		}
 	}
