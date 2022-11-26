@@ -107,7 +107,7 @@ public class MsPacManIntroScene extends GameScene {
 		}
 		Ghost ghost = ctx.game().theGhosts[ctx.ghostIndex];
 		g.setColor(r2D.getGhostColor(ghost.id));
-		g.drawString(ghost.name.toUpperCase(), t(14 - ghost.name.length() / 2), ctx.redGhostEndPosition.y() + t(6));
+		g.drawString(ghost.name().toUpperCase(), t(14 - ghost.name().length() / 2), ctx.redGhostEndPosition.y() + t(6));
 	}
 
 	private void drawMsPacManText(Graphics2D g) {
