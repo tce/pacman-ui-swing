@@ -50,14 +50,14 @@ public class DebugDraw {
 		final Color[] ghostColors = { Color.RED, Color.PINK, Color.CYAN, Color.ORANGE };
 		var game = controller.game();
 		var state = controller.state();
-		int scatterPhase = game.huntingTimer.scatterPhase();
-		int chasingPhase = game.huntingTimer.chasingPhase();
+		int scatterPhase = game.huntingTimer().scatterPhase();
+		int chasingPhase = game.huntingTimer().chasingPhase();
 		String stateText;
-		if (state == GameState.HUNTING && game.huntingTimer.inScatterPhase()) {
-			var ticks = game.huntingTimer.remaining();
+		if (state == GameState.HUNTING && game.huntingTimer().inScatterPhase()) {
+			var ticks = game.huntingTimer().remaining();
 			stateText = "Scattering Phase %d Remaining: %s".formatted(scatterPhase, state.timer().ticksToString(ticks));
-		} else if (state == GameState.HUNTING && game.huntingTimer.inChasingPhase()) {
-			var ticks = game.huntingTimer.remaining();
+		} else if (state == GameState.HUNTING && game.huntingTimer().inChasingPhase()) {
+			var ticks = game.huntingTimer().remaining();
 			stateText = "Chasing Phase %d Remaining: %s".formatted(chasingPhase, state.timer().ticksToString(ticks));
 		} else {
 			var ticks = state.timer().tick();
