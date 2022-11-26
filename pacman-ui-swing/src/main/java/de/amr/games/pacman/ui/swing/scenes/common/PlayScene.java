@@ -51,7 +51,7 @@ public class PlayScene extends GameScene {
 		if (game.level.world() instanceof ArcadeWorld arcadeWorld) {
 			arcadeWorld.setLevelCompleteAnimation(r2D.createMazeFlashingAnimation(r2D.mazeNumber(game.level.number())));
 		}
-		game.pac.setAnimationSet(new PacAnimations(game.pac, r2D));
+		game.pac().setAnimationSet(new PacAnimations(game.pac(), r2D));
 		game.ghosts().forEach(ghost -> ghost.setAnimationSet(new GhostAnimations(ghost, r2D)));
 	}
 
@@ -70,7 +70,7 @@ public class PlayScene extends GameScene {
 		r2D.drawScores(g, game, showHighScoreOnly);
 		drawMaze(g);
 		r2D.drawBonus(g, game.bonus().entity());
-		r2D.drawPac(g, game.pac);
+		r2D.drawPac(g, game.pac());
 		game.ghosts().forEach(ghost -> r2D.drawGhost(g, ghost));
 		if (PacManGameUI.isDebugDraw()) {
 			DebugDraw.drawPlaySceneDebugInfo(g, gameController);

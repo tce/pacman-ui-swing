@@ -79,7 +79,7 @@ public class DebugDraw {
 						(int) targetPosition.y());
 			});
 		});
-		game.pac.targetTile().ifPresent(targetTile -> {
+		game.pac().targetTile().ifPresent(targetTile -> {
 			g.setColor(new Color(255, 255, 0, 200));
 			g.fillRect(t(targetTile.x()), t(targetTile.y()), TS, TS);
 		});

@@ -58,8 +58,8 @@ public class MsPacManIntroScene extends GameScene {
 	@Override
 	public void init() {
 		sceneController.restartInState(MsPacManIntro.IntroState.START);
-		ctx.game().pac.setAnimationSet(new PacAnimations(ctx.game().pac, r2D));
-		ctx.game().pac.animationSet().ifPresent(EntityAnimationSet::ensureRunning);
+		ctx.game().pac().setAnimationSet(new PacAnimations(ctx.game().pac(), r2D));
+		ctx.game().pac().animationSet().ifPresent(EntityAnimationSet::ensureRunning);
 		ctx.game().ghosts().forEach(ghost -> {
 			ghost.setAnimationSet(new GhostAnimations(ghost, r2D));
 			ghost.animationSet().ifPresent(EntityAnimationSet::ensureRunning);
@@ -88,7 +88,7 @@ public class MsPacManIntroScene extends GameScene {
 			drawMsPacManText(g);
 		}
 		ctx.game().ghosts().forEach(ghost -> r2D.drawGhost(g, ghost));
-		r2D.drawPac(g, ctx.game().pac);
+		r2D.drawPac(g, ctx.game().pac());
 		r2D.drawCopyright(g, t(6), t(28));
 		r2D.drawCredit(g, game.credit());
 	}
