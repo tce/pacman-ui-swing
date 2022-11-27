@@ -259,8 +259,8 @@ public class PacManGameUI implements GameEventListener {
 		var game = gameController.game();
 
 		if (Keyboard.keyPressed("A")) {
-			game.isPacAutoControlled = !game.isPacAutoControlled;
-			showFlashMessage(1, "Autopilot %s", game.isPacAutoControlled ? "on" : "off");
+			game.setAutoControlled(!game.isAutoControlled());
+			showFlashMessage(1, "Autopilot %s", game.isAutoControlled() ? "on" : "off");
 		}
 
 		else if (Keyboard.keyPressed(MOD_CTRL, "D")) {
