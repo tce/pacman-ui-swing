@@ -323,7 +323,6 @@ public class PacManGameUI implements GameEventListener {
 
 	private void restartIntro() {
 		currentGameScene.end();
-		gameController.sounds().stopAll();
 		gameController.restartIntro();
 	}
 
