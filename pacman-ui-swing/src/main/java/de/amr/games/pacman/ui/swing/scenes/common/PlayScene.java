@@ -69,7 +69,7 @@ public class PlayScene extends GameScene {
 
 		r2D.drawScores(g, game, showHighScoreOnly);
 		drawMaze(g);
-		r2D.drawBonus(g, game.bonus().entity());
+		r2D.drawBonus(g, game.bonus());
 		r2D.drawPac(g, game.pac());
 		game.ghosts().forEach(ghost -> r2D.drawGhost(g, ghost));
 		if (PacManGameUI.isDebugDraw()) {

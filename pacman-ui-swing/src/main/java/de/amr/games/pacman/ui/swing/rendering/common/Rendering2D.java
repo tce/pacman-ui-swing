@@ -41,6 +41,7 @@ import de.amr.games.pacman.lib.animation.EntityAnimationByDirection;
 import de.amr.games.pacman.lib.animation.FixedEntityAnimation;
 import de.amr.games.pacman.lib.animation.SingleEntityAnimation;
 import de.amr.games.pacman.model.common.GameModel;
+import de.amr.games.pacman.model.common.actors.Bonus;
 import de.amr.games.pacman.model.common.actors.Entity;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.Pac;
@@ -131,25 +132,19 @@ public interface Rendering2D {
 		ghost.selectedAnimation().ifPresent(animation -> drawEntity(g, ghost, (BufferedImage) animation.frame()));
 	}
 
-	default void drawBonus(Graphics2D g, Entity bonusEntity) {
-		if (bonusEntity instanceof StaticBonus bonus) {
-			var sprite = switch (bonus.state()) {
-			case INACTIVE -> null;
-			case EDIBLE -> getBonusSymbolSprite(bonus.index());
-			case EATEN -> getBonusValueSprite(bonus.index());
-			};
-			drawEntity(g, bonus, sprite);
-		} else if (bonusEntity instanceof MovingBonus bonus) {
-			var sprite = switch (bonus.state()) {
-			case INACTIVE -> null;
-			case EDIBLE -> getBonusSymbolSprite(bonus.index());
-			case EATEN -> getBonusValueSprite(bonus.index());
-			};
-			int dy = bonus.dy();
-			Graphics2D g2d = (Graphics2D) g.create();
-			g2d.translate(0, dy);
-			drawEntity(g2d, bonus, sprite);
-			g2d.dispose();
+	default void drawBonus(Graphics2D g, Bonus bonus) {
+		var sprite = switch (bonus.state()) {
+		case INACTIVE -> null;
+		case EDIBLE -> getBonusSymbolSprite(bonus.index());
+		case EATEN -> getBonusValueSprite(bonus.index());
+		};
+		if (bonus instanceof StaticBonus) {
+			drawEntity(g, bonus.entity(), sprite);
+		} else if (bonus instanceof MovingBonus movingBonus) {
+			int dy = movingBonus.dy();
+			g.translate(0, dy);
+			drawEntity(g, bonus.entity(), sprite);
+			g.translate(0, -dy);
 		}
 	}
 
