@@ -35,7 +35,6 @@ import java.util.Random;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.amr.games.pacman.lib.TickTimer;
 import de.amr.games.pacman.model.common.GameVariant;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.SpritesheetMsPacMan;
@@ -48,7 +47,8 @@ public class BootScene extends GameScene {
 
 	private static final Logger LOGGER = LogManager.getFormatterLogger();
 
-	private final Random rnd = new Random();
+	private static final Random RND = new Random();
+
 	private BufferedImage buffer;
 
 	@Override
@@ -65,19 +65,14 @@ public class BootScene extends GameScene {
 
 	@Override
 	public void update() {
-		var g = buffer.createGraphics();
 		var timer = gameController.state().timer();
-		var tick = timer.tick();
-		if (between(timer, 0.5, 1.5, tick) && tick % 5 == 0) {
-			clearBuffer();
-			drawHexCodes(g);
-		} else if (between(timer, 1.5, 3.0, tick) && tick % 10 == 0) {
-			clearBuffer();
-			drawRandomSprites(g);
-		} else if (tick == timer.secToTicks(3.0)) {
-			clearBuffer();
-			drawGrid(g);
-		} else if (tick == timer.secToTicks(3.5)) {
+		if (timer.betweenSeconds(0.5, 1.5) && timer.tick() % 15 == 0) {
+			drawHexCodes();
+		} else if (timer.betweenSeconds(1.5, 3.5) && timer.tick() % 5 == 0) {
+			drawRandomSprites();
+		} else if (timer.atSecond(3.5)) {
+			drawGrid();
+		} else if (timer.atSecond(4.0)) {
 			gameController.terminateCurrentState();
 		}
 	}
@@ -87,37 +82,37 @@ public class BootScene extends GameScene {
 		g.drawImage(buffer, 0, 0, null);
 	}
 
-	private boolean between(TickTimer timer, double secLeft, double secRight, double tick) {
-		return timer.secToTicks(secLeft) <= tick && tick < timer.secToTicks(secRight);
-	}
-
-	private void drawHexCodes(Graphics2D g) {
+	private void drawHexCodes() {
+		clearBuffer();
+		Graphics2D g = (Graphics2D) buffer.getGraphics();
 		g.setColor(Color.LIGHT_GRAY);
 		g.setFont(SpritesheetPacMan.get().getArcadeFont());
 		for (int row = 0; row < ArcadeWorld.TILES_Y; ++row) {
 			for (int col = 0; col < ArcadeWorld.TILES_X; ++col) {
-				var hexCode = Integer.toHexString(rnd.nextInt(16));
+				var hexCode = Integer.toHexString(RND.nextInt(16));
 				g.drawString(hexCode, col * 8, row * 8 + 8);
 			}
 		}
 		LOGGER.trace("Hex codes");
 	}
 
-	private void drawRandomSprites(Graphics2D g) {
+	private void drawRandomSprites() {
+		clearBuffer();
+		Graphics2D g = (Graphics2D) buffer.getGraphics();
 		var sheet = gameController.game().variant() == GameVariant.MS_PACMAN ? SpritesheetMsPacMan.get()
 				: SpritesheetPacMan.get();
 		var sheetWidth = sheet.getSourceImage().getWidth();
 		var sheetHeight = sheet.getSourceImage().getHeight();
 		for (int row = 0; row < ArcadeWorld.TILES_Y / 2; ++row) {
-			if (rnd.nextInt(100) < 25) {
+			if (RND.nextInt(100) < 25) {
 				continue;
 			}
 			for (int col = 0; col < ArcadeWorld.TILES_X / 2; ++col) {
-				var x = rnd.nextInt(sheetWidth);
+				var x = RND.nextInt(sheetWidth);
 				if (x + 16 > sheetWidth) {
 					x -= 16;
 				}
-				var y = rnd.nextInt(sheetHeight);
+				var y = RND.nextInt(sheetHeight);
 				if (y + 16 > sheetHeight) {
 					y -= 16;
 				}
@@ -128,7 +123,9 @@ public class BootScene extends GameScene {
 		LOGGER.trace("Random sprites");
 	}
 
-	private void drawGrid(Graphics2D g) {
+	private void drawGrid() {
+		clearBuffer();
+		Graphics2D g = (Graphics2D) buffer.getGraphics();
 		g.setColor(Color.LIGHT_GRAY);
 		g.setStroke(new BasicStroke(2));
 		for (int row = 0; row < ArcadeWorld.TILES_Y / 2; ++row) {
