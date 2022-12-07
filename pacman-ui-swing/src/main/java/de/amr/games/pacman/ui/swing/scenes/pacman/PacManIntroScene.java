@@ -32,6 +32,7 @@ import java.util.stream.Stream;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.pacman.PacManIntro;
+import de.amr.games.pacman.controller.pacman.PacManIntro.IntroData;
 import de.amr.games.pacman.controller.pacman.PacManIntro.IntroState;
 import de.amr.games.pacman.lib.Direction;
 import de.amr.games.pacman.lib.animation.EntityAnimationSet;
@@ -133,7 +134,7 @@ public class PacManIntroScene extends GameScene {
 			drawGallery(g);
 			drawPoints(g, 11, 25);
 			r2D.drawCopyright(g, t(3), t(32));
-			if (Boolean.TRUE.equals(ctx.blinking.frame())) {
+			if (Boolean.TRUE.equals(IntroData.BLINKING.frame())) {
 				drawEnergizer(g);
 			}
 			int offset = sceneController.state().timer().tick() % 5 < 2 ? 0 : -1;
@@ -186,11 +187,11 @@ public class PacManIntroScene extends GameScene {
 				r2D.drawSpriteCenteredOverBox(g, r2D.getGhostSprite(id, Direction.RIGHT), t(3), t(tileY));
 				if (ctx.characterVisible[id]) {
 					g.setColor(r2D.getGhostColor(id));
-					g.drawString("-" + ctx.characters[id], t(6), t(tileY + 1));
+					g.drawString("-" + IntroData.CHARACTERS[id], t(6), t(tileY + 1));
 				}
 				if (ctx.nicknameVisible[id]) {
 					g.setColor(r2D.getGhostColor(id));
-					g.drawString("\"" + ctx.nicknames[id] + "\"", t(17), t(tileY + 1));
+					g.drawString("\"" + IntroData.NICKNAMES[id] + "\"", t(17), t(tileY + 1));
 				}
 			}
 		}
@@ -199,7 +200,7 @@ public class PacManIntroScene extends GameScene {
 	private void drawPoints(Graphics2D g, int tileX, int tileY) {
 		g.setColor(r2D.getFoodColor(1));
 		g.fillRect(t(tileX) + 6, t(tileY - 1) + 2, 2, 2);
-		if (Boolean.TRUE.equals(ctx.blinking.frame())) {
+		if (Boolean.TRUE.equals(IntroData.BLINKING.frame())) {
 			g.fillOval(t(tileX), t(tileY + 1) - 2, 10, 10);
 		}
 		g.setColor(Color.WHITE);
