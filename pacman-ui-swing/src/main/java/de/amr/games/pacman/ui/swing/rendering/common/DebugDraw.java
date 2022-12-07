@@ -70,7 +70,7 @@ public class DebugDraw {
 			g.setColor(Color.WHITE);
 			g.drawRect((int) ghost.position().x(), (int) ghost.position().y(), TS, TS);
 			ghost.targetTile().ifPresent(targetTile -> {
-				Color c = ghostColors[ghost.id];
+				Color c = ghostColors[ghost.id()];
 				g.setColor(c);
 				g.fillRect(t(targetTile.x()) + HTS / 2, t(targetTile.y()) + HTS / 2, HTS, HTS);
 				g.setStroke(new BasicStroke(0.5f));

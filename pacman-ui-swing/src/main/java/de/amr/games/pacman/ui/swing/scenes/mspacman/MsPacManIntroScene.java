@@ -106,7 +106,7 @@ public class MsPacManIntroScene extends GameScene {
 			g.drawString("WITH", ctx.titlePosition.x(), ctx.redGhostEndPosition.y() + t(3));
 		}
 		Ghost ghost = ctx.game().ghost(ctx.ghostIndex);
-		g.setColor(r2D.getGhostColor(ghost.id));
+		g.setColor(r2D.getGhostColor(ghost.id()));
 		g.drawString(ghost.name().toUpperCase(), t(14 - ghost.name().length() / 2), ctx.redGhostEndPosition.y() + t(6));
 	}
 

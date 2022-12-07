@@ -208,7 +208,7 @@ public class SpritesheetMsPacMan implements Rendering2D {
 		EntityAnimationByDirection map = new EntityAnimationByDirection(ghost::wishDir);
 		for (Direction dir : Direction.values()) {
 			int d = dirIndex(dir);
-			var color = new SingleEntityAnimation<>(rhs(2 * d, 4 + ghost.id), rhs(2 * d + 1, 4 + ghost.id));
+			var color = new SingleEntityAnimation<>(rhs(2 * d, 4 + ghost.id()), rhs(2 * d + 1, 4 + ghost.id()));
 			color.setFrameDuration(4);
 			color.repeatForever();
 			map.put(dir, color);
