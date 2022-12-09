@@ -69,7 +69,7 @@ public class PacManGameAppSwing {
 		var gameLoop = new GameLoop();
 		var ui = new PacManGameUI(gameLoop, gameController, OPT_HEIGHT.getValue());
 		ui.show();
-		GameEvents.addEventListener(ui);
+		GameEvents.addListener(ui);
 		gameController.setNormalSteering(new KeySteering("Up", "Down", "Left", "Right"));
 		gameLoop.action = () -> {
 			gameLoop.clock.frame(gameController::update);
