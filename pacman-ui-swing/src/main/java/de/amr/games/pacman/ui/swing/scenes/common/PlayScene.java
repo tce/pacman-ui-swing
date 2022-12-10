@@ -94,12 +94,12 @@ public class PlayScene extends GameScene {
 			} else {
 				r2D.drawFullMaze(g, r2D.mazeNumber(game.level().number()), 0, t(3));
 				r2D.drawDarkTiles(g, game.level().world().tiles(), tile -> game.level().world().containsEatenFood(tile)
-						|| game.level().world().isEnergizerTile(tile) && !game.energizerPulse.frame());
+						|| game.level().world().isEnergizerTile(tile) && !arcadeWorld.energizerPulse.frame());
 			}
 		} else {
 			r2D.drawFullMaze(g, r2D.mazeNumber(game.level().number()), 0, t(3));
-			r2D.drawDarkTiles(g, game.level().world().tiles(), tile -> game.level().world().containsEatenFood(tile)
-					|| game.level().world().isEnergizerTile(tile) && !game.energizerPulse.frame());
+			r2D.drawDarkTiles(g, game.level().world().tiles(),
+					tile -> game.level().world().containsEatenFood(tile) || game.level().world().isEnergizerTile(tile));
 		}
 		if (PacManGameUI.isDebugDraw()) {
 			DebugDraw.drawMazeStructure(g, game.level().world());
