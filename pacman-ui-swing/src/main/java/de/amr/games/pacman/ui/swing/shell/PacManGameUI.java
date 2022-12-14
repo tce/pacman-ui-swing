@@ -274,7 +274,7 @@ public class PacManGameUI implements GameEventListener {
 		}
 
 		else if (Keyboard.keyPressed("I")) {
-			gameController.games().forEach(g -> g.setPacImmune(!g.isPacImmune()));
+			gameController.game().setPacImmune(!gameController.game().isPacImmune());
 			showFlashMessage(1, "Player is %s", game.isPacImmune() ? "immune" : "vulnerable");
 		}
 
