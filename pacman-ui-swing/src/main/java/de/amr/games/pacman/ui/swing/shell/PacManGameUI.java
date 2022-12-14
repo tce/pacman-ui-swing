@@ -324,7 +324,7 @@ public class PacManGameUI implements GameEventListener {
 
 	private void restartIntro() {
 		currentGameScene.end();
-		gameController.restartIntro();
+		gameController.startIntro();
 	}
 
 	private void moveMousePointerOutOfSight() {
