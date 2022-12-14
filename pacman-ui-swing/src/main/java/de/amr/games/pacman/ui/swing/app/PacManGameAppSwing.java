@@ -61,8 +61,7 @@ public class PacManGameAppSwing {
 	private GameController gameController;
 
 	public PacManGameAppSwing(GameVariant gameVariant) {
-		gameController = new GameController();
-		gameController.createGame(gameVariant);
+		gameController = new GameController(gameVariant);
 	}
 
 	private void createAndShowUI() {
