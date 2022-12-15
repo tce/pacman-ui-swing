@@ -9,7 +9,11 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>18</maven.compiler.source>
 		<maven.compiler.target>18</maven.compiler.target>
+		<log4j.version>2.18.0</log4j.version>
 	</properties>
+	<organization>
+		<name>armin.reichert@web.de</name>
+	</organization>
 	<build>
 		<plugins>
 			<plugin>
@@ -24,6 +28,9 @@
 						<manifest>
 							<mainClass>de.amr.games.pacman.ui.swing.app.PacManGameAppSwing</mainClass>
 						</manifest>
+						<manifestEntries>
+							<Multi-Release>true</Multi-Release>
+						</manifestEntries>
 					</archive>
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
@@ -39,6 +46,18 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.2.0</version>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Multi-Release>true</Multi-Release>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
@@ -48,7 +67,4 @@
 			<version>1.0</version>
 		</dependency>
 	</dependencies>
-	<organization>
-		<name>armin.reichert@web.de</name>
-	</organization>
 </project>
