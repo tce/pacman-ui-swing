@@ -157,6 +157,9 @@ public class PacManIntroScene extends GameScene {
 			// nothing to do
 		}
 		}
+		if (game.hasCredit()) {
+			r2D.drawLevelCounter(g, game);
+		}
 	}
 
 	private void drawScoresAndCredit(Graphics2D g) {
