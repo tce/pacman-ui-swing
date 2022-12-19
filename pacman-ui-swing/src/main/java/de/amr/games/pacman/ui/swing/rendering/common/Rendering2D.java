@@ -135,8 +135,8 @@ public interface Rendering2D {
 	default void drawBonus(Graphics2D g, Bonus bonus) {
 		var sprite = switch (bonus.state()) {
 		case INACTIVE -> null;
-		case EDIBLE -> getBonusSymbolSprite(bonus.id());
-		case EATEN -> getBonusValueSprite(bonus.id());
+		case EDIBLE -> getBonusSymbolSprite(bonus.symbol());
+		case EATEN -> getBonusValueSprite(bonus.symbol());
 		};
 		if (bonus instanceof StaticBonus) {
 			drawEntity(g, bonus.entity(), sprite);
