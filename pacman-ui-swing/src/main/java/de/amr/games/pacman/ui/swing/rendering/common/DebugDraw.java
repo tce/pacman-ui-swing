@@ -34,8 +34,8 @@ import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.common.GameState;
-import de.amr.games.pacman.lib.V2d;
-import de.amr.games.pacman.lib.V2i;
+import de.amr.games.pacman.lib.Vector2d;
+import de.amr.games.pacman.lib.Vector2i;
 import de.amr.games.pacman.model.common.world.World;
 
 /**
@@ -74,7 +74,7 @@ public class DebugDraw {
 				g.setColor(c);
 				g.fillRect(t(targetTile.x()) + HTS / 2, t(targetTile.y()) + HTS / 2, HTS, HTS);
 				g.setStroke(new BasicStroke(0.5f));
-				V2d targetPosition = new V2d(targetTile.scaled(TS)).plus(HTS, HTS);
+				Vector2d targetPosition = new Vector2d(targetTile.scaled(TS)).plus(HTS, HTS);
 				g.drawLine((int) ghost.position().x(), (int) ghost.position().y(), (int) targetPosition.x(),
 						(int) targetPosition.y());
 			});
@@ -89,7 +89,7 @@ public class DebugDraw {
 		Color dark = new Color(80, 80, 80);
 		for (int x = 0; x < world.numCols(); ++x) {
 			for (int y = 0; y < world.numRows(); ++y) {
-				V2i tile = new V2i(x, y);
+				Vector2i tile = new Vector2i(x, y);
 				if (world.isIntersection(tile)) {
 					g.setColor(dark);
 					g.drawOval(t(x), t(y), TS, TS);

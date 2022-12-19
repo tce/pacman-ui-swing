@@ -26,7 +26,7 @@ package de.amr.games.pacman.ui.swing.lib;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-import de.amr.games.pacman.lib.V2i;
+import de.amr.games.pacman.lib.Vector2i;
 
 /**
  * A spritesheet.
@@ -59,7 +59,7 @@ public class Spritesheet {
 		return tiles(tileX, tileY, 1, 1);
 	}
 
-	public BufferedImage tile(V2i tile) {
+	public BufferedImage tile(Vector2i tile) {
 		return tile(tile.x(), tile.y());
 	}
 

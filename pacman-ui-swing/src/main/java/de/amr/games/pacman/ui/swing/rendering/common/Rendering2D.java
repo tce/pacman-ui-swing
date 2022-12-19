@@ -36,7 +36,7 @@ import java.util.stream.Stream;
 
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.V2i;
+import de.amr.games.pacman.lib.Vector2i;
 import de.amr.games.pacman.lib.animation.EntityAnimationByDirection;
 import de.amr.games.pacman.lib.animation.FixedEntityAnimation;
 import de.amr.games.pacman.lib.animation.SingleEntityAnimation;
@@ -148,7 +148,7 @@ public interface Rendering2D {
 		}
 	}
 
-	default void drawDarkTiles(Graphics2D g, Stream<V2i> tiles, Predicate<V2i> fnDark) {
+	default void drawDarkTiles(Graphics2D g, Stream<Vector2i> tiles, Predicate<Vector2i> fnDark) {
 		g.setColor(Color.BLACK);
 		tiles.filter(fnDark).forEach(tile -> g.fillRect(tile.x() * TS, tile.y() * TS, TS, TS));
 	}

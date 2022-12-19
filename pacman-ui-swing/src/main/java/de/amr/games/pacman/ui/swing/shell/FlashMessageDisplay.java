@@ -30,7 +30,7 @@ import java.awt.RenderingHints;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import de.amr.games.pacman.lib.V2i;
+import de.amr.games.pacman.lib.Vector2i;
 
 /**
  * Implements display of flash messages which disappear after a defined timespan.
@@ -56,10 +56,10 @@ public class FlashMessageDisplay {
 		}
 	}
 
-	private final V2i unscaledSize;
+	private final Vector2i unscaledSize;
 	private final Deque<FlashMessage> flashMessageQ = new ArrayDeque<>();
 
-	public FlashMessageDisplay(V2i unscaledSize) {
+	public FlashMessageDisplay(Vector2i unscaledSize) {
 		this.unscaledSize = unscaledSize;
 	}
 

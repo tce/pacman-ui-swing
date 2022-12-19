@@ -51,7 +51,7 @@ import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameEventListener;
 import de.amr.games.pacman.event.GameStateChangeEvent;
-import de.amr.games.pacman.lib.V2i;
+import de.amr.games.pacman.lib.Vector2i;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.ui.swing.app.GameLoop;
 import de.amr.games.pacman.ui.swing.lib.Ujfc;
@@ -91,8 +91,8 @@ public class PacManGameUI implements GameEventListener {
 	private final GameLoop gameLoop;
 	private final GameController gameController;
 
-	private final V2i unscaledSize;
-	private final V2i scaledSize;
+	private final Vector2i unscaledSize;
+	private final Vector2i scaledSize;
 	private final float scaling;
 	private final JFrame window;
 	private final Timer titleUpdateTimer;
@@ -126,7 +126,7 @@ public class PacManGameUI implements GameEventListener {
 		this.gameController = controller;
 		this.unscaledSize = ArcadeWorld.SIZE_PX;
 		this.scaling = height / unscaledSize.y();
-		this.scaledSize = new V2i(Math.round(scaling * unscaledSize.x()), Math.round(scaling * unscaledSize.y()));
+		this.scaledSize = new Vector2i(Math.round(scaling * unscaledSize.x()), Math.round(scaling * unscaledSize.y()));
 
 		flashMessageDisplay = new FlashMessageDisplay(unscaledSize);
 

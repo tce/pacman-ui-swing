@@ -24,7 +24,7 @@ SOFTWARE.
 
 package de.amr.games.pacman.ui.swing.scenes.pacman;
 
-import static de.amr.games.pacman.lib.V2i.v2i;
+import static de.amr.games.pacman.lib.Vector2i.v2i;
 
 import java.awt.Graphics2D;
 
