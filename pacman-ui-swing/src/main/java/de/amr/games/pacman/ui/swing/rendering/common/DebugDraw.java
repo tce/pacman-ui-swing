@@ -74,7 +74,7 @@ public class DebugDraw {
 				g.setColor(c);
 				g.fillRect(t(targetTile.x()) + HTS / 2, t(targetTile.y()) + HTS / 2, HTS, HTS);
 				g.setStroke(new BasicStroke(0.5f));
-				Vector2d targetPosition = new Vector2d(targetTile.scaled(TS)).plus(HTS, HTS);
+				Vector2d targetPosition = targetTile.scaled(TS).plus(HTS, HTS).toDoubleVec();
 				g.drawLine((int) ghost.position().x(), (int) ghost.position().y(), (int) targetPosition.x(),
 						(int) targetPosition.y());
 			});
