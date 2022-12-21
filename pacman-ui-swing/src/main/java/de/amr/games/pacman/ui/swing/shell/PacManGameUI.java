@@ -257,9 +257,10 @@ public class PacManGameUI implements GameEventListener {
 
 	private void handleNonPlayerKeys() {
 		var game = gameController.game();
+		var gameState = gameController.state();
+		var pac = game.pac();
 
 		if (Keyboard.keyPressed("A")) {
-			var pac = game.pac();
 			pac.setAutoControlled(!pac.isAutoControlled());
 			showFlashMessage(1, "Autopilot %s", pac.isAutoControlled() ? "on" : "off");
 		}
@@ -270,11 +271,11 @@ public class PacManGameUI implements GameEventListener {
 		}
 
 		else if (Keyboard.keyPressed("E")) {
-			gameController.state().cheatEatAllPellets(game);
+			gameState.cheatEatAllPellets(game);
 		}
 
 		else if (Keyboard.keyPressed("I")) {
-			gameController.game().setPacImmune(!gameController.game().isPacImmune());
+			game.setPacImmune(!game.isPacImmune());
 			showFlashMessage(1, "Player is %s", game.isPacImmune() ? "immune" : "vulnerable");
 		}
 
@@ -310,15 +311,15 @@ public class PacManGameUI implements GameEventListener {
 		}
 
 		else if (Keyboard.keyPressed("V")) {
-			gameController.state().selectGameVariant(gameController.game().variant().next());
+			gameState.selectGameVariant(game.variant().next());
 		}
 
 		else if (Keyboard.keyPressed("X")) {
-			gameController.state().cheatKillAllEatableGhosts(gameController.game());
+			gameState.cheatKillAllEatableGhosts(game);
 		}
 
 		else if (Keyboard.keyPressed("Z")) {
-			gameController.state().startCutscenesTest(gameController.game());
+			gameState.startCutscenesTest(game);
 		}
 	}
 
