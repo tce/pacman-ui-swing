@@ -281,7 +281,7 @@ public class PacManGameUI implements GameEventListener {
 
 		else if (Keyboard.keyPressed("L")) {
 			if (game.isPlaying()) {
-				game.setLives(game.lives() + 3);
+				game.pac().setLives(game.pac().lives() + 3);
 			}
 		}
 
