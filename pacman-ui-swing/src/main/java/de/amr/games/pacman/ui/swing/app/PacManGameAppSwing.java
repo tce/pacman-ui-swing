@@ -23,14 +23,14 @@ SOFTWARE.
 */
 package de.amr.games.pacman.ui.swing.app;
 
-import static de.amr.games.pacman.lib.Option.integerOption;
-import static de.amr.games.pacman.lib.Option.option;
+import static de.amr.games.pacman.lib.option.Option.integerOption;
+import static de.amr.games.pacman.lib.option.Option.option;
 import static java.awt.EventQueue.invokeLater;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.event.GameEvents;
-import de.amr.games.pacman.lib.Option;
-import de.amr.games.pacman.lib.OptionParser;
+import de.amr.games.pacman.lib.option.Option;
+import de.amr.games.pacman.lib.option.OptionParser;
 import de.amr.games.pacman.model.common.GameVariant;
 import de.amr.games.pacman.ui.swing.shell.KeySteering;
 import de.amr.games.pacman.ui.swing.shell.PacManGameUI;

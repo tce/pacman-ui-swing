@@ -26,7 +26,7 @@ package de.amr.games.pacman.ui.swing.lib;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-import de.amr.games.pacman.lib.Vector2i;
+import de.amr.games.pacman.lib.math.Vector2i;
 
 /**
  * A spritesheet.

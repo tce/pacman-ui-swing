@@ -26,7 +26,7 @@ package de.amr.games.pacman.ui.swing.entity.pacman;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import de.amr.games.pacman.lib.animation.SingleEntityAnimation;
+import de.amr.games.pacman.lib.anim.SingleEntityAnimation;
 import de.amr.games.pacman.model.common.actors.Pac;
 import de.amr.games.pacman.ui.swing.rendering.pacman.SpritesheetPacMan;
 

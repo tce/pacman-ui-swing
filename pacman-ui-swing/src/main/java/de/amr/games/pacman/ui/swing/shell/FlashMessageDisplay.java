@@ -30,7 +30,7 @@ import java.awt.RenderingHints;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import de.amr.games.pacman.lib.Vector2i;
+import de.amr.games.pacman.lib.math.Vector2i;
 
 /**
  * Implements display of flash messages which disappear after a defined timespan.

@@ -23,10 +23,10 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.rendering.pacman;
 
-import static de.amr.games.pacman.lib.Direction.DOWN;
-import static de.amr.games.pacman.lib.Direction.LEFT;
-import static de.amr.games.pacman.lib.Direction.RIGHT;
-import static de.amr.games.pacman.lib.Direction.UP;
+import static de.amr.games.pacman.lib.steering.Direction.DOWN;
+import static de.amr.games.pacman.lib.steering.Direction.LEFT;
+import static de.amr.games.pacman.lib.steering.Direction.RIGHT;
+import static de.amr.games.pacman.lib.steering.Direction.UP;
 import static de.amr.games.pacman.ui.swing.lib.Ujfc.font;
 import static de.amr.games.pacman.ui.swing.lib.Ujfc.image;
 
@@ -37,10 +37,10 @@ import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.List;
 
-import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.animation.EntityAnimationByDirection;
-import de.amr.games.pacman.lib.animation.FixedEntityAnimation;
-import de.amr.games.pacman.lib.animation.SingleEntityAnimation;
+import de.amr.games.pacman.lib.anim.EntityAnimationByDirection;
+import de.amr.games.pacman.lib.anim.FixedEntityAnimation;
+import de.amr.games.pacman.lib.anim.SingleEntityAnimation;
+import de.amr.games.pacman.lib.steering.Direction;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.Pac;
 import de.amr.games.pacman.ui.swing.lib.Spritesheet;

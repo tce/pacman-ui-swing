@@ -35,11 +35,11 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import de.amr.games.pacman.controller.common.GameState;
-import de.amr.games.pacman.lib.Direction;
-import de.amr.games.pacman.lib.Vector2i;
-import de.amr.games.pacman.lib.animation.EntityAnimationByDirection;
-import de.amr.games.pacman.lib.animation.FixedEntityAnimation;
-import de.amr.games.pacman.lib.animation.SingleEntityAnimation;
+import de.amr.games.pacman.lib.anim.EntityAnimationByDirection;
+import de.amr.games.pacman.lib.anim.FixedEntityAnimation;
+import de.amr.games.pacman.lib.anim.SingleEntityAnimation;
+import de.amr.games.pacman.lib.math.Vector2i;
+import de.amr.games.pacman.lib.steering.Direction;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Bonus;
 import de.amr.games.pacman.model.common.actors.Entity;
