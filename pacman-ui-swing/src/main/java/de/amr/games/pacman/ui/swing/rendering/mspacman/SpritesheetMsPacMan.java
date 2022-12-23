@@ -329,7 +329,7 @@ public class SpritesheetMsPacMan implements Rendering2D {
 
 	public void drawFlap(Graphics2D g, Clapperboard flap) {
 		if (flap.isVisible()) {
-			flap.selectedAnimation().map(EntityAnimation::animate).ifPresent(spriteObj -> {
+			flap.animation().map(EntityAnimation::animate).ifPresent(spriteObj -> {
 				var sprite = (BufferedImage) spriteObj;
 				drawEntity(g, flap, sprite);
 				g.setFont(getArcadeFont());
