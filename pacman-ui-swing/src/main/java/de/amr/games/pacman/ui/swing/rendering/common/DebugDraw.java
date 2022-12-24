@@ -34,7 +34,7 @@ import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.common.GameState;
-import de.amr.games.pacman.lib.math.Vector2d;
+import de.amr.games.pacman.lib.math.Vector2f;
 import de.amr.games.pacman.lib.math.Vector2i;
 import de.amr.games.pacman.model.common.world.World;
 
@@ -74,7 +74,7 @@ public class DebugDraw {
 				g.setColor(c);
 				g.fillRect(t(targetTile.x()) + HTS / 2, t(targetTile.y()) + HTS / 2, HTS, HTS);
 				g.setStroke(new BasicStroke(0.5f));
-				Vector2d targetPosition = targetTile.scaled(TS).plus(HTS, HTS).toDoubleVec();
+				Vector2f targetPosition = targetTile.scaled(TS).plus(HTS, HTS).toFloatVec();
 				g.drawLine((int) ghost.position().x(), (int) ghost.position().y(), (int) targetPosition.x(),
 						(int) targetPosition.y());
 			});

@@ -64,7 +64,7 @@ public class PacManCutscene2 extends GameScene {
 		pac.animation(AnimKeys.PAC_MUNCHING).ifPresent(EntityAnimation::restart);
 		pac.placeAtTile(v2i(29, 20), 0, 0);
 		pac.setMoveDir(Direction.LEFT);
-		pac.setAbsSpeed(1.15);
+		pac.setAbsSpeed(1.15f);
 		pac.show();
 
 		stretched = SpritesheetPacMan.get().createBlinkyStretchedAnimation();
@@ -90,10 +90,10 @@ public class PacManCutscene2 extends GameScene {
 		if (frame == 0) {
 			gameController.sounds().play(GameSound.INTERMISSION_1);
 		} else if (frame == 110) {
-			blinky.setAbsSpeed(1.25);
+			blinky.setAbsSpeed(1.25f);
 			blinky.show();
 		} else if (frame == 196) {
-			blinky.setAbsSpeed(0.17);
+			blinky.setAbsSpeed(0.17f);
 			stretched.setFrameIndex(1);
 		} else if (frame == 226) {
 			stretched.setFrameIndex(2);
