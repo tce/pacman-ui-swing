@@ -31,7 +31,6 @@ import de.amr.games.pacman.model.common.GameSound;
 
 /**
  * @author Armin Reichert
- *
  */
 public class MsPacManGameSounds extends AbstractGameSounds {
 

@@ -41,14 +41,12 @@ import de.amr.games.pacman.model.common.GameSound;
 
 /**
  * @author Armin Reichert
- *
  */
 public class AbstractGameSounds implements GameSoundController {
 
 	private static final Logger LOGGER = LogManager.getFormatterLogger();
 
 	protected final Map<GameSound, Clip> clips = new EnumMap<>(GameSound.class);
-	protected boolean silent;
 	protected boolean muted;
 
 	@Override
@@ -84,14 +82,14 @@ public class AbstractGameSounds implements GameSoundController {
 	}
 
 	protected void startClip(Clip clip) {
-		if (!silent && !muted) {
+		if (!muted) {
 			clip.setFramePosition(0);
 			clip.start();
 		}
 	}
 
 	protected void loopClip(Clip clip, int repetitions) {
-		if (!silent && !muted) {
+		if (!muted) {
 			clip.loop(repetitions);
 		}
 	}
