@@ -52,13 +52,13 @@ public class DebugDraw {
 		var game = controller.game();
 		var state = controller.state();
 		var huntingTimer = game.level().huntingTimer();
-		int scatterPhase = huntingTimer.scatterPhase();
-		int chasingPhase = huntingTimer.chasingPhase();
+		int scatterPhase = game.level().scatterPhaseIndex();
+		int chasingPhase = game.level().chasingPhaseIndex();
 		String stateText;
-		if (state == GameState.HUNTING && huntingTimer.inScatterPhase()) {
+		if (state == GameState.HUNTING && game.level().inScatterPhase()) {
 			var ticks = huntingTimer.remaining();
 			stateText = "Scattering Phase %d Remaining: %s".formatted(scatterPhase, ticksToString(ticks));
-		} else if (state == GameState.HUNTING && huntingTimer.inChasingPhase()) {
+		} else if (state == GameState.HUNTING && game.level().inChasingPhase()) {
 			var ticks = huntingTimer.remaining();
 			stateText = "Chasing Phase %d Remaining: %s".formatted(chasingPhase, ticksToString(ticks));
 		} else {
