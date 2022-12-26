@@ -31,9 +31,9 @@ import java.awt.Graphics2D;
 import java.util.stream.Stream;
 
 import de.amr.games.pacman.controller.common.GameController;
-import de.amr.games.pacman.controller.pacman.PacManIntro;
-import de.amr.games.pacman.controller.pacman.PacManIntro.IntroData;
-import de.amr.games.pacman.controller.pacman.PacManIntro.IntroState;
+import de.amr.games.pacman.controller.pacman.PacManIntroController;
+import de.amr.games.pacman.controller.pacman.PacManIntroData;
+import de.amr.games.pacman.controller.pacman.PacManIntroState;
 import de.amr.games.pacman.lib.anim.EntityAnimationSet;
 import de.amr.games.pacman.lib.steering.Direction;
 import de.amr.games.pacman.model.common.actors.AnimKeys;
@@ -53,27 +53,27 @@ import de.amr.games.pacman.ui.swing.shell.Keyboard;
  */
 public class PacManIntroScene extends GameScene {
 
-	private PacManIntro sceneController;
-	private PacManIntro.IntroData ctx;
+	private PacManIntroController sceneController;
+	private PacManIntroData ctx;
 
 	@Override
 	public void setContext(GameController gameController) {
 		super.setContext(gameController);
-		sceneController = new PacManIntro(gameController);
+		sceneController = new PacManIntroController(gameController);
 		sceneController.addStateChangeListener(this::onSceneStateChange);
 		ctx = sceneController.context();
 	}
 
 	@Override
 	public void init() {
-		sceneController.restart(PacManIntro.IntroState.START);
+		sceneController.restart(PacManIntroState.START);
 		ctx.pacMan.setAnimationSet(new PacAnimations(ctx.pacMan, r2D));
 		ctx.pacMan.animationSet().ifPresent(EntityAnimationSet::ensureRunning);
 		Stream.of(ctx.ghosts).forEach(ghost -> ghost.setAnimationSet(new GhostAnimations(ghost, r2D)));
 	}
 
-	private void onSceneStateChange(IntroState fromState, IntroState toState) {
-		if (fromState == IntroState.CHASING_PAC && toState == IntroState.CHASING_GHOSTS) {
+	private void onSceneStateChange(PacManIntroState fromState, PacManIntroState toState) {
+		if (fromState == PacManIntroState.CHASING_PAC && toState == PacManIntroState.CHASING_GHOSTS) {
 			for (var ghost : ctx.ghosts) {
 				ghost.animationSet().ifPresent(anims -> anims.select(AnimKeys.GHOST_BLUE));
 			}
@@ -93,7 +93,7 @@ public class PacManIntroScene extends GameScene {
 	}
 
 	private void updateAnimations() {
-		if (sceneController.state() == IntroState.CHASING_GHOSTS) {
+		if (sceneController.state() == PacManIntroState.CHASING_GHOSTS) {
 			for (var ghost : ctx.ghosts) {
 				ghost.animationSet().ifPresent(anims -> {
 					if (ghost.is(GhostState.EATEN)) {
@@ -134,7 +134,7 @@ public class PacManIntroScene extends GameScene {
 			drawGallery(g);
 			drawPoints(g, 11, 25);
 			r2D.drawCopyright(g, t(3), t(32));
-			if (Boolean.TRUE.equals(IntroData.BLINKING.frame())) {
+			if (Boolean.TRUE.equals(PacManIntroData.BLINKING.frame())) {
 				drawEnergizer(g);
 			}
 			int offset = sceneController.state().timer().tick() % 5 < 2 ? 0 : -1;
@@ -190,11 +190,11 @@ public class PacManIntroScene extends GameScene {
 				r2D.drawSpriteCenteredOverBox(g, r2D.getGhostSprite(id, Direction.RIGHT), t(3), t(tileY));
 				if (ctx.characterVisible[id]) {
 					g.setColor(r2D.getGhostColor(id));
-					g.drawString("-" + IntroData.CHARACTERS[id], t(6), t(tileY + 1));
+					g.drawString("-" + PacManIntroData.CHARACTERS[id], t(6), t(tileY + 1));
 				}
 				if (ctx.nicknameVisible[id]) {
 					g.setColor(r2D.getGhostColor(id));
-					g.drawString("\"" + IntroData.NICKNAMES[id] + "\"", t(17), t(tileY + 1));
+					g.drawString("\"" + PacManIntroData.NICKNAMES[id] + "\"", t(17), t(tileY + 1));
 				}
 			}
 		}
@@ -203,7 +203,7 @@ public class PacManIntroScene extends GameScene {
 	private void drawPoints(Graphics2D g, int tileX, int tileY) {
 		g.setColor(r2D.getFoodColor(1));
 		g.fillRect(t(tileX) + 6, t(tileY - 1) + 2, 2, 2);
-		if (Boolean.TRUE.equals(IntroData.BLINKING.frame())) {
+		if (Boolean.TRUE.equals(PacManIntroData.BLINKING.frame())) {
 			g.fillOval(t(tileX), t(tileY + 1) - 2, 10, 10);
 		}
 		g.setColor(Color.WHITE);

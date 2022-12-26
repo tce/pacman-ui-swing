@@ -29,8 +29,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
-import de.amr.games.pacman.controller.mspacman.MsPacManIntro;
-import de.amr.games.pacman.controller.mspacman.MsPacManIntro.IntroState;
+import de.amr.games.pacman.controller.mspacman.MsPacManIntroController;
+import de.amr.games.pacman.controller.mspacman.MsPacManIntroData;
+import de.amr.games.pacman.controller.mspacman.MsPacManIntroState;
 import de.amr.games.pacman.lib.anim.EntityAnimationSet;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
@@ -45,19 +46,19 @@ import de.amr.games.pacman.ui.swing.shell.Keyboard;
  */
 public class MsPacManIntroScene extends GameScene {
 
-	private MsPacManIntro sceneController;
-	private MsPacManIntro.IntroData ctx;
+	private MsPacManIntroController sceneController;
+	private MsPacManIntroData ctx;
 
 	@Override
 	public void setContext(GameController gameController) {
 		super.setContext(gameController);
-		sceneController = new MsPacManIntro(gameController);
+		sceneController = new MsPacManIntroController(gameController);
 		ctx = sceneController.context();
 	}
 
 	@Override
 	public void init() {
-		sceneController.restart(MsPacManIntro.IntroState.START);
+		sceneController.restart(MsPacManIntroState.START);
 		ctx.pac.setAnimationSet(new PacAnimations(ctx.pac, r2D));
 		ctx.pac.animationSet().ifPresent(EntityAnimationSet::ensureRunning);
 		ctx.ghosts.forEach(ghost -> {
@@ -82,9 +83,10 @@ public class MsPacManIntroScene extends GameScene {
 		r2D.drawScores(g, gameController.game(), true);
 		drawTitle(g);
 		drawLights(g, 32, 16);
-		if (sceneController.state() == IntroState.GHOSTS) {
+		if (sceneController.state() == MsPacManIntroState.GHOSTS) {
 			drawGhostText(g);
-		} else if (sceneController.state() == IntroState.MSPACMAN || sceneController.state() == IntroState.READY_TO_PLAY) {
+		} else if (sceneController.state() == MsPacManIntroState.MSPACMAN
+				|| sceneController.state() == MsPacManIntroState.READY_TO_PLAY) {
 			drawMsPacManText(g);
 		}
 		ctx.ghosts.forEach(ghost -> r2D.drawGhost(g, ghost));
