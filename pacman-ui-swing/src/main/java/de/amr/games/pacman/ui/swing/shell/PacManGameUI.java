@@ -206,7 +206,7 @@ public class PacManGameUI implements GameEventListener {
 		case BOOT -> scenes.get(0);
 		case INTRO -> scenes.get(1);
 		case CREDIT -> scenes.get(2);
-		case INTERMISSION -> scenes.get(2 + game.intermissionNumber(game.level().number()));
+		case INTERMISSION -> scenes.get(2 + game.intermissionNumber(game.level().get().number()));
 		case INTERMISSION_TEST -> scenes.get(2 + gameController.intermissionTestNumber);
 		default -> scenes.get(6);
 		};

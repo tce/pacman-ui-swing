@@ -25,7 +25,7 @@ package de.amr.games.pacman.ui.swing.shell;
 
 import de.amr.games.pacman.controller.common.Steering;
 import de.amr.games.pacman.lib.steering.Direction;
-import de.amr.games.pacman.model.common.GameModel;
+import de.amr.games.pacman.model.common.GameLevel;
 import de.amr.games.pacman.model.common.actors.Creature;
 
 /**
@@ -48,11 +48,7 @@ public class KeySteering implements Steering {
 	}
 
 	@Override
-	public void init() {
-	}
-
-	@Override
-	public void steer(GameModel game, Creature pac) {
+	public void steer(GameLevel level, Creature pac) {
 		if (Keyboard.keyPressed(up)) {
 			pac.setWishDir(Direction.UP);
 		} else if (Keyboard.keyPressed(down)) {

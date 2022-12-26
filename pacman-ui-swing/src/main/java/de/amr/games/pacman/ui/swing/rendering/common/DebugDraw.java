@@ -51,39 +51,41 @@ public class DebugDraw {
 		final Color[] ghostColors = { Color.RED, Color.PINK, Color.CYAN, Color.ORANGE };
 		var game = controller.game();
 		var state = controller.state();
-		var huntingTimer = game.level().huntingTimer();
-		int scatterPhase = game.level().scatterPhaseIndex();
-		int chasingPhase = game.level().chasingPhaseIndex();
-		String stateText;
-		if (state == GameState.HUNTING && game.level().inScatterPhase()) {
-			var ticks = huntingTimer.remaining();
-			stateText = "Scattering Phase %d Remaining: %s".formatted(scatterPhase, ticksToString(ticks));
-		} else if (state == GameState.HUNTING && game.level().inChasingPhase()) {
-			var ticks = huntingTimer.remaining();
-			stateText = "Chasing Phase %d Remaining: %s".formatted(chasingPhase, ticksToString(ticks));
-		} else {
-			var ticks = state.timer().tick();
-			stateText = "State %s Running: %s".formatted(state, ticksToString(ticks));
-		}
-		g.setColor(Color.WHITE);
-		g.setFont(new Font("Arial", Font.PLAIN, 6));
-		g.drawString(stateText, t(1), t(3));
-		game.ghosts().forEach(ghost -> {
+		game.level().ifPresent(level -> {
+			var huntingTimer = level.huntingTimer();
+			int scatterPhase = level.scatterPhaseIndex();
+			int chasingPhase = level.chasingPhaseIndex();
+			String stateText;
+			if (state == GameState.HUNTING && level.inScatterPhase()) {
+				var ticks = huntingTimer.remaining();
+				stateText = "Scattering Phase %d Remaining: %s".formatted(scatterPhase, ticksToString(ticks));
+			} else if (state == GameState.HUNTING && level.inChasingPhase()) {
+				var ticks = huntingTimer.remaining();
+				stateText = "Chasing Phase %d Remaining: %s".formatted(chasingPhase, ticksToString(ticks));
+			} else {
+				var ticks = state.timer().tick();
+				stateText = "State %s Running: %s".formatted(state, ticksToString(ticks));
+			}
 			g.setColor(Color.WHITE);
-			g.drawRect((int) ghost.position().x(), (int) ghost.position().y(), TS, TS);
-			ghost.targetTile().ifPresent(targetTile -> {
-				Color c = ghostColors[ghost.id()];
-				g.setColor(c);
-				g.fillRect(t(targetTile.x()) + HTS / 2, t(targetTile.y()) + HTS / 2, HTS, HTS);
-				g.setStroke(new BasicStroke(0.5f));
-				Vector2f targetPosition = targetTile.scaled(TS).plus(HTS, HTS).toFloatVec();
-				g.drawLine((int) ghost.position().x(), (int) ghost.position().y(), (int) targetPosition.x(),
-						(int) targetPosition.y());
+			g.setFont(new Font("Arial", Font.PLAIN, 6));
+			g.drawString(stateText, t(1), t(3));
+			game.ghosts().forEach(ghost -> {
+				g.setColor(Color.WHITE);
+				g.drawRect((int) ghost.position().x(), (int) ghost.position().y(), TS, TS);
+				ghost.targetTile().ifPresent(targetTile -> {
+					Color c = ghostColors[ghost.id()];
+					g.setColor(c);
+					g.fillRect(t(targetTile.x()) + HTS / 2, t(targetTile.y()) + HTS / 2, HTS, HTS);
+					g.setStroke(new BasicStroke(0.5f));
+					Vector2f targetPosition = targetTile.scaled(TS).plus(HTS, HTS).toFloatVec();
+					g.drawLine((int) ghost.position().x(), (int) ghost.position().y(), (int) targetPosition.x(),
+							(int) targetPosition.y());
+				});
 			});
-		});
-		game.pac().targetTile().ifPresent(targetTile -> {
-			g.setColor(new Color(255, 255, 0, 200));
-			g.fillRect(t(targetTile.x()), t(targetTile.y()), TS, TS);
+			game.pac().targetTile().ifPresent(targetTile -> {
+				g.setColor(new Color(255, 255, 0, 200));
+				g.fillRect(t(targetTile.x()), t(targetTile.y()), TS, TS);
+			});
 		});
 	}
 
