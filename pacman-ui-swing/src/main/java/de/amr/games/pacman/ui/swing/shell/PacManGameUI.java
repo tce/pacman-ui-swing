@@ -260,9 +260,8 @@ public class PacManGameUI implements GameEventListener {
 		var gameState = gameController.state();
 
 		if (Keyboard.keyPressed("A")) {
-			// TODO fixme
-//			pac.setAutoControlled(!pac.isAutoControlled());
-//			showFlashMessage(1, "Autopilot %s", pac.isAutoControlled() ? "on" : "off");
+			game.setAutoControlled(!game.isAutoControlled());
+			showFlashMessage(1, "Autopilot %s", game.isAutoControlled() ? "on" : "off");
 		}
 
 		else if (Keyboard.keyPressed(MOD_CTRL, "D")) {
@@ -275,16 +274,14 @@ public class PacManGameUI implements GameEventListener {
 		}
 
 		else if (Keyboard.keyPressed("I")) {
-			// TODO fixme
-//			game.pac().setImmune(!game.pac().isImmune());
-//			showFlashMessage(1, "Player is %s", game.pac().isImmune() ? "immune" : "vulnerable");
+			game.setImmune(!game.isImmune());
+			showFlashMessage(1, "Player is %s", game.isImmune() ? "immune" : "vulnerable");
 		}
 
 		else if (Keyboard.keyPressed("L")) {
-			// TODO fixme
-//			if (game.isPlaying()) {
-//				game.pac().setLives(game.pac().lives() + 3);
-//			}
+			if (game.isPlaying()) {
+				game.setLives(game.lives() + 3);
+			}
 		}
 
 		else if (Keyboard.keyPressed("N")) {
