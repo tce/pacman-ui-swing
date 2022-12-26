@@ -69,7 +69,7 @@ public class DebugDraw {
 			g.setColor(Color.WHITE);
 			g.setFont(new Font("Arial", Font.PLAIN, 6));
 			g.drawString(stateText, t(1), t(3));
-			game.ghosts().forEach(ghost -> {
+			level.ghosts().forEach(ghost -> {
 				g.setColor(Color.WHITE);
 				g.drawRect((int) ghost.position().x(), (int) ghost.position().y(), TS, TS);
 				ghost.targetTile().ifPresent(targetTile -> {
@@ -82,7 +82,7 @@ public class DebugDraw {
 							(int) targetPosition.y());
 				});
 			});
-			game.pac().targetTile().ifPresent(targetTile -> {
+			level.pac().targetTile().ifPresent(targetTile -> {
 				g.setColor(new Color(255, 255, 0, 200));
 				g.fillRect(t(targetTile.x()), t(targetTile.y()), TS, TS);
 			});

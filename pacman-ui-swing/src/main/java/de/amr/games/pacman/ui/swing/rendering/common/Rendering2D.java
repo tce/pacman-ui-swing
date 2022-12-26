@@ -186,7 +186,7 @@ public interface Rendering2D {
 	}
 
 	default void drawLivesCounter(Graphics2D g, GameModel game) {
-		int numLivesDisplayed = game.isOneLessLifeDisplayed() ? game.pac().lives() - 1 : game.pac().lives();
+		int numLivesDisplayed = game.isOneLessLifeDisplayed() ? game.lives() - 1 : game.lives();
 		if (numLivesDisplayed <= 0) {
 			return;
 		}

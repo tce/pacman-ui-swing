@@ -54,9 +54,9 @@ public class PlayScene extends GameScene {
 				var animation = r2D.createMazeFlashingAnimation(r2D.mazeNumber(level.number()));
 				arcadeWorld.setLevelCompleteAnimation(animation);
 			}
+			level.pac().setAnimationSet(new PacAnimations(level.pac(), r2D));
+			level.ghosts().forEach(ghost -> ghost.setAnimationSet(new GhostAnimations(ghost, r2D)));
 		});
-		game.pac().setAnimationSet(new PacAnimations(game.pac(), r2D));
-		game.ghosts().forEach(ghost -> ghost.setAnimationSet(new GhostAnimations(ghost, r2D)));
 	}
 
 	@Override
@@ -73,12 +73,14 @@ public class PlayScene extends GameScene {
 
 		r2D.drawScores(g, game, showHighScoreOnly);
 		drawMaze(g);
-		r2D.drawBonus(g, game.level().get().bonus());
-		r2D.drawPac(g, game.pac());
-		game.ghosts().forEach(ghost -> r2D.drawGhost(g, ghost));
-		if (PacManGameUI.isDebugDraw()) {
-			DebugDraw.drawPlaySceneDebugInfo(g, gameController);
-		}
+		game.level().ifPresent(level -> {
+			r2D.drawBonus(g, level.bonus());
+			r2D.drawPac(g, level.pac());
+			level.ghosts().forEach(ghost -> r2D.drawGhost(g, ghost));
+			if (PacManGameUI.isDebugDraw()) {
+				DebugDraw.drawPlaySceneDebugInfo(g, gameController);
+			}
+		});
 		if (game.hasCredit() && game.isPlaying()) {
 			r2D.drawLivesCounter(g, game);
 		}

@@ -258,11 +258,11 @@ public class PacManGameUI implements GameEventListener {
 	private void handleNonPlayerKeys() {
 		var game = gameController.game();
 		var gameState = gameController.state();
-		var pac = game.pac();
 
 		if (Keyboard.keyPressed("A")) {
-			pac.setAutoControlled(!pac.isAutoControlled());
-			showFlashMessage(1, "Autopilot %s", pac.isAutoControlled() ? "on" : "off");
+			// TODO fixme
+//			pac.setAutoControlled(!pac.isAutoControlled());
+//			showFlashMessage(1, "Autopilot %s", pac.isAutoControlled() ? "on" : "off");
 		}
 
 		else if (Keyboard.keyPressed(MOD_CTRL, "D")) {
@@ -275,14 +275,16 @@ public class PacManGameUI implements GameEventListener {
 		}
 
 		else if (Keyboard.keyPressed("I")) {
-			game.pac().setImmune(!game.pac().isImmune());
-			showFlashMessage(1, "Player is %s", game.pac().isImmune() ? "immune" : "vulnerable");
+			// TODO fixme
+//			game.pac().setImmune(!game.pac().isImmune());
+//			showFlashMessage(1, "Player is %s", game.pac().isImmune() ? "immune" : "vulnerable");
 		}
 
 		else if (Keyboard.keyPressed("L")) {
-			if (game.isPlaying()) {
-				game.pac().setLives(game.pac().lives() + 3);
-			}
+			// TODO fixme
+//			if (game.isPlaying()) {
+//				game.pac().setLives(game.pac().lives() + 3);
+//			}
 		}
 
 		else if (Keyboard.keyPressed("N")) {
