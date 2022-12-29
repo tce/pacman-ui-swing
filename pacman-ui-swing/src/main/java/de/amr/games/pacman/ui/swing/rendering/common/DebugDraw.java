@@ -53,15 +53,14 @@ public class DebugDraw {
 		var state = controller.state();
 		game.level().ifPresent(level -> {
 			var huntingTimer = level.huntingTimer();
-			int scatterPhase = level.scatterPhaseIndex();
-			int chasingPhase = level.chasingPhaseIndex();
 			String stateText;
-			if (state == GameState.HUNTING && level.inScatterPhase()) {
+			if (state == GameState.HUNTING && level.scatterPhase().isPresent()) {
 				var ticks = huntingTimer.remaining();
-				stateText = "Scattering Phase %d Remaining: %s".formatted(scatterPhase, ticksToString(ticks));
-			} else if (state == GameState.HUNTING && level.inChasingPhase()) {
+				stateText = "Scattering phase %d Remaining: %s".formatted(level.scatterPhase().getAsInt(),
+						ticksToString(ticks));
+			} else if (state == GameState.HUNTING && level.chasingPhase().isPresent()) {
 				var ticks = huntingTimer.remaining();
-				stateText = "Chasing Phase %d Remaining: %s".formatted(chasingPhase, ticksToString(ticks));
+				stateText = "Chasing phase %d Remaining: %s".formatted(level.chasingPhase().getAsInt(), ticksToString(ticks));
 			} else {
 				var ticks = state.timer().tick();
 				stateText = "State %s Running: %s".formatted(state, ticksToString(ticks));
