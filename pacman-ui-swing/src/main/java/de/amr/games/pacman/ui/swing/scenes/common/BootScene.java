@@ -32,9 +32,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import de.amr.games.pacman.model.common.GameVariant;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.SpritesheetMsPacMan;
@@ -45,30 +42,26 @@ import de.amr.games.pacman.ui.swing.rendering.pacman.SpritesheetPacMan;
  */
 public class BootScene extends GameScene {
 
-	private static final Logger LOGGER = LogManager.getFormatterLogger();
+	private final Random rnd = new Random();
+	private final Graphics2D gc;
+	private final BufferedImage currentImage;
 
-	private static final Random RND = new Random();
-
-	private BufferedImage buffer;
+	public BootScene() {
+		currentImage = new BufferedImage(size.x(), size.y(), BufferedImage.TYPE_INT_RGB);
+		gc = (Graphics2D) currentImage.getGraphics();
+	}
 
 	@Override
 	public void init() {
-		buffer = new BufferedImage(size.x(), size.y(), BufferedImage.TYPE_INT_RGB);
 		clearBuffer();
-	}
-
-	private void clearBuffer() {
-		var g = buffer.getGraphics();
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, buffer.getWidth(), buffer.getHeight());
 	}
 
 	@Override
 	public void update() {
 		var timer = gameController.state().timer();
-		if (timer.betweenSeconds(0.5, 1.5) && timer.tick() % 15 == 0) {
-			drawHexCodes();
-		} else if (timer.betweenSeconds(1.5, 3.5) && timer.tick() % 5 == 0) {
+		if (timer.betweenSeconds(1.0, 2.0) && timer.tick() % 5 == 0) {
+			drawRandomHexCodes();
+		} else if (timer.betweenSeconds(2.0, 3.5) && timer.tick() % 5 == 0) {
 			drawRandomSprites();
 		} else if (timer.atSecond(3.5)) {
 			drawGrid();
@@ -79,61 +72,67 @@ public class BootScene extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		g.drawImage(buffer, 0, 0, null);
+		g.drawImage(currentImage, 0, 0, null);
 	}
 
-	private void drawHexCodes() {
+	private void clearBuffer() {
+		gc.setColor(Color.BLACK);
+		gc.fillRect(0, 0, currentImage.getWidth(), currentImage.getHeight());
+	}
+
+	private void drawRandomHexCodes() {
 		clearBuffer();
-		Graphics2D g = (Graphics2D) buffer.getGraphics();
-		g.setColor(Color.LIGHT_GRAY);
-		g.setFont(SpritesheetPacMan.get().getArcadeFont());
+		gc.setColor(new Color(222, 222, 255));
+		gc.setFont(SpritesheetPacMan.get().getArcadeFont());
 		for (int row = 0; row < ArcadeWorld.TILES_Y; ++row) {
 			for (int col = 0; col < ArcadeWorld.TILES_X; ++col) {
-				var hexCode = Integer.toHexString(RND.nextInt(16));
-				g.drawString(hexCode, col * 8, row * 8 + 8);
+				var hexCode = Integer.toHexString(rnd.nextInt(16));
+				gc.drawString(hexCode, col * 8, row * 8 + 8);
 			}
 		}
-		LOGGER.trace("Hex codes");
 	}
 
 	private void drawRandomSprites() {
 		clearBuffer();
-		Graphics2D g = (Graphics2D) buffer.getGraphics();
 		var sheet = gameController.game().variant() == GameVariant.MS_PACMAN ? SpritesheetMsPacMan.get()
 				: SpritesheetPacMan.get();
-		var sheetWidth = sheet.getSourceImage().getWidth();
-		var sheetHeight = sheet.getSourceImage().getHeight();
-		for (int row = 0; row < ArcadeWorld.TILES_Y / 2; ++row) {
-			if (RND.nextInt(100) < 25) {
+		var image = sheet.getSourceImage();
+		var w = image.getWidth();
+		var h = image.getHeight();
+		var cellSize = 16;
+		var numRows = ArcadeWorld.TILES_Y / 2;
+		var numCols = ArcadeWorld.TILES_X / 2;
+		for (int row = 0; row < numRows; ++row) {
+			if (rnd.nextInt(100) < 10) {
 				continue;
 			}
-			for (int col = 0; col < ArcadeWorld.TILES_X / 2; ++col) {
-				var x = RND.nextInt(sheetWidth);
-				if (x + 16 > sheetWidth) {
-					x -= 16;
+			for (int col = 0; col < numCols; ++col) {
+				var x = rnd.nextInt(w);
+				if (x + cellSize > w) {
+					x -= cellSize;
 				}
-				var y = RND.nextInt(sheetHeight);
-				if (y + 16 > sheetHeight) {
-					y -= 16;
+				var y = rnd.nextInt(h);
+				if (y + cellSize > h) {
+					y -= cellSize;
 				}
-				var rect = sheet.getSourceImage().getSubimage(x, y, 16, 16);
-				sheet.drawSprite(g, rect, 16 * col, 16 * row);
+				var rect = image.getSubimage(x, y, cellSize, cellSize);
+				sheet.drawSprite(gc, rect, cellSize * col, cellSize * row);
 			}
 		}
-		LOGGER.trace("Random sprites");
 	}
 
 	private void drawGrid() {
 		clearBuffer();
-		Graphics2D g = (Graphics2D) buffer.getGraphics();
-		g.setColor(Color.LIGHT_GRAY);
-		g.setStroke(new BasicStroke(2));
-		for (int row = 0; row < ArcadeWorld.TILES_Y / 2; ++row) {
-			g.drawLine(0, row * 2 * TS, ArcadeWorld.TILES_X * TS, row * 2 * TS);
+		var cellSize = 16;
+		var numRows = ArcadeWorld.TILES_Y / 2;
+		var numCols = ArcadeWorld.TILES_X / 2;
+		gc.setColor(new Color(222, 222, 255));
+		gc.setStroke(new BasicStroke(2));
+		for (int row = 0; row < numRows; ++row) {
+			gc.drawLine(0, row * cellSize, ArcadeWorld.TILES_X * TS, row * cellSize);
 		}
-		for (int col = 0; col < ArcadeWorld.TILES_X / 2; ++col) {
-			g.drawLine(col * 2 * TS, 0, col * 2 * TS, ArcadeWorld.TILES_Y * TS);
+		for (int col = 0; col <= numCols; ++col) {
+			gc.drawLine(col * cellSize, 0, col * cellSize, ArcadeWorld.TILES_Y * TS);
 		}
-		LOGGER.trace("Grid");
 	}
 }
