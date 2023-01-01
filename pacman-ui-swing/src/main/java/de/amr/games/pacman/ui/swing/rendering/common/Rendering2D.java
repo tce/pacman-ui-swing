@@ -204,12 +204,10 @@ public interface Rendering2D {
 	}
 
 	default void drawLevelCounter(Graphics2D g, GameModel game) {
-		if (game.levelCounter().isVisible()) {
-			int x = t(24);
-			for (var symbol : game.levelCounter()) {
-				drawSprite(g, getBonusSymbolSprite(symbol), x, t(34));
-				x -= t(2);
-			}
+		int x = t(24);
+		for (var symbol : game.levelCounter()) {
+			drawSprite(g, getBonusSymbolSprite(symbol), x, t(34));
+			x -= t(2);
 		}
 	}
 
