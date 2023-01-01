@@ -164,23 +164,19 @@ public interface Rendering2D {
 	default void drawScores(Graphics2D g, GameModel game, boolean showHiscoreOnly) {
 		g.setFont(getArcadeFont());
 		g.translate(0, 2);
-		g.setColor(Color.WHITE);
+		g.setColor(new Color(222, 222, 255));
 		g.drawString("SCORE", t(1), t(1));
 		g.drawString("HIGH SCORE", t(15), t(1));
 		g.translate(0, 1);
-		// Score
-		g.setColor(Color.WHITE);
 		if (showHiscoreOnly) {
 			g.drawString("00", t(6), t(2));
 		} else {
-			g.drawString(String.format("%7d", game.score().points()), t(1), t(2));
-			g.setColor(Color.LIGHT_GRAY);
-			game.level().ifPresent(level -> g.drawString(String.format("L%d", level.number()), t(9), t(2)));
+			game.score().ifPresent(score -> {
+				g.drawString(String.format("%7d", score.points()), t(1), t(2));
+				g.drawString(String.format("L%d", score.levelNumber()), t(9), t(2));
+			});
 		}
-		// Highscore
-		g.setColor(Color.WHITE);
 		g.drawString(String.format("%7d", game.highScore().points()), t(15), t(2));
-		g.setColor(Color.LIGHT_GRAY);
 		g.drawString(String.format("L%d", game.highScore().levelNumber()), t(23), t(2));
 		g.translate(0, -3);
 	}
