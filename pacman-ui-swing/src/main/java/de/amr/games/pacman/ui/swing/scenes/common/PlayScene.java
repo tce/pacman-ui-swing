@@ -116,7 +116,7 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void onGameStateChange(GameStateChangeEvent e) {
-		if (e.newGameState == GameState.LEVEL_STARTING) {
+		if (e.newGameState == GameState.CHANGING_TO_NEXT_LEVEL) {
 			gameController.terminateCurrentState(); // TODO check if needed
 		}
 	}
