@@ -174,7 +174,7 @@ public class PacManGameUI implements GameEventListener {
 	}
 
 	@Override
-	public void onUIForceUpdate(GameEvent e) {
+	public void onUnspecifiedChange(GameEvent e) {
 		updateGameScene(gameController.state(), true);
 	}
 
