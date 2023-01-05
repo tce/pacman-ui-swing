@@ -53,20 +53,20 @@ import de.amr.games.pacman.ui.swing.shell.Keyboard;
  */
 public class PacManIntroScene extends GameScene {
 
-	private PacManIntroController sceneController;
+	private PacManIntroController intro;
 	private PacManIntroData ctx;
 
 	@Override
 	public void setContext(GameController gameController) {
 		super.setContext(gameController);
-		sceneController = new PacManIntroController(gameController);
-		sceneController.addStateChangeListener(this::onSceneStateChange);
-		ctx = sceneController.context();
+		intro = new PacManIntroController(gameController);
+		intro.addStateChangeListener(this::onSceneStateChange);
+		ctx = intro.context();
 	}
 
 	@Override
 	public void init() {
-		sceneController.restart(PacManIntroState.START);
+		intro.restart(PacManIntroState.START);
 		ctx.pacMan.setAnimationSet(new PacAnimations(ctx.pacMan, r2D));
 		ctx.pacMan.animationSet().ifPresent(EntityAnimationSet::ensureRunning);
 		Stream.of(ctx.ghosts).forEach(ghost -> ghost.setAnimationSet(new GhostAnimations(ghost, r2D)));
@@ -87,13 +87,13 @@ public class PacManIntroScene extends GameScene {
 		} else if (Keyboard.keyPressed("5")) {
 			gameController.state().addCredit(game);
 		} else {
-			sceneController.update();
+			intro.update();
 			updateAnimations();
 		}
 	}
 
 	private void updateAnimations() {
-		if (sceneController.state() == PacManIntroState.CHASING_GHOSTS) {
+		if (intro.state() == PacManIntroState.CHASING_GHOSTS) {
 			for (var ghost : ctx.ghosts) {
 				ghost.animationSet().ifPresent(anims -> {
 					if (ghost.is(GhostState.EATEN)) {
@@ -114,7 +114,7 @@ public class PacManIntroScene extends GameScene {
 	@Override
 	public void render(Graphics2D g) {
 
-		switch (sceneController.state()) {
+		switch (intro.state()) {
 		case START, PRESENTING_GHOSTS -> {
 			drawScoresAndCredit(g);
 			drawGallery(g);
@@ -123,7 +123,7 @@ public class PacManIntroScene extends GameScene {
 			drawScoresAndCredit(g);
 			drawGallery(g);
 			drawPoints(g, 11, 25);
-			var timer = sceneController.state().timer();
+			var timer = intro.state().timer();
 			if (timer.tick() > timer.secToTicks(1)) {
 				drawEnergizer(g);
 				r2D.drawCopyright(g, t(3), t(32));
@@ -137,7 +137,7 @@ public class PacManIntroScene extends GameScene {
 			if (Boolean.TRUE.equals(PacManIntroData.BLINKING.frame())) {
 				drawEnergizer(g);
 			}
-			int offset = sceneController.state().timer().tick() % 5 < 2 ? 0 : -1;
+			int offset = intro.state().timer().tick() % 5 < 2 ? 0 : -1;
 			drawGuys(g, offset);
 		}
 		case CHASING_GHOSTS -> {
@@ -194,7 +194,7 @@ public class PacManIntroScene extends GameScene {
 				}
 				if (ctx.nicknameVisible[id]) {
 					g.setColor(r2D.getGhostColor(id));
-					g.drawString("\"" + PacManIntroData.NICKNAMES[id] + "\"", t(17), t(tileY + 1));
+					g.drawString("\"" + intro.context().ghosts[id].name() + "\"", t(17), t(tileY + 1));
 				}
 			}
 		}
