@@ -23,6 +23,8 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.scenes.mspacman;
 
+import static de.amr.games.pacman.controller.mspacman.MsPacManIntroData.BLINKY_END_TILE;
+import static de.amr.games.pacman.controller.mspacman.MsPacManIntroData.TITLE_TILE;
 import static de.amr.games.pacman.model.common.world.World.t;
 
 import java.awt.Color;
@@ -59,8 +61,8 @@ public class MsPacManIntroScene extends GameScene {
 	@Override
 	public void init() {
 		sceneController.restart(MsPacManIntroState.START);
-		ctx.pac.setAnimationSet(new PacAnimations(ctx.pac, r2D));
-		ctx.pac.animationSet().ifPresent(EntityAnimationSet::ensureRunning);
+		ctx.msPacMan.setAnimationSet(new PacAnimations(ctx.msPacMan, r2D));
+		ctx.msPacMan.animationSet().ifPresent(EntityAnimationSet::ensureRunning);
 		ctx.ghosts.forEach(ghost -> {
 			ghost.setAnimationSet(new GhostAnimations(ghost, r2D));
 			ghost.animationSet().ifPresent(EntityAnimationSet::ensureRunning);
@@ -90,7 +92,7 @@ public class MsPacManIntroScene extends GameScene {
 			drawMsPacManText(g);
 		}
 		ctx.ghosts.forEach(ghost -> r2D.drawGhost(g, ghost));
-		r2D.drawPac(g, ctx.pac);
+		r2D.drawPac(g, ctx.msPacMan);
 		r2D.drawCopyright(g, t(6), t(28));
 		r2D.drawCredit(g, game.credit());
 		if (game.hasCredit()) {
@@ -101,26 +103,26 @@ public class MsPacManIntroScene extends GameScene {
 	private void drawTitle(Graphics2D g) {
 		g.setFont(r2D.getArcadeFont());
 		g.setColor(Color.ORANGE);
-		g.drawString("\"MS PAC-MAN\"", ctx.titlePosition.x(), ctx.titlePosition.y());
+		g.drawString("\"MS PAC-MAN\"", TITLE_TILE.x(), TITLE_TILE.y());
 	}
 
 	private void drawGhostText(Graphics2D g) {
 		g.setColor(Color.WHITE);
 		g.setFont(r2D.getArcadeFont());
-		if (ctx.ghostIndex == 0) {
-			g.drawString("WITH", ctx.titlePosition.x(), ctx.redGhostEndPosition.y() + t(3));
+		if (ctx.ghostIndex() == 0) {
+			g.drawString("WITH", TITLE_TILE.x(), BLINKY_END_TILE.y() + t(3));
 		}
-		Ghost ghost = ctx.ghosts.get(ctx.ghostIndex);
+		Ghost ghost = ctx.ghosts.get(ctx.ghostIndex());
 		g.setColor(r2D.getGhostColor(ghost.id()));
-		g.drawString(ghost.name().toUpperCase(), t(14 - ghost.name().length() / 2), ctx.redGhostEndPosition.y() + t(6));
+		g.drawString(ghost.name().toUpperCase(), t(14 - ghost.name().length() / 2), BLINKY_END_TILE.y() + t(6));
 	}
 
 	private void drawMsPacManText(Graphics2D g) {
 		g.setColor(Color.WHITE);
 		g.setFont(r2D.getArcadeFont());
-		g.drawString("STARRING", ctx.titlePosition.x(), ctx.redGhostEndPosition.y() + t(3));
+		g.drawString("STARRING", TITLE_TILE.x(), BLINKY_END_TILE.y() + t(3));
 		g.setColor(Color.YELLOW);
-		g.drawString("MS PAC-MAN", ctx.titlePosition.x(), ctx.redGhostEndPosition.y() + t(6));
+		g.drawString("MS PAC-MAN", TITLE_TILE.x(), BLINKY_END_TILE.y() + t(6));
 	}
 
 	private void drawLights(Graphics2D g, int numDotsX, int numDotsY) {
@@ -141,7 +143,7 @@ public class MsPacManIntroScene extends GameScene {
 				y = 2 * (numDotsX + numDotsY) - dot;
 			}
 			g.setColor((dot + light) % (numDotsX / 2) == 0 ? Color.PINK : Color.RED);
-			g.fillRect(ctx.redGhostEndPosition.x() + 4 * x, ctx.redGhostEndPosition.y() + 4 * y, 2, 2);
+			g.fillRect(BLINKY_END_TILE.x() + 4 * x, BLINKY_END_TILE.y() + 4 * y, 2, 2);
 		}
 	}
 }
