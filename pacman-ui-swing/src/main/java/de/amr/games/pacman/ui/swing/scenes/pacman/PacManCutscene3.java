@@ -74,13 +74,13 @@ public class PacManCutscene3 extends GameScene {
 			gameController.sounds().loop(GameSound.INTERMISSION_1, 1);
 			pac.placeAtTile(v2i(29, 20), 0, 0);
 			pac.setMoveDir(Direction.LEFT);
-			pac.setAbsSpeed(1.25f);
+			pac.setPixelSpeed(1.25f);
 			pac.show();
 			pac.animationSet().ifPresent(anims -> anims.select(AnimKeys.PAC_MUNCHING));
 			pac.animation(AnimKeys.PAC_MUNCHING).ifPresent(EntityAnimation::restart);
 			blinky.placeAtTile(v2i(35, 20), 0, 0);
 			blinky.setMoveAndWishDir(Direction.LEFT);
-			blinky.setAbsSpeed(1.25f);
+			blinky.setPixelSpeed(1.25f);
 			blinky.show();
 			blinky.animationSet().ifPresent(anims -> anims.select(AnimKeys.BLINKY_PATCHED));
 			blinky.animation(AnimKeys.BLINKY_PATCHED).ifPresent(EntityAnimation::restart);
