@@ -156,7 +156,7 @@ public interface Rendering2D {
 	default void drawCredit(Graphics2D g, int credit) {
 		g.setFont(getArcadeFont());
 		g.setColor(Color.WHITE);
-		g.drawString("CREDIT  %d".formatted(credit), t(2), t(ArcadeWorld.TILES_Y) - 2);
+		g.drawString("CREDIT  %d".formatted(credit), t(2), t(ArcadeWorld.SIZE_TILES.y()) - 2);
 	}
 
 	void drawCopyright(Graphics2D g, int x, int y);

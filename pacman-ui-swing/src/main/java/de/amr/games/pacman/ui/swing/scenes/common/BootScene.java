@@ -84,8 +84,8 @@ public class BootScene extends GameScene {
 		clearBuffer();
 		gc.setColor(new Color(222, 222, 255));
 		gc.setFont(SpritesheetPacMan.get().getArcadeFont());
-		for (int row = 0; row < ArcadeWorld.TILES_Y; ++row) {
-			for (int col = 0; col < ArcadeWorld.TILES_X; ++col) {
+		for (int row = 0; row < ArcadeWorld.SIZE_TILES.y(); ++row) {
+			for (int col = 0; col < ArcadeWorld.SIZE_TILES.x(); ++col) {
 				var hexCode = Integer.toHexString(rnd.nextInt(16));
 				gc.drawString(hexCode, col * 8, row * 8 + 8);
 			}
@@ -100,8 +100,8 @@ public class BootScene extends GameScene {
 		var w = image.getWidth();
 		var h = image.getHeight();
 		var cellSize = 16;
-		var numRows = ArcadeWorld.TILES_Y / 2;
-		var numCols = ArcadeWorld.TILES_X / 2;
+		var numRows = ArcadeWorld.SIZE_TILES.y() / 2;
+		var numCols = ArcadeWorld.SIZE_TILES.x() / 2;
 		for (int row = 0; row < numRows; ++row) {
 			if (rnd.nextInt(100) < 10) {
 				continue;
@@ -124,15 +124,15 @@ public class BootScene extends GameScene {
 	private void drawGrid() {
 		clearBuffer();
 		var cellSize = 16;
-		var numRows = ArcadeWorld.TILES_Y / 2;
-		var numCols = ArcadeWorld.TILES_X / 2;
+		var numRows = ArcadeWorld.SIZE_TILES.y() / 2;
+		var numCols = ArcadeWorld.SIZE_TILES.x() / 2;
 		gc.setColor(new Color(222, 222, 255));
 		gc.setStroke(new BasicStroke(2));
 		for (int row = 0; row < numRows; ++row) {
-			gc.drawLine(0, row * cellSize, ArcadeWorld.TILES_X * TS, row * cellSize);
+			gc.drawLine(0, row * cellSize, ArcadeWorld.SIZE_TILES.x() * TS, row * cellSize);
 		}
 		for (int col = 0; col <= numCols; ++col) {
-			gc.drawLine(col * cellSize, 0, col * cellSize, ArcadeWorld.TILES_Y * TS);
+			gc.drawLine(col * cellSize, 0, col * cellSize, ArcadeWorld.SIZE_PX.y());
 		}
 	}
 }
