@@ -128,7 +128,7 @@ public class BootScene extends GameScene {
 		var numCols = ArcadeWorld.SIZE_TILES.x() / 2;
 		gc.setColor(new Color(222, 222, 255));
 		gc.setStroke(new BasicStroke(2));
-		for (int row = 0; row < numRows; ++row) {
+		for (int row = 0; row <= numRows; ++row) {
 			gc.drawLine(0, row * cellSize, ArcadeWorld.SIZE_TILES.x() * TS, row * cellSize);
 		}
 		for (int col = 0; col <= numCols; ++col) {
