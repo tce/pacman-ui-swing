@@ -52,7 +52,7 @@ public class PlayScene extends GameScene {
 		game.level().ifPresent(level -> {
 			if (level.world() instanceof ArcadeWorld arcadeWorld) {
 				var animation = r2D.createMazeFlashingAnimation(r2D.mazeNumber(level.number()));
-				arcadeWorld.setLevelCompleteAnimation(animation);
+				arcadeWorld.setFlashingAnimation(animation);
 			}
 			level.pac().setAnimationSet(new PacAnimations(level.pac(), r2D));
 			level.ghosts().forEach(ghost -> ghost.setAnimationSet(new GhostAnimations(ghost, r2D)));
@@ -95,7 +95,7 @@ public class PlayScene extends GameScene {
 	private void drawMaze(Graphics2D g) {
 		var level = game.level().get();
 		if (level.world() instanceof ArcadeWorld arcadeWorld) {
-			var mazeFlashing = arcadeWorld.levelCompleteAnimation();
+			var mazeFlashing = arcadeWorld.flashingAnimation();
 			if (mazeFlashing.isPresent() && mazeFlashing.get().isRunning()) {
 				g.drawImage((Image) mazeFlashing.get().frame(), 0, t(3), null);
 			} else {
