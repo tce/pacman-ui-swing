@@ -23,14 +23,14 @@ SOFTWARE.
 */
 package de.amr.games.pacman.ui.swing.rendering.common;
 
-import de.amr.games.pacman.lib.anim.EntityAnimationSet;
+import de.amr.games.pacman.lib.anim.EntityAnimationMap;
 import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.model.common.actors.Ghost;
 
 /**
  * @author Armin Reichert
  */
-public class GhostAnimations extends EntityAnimationSet<AnimKeys> {
+public class GhostAnimations extends EntityAnimationMap<AnimKeys> {
 
 	public GhostAnimations(Ghost ghost, Rendering2D r2D) {
 		super(5);

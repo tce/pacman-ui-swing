@@ -24,13 +24,13 @@ SOFTWARE.
 
 package de.amr.games.pacman.ui.swing.scenes.mspacman;
 
-import de.amr.games.pacman.lib.anim.EntityAnimationSet;
+import de.amr.games.pacman.lib.anim.EntityAnimationMap;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.SpritesheetMsPacMan;
 
 /**
  * @author Armin Reichert
  */
-public class ClapperboardAnimations extends EntityAnimationSet<Integer> {
+public class ClapperboardAnimations extends EntityAnimationMap<Integer> {
 
 	public ClapperboardAnimations() {
 		super(1);
