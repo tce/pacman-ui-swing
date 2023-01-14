@@ -57,8 +57,8 @@ public class PacManCutscene1 extends GameScene {
 		pac = new Pac("Pac-Man");
 		pac.setAnimationSet(new PacAnimations(pac, r2D));
 		var bigPacAnim = SpritesheetPacMan.get().createBigPacManMunchingAnimation();
-		pac.animationSet().ifPresent(anims -> anims.put(AnimKeys.PAC_BIG, bigPacAnim));
-		pac.animationSet().ifPresent(anims -> anims.select(AnimKeys.PAC_MUNCHING));
+		pac.animations().ifPresent(anims -> anims.put(AnimKeys.PAC_BIG, bigPacAnim));
+		pac.animations().ifPresent(anims -> anims.select(AnimKeys.PAC_MUNCHING));
 		pac.animation(AnimKeys.PAC_MUNCHING).ifPresent(EntityAnimation::restart);
 
 		pac.placeAtTile(v2i(29, 20), 0, 0);
@@ -68,7 +68,7 @@ public class PacManCutscene1 extends GameScene {
 
 		blinky = new Ghost(Ghost.ID_RED_GHOST, "Blinky");
 		blinky.setAnimationSet(new GhostAnimations(blinky, r2D));
-		blinky.animationSet().ifPresent(anims -> anims.select(AnimKeys.GHOST_COLOR));
+		blinky.animations().ifPresent(anims -> anims.select(AnimKeys.GHOST_COLOR));
 		blinky.animation(AnimKeys.GHOST_COLOR).ifPresent(EntityAnimation::restart);
 		blinky.placeAtTile(v2i(32, 20), 0, 0);
 		blinky.setMoveAndWishDir(Direction.LEFT);
@@ -88,14 +88,14 @@ public class PacManCutscene1 extends GameScene {
 		} else if (frame == 260) {
 			blinky.placeAtTile(v2i(-2, 20), 4, 0);
 			blinky.setMoveAndWishDir(Direction.RIGHT);
-			blinky.animationSet().ifPresent(anims -> anims.select(AnimKeys.GHOST_BLUE));
-			blinky.animationSet().ifPresent(anims -> anims.selectedAnimation().get().restart());
+			blinky.animations().ifPresent(anims -> anims.select(AnimKeys.GHOST_BLUE));
+			blinky.animations().ifPresent(anims -> anims.selectedAnimation().get().restart());
 			blinky.setPixelSpeed(0.75f);
 		} else if (frame == 400) {
 			pac.placeAtTile(v2i(-3, 19), 0, 0);
 			pac.setMoveDir(Direction.RIGHT);
-			pac.animationSet().ifPresent(anims -> anims.select(AnimKeys.PAC_BIG));
-			pac.animationSet().ifPresent(anims -> anims.selectedAnimation().get().restart());
+			pac.animations().ifPresent(anims -> anims.select(AnimKeys.PAC_BIG));
+			pac.animations().ifPresent(anims -> anims.selectedAnimation().get().restart());
 		} else if (frame == 632) {
 			gameController.terminateCurrentState();
 			return;

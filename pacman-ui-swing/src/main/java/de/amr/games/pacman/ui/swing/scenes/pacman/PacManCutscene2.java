@@ -60,7 +60,7 @@ public class PacManCutscene2 extends GameScene {
 
 		pac = new Pac("Pac-Man");
 		pac.setAnimationSet(new PacAnimations(pac, r2D));
-		pac.animationSet().ifPresent(anims -> anims.select(AnimKeys.PAC_MUNCHING));
+		pac.animations().ifPresent(anims -> anims.select(AnimKeys.PAC_MUNCHING));
 		pac.animation(AnimKeys.PAC_MUNCHING).ifPresent(EntityAnimation::restart);
 		pac.placeAtTile(v2i(29, 20), 0, 0);
 		pac.setMoveDir(Direction.LEFT);
@@ -71,8 +71,8 @@ public class PacManCutscene2 extends GameScene {
 		blinky = new Ghost(Ghost.ID_RED_GHOST, "Blinky");
 		blinky.setAnimationSet(new GhostAnimations(blinky, r2D));
 		var damagedBlinkyAnimation = SpritesheetPacMan.get().createBlinkyDamagedAnimation();
-		blinky.animationSet().ifPresent(anims -> anims.put(AnimKeys.BLINKY_DAMAGED, damagedBlinkyAnimation));
-		blinky.animationSet().ifPresent(anims -> anims.select(AnimKeys.GHOST_COLOR));
+		blinky.animations().ifPresent(anims -> anims.put(AnimKeys.BLINKY_DAMAGED, damagedBlinkyAnimation));
+		blinky.animations().ifPresent(anims -> anims.select(AnimKeys.GHOST_COLOR));
 		blinky.animation(AnimKeys.GHOST_COLOR).ifPresent(EntityAnimation::restart);
 		blinky.placeAtTile(v2i(28, 20), 0, 0);
 		blinky.setMoveAndWishDir(Direction.LEFT);
@@ -99,12 +99,12 @@ public class PacManCutscene2 extends GameScene {
 			stretched.setFrameIndex(2);
 		} else if (frame == 248) {
 			blinky.setPixelSpeed(0);
-			blinky.animationSet().ifPresent(anims -> anims.selectedAnimation().get().stop());
+			blinky.animations().ifPresent(anims -> anims.selectedAnimation().get().stop());
 			stretched.setFrameIndex(3);
 		} else if (frame == 328) {
 			stretched.setFrameIndex(4);
 		} else if (frame == 329) {
-			blinky.animationSet().ifPresent(anims -> anims.select(AnimKeys.BLINKY_DAMAGED));
+			blinky.animations().ifPresent(anims -> anims.select(AnimKeys.BLINKY_DAMAGED));
 			blinky.animation(AnimKeys.BLINKY_DAMAGED).ifPresent(damaged -> damaged.setFrameIndex(0));
 		} else if (frame == 389) {
 			blinky.animation(AnimKeys.BLINKY_DAMAGED).ifPresent(damaged -> damaged.setFrameIndex(1));
