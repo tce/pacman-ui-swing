@@ -156,10 +156,11 @@ public class PacManGameUI implements GameEventListener {
 		titleUpdateTimer = new Timer(1000, e -> window.setTitle(String.format("%s (%d fps, JFC Swing)",
 				gameController.game().variant() == MS_PACMAN ? "Ms. Pac-Man" : "Pac-Man", gameLoop.clock.getLastFPS())));
 
-		onGameStateChange(new GameStateChangeEvent(gameController.game(), null, controller.state()));
+		gameController.boot();
 	}
 
 	public void show() {
+		updateGameScene(gameController.state(), true);
 		window.pack();
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
@@ -223,6 +224,9 @@ public class PacManGameUI implements GameEventListener {
 	}
 
 	private void renderScreen() {
+		if (currentGameScene == null) {
+			return;
+		}
 		BufferStrategy buffers = canvas.getBufferStrategy();
 		if (buffers == null) {
 			canvas.createBufferStrategy(2);
