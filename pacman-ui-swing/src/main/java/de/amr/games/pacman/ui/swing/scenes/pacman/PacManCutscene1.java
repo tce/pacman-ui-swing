@@ -55,7 +55,7 @@ public class PacManCutscene1 extends GameScene {
 		initialDelay = 120;
 
 		pac = new Pac("Pac-Man");
-		pac.setAnimationSet(new PacAnimations(pac, r2D));
+		pac.setAnimations(new PacAnimations(pac, r2D));
 		var bigPacAnim = SpritesheetPacMan.get().createBigPacManMunchingAnimation();
 		pac.animations().ifPresent(anims -> anims.put(AnimKeys.PAC_BIG, bigPacAnim));
 		pac.animations().ifPresent(anims -> anims.select(AnimKeys.PAC_MUNCHING));
@@ -67,7 +67,7 @@ public class PacManCutscene1 extends GameScene {
 		pac.show();
 
 		blinky = new Ghost(Ghost.ID_RED_GHOST, "Blinky");
-		blinky.setAnimationSet(new GhostAnimations(blinky, r2D));
+		blinky.setAnimations(new GhostAnimations(blinky, r2D));
 		blinky.animations().ifPresent(anims -> anims.select(AnimKeys.GHOST_COLOR));
 		blinky.animation(AnimKeys.GHOST_COLOR).ifPresent(EntityAnimation::restart);
 		blinky.placeAtTile(v2i(32, 20), 0, 0);

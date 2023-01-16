@@ -54,8 +54,8 @@ public class PlayScene extends GameScene {
 				var animation = r2D.createMazeFlashingAnimation(r2D.mazeNumber(level.number()));
 				arcadeWorld.setFlashingAnimation(animation);
 			}
-			level.pac().setAnimationSet(new PacAnimations(level.pac(), r2D));
-			level.ghosts().forEach(ghost -> ghost.setAnimationSet(new GhostAnimations(ghost, r2D)));
+			level.pac().setAnimations(new PacAnimations(level.pac(), r2D));
+			level.ghosts().forEach(ghost -> ghost.setAnimations(new GhostAnimations(ghost, r2D)));
 		});
 	}
 

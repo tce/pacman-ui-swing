@@ -61,10 +61,10 @@ public class MsPacManIntroScene extends GameScene {
 	@Override
 	public void init() {
 		sceneController.restart(MsPacManIntroState.START);
-		ctx.msPacMan.setAnimationSet(new PacAnimations(ctx.msPacMan, r2D));
+		ctx.msPacMan.setAnimations(new PacAnimations(ctx.msPacMan, r2D));
 		ctx.msPacMan.animations().ifPresent(EntityAnimationMap::ensureRunning);
 		ctx.ghosts.forEach(ghost -> {
-			ghost.setAnimationSet(new GhostAnimations(ghost, r2D));
+			ghost.setAnimations(new GhostAnimations(ghost, r2D));
 			ghost.animations().ifPresent(EntityAnimationMap::ensureRunning);
 		});
 	}

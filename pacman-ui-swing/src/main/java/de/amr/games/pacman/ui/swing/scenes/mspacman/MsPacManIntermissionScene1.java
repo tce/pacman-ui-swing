@@ -61,14 +61,14 @@ public class MsPacManIntermissionScene1 extends GameScene {
 	public void init() {
 		sceneController.restart(MsPacManIntermission1.IntermissionState.FLAP);
 		ctx.clapperboard.setAnimationSet(new ClapperboardAnimations());
-		ctx.msPac.setAnimationSet(new PacAnimations(ctx.msPac, r2D));
+		ctx.msPac.setAnimations(new PacAnimations(ctx.msPac, r2D));
 		ctx.msPac.animations().ifPresent(EntityAnimationMap::ensureRunning);
-		ctx.pacMan.setAnimationSet(new PacAnimations(ctx.pacMan, r2D));
+		ctx.pacMan.setAnimations(new PacAnimations(ctx.pacMan, r2D));
 		var husbandMunching = SpritesheetMsPacMan.get().createHusbandMunchingAnimations(ctx.pacMan);
 		ctx.pacMan.animations().ifPresent(anims -> anims.put(AnimKeys.PAC_MUNCHING, husbandMunching));
 		ctx.pacMan.animations().ifPresent(anims -> anims.selectedAnimation().get().ensureRunning());
-		ctx.inky.setAnimationSet(new GhostAnimations(ctx.inky, r2D));
-		ctx.pinky.setAnimationSet(new GhostAnimations(ctx.pinky, r2D));
+		ctx.inky.setAnimations(new GhostAnimations(ctx.inky, r2D));
+		ctx.pinky.setAnimations(new GhostAnimations(ctx.pinky, r2D));
 		heart2D = new Heart2D(ctx.heart);
 		heart2D.setImage(SpritesheetMsPacMan.get().getHeart());
 	}

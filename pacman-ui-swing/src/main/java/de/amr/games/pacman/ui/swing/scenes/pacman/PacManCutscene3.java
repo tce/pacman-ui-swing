@@ -54,9 +54,9 @@ public class PacManCutscene3 extends GameScene {
 		frame = -1;
 		initialDelay = 120;
 		pac = new Pac("Pac-Man");
-		pac.setAnimationSet(new PacAnimations(pac, r2D));
+		pac.setAnimations(new PacAnimations(pac, r2D));
 		blinky = new Ghost(Ghost.ID_RED_GHOST, "Blinky");
-		blinky.setAnimationSet(new GhostAnimations(blinky, r2D));
+		blinky.setAnimations(new GhostAnimations(blinky, r2D));
 		blinky.animations()
 				.ifPresent(anims -> anims.put(AnimKeys.BLINKY_PATCHED, SpritesheetPacMan.get().createBlinkyPatchedAnimation()));
 		blinky.animations()
