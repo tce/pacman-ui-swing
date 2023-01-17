@@ -87,9 +87,7 @@ public class PlayScene extends GameScene {
 				&& gameController.state() != GameState.GAME_OVER;
 		r2D.drawScores(g, game, highScoreOnly);
 		if (game.hasCredit()) {
-			if (game.isPlaying()) {
-				r2D.drawLivesCounter(g, game);
-			}
+			r2D.drawLivesCounter(g, game);
 		} else {
 			r2D.drawCredit(g, game.credit());
 		}

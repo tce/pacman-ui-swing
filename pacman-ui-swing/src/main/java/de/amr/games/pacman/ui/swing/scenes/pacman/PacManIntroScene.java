@@ -116,11 +116,11 @@ public class PacManIntroScene extends GameScene {
 
 		switch (intro.state()) {
 		case START, PRESENTING_GHOSTS -> {
-			drawScoresAndCredit(g);
+			drawHUD(g);
 			drawGallery(g);
 		}
 		case SHOWING_POINTS -> {
-			drawScoresAndCredit(g);
+			drawHUD(g);
 			drawGallery(g);
 			drawPoints(g, 11, 25);
 			var timer = intro.state().timer();
@@ -130,7 +130,7 @@ public class PacManIntroScene extends GameScene {
 			}
 		}
 		case CHASING_PAC -> {
-			drawScoresAndCredit(g);
+			drawHUD(g);
 			drawGallery(g);
 			drawPoints(g, 11, 25);
 			r2D.drawCopyright(g, t(3), t(32));
@@ -141,14 +141,14 @@ public class PacManIntroScene extends GameScene {
 			drawGuys(g, offset);
 		}
 		case CHASING_GHOSTS -> {
-			drawScoresAndCredit(g);
+			drawHUD(g);
 			drawGallery(g);
 			drawPoints(g, 11, 25);
 			r2D.drawCopyright(g, t(3), t(32));
 			drawGuys(g, 0);
 		}
 		case READY_TO_PLAY -> {
-			drawScoresAndCredit(g);
+			drawHUD(g);
 			drawGallery(g);
 			drawPoints(g, 11, 25);
 			drawGuys(g, 0);
@@ -162,9 +162,10 @@ public class PacManIntroScene extends GameScene {
 		}
 	}
 
-	private void drawScoresAndCredit(Graphics2D g) {
+	private void drawHUD(Graphics2D g) {
 		r2D.drawScores(g, game, true);
 		r2D.drawCredit(g, game.credit());
+		r2D.drawLevelCounter(g, game.levelCounter());
 	}
 
 	private void drawGuys(Graphics2D g, int offset) {
