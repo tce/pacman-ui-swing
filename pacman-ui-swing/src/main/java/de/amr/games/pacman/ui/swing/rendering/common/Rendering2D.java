@@ -104,6 +104,12 @@ public interface Rendering2D {
 
 	// Drawing
 
+	default void drawText(Graphics2D g, String text, Color color, Font font, int x, int y) {
+		g.setColor(color);
+		g.setFont(font);
+		g.drawString(text, x, y);
+	}
+
 	default void drawSprite(Graphics2D g, BufferedImage sprite, int x, int y) {
 		if (sprite != null) {
 			g.drawImage(sprite, x, y, null);
@@ -203,9 +209,9 @@ public interface Rendering2D {
 		}
 	}
 
-	default void drawLevelCounter(Graphics2D g, GameModel game) {
+	default void drawLevelCounter(Graphics2D g, Iterable<Byte> levelCounter) {
 		int x = t(24);
-		for (var symbol : game.levelCounter()) {
+		for (var symbol : levelCounter) {
 			drawSprite(g, getBonusSymbolSprite(symbol), x, t(34));
 			x -= t(2);
 		}

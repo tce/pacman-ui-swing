@@ -96,7 +96,7 @@ public class MsPacManIntroScene extends GameScene {
 		r2D.drawCopyright(g, t(6), t(28));
 		r2D.drawCredit(g, game.credit());
 		if (game.hasCredit()) {
-			r2D.drawLevelCounter(g, game);
+			r2D.drawLevelCounter(g, game.levelCounter());
 		}
 	}
 

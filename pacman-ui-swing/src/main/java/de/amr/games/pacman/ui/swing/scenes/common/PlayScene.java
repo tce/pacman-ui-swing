@@ -31,7 +31,9 @@ import java.awt.Image;
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameStateChangeEvent;
+import de.amr.games.pacman.model.common.GameLevel;
 import de.amr.games.pacman.model.common.GameSound;
+import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
@@ -69,10 +71,14 @@ public class PlayScene extends GameScene {
 	@Override
 	public void render(Graphics2D g) {
 		game.level().ifPresent(level -> {
-			drawMaze(g);
+			drawMaze(g, level);
 			r2D.drawBonus(g, level.bonus());
+			r2D.drawGameState(g, game, game.hasCredit() ? gameController.state() : GameState.GAME_OVER);
 			r2D.drawPac(g, level.pac());
-			level.ghosts().forEach(ghost -> r2D.drawGhost(g, ghost));
+			r2D.drawGhost(g, level.ghost(Ghost.ID_ORANGE_GHOST));
+			r2D.drawGhost(g, level.ghost(Ghost.ID_CYAN_GHOST));
+			r2D.drawGhost(g, level.ghost(Ghost.ID_PINK_GHOST));
+			r2D.drawGhost(g, level.ghost(Ghost.ID_RED_GHOST));
 			if (PacManGameUI.isDebugDraw()) {
 				DebugDraw.drawPlaySceneDebugInfo(g, gameController);
 			}
@@ -80,19 +86,17 @@ public class PlayScene extends GameScene {
 		boolean highScoreOnly = !game.isPlaying() && gameController.state() != GameState.READY
 				&& gameController.state() != GameState.GAME_OVER;
 		r2D.drawScores(g, game, highScoreOnly);
-		if (game.hasCredit() && game.isPlaying()) {
-			r2D.drawLivesCounter(g, game);
-		}
 		if (game.hasCredit()) {
-			r2D.drawLevelCounter(g, game);
-		}
-		if (!game.hasCredit() && !game.isPlaying()) {
+			if (game.isPlaying()) {
+				r2D.drawLivesCounter(g, game);
+			}
+		} else {
 			r2D.drawCredit(g, game.credit());
 		}
+		r2D.drawLevelCounter(g, game.levelCounter());
 	}
 
-	private void drawMaze(Graphics2D g) {
-		var level = game.level().get();
+	private void drawMaze(Graphics2D g, GameLevel level) {
 		if (level.world() instanceof ArcadeWorld arcadeWorld) {
 			var mazeFlashing = arcadeWorld.flashingAnimation();
 			if (mazeFlashing.isPresent() && mazeFlashing.get().isRunning()) {
@@ -110,7 +114,6 @@ public class PlayScene extends GameScene {
 		if (PacManGameUI.isDebugDraw()) {
 			DebugDraw.drawMazeStructure(g, level.world());
 		}
-		r2D.drawGameState(g, game, game.hasCredit() ? gameController.state() : GameState.GAME_OVER);
 	}
 
 	@Override

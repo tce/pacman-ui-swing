@@ -49,26 +49,16 @@ public class PacManCreditScene extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-
 		r2D.drawScores(g, game, true);
-
-		g.setFont(r2D.getArcadeFont());
-		g.setColor(r2D.getGhostColor(Ghost.ID_ORANGE_GHOST));
-		g.drawString("PUSH START BUTTON", t(6), t(17));
-
-		g.setFont(r2D.getArcadeFont());
-		g.setColor(r2D.getGhostColor(Ghost.ID_CYAN_GHOST));
-		g.drawString("1 PLAYER ONLY", t(8), t(21));
-
-		g.setFont(r2D.getArcadeFont());
-		g.setColor(new Color(255, 184, 174));
-		g.drawString("BONUS PAC-MAN FOR 10000", t(1), t(25));
-
-		g.setFont(r2D.getArcadeFont());
-		g.setFont(r2D.getArcadeFont().deriveFont(6.0f));
-		g.drawString("PTS", t(25), t(25));
-
+		var arcade8 = r2D.getArcadeFont();
+		var arcade6 = arcade8.deriveFont(6f);
+		r2D.drawText(g, "PUSH START BUTTON", r2D.getGhostColor(Ghost.ID_ORANGE_GHOST), arcade8, t(6), t(17));
+		r2D.drawText(g, "1 PLAYER ONLY", r2D.getGhostColor(Ghost.ID_CYAN_GHOST), arcade8, t(8), t(21));
+		r2D.drawText(g, "1 PLAYER ONLY", r2D.getGhostColor(Ghost.ID_CYAN_GHOST), arcade8, t(8), t(21));
+		r2D.drawText(g, "BONUS PAC-MAN FOR 10000", new Color(255, 184, 174), arcade8, t(1), t(25));
+		r2D.drawText(g, "PTS", new Color(255, 184, 174), arcade6, t(25), t(25));
 		r2D.drawCopyright(g, t(4), t(29));
 		r2D.drawCredit(g, game.credit());
+		r2D.drawLevelCounter(g, game.levelCounter());
 	}
 }
