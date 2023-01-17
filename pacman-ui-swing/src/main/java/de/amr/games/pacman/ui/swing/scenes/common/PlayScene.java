@@ -104,7 +104,7 @@ public class PlayScene extends GameScene {
 			} else {
 				r2D.drawFullMaze(g, r2D.mazeNumber(level.number()), 0, t(3));
 				r2D.drawDarkTiles(g, level.world().tiles(), tile -> level.world().containsEatenFood(tile)
-						|| level.world().isEnergizerTile(tile) && !level.energizerPulse().frame());
+						|| level.world().isEnergizerTile(tile) && !arcadeWorld.energizerPulse().frame());
 			}
 		} else {
 			r2D.drawFullMaze(g, r2D.mazeNumber(level.number()), 0, t(3));
