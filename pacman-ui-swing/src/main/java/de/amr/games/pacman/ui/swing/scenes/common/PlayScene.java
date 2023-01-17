@@ -68,12 +68,8 @@ public class PlayScene extends GameScene {
 
 	@Override
 	public void render(Graphics2D g) {
-		boolean showHighScoreOnly = !game.isPlaying() && gameController.state() != GameState.READY
-				&& gameController.state() != GameState.GAME_OVER;
-
-		r2D.drawScores(g, game, showHighScoreOnly);
-		drawMaze(g);
 		game.level().ifPresent(level -> {
+			drawMaze(g);
 			r2D.drawBonus(g, level.bonus());
 			r2D.drawPac(g, level.pac());
 			level.ghosts().forEach(ghost -> r2D.drawGhost(g, ghost));
@@ -81,6 +77,9 @@ public class PlayScene extends GameScene {
 				DebugDraw.drawPlaySceneDebugInfo(g, gameController);
 			}
 		});
+		boolean highScoreOnly = !game.isPlaying() && gameController.state() != GameState.READY
+				&& gameController.state() != GameState.GAME_OVER;
+		r2D.drawScores(g, game, highScoreOnly);
 		if (game.hasCredit() && game.isPlaying()) {
 			r2D.drawLivesCounter(g, game);
 		}
