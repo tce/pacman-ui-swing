@@ -31,10 +31,10 @@ import java.awt.Image;
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameStateChangeEvent;
-import de.amr.games.pacman.model.common.GameLevel;
 import de.amr.games.pacman.model.common.GameSound;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
+import de.amr.games.pacman.model.common.world.World;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
@@ -71,7 +71,7 @@ public class PlayScene extends GameScene {
 	@Override
 	public void render(Graphics2D g) {
 		game.level().ifPresent(level -> {
-			drawMaze(g, level);
+			drawMaze(g, level.world(), r2D.mazeNumber(level.number()));
 			r2D.drawBonus(g, level.bonus());
 			r2D.drawGameState(g, game, game.hasCredit() ? gameController.state() : GameState.GAME_OVER);
 			r2D.drawPac(g, level.pac());
@@ -96,23 +96,22 @@ public class PlayScene extends GameScene {
 		r2D.drawLevelCounter(g, game.levelCounter());
 	}
 
-	private void drawMaze(Graphics2D g, GameLevel level) {
-		if (level.world() instanceof ArcadeWorld arcadeWorld) {
-			var mazeFlashing = arcadeWorld.flashingAnimation();
-			if (mazeFlashing.isPresent() && mazeFlashing.get().isRunning()) {
-				g.drawImage((Image) mazeFlashing.get().frame(), 0, t(3), null);
+	private void drawMaze(Graphics2D g, World world, int mazeNumber) {
+		if (world instanceof ArcadeWorld arcadeWorld) {
+			var flashing = arcadeWorld.flashingAnimation();
+			if (flashing.isPresent() && flashing.get().isRunning()) {
+				g.drawImage((Image) flashing.get().frame(), 0, t(3), null);
 			} else {
-				r2D.drawFullMaze(g, r2D.mazeNumber(level.number()), 0, t(3));
-				r2D.drawDarkTiles(g, level.world().tiles(), tile -> level.world().containsEatenFood(tile)
-						|| level.world().isEnergizerTile(tile) && !arcadeWorld.energizerPulse().frame());
+				r2D.drawFullMaze(g, mazeNumber, 0, t(3));
+				r2D.drawDarkTiles(g, arcadeWorld.tiles(), tile -> arcadeWorld.containsEatenFood(tile)
+						|| arcadeWorld.isEnergizerTile(tile) && !arcadeWorld.energizerPulse().frame());
 			}
 		} else {
-			r2D.drawFullMaze(g, r2D.mazeNumber(level.number()), 0, t(3));
-			r2D.drawDarkTiles(g, level.world().tiles(),
-					tile -> level.world().containsEatenFood(tile) || level.world().isEnergizerTile(tile));
+			r2D.drawFullMaze(g, mazeNumber, 0, t(3));
+			r2D.drawDarkTiles(g, world.tiles(), tile -> world.containsEatenFood(tile) || world.isEnergizerTile(tile));
 		}
 		if (PacManGameUI.isDebugDraw()) {
-			DebugDraw.drawMazeStructure(g, level.world());
+			DebugDraw.drawMazeStructure(g, world);
 		}
 	}
 
