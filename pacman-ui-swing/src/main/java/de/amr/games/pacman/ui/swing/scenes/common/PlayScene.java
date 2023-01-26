@@ -36,8 +36,6 @@ import de.amr.games.pacman.model.common.GameSound;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.world.World;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
-import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
-import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.shell.Keyboard;
 import de.amr.games.pacman.ui.swing.shell.PacManGameUI;
 
@@ -47,17 +45,6 @@ import de.amr.games.pacman.ui.swing.shell.PacManGameUI;
  * @author Armin Reichert
  */
 public class PlayScene extends GameScene {
-
-	@Override
-	public void init() {
-		// dubious
-		game.level().ifPresent(level -> {
-			var flashing = r2D.createMazeFlashingAnimation(r2D.mazeNumber(level.number()));
-			level.world().animations().put("flashing", flashing);
-			level.pac().setAnimations(new PacAnimations(level.pac(), r2D));
-			level.ghosts().forEach(ghost -> ghost.setAnimations(new GhostAnimations(ghost, r2D)));
-		});
-	}
 
 	@Override
 	public void update() {

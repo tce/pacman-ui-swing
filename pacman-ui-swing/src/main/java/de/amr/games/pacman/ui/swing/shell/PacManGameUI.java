@@ -55,6 +55,10 @@ import de.amr.games.pacman.lib.math.Vector2i;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.ui.swing.app.GameLoop;
 import de.amr.games.pacman.ui.swing.lib.Ujfc;
+import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
+import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
+import de.amr.games.pacman.ui.swing.rendering.mspacman.SpritesheetMsPacMan;
+import de.amr.games.pacman.ui.swing.rendering.pacman.SpritesheetPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.BootScene;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
 import de.amr.games.pacman.ui.swing.scenes.common.PlayScene;
@@ -182,6 +186,21 @@ public class PacManGameUI implements GameEventListener {
 	@Override
 	public void onGameStateChange(GameStateChangeEvent e) {
 		updateGameScene(e.newGameState, false);
+	}
+
+	// this is dubious but we need some point in time where the animations are created
+	@Override
+	public void onLevelStarting(GameEvent e) {
+		gameController.game().level().ifPresent(level -> {
+			var r2D = switch (gameController.game().variant()) {
+			case MS_PACMAN -> SpritesheetMsPacMan.get();
+			case PACMAN -> SpritesheetPacMan.get();
+			};
+			var flashing = r2D.createMazeFlashingAnimation(r2D.mazeNumber(level.number()));
+			level.world().animations().put("flashing", flashing);
+			level.pac().setAnimations(new PacAnimations(level.pac(), r2D));
+			level.ghosts().forEach(ghost -> ghost.setAnimations(new GhostAnimations(ghost, r2D)));
+		});
 	}
 
 	private void updateGameScene(GameState gameState, boolean forced) {
