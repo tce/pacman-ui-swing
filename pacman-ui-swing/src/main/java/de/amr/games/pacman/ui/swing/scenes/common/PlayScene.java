@@ -34,7 +34,6 @@ import de.amr.games.pacman.event.GameStateChangeEvent;
 import de.amr.games.pacman.lib.anim.Pulse;
 import de.amr.games.pacman.model.common.GameSound;
 import de.amr.games.pacman.model.common.actors.Ghost;
-import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.model.common.world.World;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
@@ -53,10 +52,8 @@ public class PlayScene extends GameScene {
 	public void init() {
 		// dubious
 		game.level().ifPresent(level -> {
-			if (level.world() instanceof ArcadeWorld arcadeWorld) {
-				var animation = r2D.createMazeFlashingAnimation(r2D.mazeNumber(level.number()));
-				arcadeWorld.setFlashingAnimation(animation);
-			}
+			var flashing = r2D.createMazeFlashingAnimation(r2D.mazeNumber(level.number()));
+			level.world().animations().put("flashing", flashing);
 			level.pac().setAnimations(new PacAnimations(level.pac(), r2D));
 			level.ghosts().forEach(ghost -> ghost.setAnimations(new GhostAnimations(ghost, r2D)));
 		});
@@ -96,19 +93,14 @@ public class PlayScene extends GameScene {
 	}
 
 	private void drawMaze(Graphics2D g, World world, int mazeNumber) {
-		if (world instanceof ArcadeWorld arcadeWorld) {
-			var flashing = arcadeWorld.flashingAnimation();
-			if (flashing.isPresent() && flashing.get().isRunning()) {
-				g.drawImage((Image) flashing.get().frame(), 0, t(3), null);
-			} else {
-				r2D.drawFullMaze(g, mazeNumber, 0, t(3));
-				Pulse energizerPulse = (Pulse) world.animations().get("energizerPulse");
-				r2D.drawDarkTiles(g, arcadeWorld.tiles(), tile -> arcadeWorld.containsEatenFood(tile)
-						|| arcadeWorld.isEnergizerTile(tile) && !energizerPulse.frame());
-			}
+		var flashing = world.animations().get("flashing");
+		if (flashing != null && flashing.isRunning()) {
+			g.drawImage((Image) flashing.frame(), 0, t(3), null);
 		} else {
 			r2D.drawFullMaze(g, mazeNumber, 0, t(3));
-			r2D.drawDarkTiles(g, world.tiles(), tile -> world.containsEatenFood(tile) || world.isEnergizerTile(tile));
+			Pulse energizerPulse = (Pulse) world.animations().get("energizerPulse");
+			r2D.drawDarkTiles(g, world.tiles(),
+					tile -> world.containsEatenFood(tile) || world.isEnergizerTile(tile) && !energizerPulse.frame());
 		}
 		if (PacManGameUI.isDebugDraw()) {
 			DebugDraw.drawMazeStructure(g, world);
