@@ -31,6 +31,7 @@ import java.awt.Image;
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameStateChangeEvent;
+import de.amr.games.pacman.lib.anim.Pulse;
 import de.amr.games.pacman.model.common.GameSound;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
@@ -101,8 +102,9 @@ public class PlayScene extends GameScene {
 				g.drawImage((Image) flashing.get().frame(), 0, t(3), null);
 			} else {
 				r2D.drawFullMaze(g, mazeNumber, 0, t(3));
+				Pulse energizerPulse = (Pulse) world.animations().get("energizerPulse");
 				r2D.drawDarkTiles(g, arcadeWorld.tiles(), tile -> arcadeWorld.containsEatenFood(tile)
-						|| arcadeWorld.isEnergizerTile(tile) && !arcadeWorld.energizerPulse().frame());
+						|| arcadeWorld.isEnergizerTile(tile) && !energizerPulse.frame());
 			}
 		} else {
 			r2D.drawFullMaze(g, mazeNumber, 0, t(3));
