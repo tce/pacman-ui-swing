@@ -31,6 +31,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -209,7 +210,7 @@ public interface Rendering2D {
 		}
 	}
 
-	default void drawLevelCounter(Graphics2D g, Iterable<Byte> levelCounter) {
+	default void drawLevelCounter(Graphics2D g, List<Byte> levelCounter) {
 		int x = t(24);
 		for (var symbol : levelCounter) {
 			drawSprite(g, getBonusSymbolSprite(symbol), x, t(34));
