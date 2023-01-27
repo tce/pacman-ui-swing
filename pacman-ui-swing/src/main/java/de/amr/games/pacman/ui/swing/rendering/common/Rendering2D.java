@@ -183,9 +183,10 @@ public interface Rendering2D {
 				g.drawString(String.format("L%d", score.levelNumber()), t(9), t(2));
 			});
 		}
-		if (game.highScore().get().points() > 0) {
-			g.drawString(String.format("%7d", game.highScore().get().points()), t(15), t(2));
-			g.drawString(String.format("L%d", game.highScore().get().levelNumber()), t(23), t(2));
+		var highScore = game.highScore();
+		if (highScore.isPresent() && highScore.get().points() > 0) {
+			g.drawString(String.format("%7d", highScore.get().points()), t(15), t(2));
+			g.drawString(String.format("L%d", highScore.get().levelNumber()), t(23), t(2));
 		} else {
 			g.drawString("00", t(20), t(2));
 		}
