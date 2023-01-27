@@ -251,7 +251,7 @@ public class SpritesheetMsPacMan implements Rendering2D {
 		var mazeEmptyBright = ss.createBrightEffect(mazeEmpty[mazeIndex], MAZE_SIDE_COLORS[mazeIndex],
 				MAZE_TOP_COLORS[mazeIndex]);
 		var animation = new SingleEntityAnimation<>(mazeEmptyBright, mazeEmpty[mazeIndex]);
-		animation.setFrameDuration(15);
+		animation.setFrameDuration(12);
 		return animation;
 	}
 

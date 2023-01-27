@@ -90,7 +90,7 @@ public class SpritesheetPacMan implements Rendering2D {
 		var mazeEmptyDark = image("/pacman/graphics/maze_empty.png");
 		var mazeEmptyBright = ss.createBrightEffect(mazeEmptyDark, new Color(33, 33, 255), Color.BLACK);
 		mazeFlashingAnim = new SingleEntityAnimation<>(mazeEmptyBright, mazeEmptyDark);
-		mazeFlashingAnim.setFrameDuration(15);
+		mazeFlashingAnim.setFrameDuration(12);
 	}
 
 	@Override
