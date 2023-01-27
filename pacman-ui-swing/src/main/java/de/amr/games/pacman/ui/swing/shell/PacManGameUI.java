@@ -221,13 +221,18 @@ public class PacManGameUI implements GameEventListener {
 
 	private GameScene getSceneForGameState(GameState state) {
 		var game = gameController.game();
-		var level = game.level().orElse(null);
 		var scenes = game.variant() == MS_PACMAN ? gameScenesMsPacMan : gameScenesPacMan;
 		return switch (state) {
 		case BOOT -> scenes.get(0);
 		case INTRO -> scenes.get(1);
 		case CREDIT -> scenes.get(2);
-		case INTERMISSION -> scenes.get(2 + level.params().intermissionNumber());
+		case INTERMISSION -> {
+			var level = game.level();
+			if (level.isPresent()) {
+				yield scenes.get(2 + level.get().params().intermissionNumber());
+			}
+			throw new IllegalStateException("No game level is present");
+		}
 		case INTERMISSION_TEST -> scenes.get(2 + gameController.intermissionTestNumber);
 		default -> scenes.get(6);
 		};
