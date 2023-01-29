@@ -44,7 +44,7 @@ import de.amr.games.pacman.model.common.GameSound;
  */
 public class AbstractGameSounds implements GameSoundController {
 
-	private static final Logger LOGGER = LogManager.getFormatterLogger();
+	private static final Logger LOG = LogManager.getFormatterLogger();
 
 	protected final Map<GameSound, Clip> clips = new EnumMap<>(GameSound.class);
 	protected boolean muted;
@@ -155,7 +155,7 @@ public class AbstractGameSounds implements GameSoundController {
 		default -> throw new GameSoundException("Illegal siren index: %d", sirenIndex);
 		};
 		loop(siren, Clip.LOOP_CONTINUOUSLY);
-		LOGGER.info("Siren %s started", siren);
+		LOG.info("Siren %s started", siren);
 	}
 
 	@Override
@@ -175,7 +175,7 @@ public class AbstractGameSounds implements GameSoundController {
 		sirens().forEach(siren -> {
 			if (isPlaying(siren)) {
 				getClip(siren).stop();
-				LOGGER.info("Siren %s stopped", siren);
+				LOG.info("Siren %s stopped", siren);
 			}
 		});
 	}
