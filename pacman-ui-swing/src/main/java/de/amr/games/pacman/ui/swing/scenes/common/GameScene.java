@@ -26,7 +26,6 @@ package de.amr.games.pacman.ui.swing.scenes.common;
 import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
-import de.amr.games.pacman.controller.common.GameSoundController;
 import de.amr.games.pacman.event.GameEventListener;
 import de.amr.games.pacman.lib.math.Vector2i;
 import de.amr.games.pacman.model.common.GameModel;
@@ -34,8 +33,6 @@ import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.ui.swing.rendering.common.Rendering2D;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.SpritesheetMsPacMan;
 import de.amr.games.pacman.ui.swing.rendering.pacman.SpritesheetPacMan;
-import de.amr.games.pacman.ui.swing.sound.MsPacManGameSounds;
-import de.amr.games.pacman.ui.swing.sound.PacManGameSounds;
 
 /**
  * Common game scene base class.
@@ -43,9 +40,6 @@ import de.amr.games.pacman.ui.swing.sound.PacManGameSounds;
  * @author Armin Reichert
  */
 public abstract class GameScene implements GameEventListener {
-
-	private static final GameSoundController PACMAN_SOUNDS = new PacManGameSounds();
-	private static final GameSoundController MS_PACMAN_SOUNDS = new MsPacManGameSounds();
 
 	protected GameController gameController;
 	protected Vector2i size = ArcadeWorld.SIZE_PX;
@@ -59,11 +53,6 @@ public abstract class GameScene implements GameEventListener {
 		case MS_PACMAN -> SpritesheetMsPacMan.get();
 		case PACMAN -> SpritesheetPacMan.get();
 		};
-		var sounds = switch (game.variant()) {
-		case MS_PACMAN -> MS_PACMAN_SOUNDS;
-		case PACMAN -> PACMAN_SOUNDS;
-		};
-		gameController.setSounds(sounds);
 	}
 
 	public Vector2i size() {

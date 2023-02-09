@@ -29,9 +29,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 
 import de.amr.games.pacman.controller.common.GameState;
-import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameStateChangeEvent;
-import de.amr.games.pacman.model.common.GameSound;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.world.World;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
@@ -103,15 +101,5 @@ public class PlayScene extends GameScene {
 		if (e.newGameState == GameState.CHANGING_TO_NEXT_LEVEL) {
 			gameController.terminateCurrentState(); // TODO check if needed
 		}
-	}
-
-	@Override
-	public void onBonusGetsEaten(GameEvent e) {
-		gameController.sounds().play(GameSound.BONUS_EATEN);
-	}
-
-	@Override
-	public void onPlayerGetsExtraLife(GameEvent e) {
-		gameController.sounds().play(GameSound.EXTRA_LIFE);
 	}
 }
