@@ -32,7 +32,7 @@ import de.amr.games.pacman.model.common.GameSound;
 /**
  * @author Armin Reichert
  */
-public class MsPacManGameSounds extends AbstractGameSounds {
+public class MsPacManGameSounds extends GameSounds {
 
 	private static final Logger LOG = LogManager.getFormatterLogger();
 

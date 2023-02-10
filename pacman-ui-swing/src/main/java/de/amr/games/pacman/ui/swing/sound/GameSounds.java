@@ -36,25 +36,22 @@ import javax.sound.sampled.Clip;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.amr.games.pacman.controller.common.GameSoundController;
 import de.amr.games.pacman.model.common.GameSound;
 
 /**
  * @author Armin Reichert
  */
-public class AbstractGameSounds implements GameSoundController {
+public class GameSounds {
 
 	private static final Logger LOG = LogManager.getFormatterLogger();
 
 	protected final Map<GameSound, Clip> clips = new EnumMap<>(GameSound.class);
 	protected boolean muted;
 
-	@Override
 	public boolean isMuted() {
 		return muted;
 	}
 
-	@Override
 	public void setMuted(boolean muted) {
 		this.muted = muted;
 		if (muted) {
@@ -101,41 +98,34 @@ public class AbstractGameSounds implements GameSoundController {
 		return clips.get(sound);
 	}
 
-	@Override
 	public boolean isPlaying(GameSound sound) {
 		return getClip(sound).isRunning();
 	}
 
-	@Override
 	public void ensurePlaying(GameSound sound) {
 		if (!isPlaying(sound)) {
 			play(sound);
 		}
 	}
 
-	@Override
 	public void play(GameSound sound) {
 		startClip(getClip(sound));
 	}
 
-	@Override
 	public void ensureLoop(GameSound sound, int repetitions) {
 		if (!isPlaying(sound)) {
 			loop(sound, repetitions);
 		}
 	}
 
-	@Override
 	public void loop(GameSound sound, int repetitions) {
 		loopClip(getClip(sound), repetitions);
 	}
 
-	@Override
 	public void stop(GameSound sound) {
 		getClip(sound).stop();
 	}
 
-	@Override
 	public void stopAll() {
 		for (var clip : clips.values()) {
 			clip.stop();
@@ -144,7 +134,6 @@ public class AbstractGameSounds implements GameSoundController {
 
 	// -----------------
 
-	@Override
 	public void startSiren(int sirenIndex) {
 		stopSirens();
 		var siren = switch (sirenIndex) {
@@ -158,19 +147,16 @@ public class AbstractGameSounds implements GameSoundController {
 		LOG.info("Siren %s started", siren);
 	}
 
-	@Override
 	public Stream<GameSound> sirens() {
 		return Stream.of(GameSound.SIREN_1, GameSound.SIREN_2, GameSound.SIREN_3, GameSound.SIREN_4);
 	}
 
-	@Override
 	public void ensureSirenStarted(int sirenIndex) {
 		if (sirens().noneMatch(this::isPlaying)) {
 			startSiren(sirenIndex);
 		}
 	}
 
-	@Override
 	public void stopSirens() {
 		sirens().forEach(siren -> {
 			if (isPlaying(siren)) {

@@ -51,6 +51,7 @@ import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.event.GameEvent;
 import de.amr.games.pacman.event.GameEventListener;
 import de.amr.games.pacman.event.GameStateChangeEvent;
+import de.amr.games.pacman.event.SoundEvent;
 import de.amr.games.pacman.lib.math.Vector2i;
 import de.amr.games.pacman.model.common.world.ArcadeWorld;
 import de.amr.games.pacman.ui.swing.app.GameLoop;
@@ -201,6 +202,11 @@ public class PacManGameUI implements GameEventListener {
 			level.pac().setAnimations(new PacAnimations(level.pac(), r2D));
 			level.ghosts().forEach(ghost -> ghost.setAnimations(new GhostAnimations(ghost, r2D)));
 		});
+	}
+
+	@Override
+	public void onSoundEvent(SoundEvent e) {
+		LOG.info("Received %s", e);
 	}
 
 	private void updateGameScene(GameState gameState, boolean forced) {
