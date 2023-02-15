@@ -198,7 +198,7 @@ public class PacManGameUI implements GameEventListener {
 			case PACMAN -> SpritesheetPacMan.get();
 			};
 			var flashing = r2D.createMazeFlashingAnimation(r2D.mazeNumber(level.number()));
-			level.world().addAnimation("flashing", flashing);
+			level.world().addAnimation(ArcadeWorld.FLASHING, flashing);
 			level.pac().setAnimations(new PacAnimations(level.pac(), r2D));
 			level.ghosts().forEach(ghost -> ghost.setAnimations(new GhostAnimations(ghost, r2D)));
 		});
