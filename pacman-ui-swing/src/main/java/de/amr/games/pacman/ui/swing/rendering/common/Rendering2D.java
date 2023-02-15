@@ -148,7 +148,7 @@ public interface Rendering2D {
 		if (bonus instanceof StaticBonus) {
 			drawEntity(g, bonus.entity(), sprite);
 		} else if (bonus instanceof MovingBonus movingBonus) {
-			int dy = movingBonus.dy();
+			float dy = movingBonus.dy();
 			g.translate(0, dy);
 			drawEntity(g, bonus.entity(), sprite);
 			g.translate(0, -dy);
