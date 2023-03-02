@@ -24,15 +24,15 @@ SOFTWARE.
 
 package de.amr.games.pacman.ui.swing.rendering.common;
 
+import de.amr.games.pacman.lib.anim.AnimKeys;
 import de.amr.games.pacman.lib.anim.EntityAnimation;
 import de.amr.games.pacman.lib.anim.EntityAnimationMap;
-import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.model.common.actors.Pac;
 
 /**
  * @author Armin Reichert
  */
-public class PacAnimations extends EntityAnimationMap<AnimKeys> {
+public class PacAnimations extends EntityAnimationMap {
 
 	public PacAnimations(Pac pac, Rendering2D r2D) {
 		super(2);
