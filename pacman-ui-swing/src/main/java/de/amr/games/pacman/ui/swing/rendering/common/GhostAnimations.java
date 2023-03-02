@@ -33,7 +33,6 @@ import de.amr.games.pacman.model.common.actors.Ghost;
 public class GhostAnimations extends EntityAnimationMap {
 
 	public GhostAnimations(Ghost ghost, Rendering2D r2D) {
-		super(5);
 		put(AnimKeys.GHOST_EYES, r2D.createGhostEyesAnimationMap(ghost));
 		put(AnimKeys.GHOST_FLASHING, r2D.createGhostFlashingAnimation());
 		put(AnimKeys.GHOST_BLUE, r2D.createGhostBlueAnimation());

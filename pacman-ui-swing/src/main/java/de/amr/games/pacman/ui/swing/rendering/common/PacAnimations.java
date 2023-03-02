@@ -35,7 +35,6 @@ import de.amr.games.pacman.model.common.actors.Pac;
 public class PacAnimations extends EntityAnimationMap {
 
 	public PacAnimations(Pac pac, Rendering2D r2D) {
-		super(2);
 		put(AnimKeys.PAC_DYING, r2D.createPacDyingAnimation());
 		put(AnimKeys.PAC_MUNCHING, r2D.createPacMunchingAnimationMap(pac));
 		select(AnimKeys.PAC_MUNCHING);
