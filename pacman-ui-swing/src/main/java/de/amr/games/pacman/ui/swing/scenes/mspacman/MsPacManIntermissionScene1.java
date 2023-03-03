@@ -27,8 +27,8 @@ import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.MsPacManIntermission1;
+import de.amr.games.pacman.lib.anim.AnimKeys;
 import de.amr.games.pacman.lib.anim.EntityAnimationMap;
-import de.amr.games.pacman.model.common.actors.AnimKeys;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Heart2D;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
@@ -60,7 +60,7 @@ public class MsPacManIntermissionScene1 extends GameScene {
 	@Override
 	public void init() {
 		sceneController.restart(MsPacManIntermission1.IntermissionState.FLAP);
-		ctx.clapperboard.setAnimationSet(new ClapperboardAnimations());
+		ctx.clapperboard.setAnimation(SpritesheetMsPacMan.get().createClapperboardAnimation());
 		ctx.msPac.setAnimations(new PacAnimations(ctx.msPac, r2D));
 		ctx.msPac.animations().ifPresent(EntityAnimationMap::ensureRunning);
 		ctx.pacMan.setAnimations(new PacAnimations(ctx.pacMan, r2D));
