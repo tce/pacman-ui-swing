@@ -104,6 +104,13 @@ public class PacManGameUI implements GameEventListener {
 	private final Canvas canvas;
 	private final FlashMessageDisplay flashMessageDisplay;
 
+	private final double RENDER_ERROR_PERCENT = 0.05;
+	public final double KEY_ERROR_PERCENT = 0.1;
+	private int BLANK_FRAMES = 0;
+	private boolean SKIP_FRAMES = false;
+
+	private boolean SKIP_CONTROLS = false;
+
 	private final List<GameScene> gameScenesPacMan = List.of( //
 			new BootScene(), //
 			new PacManIntroScene(), //
@@ -250,7 +257,19 @@ public class PacManGameUI implements GameEventListener {
 			currentGameScene.update();
 		}
 		flashMessageDisplay.update();
-		EventQueue.invokeLater(this::renderScreen);
+		if (!SKIP_FRAMES || (Math.random() > RENDER_ERROR_PERCENT && BLANK_FRAMES == 0))
+		{
+			EventQueue.invokeLater(this::renderScreen);
+		}
+		else
+		{
+			if (BLANK_FRAMES == 0)
+				BLANK_FRAMES = 10;
+			else
+				BLANK_FRAMES -= 1;
+
+			System.out.println("skip " + BLANK_FRAMES);
+		}
 	}
 
 	private void renderScreen() {
@@ -355,6 +374,21 @@ public class PacManGameUI implements GameEventListener {
 		else if (Keyboard.keyPressed("Z")) {
 			gameState.startCutscenesTest(game);
 		}
+
+		else if (Keyboard.keyPressed( ",")) {
+			SKIP_CONTROLS = ! SKIP_CONTROLS;
+			showFlashMessage(2, "SKIP CONTROLS: %s", SKIP_CONTROLS);
+			((KeySteering)gameController.steering()).setSkipControls(SKIP_CONTROLS);
+		}
+
+		else if (Keyboard.keyPressed(".")) {
+			SKIP_FRAMES = ! SKIP_FRAMES;
+			showFlashMessage(2, "SKIP FRAMES: %s", SKIP_FRAMES);
+		}
+
+
+
+
 	}
 
 	private void restartIntro() {

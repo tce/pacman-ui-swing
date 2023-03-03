@@ -40,6 +40,10 @@ public class KeySteering implements Steering {
 	private String left;
 	private String right;
 
+	private double control_error_percent = 0.2;
+
+	private boolean skipControls = false;
+
 	public KeySteering(String up, String down, String left, String right) {
 		this.up = up;
 		this.down = down;
@@ -47,16 +51,26 @@ public class KeySteering implements Steering {
 		this.right = right;
 	}
 
+	public void setSkipControls(boolean value)
+	{
+		skipControls = value;
+	}
+
+
+	private boolean skip()
+	{
+		return (skipControls && Math.random() < control_error_percent);
+	}
 	@Override
 	public void steer(GameLevel level, Creature pac) {
 		if (Keyboard.keyPressed(up)) {
-			pac.setWishDir(Direction.UP);
+			if (!skip()) pac.setWishDir(Direction.UP);
 		} else if (Keyboard.keyPressed(down)) {
-			pac.setWishDir(Direction.DOWN);
+			if (!skip()) pac.setWishDir(Direction.DOWN);
 		} else if (Keyboard.keyPressed(left)) {
-			pac.setWishDir(Direction.LEFT);
+			if (!skip()) pac.setWishDir(Direction.LEFT);
 		} else if (Keyboard.keyPressed(right)) {
-			pac.setWishDir(Direction.RIGHT);
+			if (!skip()) pac.setWishDir(Direction.RIGHT);
 		}
 	}
 }

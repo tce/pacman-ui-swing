@@ -53,7 +53,10 @@ public class Keyboard {
 			"Esc",		KeyEvent.VK_ESCAPE, 
 			"Space",	KeyEvent.VK_SPACE, 
 			"Plus",		KeyEvent.VK_PLUS, 
-			"Minus",	KeyEvent.VK_MINUS);
+			"Minus",	KeyEvent.VK_MINUS,
+			",",        KeyEvent.VK_COMMA,
+			".",       KeyEvent.VK_PERIOD)
+	;
 	//@formatter:on
 
 	private static int code(String spec) {
