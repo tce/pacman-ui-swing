@@ -36,7 +36,7 @@ import de.amr.games.pacman.controller.pacman.PacManIntroData;
 import de.amr.games.pacman.controller.pacman.PacManIntroState;
 import de.amr.games.pacman.lib.anim.EntityAnimationMap;
 import de.amr.games.pacman.lib.steering.Direction;
-import de.amr.games.pacman.model.common.AnimationKey;
+import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.GhostState;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
@@ -75,7 +75,7 @@ public class PacManIntroScene extends GameScene {
 	private void onSceneStateChange(PacManIntroState fromState, PacManIntroState toState) {
 		if (fromState == PacManIntroState.CHASING_PAC && toState == PacManIntroState.CHASING_GHOSTS) {
 			for (var ghost : ctx.ghosts) {
-				ghost.animations().ifPresent(anims -> anims.select(AnimationKey.GHOST_BLUE));
+				ghost.animations().ifPresent(anims -> anims.select(GameModel.AK_GHOST_BLUE));
 			}
 		}
 	}
@@ -97,13 +97,13 @@ public class PacManIntroScene extends GameScene {
 			for (var ghost : ctx.ghosts) {
 				ghost.animations().ifPresent(anims -> {
 					if (ghost.is(GhostState.EATEN)) {
-						anims.select(AnimationKey.GHOST_VALUE);
+						anims.select(GameModel.AK_GHOST_VALUE);
 						anims.selectedAnimation().get().ensureRunning();
 					} else {
-						anims.select(AnimationKey.GHOST_BLUE);
+						anims.select(GameModel.AK_GHOST_BLUE);
 						anims.selectedAnimation().get().ensureRunning();
 						if (ghost.velocity().length() == 0) {
-							anims.animation(AnimationKey.GHOST_BLUE).get().stop();
+							anims.animation(GameModel.AK_GHOST_BLUE).get().stop();
 						}
 					}
 				});

@@ -34,7 +34,7 @@ import de.amr.games.pacman.event.GameEvents;
 import de.amr.games.pacman.lib.anim.EntityAnimation;
 import de.amr.games.pacman.lib.anim.SingleEntityAnimation;
 import de.amr.games.pacman.lib.steering.Direction;
-import de.amr.games.pacman.model.common.AnimationKey;
+import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.Pac;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
@@ -60,8 +60,8 @@ public class PacManCutscene2 extends GameScene {
 
 		pac = new Pac("Pac-Man");
 		pac.setAnimations(new PacAnimations(pac, r2D));
-		pac.animations().ifPresent(anims -> anims.select(AnimationKey.PAC_MUNCHING));
-		pac.animation(AnimationKey.PAC_MUNCHING).ifPresent(EntityAnimation::restart);
+		pac.animations().ifPresent(anims -> anims.select(GameModel.AK_PAC_MUNCHING));
+		pac.animation(GameModel.AK_PAC_MUNCHING).ifPresent(EntityAnimation::restart);
 		pac.placeAtTile(v2i(29, 20), 0, 0);
 		pac.setMoveDir(Direction.LEFT);
 		pac.setPixelSpeed(1.15f);
@@ -71,9 +71,9 @@ public class PacManCutscene2 extends GameScene {
 		blinky = new Ghost(Ghost.ID_RED_GHOST, "Blinky");
 		blinky.setAnimations(new GhostAnimations(blinky, r2D));
 		var damagedBlinkyAnimation = SpritesheetPacMan.get().createBlinkyDamagedAnimation();
-		blinky.animations().ifPresent(anims -> anims.put(AnimationKey.BLINKY_DAMAGED, damagedBlinkyAnimation));
-		blinky.animations().ifPresent(anims -> anims.select(AnimationKey.GHOST_COLOR));
-		blinky.animation(AnimationKey.GHOST_COLOR).ifPresent(EntityAnimation::restart);
+		blinky.animations().ifPresent(anims -> anims.put(GameModel.AK_BLINKY_DAMAGED, damagedBlinkyAnimation));
+		blinky.animations().ifPresent(anims -> anims.select(GameModel.AK_GHOST_COLOR));
+		blinky.animation(GameModel.AK_GHOST_COLOR).ifPresent(EntityAnimation::restart);
 		blinky.placeAtTile(v2i(28, 20), 0, 0);
 		blinky.setMoveAndWishDir(Direction.LEFT);
 		blinky.setPixelSpeed(0);
@@ -104,10 +104,10 @@ public class PacManCutscene2 extends GameScene {
 		} else if (frame == 328) {
 			stretched.setFrameIndex(4);
 		} else if (frame == 329) {
-			blinky.animations().ifPresent(anims -> anims.select(AnimationKey.BLINKY_DAMAGED));
-			blinky.animation(AnimationKey.BLINKY_DAMAGED).ifPresent(damaged -> damaged.setFrameIndex(0));
+			blinky.animations().ifPresent(anims -> anims.select(GameModel.AK_BLINKY_DAMAGED));
+			blinky.animation(GameModel.AK_BLINKY_DAMAGED).ifPresent(damaged -> damaged.setFrameIndex(0));
 		} else if (frame == 389) {
-			blinky.animation(AnimationKey.BLINKY_DAMAGED).ifPresent(damaged -> damaged.setFrameIndex(1));
+			blinky.animation(GameModel.AK_BLINKY_DAMAGED).ifPresent(damaged -> damaged.setFrameIndex(1));
 		} else if (frame == 508) {
 			stretched = null;
 		} else if (frame == 509) {

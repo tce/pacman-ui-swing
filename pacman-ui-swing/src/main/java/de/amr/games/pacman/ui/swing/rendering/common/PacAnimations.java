@@ -26,7 +26,7 @@ package de.amr.games.pacman.ui.swing.rendering.common;
 
 import de.amr.games.pacman.lib.anim.EntityAnimation;
 import de.amr.games.pacman.lib.anim.EntityAnimationMap;
-import de.amr.games.pacman.model.common.AnimationKey;
+import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Pac;
 
 /**
@@ -35,13 +35,13 @@ import de.amr.games.pacman.model.common.actors.Pac;
 public class PacAnimations extends EntityAnimationMap {
 
 	public PacAnimations(Pac pac, Rendering2D r2D) {
-		put(AnimationKey.PAC_DYING, r2D.createPacDyingAnimation());
-		put(AnimationKey.PAC_MUNCHING, r2D.createPacMunchingAnimationMap(pac));
-		select(AnimationKey.PAC_MUNCHING);
+		put(GameModel.AK_PAC_DYING, r2D.createPacDyingAnimation());
+		put(GameModel.AK_PAC_MUNCHING, r2D.createPacMunchingAnimationMap(pac));
+		select(GameModel.AK_PAC_MUNCHING);
 	}
 
 	@Override
 	public void ensureRunning() {
-		animation(AnimationKey.PAC_MUNCHING).ifPresent(EntityAnimation::ensureRunning);
+		animation(GameModel.AK_PAC_MUNCHING).ifPresent(EntityAnimation::ensureRunning);
 	}
 }

@@ -26,7 +26,7 @@ package de.amr.games.pacman.ui.swing.rendering.common;
 
 import de.amr.games.pacman.lib.anim.EntityAnimationMap;
 import de.amr.games.pacman.lib.anim.Pulse;
-import de.amr.games.pacman.model.common.AnimationKey;
+import de.amr.games.pacman.model.common.GameModel;
 
 /**
  * @author Armin Reichert
@@ -35,8 +35,8 @@ import de.amr.games.pacman.model.common.AnimationKey;
 public class WorldAnimations extends EntityAnimationMap {
 
 	public WorldAnimations(Rendering2D r2D, int levelNumber) {
-		put(AnimationKey.MAZE_ENERGIZER_BLINKING, new Pulse(10, true));
+		put(GameModel.AK_MAZE_ENERGIZER_BLINKING, new Pulse(10, true));
 		var flashing = r2D.createMazeFlashingAnimation(r2D.mazeNumber(levelNumber));
-		put(AnimationKey.MAZE_FLASHING, flashing);
+		put(GameModel.AK_MAZE_FLASHING, flashing);
 	}
 }

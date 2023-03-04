@@ -31,7 +31,7 @@ import java.awt.Graphics2D;
 import de.amr.games.pacman.event.GameEvents;
 import de.amr.games.pacman.lib.anim.EntityAnimation;
 import de.amr.games.pacman.lib.steering.Direction;
-import de.amr.games.pacman.model.common.AnimationKey;
+import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.Pac;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
@@ -57,10 +57,10 @@ public class PacManCutscene3 extends GameScene {
 		pac.setAnimations(new PacAnimations(pac, r2D));
 		blinky = new Ghost(Ghost.ID_RED_GHOST, "Blinky");
 		blinky.setAnimations(new GhostAnimations(blinky, r2D));
+		blinky.animations().ifPresent(
+				anims -> anims.put(GameModel.AK_BLINKY_PATCHED, SpritesheetPacMan.get().createBlinkyPatchedAnimation()));
 		blinky.animations()
-				.ifPresent(anims -> anims.put(AnimationKey.BLINKY_PATCHED, SpritesheetPacMan.get().createBlinkyPatchedAnimation()));
-		blinky.animations()
-				.ifPresent(anims -> anims.put(AnimationKey.BLINKY_NAKED, SpritesheetPacMan.get().createBlinkyNakedAnimation()));
+				.ifPresent(anims -> anims.put(GameModel.AK_BLINKY_NAKED, SpritesheetPacMan.get().createBlinkyNakedAnimation()));
 	}
 
 	@Override
@@ -76,18 +76,18 @@ public class PacManCutscene3 extends GameScene {
 			pac.setMoveDir(Direction.LEFT);
 			pac.setPixelSpeed(1.25f);
 			pac.show();
-			pac.animations().ifPresent(anims -> anims.select(AnimationKey.PAC_MUNCHING));
-			pac.animation(AnimationKey.PAC_MUNCHING).ifPresent(EntityAnimation::restart);
+			pac.animations().ifPresent(anims -> anims.select(GameModel.AK_PAC_MUNCHING));
+			pac.animation(GameModel.AK_PAC_MUNCHING).ifPresent(EntityAnimation::restart);
 			blinky.placeAtTile(v2i(35, 20), 0, 0);
 			blinky.setMoveAndWishDir(Direction.LEFT);
 			blinky.setPixelSpeed(1.25f);
 			blinky.show();
-			blinky.animations().ifPresent(anims -> anims.select(AnimationKey.BLINKY_PATCHED));
-			blinky.animation(AnimationKey.BLINKY_PATCHED).ifPresent(EntityAnimation::restart);
+			blinky.animations().ifPresent(anims -> anims.select(GameModel.AK_BLINKY_PATCHED));
+			blinky.animation(GameModel.AK_BLINKY_PATCHED).ifPresent(EntityAnimation::restart);
 		} else if (frame == 296) {
 			blinky.placeAtTile(v2i(-1, 20), 0, 0);
 			blinky.setMoveAndWishDir(Direction.RIGHT);
-			blinky.animations().ifPresent(anims -> anims.select(AnimationKey.BLINKY_NAKED));
+			blinky.animations().ifPresent(anims -> anims.select(GameModel.AK_BLINKY_NAKED));
 			blinky.animations().ifPresent(anims -> anims.selectedAnimation().get().restart());
 		} else if (frame == 516) {
 			gameController.terminateCurrentState();
