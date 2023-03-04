@@ -27,7 +27,7 @@ import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.MsPacManIntermission1;
-import de.amr.games.pacman.lib.anim.AnimKeys;
+import de.amr.games.pacman.lib.anim.AnimationKey;
 import de.amr.games.pacman.lib.anim.EntityAnimationMap;
 import de.amr.games.pacman.ui.swing.entity.mspacman.Heart2D;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
@@ -65,7 +65,7 @@ public class MsPacManIntermissionScene1 extends GameScene {
 		ctx.msPac.animations().ifPresent(EntityAnimationMap::ensureRunning);
 		ctx.pacMan.setAnimations(new PacAnimations(ctx.pacMan, r2D));
 		var husbandMunching = SpritesheetMsPacMan.get().createHusbandMunchingAnimations(ctx.pacMan);
-		ctx.pacMan.animations().ifPresent(anims -> anims.put(AnimKeys.PAC_MUNCHING, husbandMunching));
+		ctx.pacMan.animations().ifPresent(anims -> anims.put(AnimationKey.PAC_MUNCHING, husbandMunching));
 		ctx.pacMan.animations().ifPresent(anims -> anims.selectedAnimation().get().ensureRunning());
 		ctx.inky.setAnimations(new GhostAnimations(ctx.inky, r2D));
 		ctx.pinky.setAnimations(new GhostAnimations(ctx.pinky, r2D));

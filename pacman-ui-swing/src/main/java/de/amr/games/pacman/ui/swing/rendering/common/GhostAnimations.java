@@ -23,7 +23,7 @@ SOFTWARE.
 */
 package de.amr.games.pacman.ui.swing.rendering.common;
 
-import de.amr.games.pacman.lib.anim.AnimKeys;
+import de.amr.games.pacman.lib.anim.AnimationKey;
 import de.amr.games.pacman.lib.anim.EntityAnimationMap;
 import de.amr.games.pacman.model.common.actors.Ghost;
 
@@ -33,11 +33,11 @@ import de.amr.games.pacman.model.common.actors.Ghost;
 public class GhostAnimations extends EntityAnimationMap {
 
 	public GhostAnimations(Ghost ghost, Rendering2D r2D) {
-		put(AnimKeys.GHOST_EYES, r2D.createGhostEyesAnimationMap(ghost));
-		put(AnimKeys.GHOST_FLASHING, r2D.createGhostFlashingAnimation());
-		put(AnimKeys.GHOST_BLUE, r2D.createGhostBlueAnimation());
-		put(AnimKeys.GHOST_COLOR, r2D.createGhostColorAnimationMap(ghost));
-		put(AnimKeys.GHOST_VALUE, r2D.createGhostValueList());
-		select(AnimKeys.GHOST_COLOR);
+		put(AnimationKey.GHOST_EYES, r2D.createGhostEyesAnimationMap(ghost));
+		put(AnimationKey.GHOST_FLASHING, r2D.createGhostFlashingAnimation());
+		put(AnimationKey.GHOST_BLUE, r2D.createGhostBlueAnimation());
+		put(AnimationKey.GHOST_COLOR, r2D.createGhostColorAnimationMap(ghost));
+		put(AnimationKey.GHOST_VALUE, r2D.createGhostValueList());
+		select(AnimationKey.GHOST_COLOR);
 	}
 }

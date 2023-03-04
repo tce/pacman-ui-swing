@@ -30,7 +30,7 @@ import java.awt.Image;
 
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.event.GameStateChangeEvent;
-import de.amr.games.pacman.lib.anim.AnimKeys;
+import de.amr.games.pacman.lib.anim.AnimationKey;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.world.World;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;
@@ -78,12 +78,12 @@ public class PlayScene extends GameScene {
 	}
 
 	private void drawMaze(Graphics2D g, World world, int mazeNumber) {
-		var flashing = world.animation(AnimKeys.MAZE_FLASHING);
+		var flashing = world.animation(AnimationKey.MAZE_FLASHING);
 		if (flashing.isPresent() && flashing.get().isRunning()) {
 			g.drawImage((Image) flashing.get().frame(), 0, t(3), null);
 		} else {
 			r2D.drawFullMaze(g, mazeNumber, 0, t(3));
-			var energizerPulse = world.animation(AnimKeys.MAZE_ENERGIZER_BLINKING);
+			var energizerPulse = world.animation(AnimationKey.MAZE_ENERGIZER_BLINKING);
 			if (energizerPulse.isPresent()) {
 				boolean dark = !(boolean) energizerPulse.get().frame();
 				r2D.drawDarkTiles(g, world.tiles(),
