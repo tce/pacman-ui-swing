@@ -34,6 +34,7 @@ import de.amr.games.pacman.lib.steering.Direction;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.Pac;
+import de.amr.games.pacman.model.pacman.PacManGame;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.pacman.SpritesheetPacMan;
@@ -57,7 +58,7 @@ public class PacManCutscene1 extends GameScene {
 		pac = new Pac("Pac-Man");
 		pac.setAnimations(new PacAnimations(pac, r2D));
 		var bigPacAnim = SpritesheetPacMan.get().createBigPacManMunchingAnimation();
-		pac.animations().ifPresent(anims -> anims.put(GameModel.AK_PAC_BIG, bigPacAnim));
+		pac.animations().ifPresent(anims -> anims.put(PacManGame.AK_PAC_BIG, bigPacAnim));
 		pac.animations().ifPresent(anims -> anims.select(GameModel.AK_PAC_MUNCHING));
 		pac.animation(GameModel.AK_PAC_MUNCHING).ifPresent(EntityAnimation::restart);
 
@@ -94,7 +95,7 @@ public class PacManCutscene1 extends GameScene {
 		} else if (frame == 400) {
 			pac.placeAtTile(v2i(-3, 19), 0, 0);
 			pac.setMoveDir(Direction.RIGHT);
-			pac.animations().ifPresent(anims -> anims.select(GameModel.AK_PAC_BIG));
+			pac.animations().ifPresent(anims -> anims.select(PacManGame.AK_PAC_BIG));
 			pac.animations().ifPresent(anims -> anims.selectedAnimation().get().restart());
 		} else if (frame == 632) {
 			gameController.terminateCurrentState();

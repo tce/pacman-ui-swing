@@ -37,6 +37,7 @@ import de.amr.games.pacman.lib.steering.Direction;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.Pac;
+import de.amr.games.pacman.model.pacman.PacManGame;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.pacman.SpritesheetPacMan;
@@ -71,7 +72,7 @@ public class PacManCutscene2 extends GameScene {
 		blinky = new Ghost(Ghost.ID_RED_GHOST, "Blinky");
 		blinky.setAnimations(new GhostAnimations(blinky, r2D));
 		var damagedBlinkyAnimation = SpritesheetPacMan.get().createBlinkyDamagedAnimation();
-		blinky.animations().ifPresent(anims -> anims.put(GameModel.AK_BLINKY_DAMAGED, damagedBlinkyAnimation));
+		blinky.animations().ifPresent(anims -> anims.put(PacManGame.AK_BLINKY_DAMAGED, damagedBlinkyAnimation));
 		blinky.animations().ifPresent(anims -> anims.select(GameModel.AK_GHOST_COLOR));
 		blinky.animation(GameModel.AK_GHOST_COLOR).ifPresent(EntityAnimation::restart);
 		blinky.placeAtTile(v2i(28, 20), 0, 0);
@@ -104,10 +105,10 @@ public class PacManCutscene2 extends GameScene {
 		} else if (frame == 328) {
 			stretched.setFrameIndex(4);
 		} else if (frame == 329) {
-			blinky.animations().ifPresent(anims -> anims.select(GameModel.AK_BLINKY_DAMAGED));
-			blinky.animation(GameModel.AK_BLINKY_DAMAGED).ifPresent(damaged -> damaged.setFrameIndex(0));
+			blinky.animations().ifPresent(anims -> anims.select(PacManGame.AK_BLINKY_DAMAGED));
+			blinky.animation(PacManGame.AK_BLINKY_DAMAGED).ifPresent(damaged -> damaged.setFrameIndex(0));
 		} else if (frame == 389) {
-			blinky.animation(GameModel.AK_BLINKY_DAMAGED).ifPresent(damaged -> damaged.setFrameIndex(1));
+			blinky.animation(PacManGame.AK_BLINKY_DAMAGED).ifPresent(damaged -> damaged.setFrameIndex(1));
 		} else if (frame == 508) {
 			stretched = null;
 		} else if (frame == 509) {

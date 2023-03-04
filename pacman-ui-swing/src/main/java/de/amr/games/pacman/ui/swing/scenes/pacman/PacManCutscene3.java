@@ -34,6 +34,7 @@ import de.amr.games.pacman.lib.steering.Direction;
 import de.amr.games.pacman.model.common.GameModel;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.actors.Pac;
+import de.amr.games.pacman.model.pacman.PacManGame;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.pacman.SpritesheetPacMan;
@@ -58,9 +59,9 @@ public class PacManCutscene3 extends GameScene {
 		blinky = new Ghost(Ghost.ID_RED_GHOST, "Blinky");
 		blinky.setAnimations(new GhostAnimations(blinky, r2D));
 		blinky.animations().ifPresent(
-				anims -> anims.put(GameModel.AK_BLINKY_PATCHED, SpritesheetPacMan.get().createBlinkyPatchedAnimation()));
-		blinky.animations()
-				.ifPresent(anims -> anims.put(GameModel.AK_BLINKY_NAKED, SpritesheetPacMan.get().createBlinkyNakedAnimation()));
+				anims -> anims.put(PacManGame.AK_BLINKY_PATCHED, SpritesheetPacMan.get().createBlinkyPatchedAnimation()));
+		blinky.animations().ifPresent(
+				anims -> anims.put(PacManGame.AK_BLINKY_NAKED, SpritesheetPacMan.get().createBlinkyNakedAnimation()));
 	}
 
 	@Override
@@ -82,12 +83,12 @@ public class PacManCutscene3 extends GameScene {
 			blinky.setMoveAndWishDir(Direction.LEFT);
 			blinky.setPixelSpeed(1.25f);
 			blinky.show();
-			blinky.animations().ifPresent(anims -> anims.select(GameModel.AK_BLINKY_PATCHED));
-			blinky.animation(GameModel.AK_BLINKY_PATCHED).ifPresent(EntityAnimation::restart);
+			blinky.animations().ifPresent(anims -> anims.select(PacManGame.AK_BLINKY_PATCHED));
+			blinky.animation(PacManGame.AK_BLINKY_PATCHED).ifPresent(EntityAnimation::restart);
 		} else if (frame == 296) {
 			blinky.placeAtTile(v2i(-1, 20), 0, 0);
 			blinky.setMoveAndWishDir(Direction.RIGHT);
-			blinky.animations().ifPresent(anims -> anims.select(GameModel.AK_BLINKY_NAKED));
+			blinky.animations().ifPresent(anims -> anims.select(PacManGame.AK_BLINKY_NAKED));
 			blinky.animations().ifPresent(anims -> anims.selectedAnimation().get().restart());
 		} else if (frame == 516) {
 			gameController.terminateCurrentState();
