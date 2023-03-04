@@ -30,7 +30,7 @@ import java.awt.Image;
 
 import de.amr.games.pacman.controller.common.GameState;
 import de.amr.games.pacman.event.GameStateChangeEvent;
-import de.amr.games.pacman.lib.anim.AnimationKey;
+import de.amr.games.pacman.model.common.AnimationKey;
 import de.amr.games.pacman.model.common.actors.Ghost;
 import de.amr.games.pacman.model.common.world.World;
 import de.amr.games.pacman.ui.swing.rendering.common.DebugDraw;

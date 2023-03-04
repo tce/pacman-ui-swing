@@ -23,8 +23,8 @@ SOFTWARE.
 */
 package de.amr.games.pacman.ui.swing.rendering.common;
 
-import de.amr.games.pacman.lib.anim.AnimationKey;
 import de.amr.games.pacman.lib.anim.EntityAnimationMap;
+import de.amr.games.pacman.model.common.AnimationKey;
 import de.amr.games.pacman.model.common.actors.Ghost;
 
 /**

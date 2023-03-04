@@ -27,8 +27,8 @@ import java.awt.Graphics2D;
 
 import de.amr.games.pacman.controller.common.GameController;
 import de.amr.games.pacman.controller.mspacman.MsPacManIntermission2;
-import de.amr.games.pacman.lib.anim.AnimationKey;
 import de.amr.games.pacman.lib.anim.EntityAnimationMap;
+import de.amr.games.pacman.model.common.AnimationKey;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.SpritesheetMsPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.GameScene;
