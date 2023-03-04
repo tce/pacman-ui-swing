@@ -58,6 +58,7 @@ import de.amr.games.pacman.ui.swing.app.GameLoop;
 import de.amr.games.pacman.ui.swing.lib.Ujfc;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
+import de.amr.games.pacman.ui.swing.rendering.common.WorldAnimations;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.SpritesheetMsPacMan;
 import de.amr.games.pacman.ui.swing.rendering.pacman.SpritesheetPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.BootScene;
@@ -197,8 +198,7 @@ public class PacManGameUI implements GameEventListener {
 			case MS_PACMAN -> SpritesheetMsPacMan.get();
 			case PACMAN -> SpritesheetPacMan.get();
 			};
-			var flashing = r2D.createMazeFlashingAnimation(r2D.mazeNumber(level.number()));
-			level.world().addAnimation(ArcadeWorld.FLASHING, flashing);
+			level.world().setAnimations(new WorldAnimations(r2D, level.number()));
 			level.pac().setAnimations(new PacAnimations(level.pac(), r2D));
 			level.ghosts().forEach(ghost -> ghost.setAnimations(new GhostAnimations(ghost, r2D)));
 		});

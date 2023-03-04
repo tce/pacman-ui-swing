@@ -79,6 +79,8 @@ public interface Rendering2D {
 
 	// Animations
 
+	SingleEntityAnimation<BufferedImage> createMazeFlashingAnimation(int mazeNumber);
+
 	EntityAnimationByDirection createPacMunchingAnimationMap(Pac pac);
 
 	SingleEntityAnimation<BufferedImage> createPacDyingAnimation();
@@ -98,8 +100,6 @@ public interface Rendering2D {
 	int mazeNumber(int levelNumber);
 
 	Color getFoodColor(int mazeNumber);
-
-	SingleEntityAnimation<BufferedImage> createMazeFlashingAnimation(int mazeNumber);
 
 	void drawFullMaze(Graphics2D g, int mazeNumber, int x, int y);
 
