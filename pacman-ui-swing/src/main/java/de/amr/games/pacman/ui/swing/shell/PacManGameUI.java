@@ -23,6 +23,8 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.shell;
 
+import static de.amr.games.pacman.controller.common.GameState.CREDIT;
+import static de.amr.games.pacman.controller.common.GameState.INTRO;
 import static de.amr.games.pacman.model.common.GameVariant.MS_PACMAN;
 import static de.amr.games.pacman.ui.swing.shell.Keyboard.MOD_CTRL;
 import static de.amr.games.pacman.ui.swing.shell.Keyboard.MOD_SHIFT;
@@ -162,7 +164,7 @@ public class PacManGameUI implements GameEventListener {
 		titleUpdateTimer = new Timer(1000, e -> window.setTitle(String.format("%s (%d fps, JFC Swing)",
 				gameController.game().variant() == MS_PACMAN ? "Ms. Pac-Man" : "Pac-Man", gameLoop.clock.getLastFPS())));
 
-		gameController.boot();
+		gameController.restart(GameState.BOOT);
 	}
 
 	public void show() {
@@ -359,7 +361,11 @@ public class PacManGameUI implements GameEventListener {
 
 	private void restartIntro() {
 		currentGameScene.end();
-		gameController.startIntro();
+		// TODO check this
+		if (gameController.state() != CREDIT && gameController.state() != INTRO) {
+			gameController.game().changeCredit(-1);
+		}
+		gameController.restart(INTRO);
 	}
 
 	private void moveMousePointerOutOfSight() {
