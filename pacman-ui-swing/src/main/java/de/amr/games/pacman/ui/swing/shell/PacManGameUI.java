@@ -239,7 +239,7 @@ public class PacManGameUI implements GameEventListener {
 			}
 			throw new IllegalStateException("No game level is present");
 		}
-		case INTERMISSION_TEST -> scenes.get(2 + gameController.intermissionTestNumber);
+		case INTERMISSION_TEST -> scenes.get(2 + game.intermissionTestNumber);
 		default -> scenes.get(6);
 		};
 	}
