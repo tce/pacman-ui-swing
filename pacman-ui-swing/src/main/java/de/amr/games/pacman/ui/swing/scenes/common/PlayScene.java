@@ -47,7 +47,7 @@ public class PlayScene extends GameScene {
 	@Override
 	public void update() {
 		if (Keyboard.keyPressed("5")) {
-			gameController.state().addCredit(game);
+			gameController.addCredit();
 		}
 	}
 

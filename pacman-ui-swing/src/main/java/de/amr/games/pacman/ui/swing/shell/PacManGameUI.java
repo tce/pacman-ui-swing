@@ -294,7 +294,6 @@ public class PacManGameUI implements GameEventListener {
 
 	private void handleNonPlayerKeys() {
 		var game = gameController.game();
-		var gameState = gameController.state();
 
 		if (Keyboard.keyPressed("A")) {
 			gameController.toggleAutoControlled();
@@ -307,7 +306,7 @@ public class PacManGameUI implements GameEventListener {
 		}
 
 		else if (Keyboard.keyPressed("E")) {
-			gameState.cheatEatAllPellets(game);
+			gameController.cheatEatAllPellets();
 		}
 
 		else if (Keyboard.keyPressed("I")) {
@@ -347,15 +346,15 @@ public class PacManGameUI implements GameEventListener {
 		}
 
 		else if (Keyboard.keyPressed("V")) {
-			gameState.selectGameVariant(game.variant().next());
+			gameController.selectGameVariant(game.variant().next());
 		}
 
 		else if (Keyboard.keyPressed("X")) {
-			gameState.cheatKillAllEatableGhosts(game);
+			gameController.cheatKillAllEatableGhosts();
 		}
 
 		else if (Keyboard.keyPressed("Z")) {
-			gameState.startCutscenesTest(game);
+			gameController.startCutscenesTest();
 		}
 	}
 

@@ -43,9 +43,9 @@ public class MsPacManCreditScene extends GameScene {
 	@Override
 	public void update() {
 		if (Keyboard.keyPressed("5")) {
-			gameController.state().addCredit(game);
+			gameController.addCredit();
 		} else if (Keyboard.keyPressed("1")) {
-			gameController.state().requestGame(game);
+			gameController.startPlaying();
 		}
 	}
 
