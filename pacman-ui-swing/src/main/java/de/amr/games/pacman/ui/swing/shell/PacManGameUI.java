@@ -23,6 +23,8 @@ SOFTWARE.
  */
 package de.amr.games.pacman.ui.swing.shell;
 
+import static de.amr.games.pacman.controller.common.GameState.CREDIT;
+import static de.amr.games.pacman.controller.common.GameState.INTRO;
 import static de.amr.games.pacman.model.common.GameVariant.MS_PACMAN;
 import static de.amr.games.pacman.ui.swing.shell.Keyboard.MOD_CTRL;
 import static de.amr.games.pacman.ui.swing.shell.Keyboard.MOD_SHIFT;
@@ -58,6 +60,7 @@ import de.amr.games.pacman.ui.swing.app.GameLoop;
 import de.amr.games.pacman.ui.swing.lib.Ujfc;
 import de.amr.games.pacman.ui.swing.rendering.common.GhostAnimations;
 import de.amr.games.pacman.ui.swing.rendering.common.PacAnimations;
+import de.amr.games.pacman.ui.swing.rendering.common.WorldAnimations;
 import de.amr.games.pacman.ui.swing.rendering.mspacman.SpritesheetMsPacMan;
 import de.amr.games.pacman.ui.swing.rendering.pacman.SpritesheetPacMan;
 import de.amr.games.pacman.ui.swing.scenes.common.BootScene;
@@ -168,7 +171,7 @@ public class PacManGameUI implements GameEventListener {
 		titleUpdateTimer = new Timer(1000, e -> window.setTitle(String.format("%s (%d fps, JFC Swing)",
 				gameController.game().variant() == MS_PACMAN ? "Ms. Pac-Man" : "Pac-Man", gameLoop.clock.getLastFPS())));
 
-		gameController.boot();
+		gameController.restart(GameState.BOOT);
 	}
 
 	public void show() {
@@ -204,8 +207,7 @@ public class PacManGameUI implements GameEventListener {
 			case MS_PACMAN -> SpritesheetMsPacMan.get();
 			case PACMAN -> SpritesheetPacMan.get();
 			};
-			var flashing = r2D.createMazeFlashingAnimation(r2D.mazeNumber(level.number()));
-			level.world().addAnimation(ArcadeWorld.FLASHING, flashing);
+			level.world().setAnimations(new WorldAnimations(r2D, level.number()));
 			level.pac().setAnimations(new PacAnimations(level.pac(), r2D));
 			level.ghosts().forEach(ghost -> ghost.setAnimations(new GhostAnimations(ghost, r2D)));
 		});
@@ -246,7 +248,7 @@ public class PacManGameUI implements GameEventListener {
 			}
 			throw new IllegalStateException("No game level is present");
 		}
-		case INTERMISSION_TEST -> scenes.get(2 + gameController.intermissionTestNumber);
+		case INTERMISSION_TEST -> scenes.get(2 + game.intermissionTestNumber);
 		default -> scenes.get(6);
 		};
 	}
@@ -311,7 +313,6 @@ public class PacManGameUI implements GameEventListener {
 
 	private void handleNonPlayerKeys() {
 		var game = gameController.game();
-		var gameState = gameController.state();
 
 		if (Keyboard.keyPressed("A")) {
 			gameController.toggleAutoControlled();
@@ -324,7 +325,7 @@ public class PacManGameUI implements GameEventListener {
 		}
 
 		else if (Keyboard.keyPressed("E")) {
-			gameState.cheatEatAllPellets(game);
+			gameController.cheatEatAllPellets();
 		}
 
 		else if (Keyboard.keyPressed("I")) {
@@ -364,15 +365,15 @@ public class PacManGameUI implements GameEventListener {
 		}
 
 		else if (Keyboard.keyPressed("V")) {
-			gameState.selectGameVariant(game.variant().next());
+			gameController.selectGameVariant(game.variant().next());
 		}
 
 		else if (Keyboard.keyPressed("X")) {
-			gameState.cheatKillAllEatableGhosts(game);
+			gameController.cheatKillAllEatableGhosts();
 		}
 
 		else if (Keyboard.keyPressed("Z")) {
-			gameState.startCutscenesTest(game);
+			gameController.startCutscenesTest();
 		}
 
 		else if (Keyboard.keyPressed( ",")) {
@@ -393,7 +394,11 @@ public class PacManGameUI implements GameEventListener {
 
 	private void restartIntro() {
 		currentGameScene.end();
-		gameController.startIntro();
+		// TODO check this
+		if (gameController.state() != CREDIT && gameController.state() != INTRO) {
+			gameController.game().changeCredit(-1);
+		}
+		gameController.restart(INTRO);
 	}
 
 	private void moveMousePointerOutOfSight() {

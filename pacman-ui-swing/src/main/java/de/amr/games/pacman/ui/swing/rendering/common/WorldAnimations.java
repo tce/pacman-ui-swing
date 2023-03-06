@@ -24,24 +24,19 @@ SOFTWARE.
 
 package de.amr.games.pacman.ui.swing.rendering.common;
 
-import de.amr.games.pacman.lib.anim.EntityAnimation;
 import de.amr.games.pacman.lib.anim.EntityAnimationMap;
+import de.amr.games.pacman.lib.anim.Pulse;
 import de.amr.games.pacman.model.common.GameModel;
-import de.amr.games.pacman.model.common.actors.Pac;
 
 /**
  * @author Armin Reichert
+ *
  */
-public class PacAnimations extends EntityAnimationMap {
+public class WorldAnimations extends EntityAnimationMap {
 
-	public PacAnimations(Pac pac, Rendering2D r2D) {
-		put(GameModel.AK_PAC_DYING, r2D.createPacDyingAnimation());
-		put(GameModel.AK_PAC_MUNCHING, r2D.createPacMunchingAnimationMap(pac));
-		select(GameModel.AK_PAC_MUNCHING);
-	}
-
-	@Override
-	public void ensureRunning() {
-		animation(GameModel.AK_PAC_MUNCHING).ifPresent(EntityAnimation::ensureRunning);
+	public WorldAnimations(Rendering2D r2D, int levelNumber) {
+		put(GameModel.AK_MAZE_ENERGIZER_BLINKING, new Pulse(10, true));
+		var flashing = r2D.createMazeFlashingAnimation(r2D.mazeNumber(levelNumber));
+		put(GameModel.AK_MAZE_FLASHING, flashing);
 	}
 }
