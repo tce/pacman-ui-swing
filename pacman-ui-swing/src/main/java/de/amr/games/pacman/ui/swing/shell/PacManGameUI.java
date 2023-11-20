@@ -39,12 +39,16 @@ import java.awt.Robot;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.WindowConstants;
 
+import de.amr.games.pacman.event.GameEventType;
+import de.amr.games.pacman.event.GhostEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -76,6 +80,7 @@ import de.amr.games.pacman.ui.swing.scenes.pacman.PacManCutscene1;
 import de.amr.games.pacman.ui.swing.scenes.pacman.PacManCutscene2;
 import de.amr.games.pacman.ui.swing.scenes.pacman.PacManCutscene3;
 import de.amr.games.pacman.ui.swing.scenes.pacman.PacManIntroScene;
+import org.apache.logging.log4j.core.util.JsonUtils;
 
 /**
  * A Swing UI for the Pac-Man / Ms. Pac-Man game.
@@ -107,12 +112,14 @@ public class PacManGameUI implements GameEventListener {
 	private final Canvas canvas;
 	private final FlashMessageDisplay flashMessageDisplay;
 
-	private final double RENDER_ERROR_PERCENT = 0.05;
-	public final double KEY_ERROR_PERCENT = 0.1;
+	private final double RENDER_ERROR_PERCENT = 0.02;
+
+	private boolean IN_BLANK_FRAMES = false;
 	private int BLANK_FRAMES = 0;
 	private boolean SKIP_FRAMES = false;
-
 	private boolean SKIP_CONTROLS = false;
+
+	FileWriter fw = null;
 
 	private final List<GameScene> gameScenesPacMan = List.of( //
 			new BootScene(), //
@@ -136,7 +143,8 @@ public class PacManGameUI implements GameEventListener {
 
 	private GameScene currentGameScene;
 
-	public PacManGameUI(GameLoop gameLoop, GameController controller, float height) {
+	public PacManGameUI(FileWriter fw, GameLoop gameLoop, GameController controller, float height) {
+		this.fw = fw;
 		this.gameLoop = gameLoop;
 		this.gameController = controller;
 		this.unscaledSize = ArcadeWorld.SIZE_PX;
@@ -163,6 +171,16 @@ public class PacManGameUI implements GameEventListener {
 			public void windowClosing(WindowEvent e) {
 				titleUpdateTimer.stop();
 				gameLoop.end();
+				try
+				{
+					fw.flush();
+					fw.close();
+				}
+				catch (IOException ex)
+				{
+					throw new RuntimeException(ex);
+				}
+
 			}
 		});
 		window.getContentPane().add(canvas);
@@ -183,8 +201,19 @@ public class PacManGameUI implements GameEventListener {
 		titleUpdateTimer.start();
 	}
 
+	// GameEvent.type = "GAME_STATE_CHANGED"
+	// "SOUND_EVENT" = "credit_added"
+	// "LEVEL_STARTING"
 	@Override
 	public void onGameEvent(GameEvent event) {
+		//if ((! (event instanceof  SoundEvent)) && (! (event instanceof GhostEvent)))
+		if (event.type.equals(GameEventType.GAME_STATE_CHANGED))
+		{
+			String transition = event.toString();
+			String nextState = transition.substring(transition.indexOf("->")+2);
+			String line = nextState.substring(0,nextState.indexOf(")"));
+			explog("event," + line);
+		}
 		GameEventListener.super.onGameEvent(event);
 		currentGameScene.onGameEvent(event);
 	}
@@ -194,6 +223,7 @@ public class PacManGameUI implements GameEventListener {
 		updateGameScene(gameController.state(), true);
 	}
 
+	// BOOT-> INTRO
 	@Override
 	public void onGameStateChange(GameStateChangeEvent e) {
 		updateGameScene(e.newGameState, false);
@@ -210,12 +240,13 @@ public class PacManGameUI implements GameEventListener {
 			level.world().setAnimations(new WorldAnimations(r2D, level.number()));
 			level.pac().setAnimations(new PacAnimations(level.pac(), r2D));
 			level.ghosts().forEach(ghost -> ghost.setAnimations(new GhostAnimations(ghost, r2D)));
+			explog("event,level " + level.number());
 		});
 	}
 
 	@Override
 	public void onSoundEvent(SoundEvent e) {
-		LOG.info("Received %s", e);
+		//LOG.info("Received %s", e);
 	}
 
 	private void updateGameScene(GameState gameState, boolean forced) {
@@ -229,7 +260,7 @@ public class PacManGameUI implements GameEventListener {
 			}
 			newGameScene.setContext(gameController);
 			newGameScene.init();
-			LOG.info("Current scene changed from %s to %s", currentGameScene, newGameScene);
+			//LOG.info("Current scene changed from %s to %s", currentGameScene, newGameScene);
 		}
 		currentGameScene = newGameScene;
 	}
@@ -253,6 +284,18 @@ public class PacManGameUI implements GameEventListener {
 		};
 	}
 
+	public void explog(String line)
+	{
+		try
+		{
+			fw.write(System.currentTimeMillis() + "," + line+ "\n");
+		}
+		catch (IOException e)
+		{
+			throw new RuntimeException(e);
+		}
+	}
+
 	public void update() {
 		handleNonPlayerKeys();
 		if (currentGameScene != null) {
@@ -265,12 +308,22 @@ public class PacManGameUI implements GameEventListener {
 		}
 		else
 		{
-			if (BLANK_FRAMES == 0)
-				BLANK_FRAMES = 10;
-			else
-				BLANK_FRAMES -= 1;
+			if (! IN_BLANK_FRAMES)
+			{
+				explog("blank,"+BLANK_FRAMES);
+				IN_BLANK_FRAMES = true;
+			}
 
-			System.out.println("skip " + BLANK_FRAMES);
+			if (BLANK_FRAMES == 0)
+			{
+				BLANK_FRAMES = 10;
+				IN_BLANK_FRAMES = false;
+				explog("render");
+			}
+			else
+			{
+				BLANK_FRAMES -= 1;
+			}
 		}
 	}
 
@@ -378,13 +431,13 @@ public class PacManGameUI implements GameEventListener {
 
 		else if (Keyboard.keyPressed( ",")) {
 			SKIP_CONTROLS = ! SKIP_CONTROLS;
-			showFlashMessage(2, "SKIP CONTROLS: %s", SKIP_CONTROLS);
+			//showFlashMessage(2, "SKIP CONTROLS: %s", SKIP_CONTROLS);
 			((KeySteering)gameController.steering()).setSkipControls(SKIP_CONTROLS);
 		}
 
 		else if (Keyboard.keyPressed(".")) {
 			SKIP_FRAMES = ! SKIP_FRAMES;
-			showFlashMessage(2, "SKIP FRAMES: %s", SKIP_FRAMES);
+			//showFlashMessage(2, "SKIP FRAMES: %s", SKIP_FRAMES);
 		}
 
 

@@ -35,6 +35,10 @@ import de.amr.games.pacman.model.common.GameVariant;
 import de.amr.games.pacman.ui.swing.shell.KeySteering;
 import de.amr.games.pacman.ui.swing.shell.PacManGameUI;
 
+import java.io.BufferedOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
  * The Pac-Man application.
  * 
@@ -52,8 +56,11 @@ public class PacManGameAppSwing {
 	static final Option<Integer> OPT_HEIGHT = integerOption("-height", 576);
 	static final Option<GameVariant> OPT_VARIANT = option("-variant", GameVariant.PACMAN, GameVariant::valueOf);
 
+	static final Option<String> OPT_USER = option("-user", "dev", String::valueOf);
+
+
 	public static void main(String[] args) {
-		new OptionParser(OPT_HEIGHT, OPT_VARIANT).parse(args);
+		new OptionParser(OPT_HEIGHT, OPT_VARIANT, OPT_USER).parse(args);
 		var app = new PacManGameAppSwing(OPT_VARIANT.getValue());
 		invokeLater(app::createAndShowUI);
 	}
@@ -64,16 +71,27 @@ public class PacManGameAppSwing {
 		gameController = new GameController(gameVariant);
 	}
 
-	private void createAndShowUI() {
+	private void createAndShowUI()
+	{
 		var gameLoop = new GameLoop();
-		var ui = new PacManGameUI(gameLoop, gameController, OPT_HEIGHT.getValue());
-		GameEvents.addListener(ui);
-		ui.show();
-		gameController.setManualPacSteering(new KeySteering("Up", "Down", "Left", "Right"));
-		gameLoop.action = () -> {
-			gameLoop.clock.frame(gameController::update);
-			ui.update();
-		};
-		gameLoop.start();
+		FileWriter fw = null;
+		try
+		{
+			fw = new FileWriter(OPT_USER.getValue()+"_explog.csv");
+
+			var ui = new PacManGameUI(fw, gameLoop, gameController, OPT_HEIGHT.getValue());
+			GameEvents.addListener(ui);
+			ui.show();
+			gameController.setManualPacSteering(new KeySteering(fw, "Up", "Down", "Left", "Right"));
+			gameLoop.action = () -> {
+				gameLoop.clock.frame(gameController::update);
+				ui.update();
+			};
+			gameLoop.start();
+		}
+		catch (IOException e)
+		{
+			throw new RuntimeException(e);
+		}
 	}
 }

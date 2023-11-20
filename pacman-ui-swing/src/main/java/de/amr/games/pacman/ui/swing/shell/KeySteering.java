@@ -28,6 +28,9 @@ import de.amr.games.pacman.lib.steering.Direction;
 import de.amr.games.pacman.model.common.GameLevel;
 import de.amr.games.pacman.model.common.actors.Creature;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
  * Controls the player using the keyboard.
  * 
@@ -44,7 +47,10 @@ public class KeySteering implements Steering {
 
 	private boolean skipControls = false;
 
-	public KeySteering(String up, String down, String left, String right) {
+	FileWriter fw = null;
+
+	public KeySteering(FileWriter fw, String up, String down, String left, String right) {
+		this.fw = fw;
 		this.up = up;
 		this.down = down;
 		this.left = left;
@@ -56,21 +62,54 @@ public class KeySteering implements Steering {
 		skipControls = value;
 	}
 
-
-	private boolean skip()
+	public void explog(String line)
 	{
-		return (skipControls && Math.random() < control_error_percent);
+		try
+		{
+			fw.write(System.currentTimeMillis() + "," + line+ "\n");
+		}
+		catch (IOException e)
+		{
+			throw new RuntimeException(e);
+		}
+	}
+
+	private boolean skip(String dir)
+	{
+		boolean skipKey = skipControls && Math.random() < control_error_percent;
+		if (skipKey)
+		{
+			explog("skip," + dir);
+		}
+		return skipKey;
 	}
 	@Override
 	public void steer(GameLevel level, Creature pac) {
-		if (Keyboard.keyPressed(up)) {
-			if (!skip()) pac.setWishDir(Direction.UP);
+		if (Keyboard.keyPressed(up))
+		{
+			if (!skip("up"))
+			{
+				pac.setWishDir(Direction.UP);
+				explog("command,up");
+			}
 		} else if (Keyboard.keyPressed(down)) {
-			if (!skip()) pac.setWishDir(Direction.DOWN);
+			if (!skip("down"))
+			{
+				pac.setWishDir(Direction.DOWN);
+				explog("command,down");
+			}
 		} else if (Keyboard.keyPressed(left)) {
-			if (!skip()) pac.setWishDir(Direction.LEFT);
+			if (!skip("left"))
+			{
+				pac.setWishDir(Direction.LEFT);
+				explog("command,left");
+			}
 		} else if (Keyboard.keyPressed(right)) {
-			if (!skip()) pac.setWishDir(Direction.RIGHT);
+			if (!skip("right"))
+			{
+				pac.setWishDir(Direction.RIGHT);
+				explog("command,right");
+			}
 		}
 	}
 }
